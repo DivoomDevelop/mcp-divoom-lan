@@ -185,6 +185,23 @@ const tools: Tool[] = [
     },
   },
   {
+    name: "watchface_onoff_screen",
+    description: "Call Channel/OnOffScreen with OnOff (1=on, 0=off).",
+    inputSchema: {
+      type: "object",
+      properties: {
+        target: targetSchema,
+        onOff: {
+          type: "integer",
+          enum: [0, 1],
+          description: "1 turns screen on, 0 turns screen off.",
+        },
+      },
+      required: ["onOff"],
+      additionalProperties: false,
+    },
+  },
+  {
     name: "watchface_replace_dial_bg_file",
     description:
       "POST /replace_clock_dial_bg using multipart (Device/ReplaceClockDialBgFile). Does not modify DeviceImageUrl.",
@@ -333,6 +350,14 @@ function requiredInteger(input: unknown, fieldName: string): number {
   const value = optionalInteger(input, fieldName);
   if (value === undefined) {
     throw new Error(`${fieldName} is required.`);
+  }
+  return value;
+}
+
+function requiredZeroOrOne(input: unknown, fieldName: string): 0 | 1 {
+  const value = requiredInteger(input, fieldName);
+  if (value !== 0 && value !== 1) {
+    throw new Error(`${fieldName} must be 0 or 1.`);
   }
   return value;
 }
@@ -683,6 +708,12 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const target = resolveTarget(args.target);
     const brightness = requiredInteger(args.brightness, "brightness");
     return callDivoomApi(target, "Channel/SetBrightness", { Brightness: brightness });
+  }
+
+  if (name === "watchface_onoff_screen") {
+    const target = resolveTarget(args.target);
+    const onOff = requiredZeroOrOne(args.onOff ?? args.OnOff, "OnOff");
+    return callDivoomApi(target, "Channel/OnOffScreen", { OnOff: onOff });
   }
 
   if (name === "watchface_replace_dial_bg_file") {
