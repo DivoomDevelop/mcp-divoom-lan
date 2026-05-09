@@ -10,6 +10,12 @@
 - 让支持 MCP 的客户端（Cursor、Claude Desktop、本地模型等）通过自然语言执行表盘操作
 - 保留安全边界（读前写、危险命令显式提示、multipart 规则）
 
+## 默认安全策略（重要）
+
+- 先读后写：先 `watchface_get_local`，再 `watchface_patch_local`，最后回读确认。
+- 若 `GetLocalClockInfo` 返回 `ItemList` 为空：立即停止写入，先切换到可编辑表盘再继续。
+- 非用户明确要求时，禁止调用 `watchface_create_local_clock`（不要隐式新建表盘）。
+
 ## 已实现工具
 
 - `watchface_get_local` -> `Device/GetLocalClockInfo`
@@ -61,6 +67,8 @@ npm run release:check
 - `docs/tool-examples.md`：工具调用示例
 - `docs/html-visual-editor.md`：配合 HTML 可视化编辑器
 - `docs/safety-and-troubleshooting.md`：安全边界与常见问题
+- `docs/reference/`：协议关键约束提炼（中英）
+- `docs/examples/`：请求/响应样例（含目录清单）
 
 ## 环境变量
 
@@ -146,7 +154,7 @@ npm run release:check
 
 ## 与现有文档对齐
 
-- 当前仓库内的最小可用文档：`docs/`
-- 若你在源码大仓中维护协议细节，可继续参考原工程中的完整 Guide / EXAMPLE / SKILL 文档
+- 当前仓库已内置可独立发布的最小文档：`docs/` + `docs/reference/` + `docs/examples/`
+- 若你在源码大仓中维护协议细节，可继续保留完整 Guide / EXAMPLE / SKILL 作为上游源
 
 > 注意：`CHANGELOG.md` 底部的 GitHub Release 链接目前是占位地址，创建正式仓库后请替换为真实 URL。

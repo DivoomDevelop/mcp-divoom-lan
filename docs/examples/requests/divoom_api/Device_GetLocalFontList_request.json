@@ -1,0 +1,4 @@
+{
+  "Command": "Device/GetLocalFontList",
+  "ReturnCode": 0
+}

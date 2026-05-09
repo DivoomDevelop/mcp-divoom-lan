@@ -1,0 +1,6 @@
+{
+  "Command": "Device/ResetLocalClockFromServer",
+  "ReturnCode": 0,
+  "ReturnMessage": "OK",
+  "CloudSyncRequested": 1
+}

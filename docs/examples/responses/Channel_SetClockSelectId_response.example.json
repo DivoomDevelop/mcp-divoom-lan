@@ -1,0 +1,7 @@
+{
+  "Command": "Channel/SetClockSelectId",
+  "ReturnCode": 0,
+  "ReturnMessage": "OK",
+  "DeviceType": "Frame",
+  "ClockId": 523
+}

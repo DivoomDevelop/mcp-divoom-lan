@@ -18,6 +18,8 @@ Modify watchface data safely through Divoom local HTTP endpoints.
 6. If only replacing decoded background cache, use `/replace_clock_dial_bg`.
 7. If changing cfg `DeviceImageUrl`, use `/upload` then `PatchLocalClockInfo`.
 8. Verify changes by calling `GetLocalClockInfo` after every write.
+9. Do not call `watchface_create_local_clock` unless user explicitly asks to create a new clock.
+10. If `GetLocalClockInfo` returns `ItemList` empty, stop and ask user to switch to an editable clock first.
 
 ## Risky operations
 

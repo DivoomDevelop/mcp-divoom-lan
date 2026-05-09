@@ -1,0 +1,5 @@
+{
+  "Command": "Device/ReplaceClockDialBgFile",
+  "ReturnCode": 0,
+  "UseCurrentDisplayClock": 1
+}

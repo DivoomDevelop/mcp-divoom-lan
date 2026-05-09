@@ -1,0 +1,5 @@
+{
+  "Command": "Device/GetLocalClockInfo",
+  "ReturnCode": 0,
+  "UseCurrentDisplayClock": 1
+}

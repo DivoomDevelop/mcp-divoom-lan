@@ -1,0 +1,22 @@
+{
+  "Command": "Device/PatchLocalClockInfo",
+  "ReturnCode": 0,
+  "UseCurrentDisplayClock": 1,
+  "ItemPatchList": [
+    {
+      "index": 2,
+      "patch": {
+        "color_1": "#FFFFFF",
+        "color_2": "#222222",
+        "font": 3,
+        "size": 48,
+        "size_delta": 0,
+        "x": 120,
+        "y": 340,
+        "w": 400,
+        "h": 120,
+        "alig": 1
+      }
+    }
+  ]
+}

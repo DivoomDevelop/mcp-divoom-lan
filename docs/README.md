@@ -6,6 +6,8 @@
 2. `tool-examples.md`：核心功能示例（改表盘、选表盘、亮度、新建表盘）
 3. `html-visual-editor.md`：如何配合 HTML 可视化编辑器
 4. `safety-and-troubleshooting.md`：风险边界与常见问题
+5. `reference/`：协议关键规则提炼（中英）
+6. `examples/`：请求/响应示例与目录清单
 
 ## 目标能力
 
@@ -19,3 +21,8 @@
 - 设备和 MCP 客户端机器网络可达（通常在同一局域网）
 - 知道设备 LAN IP（例如 `192.168.1.120`）
 - Node.js 版本 >= 20
+
+## 新增目录说明
+
+- `reference/`：从原始 Guide 提炼的关键协议约束，便于模型快速对齐行为
+- `examples/`：从原始 EXAMPLE 抽取的常用样例，适合联调与回归

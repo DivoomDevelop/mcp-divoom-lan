@@ -1,0 +1,6 @@
+{
+  "Command": "Sys/GetBrightness",
+  "ReturnCode": 0,
+  "ReturnMessage": "OK",
+  "Brightness": 75
+}

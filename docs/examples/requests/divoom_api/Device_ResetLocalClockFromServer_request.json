@@ -1,0 +1,7 @@
+{
+  "Command": "Device/ResetLocalClockFromServer",
+  "ReturnCode": 0,
+  "ClockId": 523,
+  "ParentClockId": 0,
+  "ParentItemId": 0
+}

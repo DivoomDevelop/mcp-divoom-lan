@@ -13,7 +13,17 @@
 
 建议在用户明确确认后再执行。
 
-### 3) multipart 规范
+### 3) 禁止隐式新建表盘
+
+- `watchface_create_local_clock` 只在用户明确提出“创建新表盘”时调用。
+- 对于“改颜色/改字体/改位置”这类请求，禁止自动新建表盘。
+
+### 4) 空 ItemList 保护
+
+- 若 `watchface_get_local` 返回 `ItemList` 为空，必须先切换到可编辑表盘。
+- 在空 `ItemList` 状态下不要继续 `watchface_patch_local`。
+
+### 5) multipart 规范
 
 服务端对 multipart 较敏感，建议：
 
@@ -21,7 +31,7 @@
 - 每段包含 `Content-Length`
 - 图像满足规格（见下）
 
-### 4) 图像规格
+### 6) 图像规格
 
 - 分辨率：`800x1280`
 - 格式：`JPEG` 或 `WebP`
@@ -57,6 +67,7 @@
 - 是否针对错误的 `ClockId`
 - `index` 是否与当前 `ItemList` 对应
 - 是否被后续流程覆盖（例如切换表盘后再回读）
+- 是否命中了空 `ItemList` 场景（先 `watchface_get_local` 检查）
 
 ### 4) 图片相关失败
 

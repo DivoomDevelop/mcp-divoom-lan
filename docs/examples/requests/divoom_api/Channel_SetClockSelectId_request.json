@@ -1,0 +1,5 @@
+{
+  "Command": "Channel/SetClockSelectId",
+  "ReturnCode": 0,
+  "ClockId": 523
+}

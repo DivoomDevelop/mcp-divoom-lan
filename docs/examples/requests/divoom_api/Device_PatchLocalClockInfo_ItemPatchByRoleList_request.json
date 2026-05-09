@@ -1,0 +1,15 @@
+{
+  "Command": "Device/PatchLocalClockInfo",
+  "ReturnCode": 0,
+  "UseCurrentDisplayClock": 1,
+  "ItemPatchByRoleList": [
+    {
+      "role": "clock_time_font",
+      "patch": {
+        "color_1": "#4CAF50",
+        "color_2": "#1B5E20",
+        "size_delta": 2
+      }
+    }
+  ]
+}

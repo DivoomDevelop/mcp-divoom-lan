@@ -1,0 +1,6 @@
+{
+  "Command": "Channel/SetBrightness",
+  "ReturnCode": 0,
+  "ReturnMessage": "OK",
+  "Brightness": 80
+}

@@ -26,10 +26,12 @@ This resource is a condensed reference for agents using the Divoom local HTTP AP
 ## Safe patch workflow
 
 1. Read current clock (`GetLocalClockInfo`).
-2. Patch minimally (`PatchLocalClockInfo`) using:
+2. If `ItemList` is empty, stop and switch to an editable clock first.
+3. Patch minimally (`PatchLocalClockInfo`) using:
    - `ItemPatchList` by index, or
    - `ItemPatchByRoleList` for semantic patching.
-3. Read again and verify.
+4. Do not auto-create a new clock for color/style patch requests.
+5. Read again and verify.
 
 ## Multipart endpoints
 

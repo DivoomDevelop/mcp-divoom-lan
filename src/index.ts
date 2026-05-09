@@ -90,7 +90,7 @@ const tools: Tool[] = [
   {
     name: "watchface_patch_local",
     description:
-      "Call Device/PatchLocalClockInfo. Supports ItemPatchList, ItemPatchByRoleList, and image URLs.",
+      "Call Device/PatchLocalClockInfo with precheck. Stops when current ItemList is empty to avoid unsafe patch flow.",
     inputSchema: {
       type: "object",
       properties: {
@@ -237,7 +237,7 @@ const tools: Tool[] = [
   {
     name: "watchface_create_local_clock",
     description:
-      "POST /create_local_clock with multipart. Auto-enforces Command=Device/CreateLocalClock and ReturnCode=0 in first part JSON.",
+      "POST /create_local_clock with multipart. Explicit operation only; never auto-triggered by patch flow.",
     inputSchema: {
       type: "object",
       properties: {
@@ -575,6 +575,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
   if (name === "watchface_patch_local") {
     const target = resolveTarget(args.target);
     const body: JsonRecord = {};
+    const precheckBody: JsonRecord = {};
 
     const clockId = optionalInteger(args.clockId, "clockId");
     const useCurrentDisplayClock = optionalBoolean(
@@ -584,12 +585,15 @@ async function handleToolCall(name: string, rawArgs: unknown) {
 
     if (clockId !== undefined) {
       body.ClockId = clockId;
+      precheckBody.ClockId = clockId;
     }
     if (useCurrentDisplayClock !== undefined) {
       body.UseCurrentDisplayClock = toDeviceFlag(useCurrentDisplayClock);
+      precheckBody.UseCurrentDisplayClock = toDeviceFlag(useCurrentDisplayClock);
     }
     if (clockId === undefined && useCurrentDisplayClock === undefined) {
       body.UseCurrentDisplayClock = 1;
+      precheckBody.UseCurrentDisplayClock = 1;
     }
 
     if (args.deviceImageUrl !== undefined) {
@@ -623,6 +627,31 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       body.ItemPatchByRoleList = ensureArray(
         args.itemPatchByRoleList,
         "itemPatchByRoleList",
+      );
+    }
+
+    // Guard rail: do not patch when current/local clock payload is empty.
+    // This avoids writing against a non-editable or incomplete dial context.
+    const precheck = await callDivoomApi(
+      target,
+      "Device/GetLocalClockInfo",
+      precheckBody,
+    );
+    const precheckJson =
+      precheck.responseJson && typeof precheck.responseJson === "object"
+        ? (precheck.responseJson as JsonRecord)
+        : null;
+    const precheckCode =
+      precheckJson && typeof precheckJson.ReturnCode === "number"
+        ? precheckJson.ReturnCode
+        : null;
+    const precheckItems =
+      precheckJson && Array.isArray(precheckJson.ItemList)
+        ? precheckJson.ItemList
+        : null;
+    if (precheckCode === 0 && precheckItems && precheckItems.length === 0) {
+      throw new Error(
+        "GetLocalClockInfo returned empty ItemList. Stop patching and switch to an editable clock first (watchface_set_clock_select). Do not auto-create a new clock unless explicitly requested.",
       );
     }
 
@@ -785,6 +814,8 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       "6) Multipart parts must include filename=\"...\" and per-part Content-Length.",
       "7) Typical image constraints: JPEG/WebP, exactly 800x1280, and below 512000 bytes.",
       "8) ResetLocalClockFromServer is destructive (deletes local sys files first).",
+      "9) Do not auto-call watchface_create_local_clock for style/color patch requests.",
+      "10) If GetLocalClockInfo returns ItemList empty, stop and ask user to switch to an editable clock.",
     ];
     return {
       rules: lines,

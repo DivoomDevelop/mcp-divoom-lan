@@ -1,0 +1,7 @@
+{
+  "Command": "Device/CreateLocalClock",
+  "ReturnCode": 0,
+  "ReturnMessage": "OK",
+  "DeviceType": "Frame",
+  "ClockId": 60001
+}

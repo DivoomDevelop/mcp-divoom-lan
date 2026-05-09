@@ -1,0 +1,17 @@
+{
+  "Command": "Device/GetLocalFontList",
+  "ReturnCode": 0,
+  "ReturnMessage": "OK",
+  "DeviceType": "Frame",
+  "FontList": [
+    {
+      "id": 6,
+      "type": 1,
+      "url": "group1/M00/example.ttf",
+      "charset": "",
+      "name": "Example Font"
+    }
+  ],
+  "UpdateTime": 1755067234,
+  "check_flag": 2
+}

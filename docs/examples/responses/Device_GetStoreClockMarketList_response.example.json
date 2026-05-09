@@ -1,0 +1,7 @@
+{
+  "Command": "Device/GetStoreClockMarketList",
+  "ReturnCode": 0,
+  "ReturnMessage": "OK",
+  "MarketClockCount": 0,
+  "MarketClockList": []
+}

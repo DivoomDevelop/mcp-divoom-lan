@@ -1,0 +1,7 @@
+{
+  "_note": "成功时常与 GET 同构；此处为缩略示意。",
+  "Command": "Device/PatchLocalClockInfo",
+  "ReturnCode": 0,
+  "ReturnMessage": "OK",
+  "ClockId": 523
+}
