@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "divoom-lan": {
+      "command": "node",
+      "args": [
+        "/ABSOLUTE/PATH/to/tools/mcp-divoom-lan/dist/index.js"
+      ],
+      "env": {
+        "DIVOOM_DEVICE_HOST": "192.168.1.120",
+        "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_TIMEOUT_MS": "45000"
+      }
+    }
+  }
+}
