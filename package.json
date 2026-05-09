@@ -15,6 +15,7 @@
   "files": [
     "dist",
     "README.md",
+    "docs",
     "resources",
     "client-config.example.json",
     "LICENSE"

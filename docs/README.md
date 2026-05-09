@@ -1,0 +1,21 @@
+# mcp-divoom-lan 文档索引
+
+如果你是第一次接触 Divoom MCP，按下面顺序阅读：
+
+1. `quick-start.md`：5 分钟跑通安装和首个调用
+2. `tool-examples.md`：核心功能示例（改表盘、选表盘、亮度、新建表盘）
+3. `html-visual-editor.md`：如何配合 HTML 可视化编辑器
+4. `safety-and-troubleshooting.md`：风险边界与常见问题
+
+## 目标能力
+
+- 修改本地表盘内容（`watchface_patch_local`）
+- 切换当前表盘（`watchface_set_clock_select`）
+- 调整亮度（`watchface_set_brightness`）
+- 创建新本地表盘（`watchface_create_local_clock`）
+
+## 前置条件（必须）
+
+- 设备和 MCP 客户端机器网络可达（通常在同一局域网）
+- 知道设备 LAN IP（例如 `192.168.1.120`）
+- Node.js 版本 >= 20

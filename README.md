@@ -2,6 +2,8 @@
 
 `mcp-divoom-lan` 是一个可开源发布的 MCP Server，将 Divoom 表盘局域网 API 封装为标准工具，便于 AI 客户端直接调用。
 
+支持与 HTML 可视化编辑器协同，覆盖表盘修改、表盘选择、亮度调节与新表盘创建。
+
 ## 目标
 
 - 将 `Divoom_Watchface_Remote_Customization_Guide_EN.md` 中的关键能力转成 MCP Tools
@@ -51,6 +53,14 @@ npm run dev
 ```bash
 npm run release:check
 ```
+
+## 使用文档（新增）
+
+- `docs/README.md`：文档索引
+- `docs/quick-start.md`：快速上手
+- `docs/tool-examples.md`：工具调用示例
+- `docs/html-visual-editor.md`：配合 HTML 可视化编辑器
+- `docs/safety-and-troubleshooting.md`：安全边界与常见问题
 
 ## 环境变量
 
@@ -136,9 +146,7 @@ npm run release:check
 
 ## 与现有文档对齐
 
-- 协议主文档：`docs/Divoom_Watchface_Remote_Customization_Guide_EN.md`
-- API 提纲：`docs/mcp_watchface_api.md`
-- 示例请求：`docs/EXAMPLE/`
-- 原始 Skill：`.cursor/skills/divoom-watchface-customization/SKILL.md`
+- 当前仓库内的最小可用文档：`docs/`
+- 若你在源码大仓中维护协议细节，可继续参考原工程中的完整 Guide / EXAMPLE / SKILL 文档
 
 > 注意：`CHANGELOG.md` 底部的 GitHub Release 链接目前是占位地址，创建正式仓库后请替换为真实 URL。
