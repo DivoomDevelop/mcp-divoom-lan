@@ -1,0 +1,42 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.DivoomDevelop/mcp-divoom-lan",
+  "description": "MCP server for Divoom LAN watchface APIs; read-before-write safe. V2 editor linked in README.",
+  "title": "Divoom LAN Watchface",
+  "repository": {
+    "url": "https://github.com/DivoomDevelop/mcp-divoom-lan",
+    "source": "github"
+  },
+  "websiteUrl": "https://github.com/DivoomDevelop/mcp-divoom-lan",
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "mcp-divoom-lan",
+      "version": "0.1.1",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "DIVOOM_DEVICE_HOST",
+          "description": "Divoom device LAN IP address",
+          "isRequired": true,
+          "isSecret": false
+        },
+        {
+          "name": "DIVOOM_DEVICE_PORT",
+          "description": "Divoom device HTTP port",
+          "default": "9000"
+        },
+        {
+          "name": "DIVOOM_TIMEOUT_MS",
+          "description": "HTTP request timeout in milliseconds",
+          "default": "45000"
+        }
+      ]
+    }
+  ]
+}

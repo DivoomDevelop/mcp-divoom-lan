@@ -27,7 +27,9 @@
 - `reference/`：从原始 Guide 提炼的关键协议约束，便于模型快速对齐行为
 - `examples/`：从原始 EXAMPLE 抽取的常用样例，适合联调与回归
 
-## 可视化编辑器公开地址
+## 可视化编辑器公开地址（v2）
 
-- GitHub 仓库：`https://github.com/DivoomDevelop/divoom-watchface-visual-editor`
-- 在线页面（GitHub Pages）：`https://divoomdevelop.github.io/divoom-watchface-visual-editor/`
+- GitHub 仓库：`https://github.com/DivoomDevelop/divoom-watchface-visual-editor_v2`
+- 在线页面（GitHub Pages）：`https://divoomdevelop.github.io/divoom-watchface-visual-editor_v2/`
+
+本地工作目录（例如 `D:\divoom-watchface-visual-editor`）与上述 **v2** 仓库对应：开发、提交、`git push` 均以该 GitHub 地址为远程权威来源；npm 包名定位为 `divoom-watchface-visual-editor-v2`（与 v1 区分）。

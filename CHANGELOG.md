@@ -18,4 +18,5 @@ This project follows [Semantic Versioning](https://semver.org/).
 - Example MCP client config template (`client-config.example.json`).
 - Initial publish docs and release guidance.
 
-[0.1.0]: https://github.com/your-org/mcp-divoom-lan/releases/tag/v0.1.0
+[0.1.1]: https://github.com/DivoomDevelop/mcp-divoom-lan/releases/tag/v0.1.1
+[0.1.0]: https://github.com/DivoomDevelop/mcp-divoom-lan/releases/tag/v0.1.0

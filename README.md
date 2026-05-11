@@ -1,91 +1,93 @@
 # mcp-divoom-lan
 
-`mcp-divoom-lan` 是一个可开源发布的 MCP Server，将 Divoom 表盘局域网 API 封装为标准工具，便于 AI 客户端直接调用。
+`mcp-divoom-lan` is an open-source MCP server that wraps Divoom watchface LAN APIs as standard tools for AI clients.
 
-支持与 HTML 可视化编辑器协同，覆盖表盘修改、表盘选择、亮度调节与新表盘创建。
+It works together with the **v2** HTML visual editor for modifying watchfaces, switching faces, adjusting brightness, and creating new local watchfaces.
 
-可视化编辑器公开地址：
+**v2 visual editor (public):**
 
-- GitHub: `https://github.com/DivoomDevelop/divoom-watchface-visual-editor`
-- 在线页面: `https://divoomdevelop.github.io/divoom-watchface-visual-editor/`
+- GitHub: `https://github.com/DivoomDevelop/divoom-watchface-visual-editor_v2`
+- Live site: `https://divoomdevelop.github.io/divoom-watchface-visual-editor_v2/`
 
-## 目标
+Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-specific; **use the v2 GitHub / GitHub Pages URLs above in docs and MCP metadata.**
 
-- 将 `Divoom_Watchface_Remote_Customization_Guide_EN.md` 中的关键能力转成 MCP Tools
-- 让支持 MCP 的客户端（Cursor、Claude Desktop、本地模型等）通过自然语言执行表盘操作
-- 保留安全边界（读前写、危险命令显式提示、multipart 规则）
+## Goals
 
-## 默认安全策略（重要）
+- Expose key capabilities from `Divoom_Watchface_Remote_Customization_Guide_EN.md` as MCP tools
+- Let MCP-enabled clients (Cursor, Claude Desktop, local LLMs, etc.) drive watchface actions via natural language
+- Preserve safety boundaries (read before write, explicit warnings for risky operations, multipart rules)
 
-- 先读后写：先 `watchface_get_local`，再 `watchface_patch_local`，最后回读确认。
-- 若 `GetLocalClockInfo` 返回 `ItemList` 为空：立即停止写入，先切换到可编辑表盘再继续。
-- 非用户明确要求时，禁止调用 `watchface_create_local_clock`（不要隐式新建表盘）。
+## Default safety policy (important)
 
-## 已实现工具
+- **Read before write:** call `watchface_get_local`, then `watchface_patch_local`, then read back to verify.
+- If `GetLocalClockInfo` returns an **empty `ItemList`:** stop writes; switch to an editable watchface first.
+- Do **not** call `watchface_create_local_clock` unless the user clearly asks to create a new one (no implicit creation).
 
-- `watchface_get_local` -> `Device/GetLocalClockInfo`
-- `watchface_patch_local` -> `Device/PatchLocalClockInfo`
-- `watchface_get_fonts_local` -> `Device/GetLocalFontList`
-- `watchface_get_store_market_list` -> `Device/GetStoreClockMarketList`
-- `watchface_set_clock_select` -> `Channel/SetClockSelectId`
-- `watchface_get_brightness` -> `Sys/GetBrightness`
-- `watchface_set_brightness` -> `Channel/SetBrightness`
-- `watchface_replace_dial_bg_file` -> `POST /replace_clock_dial_bg`
-- `watchface_upload_file` -> `POST /upload`
-- `watchface_create_local_clock` -> `POST /create_local_clock`
-- `watchface_reset_local_then_cloud` -> `Device/ResetLocalClockFromServer`
-- `watchface_raw_command` -> 通用 `POST /divoom_api`
-- `watchface_protocol_quick_reference` -> 返回协议关键约束
+## Implemented tools
 
-## Resource（知识上下文）
+- `watchface_get_local` → `Device/GetLocalClockInfo`
+- `watchface_patch_local` → `Device/PatchLocalClockInfo`
+- `watchface_get_fonts_local` → `Device/GetLocalFontList`
+- `watchface_get_store_market_list` → `Device/GetStoreClockMarketList`
+- `watchface_set_clock_select` → `Channel/SetClockSelectId`
+- `watchface_get_brightness` → `Sys/GetBrightness`
+- `watchface_set_brightness` → `Channel/SetBrightness`
+- `watchface_replace_dial_bg_file` → `POST /replace_clock_dial_bg`
+- `watchface_upload_file` → `POST /upload`
+- `watchface_create_local_clock` → `POST /create_local_clock`
+- `watchface_reset_local_then_cloud` → `Device/ResetLocalClockFromServer`
+- `watchface_raw_command` → generic `POST /divoom_api`
+- `watchface_protocol_quick_reference` → key protocol constraints for the model
 
-Server 暴露了两份 MCP Resource，可用于给模型补充上下文：
+## Resources (context for the model)
+
+The server exposes two MCP resources:
 
 - `divoom://guide/quick-reference`
 - `divoom://skill/watchface-customization`
 
-## 快速开始
+## Quick start
 
 ```bash
-cd tools/mcp-divoom-lan
+cd tools/mcp-divoom-lan  # or your clone root for this package
 npm install
 npm run build
 npm start
 ```
 
-开发调试：
+Development (watch rebuild):
 
 ```bash
 npm run dev
 ```
 
-发布前一键检查：
+Pre-release check (typecheck, build, pack dry-run):
 
 ```bash
 npm run release:check
 ```
 
-## 使用文档（新增）
+## Documentation
 
-- `docs/README.md`：文档索引
-- `docs/quick-start.md`：快速上手
-- `docs/tool-examples.md`：工具调用示例
-- `docs/html-visual-editor.md`：配合 HTML 可视化编辑器
-- `docs/safety-and-troubleshooting.md`：安全边界与常见问题
-- `docs/reference/`：协议关键约束提炼（中英）
-- `docs/examples/`：请求/响应样例（含目录清单）
+- `docs/README.md` — documentation index
+- `docs/quick-start.md` — minimal setup
+- `docs/tool-examples.md` — tool usage examples
+- `docs/html-visual-editor.md` — using the visual editor with MCP
+- `docs/safety-and-troubleshooting.md` — safety and FAQs
+- `docs/reference/` — condensed protocol rules (EN/ZH)
+- `docs/examples/` — sample requests/responses and catalog
 
-## 环境变量
+## Environment variables
 
-- `DIVOOM_DEVICE_HOST`：设备 LAN IP（例如 `192.168.1.120`）
-- `DIVOOM_DEVICE_PORT`：HTTP 端口，默认 `9000`
-- `DIVOOM_TIMEOUT_MS`：请求超时，默认 `45000`
+- `DIVOOM_DEVICE_HOST` — device LAN IP (e.g. `192.168.1.120`)
+- `DIVOOM_DEVICE_PORT` — HTTP port, default `9000`
+- `DIVOOM_TIMEOUT_MS` — request timeout ms, default `45000`
 
-如果不设置 `DIVOOM_DEVICE_HOST`，则每次调用工具时必须传 `target.host`。
+If `DIVOOM_DEVICE_HOST` is unset, each tool call must pass `target.host`.
 
-## 客户端配置示例
+## Example client config (stdio)
 
-### Cursor / Claude Desktop（stdio）
+### Cursor / Claude Desktop
 
 ```json
 {
@@ -105,62 +107,35 @@ npm run release:check
 }
 ```
 
-也可直接使用本目录的 `client-config.example.json` 作为模板。
+You can also copy `client-config.example.json` in this directory as a starting point.
 
-## 发布方案（可直接执行）
+## Publishing checklist (for maintainers)
 
-1. 新建独立仓库（建议名 `mcp-divoom-lan`），复制本目录内容作为仓库根目录。
-2. 检查并更新元数据（已内置）：
-   - `LICENSE`
-   - `SECURITY.md`
-   - `CONTRIBUTING.md`
-   - `CHANGELOG.md`
-   - `RELEASE.md`
-3. 运行 `npm run release:check`，确认构建、类型检查、打包检查全部通过。
-4. GitHub Release 发布 `v0.1.0`，附上使用截图与请求示例。
-5. 向 MCP 目录提交：
-   - 官方 MCP Registry
-   - Smithery
-   - Glama
-   - 其他社区目录（如 mcp.so）
-6. 同步发布“最小可复现演示”：
-   - `watchface_get_local` 读配置
-   - `watchface_patch_local` 改字体大小和颜色
-   - `watchface_replace_dial_bg_file` 替换底图
+1. Use a dedicated repo (e.g. `mcp-divoom-lan`) with this package at the repo root.
+2. Verify metadata: `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `RELEASE.md` as applicable.
+3. Run `npm run release:check`.
+4. Tag a GitHub release (e.g. `v0.1.1`) with screenshots and sample requests if helpful.
+5. Submit listings where appropriate (MCP Registry, Smithery, Glama, community indexes).
+6. Minimal demo flow: `watchface_get_local` → `watchface_patch_local` (font size/color) → `watchface_replace_dial_bg_file` (background).
 
-## 发布收尾文件（已包含）
+## Files often used at release
 
-- `LICENSE`：开源许可证（MIT）
-- `CHANGELOG.md`：版本变更记录
-- `CONTRIBUTING.md`：贡献规范
-- `SECURITY.md`：安全漏洞提交流程
-- `RELEASE.md`：发版操作手册
-- `PUBLISH_CHECKLIST.md`：发版检查清单
-- `GITHUB_RELEASE_NOTES_v0.1.0.md`：可直接使用的 Release 正文模板
-- `MCP_DIRECTORY_LISTING_TEMPLATE.md`：MCP 目录提交通用模板
-- `GITHUB_RELEASE_NOTES_v0.1.0_READY.md`：可直接替换占位符的 Release 正文
-- `MCP_REGISTRY_SUBMISSION_READY.md`：官方 MCP Registry 提交文案
-- `SMITHERY_SUBMISSION_READY.md`：Smithery 提交文案
-- `GLAMA_SUBMISSION_READY.md`：Glama 提交文案
-- `.github/workflows/ci.yml`：CI（check/build/pack）
+Included in this repo (when present): `LICENSE`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, `RELEASE.md`, optional checklist and directory templates, and `.github/workflows/ci.yml`.
 
-## 是否要打包 HTML 可视化编辑器？
+## Should the HTML visual editor ship inside this npm package?
 
-建议：**要，但作为可选增强包，不要和 MCP 核心耦合。**
+**Recommendation:** **no** for the core MCP package — keep MCP lean. Offer the editor as a **separate optional** project.
 
-- 核心包（必须）：`https://github.com/DivoomDevelop/mcp-divoom-lan`
-- 可视化包（建议）：`https://github.com/DivoomDevelop/divoom-watchface-visual-editor`
-- 在线编辑器（GitHub Pages）：`https://divoomdevelop.github.io/divoom-watchface-visual-editor/`
+- **Core:** `https://github.com/DivoomDevelop/mcp-divoom-lan`
+- **Visual editor v2:** `https://github.com/DivoomDevelop/divoom-watchface-visual-editor_v2`
+- **Hosted v2:** `https://divoomdevelop.github.io/divoom-watchface-visual-editor_v2/`
 
-这样做的好处：
+Benefits:
 
-- MCP 工具保持轻量，适合所有 AI 客户端
-- 非技术用户可以先在可视化页面理解 `ItemList`，再让 AI 下发 patch
-- 便于后续演进为“所见即所得 + AI 指令”的组合体验
+- Small MCP install suitable for all AI clients  
+- Non-developers can use the visual UI to understand `ItemList`, then let the AI apply patches  
+- Clear split between WYSIWYG editing and automated MCP writes  
 
-## 与现有文档对齐
+## Alignment with upstream docs
 
-- 当前仓库已内置可独立发布的最小文档：`docs/` + `docs/reference/` + `docs/examples/`
-- 若你在源码大仓中维护协议细节，可继续保留完整 Guide / EXAMPLE / SKILL 作为上游源
-
-> 注意：`CHANGELOG.md` 底部的 GitHub Release 链接目前是占位地址，创建正式仓库后请替换为真实 URL。
+This repo ships standalone docs under `docs/`, `docs/reference/`, and `docs/examples/`. If you maintain full guides elsewhere, keep this tree synced or treat it as the distribution subset.
