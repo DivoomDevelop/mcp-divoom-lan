@@ -4,7 +4,7 @@
 
 1. `quick-start.md`：5 分钟跑通安装和首个调用
 2. `tool-examples.md`：核心功能示例（改表盘、选表盘、亮度、新建表盘）
-3. `html-visual-editor.md`：如何配合 HTML 可视化编辑器
+3. `html-visual-editor.md`：如何配合 HTML 可视化编辑器（含公开仓库地址）
 4. `safety-and-troubleshooting.md`：风险边界与常见问题
 5. `reference/`：协议关键规则提炼（中英）
 6. `examples/`：请求/响应示例与目录清单
@@ -26,3 +26,8 @@
 
 - `reference/`：从原始 Guide 提炼的关键协议约束，便于模型快速对齐行为
 - `examples/`：从原始 EXAMPLE 抽取的常用样例，适合联调与回归
+
+## 可视化编辑器公开地址
+
+- GitHub 仓库：`https://github.com/DivoomDevelop/divoom-watchface-visual-editor`
+- 在线页面（GitHub Pages）：`https://divoomdevelop.github.io/divoom-watchface-visual-editor/`

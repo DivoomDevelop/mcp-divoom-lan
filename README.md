@@ -4,6 +4,11 @@
 
 支持与 HTML 可视化编辑器协同，覆盖表盘修改、表盘选择、亮度调节与新表盘创建。
 
+可视化编辑器公开地址：
+
+- GitHub: `https://github.com/DivoomDevelop/divoom-watchface-visual-editor`
+- 在线页面: `https://divoomdevelop.github.io/divoom-watchface-visual-editor/`
+
 ## 目标
 
 - 将 `Divoom_Watchface_Remote_Customization_Guide_EN.md` 中的关键能力转成 MCP Tools
@@ -143,8 +148,9 @@ npm run release:check
 
 建议：**要，但作为可选增强包，不要和 MCP 核心耦合。**
 
-- 核心包（必须）：`mcp-divoom-lan`（本目录）
-- 可视化包（建议）：复用仓库中的 `html/index.html` 或 `html/modern-editor`
+- 核心包（必须）：`https://github.com/DivoomDevelop/mcp-divoom-lan`
+- 可视化包（建议）：`https://github.com/DivoomDevelop/divoom-watchface-visual-editor`
+- 在线编辑器（GitHub Pages）：`https://divoomdevelop.github.io/divoom-watchface-visual-editor/`
 
 这样做的好处：
 

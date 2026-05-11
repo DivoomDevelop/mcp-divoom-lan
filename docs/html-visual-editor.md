@@ -2,6 +2,13 @@
 
 `mcp-divoom-lan` 可以和 HTML 可视化表盘编辑器协同使用，推荐工作流如下。
 
+## 公开地址（给最终用户）
+
+- GitHub 仓库：`https://github.com/DivoomDevelop/divoom-watchface-visual-editor`
+- 在线页面（GitHub Pages）：`https://divoomdevelop.github.io/divoom-watchface-visual-editor/`
+
+> 文档统一使用以上公开地址，不再依赖本地目录路径描述。
+
 ## 推荐工作流
 
 1. 用 MCP 读取当前表盘：
