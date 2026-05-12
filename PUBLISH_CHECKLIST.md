@@ -38,6 +38,7 @@
 - [ ] Submit/update Glama (`GLAMA_SUBMISSION_READY.md`)
 - [ ] Submit/update MCP.so (`MCP_SO_SUBMISSION_READY.md`, [submit form](https://mcp.so/submit))
 - [ ] 阿里云百炼自定义 MCP（`BAILIAN_MCP_SUBMISSION_READY.md`；[帮助中心-自定义 MCP](https://help.aliyun.com/zh/model-studio/custom-mcp)）
+- [ ] 扣子 Coze 插件（`COZE_SUBMISSION_READY.md`；[扣子官方教程](https://www.coze.cn/api/open/docs/tutorial/build_a_agent_query_plugin)）
 - [ ] Verify listing install instructions
 
 ## F. Post-release smoke test
