@@ -35,7 +35,8 @@
 - [ ] Fill `MCP_DIRECTORY_LISTING_TEMPLATE.md`
 - [ ] Submit/update official MCP registry
 - [ ] Submit/update Smithery
-- [ ] Submit/update Glama
+- [ ] Submit/update Glama (`GLAMA_SUBMISSION_READY.md`)
+- [ ] Submit/update MCP.so (`MCP_SO_SUBMISSION_READY.md`, [submit form](https://mcp.so/submit))
 - [ ] Verify listing install instructions
 
 ## F. Post-release smoke test
