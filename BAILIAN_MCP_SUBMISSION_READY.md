@@ -49,7 +49,30 @@ mcp-divoom-lan 是基于模型上下文协议（MCP）的 Divoom 局域网工具
 
 ### 3. MCP 服务配置（JSON）
 
-将下面 **整段** 粘贴到「MCP 服务配置」中（与帮助中心 [自定义 MCP](https://help.aliyun.com/zh/model-studio/custom-mcp) 模板一致：`type: stdio` + `command` / `args` / `env`）。把 `DIVOOM_DEVICE_HOST` 换成你设备在 **该运行环境可达** 的地址。
+百炼控制台里 **NPX 配置** 常与 **高德等官方卡片** 相同：仅 `command` / `args` / `env`，**不带 `type`**。帮助中心 [自定义 MCP](https://help.aliyun.com/zh/model-studio/custom-mcp) 文档模板里则写有 **`"type": "stdio"`**。若一种格式校验失败，可换另一种。
+
+**A. 与控制台高德示例一致（推荐先试）**
+
+```json
+{
+  "mcpServers": {
+    "divoom-lan": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-divoom-lan"
+      ],
+      "env": {
+        "DIVOOM_DEVICE_HOST": "192.168.1.120",
+        "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_TIMEOUT_MS": "45000"
+      }
+    }
+  }
+}
+```
+
+**B. 与帮助中心模板一致（含 `type`）**
 
 ```json
 {
@@ -70,6 +93,8 @@ mcp-divoom-lan 是基于模型上下文协议（MCP）的 Divoom 局域网工具
   }
 }
 ```
+
+把 `DIVOOM_DEVICE_HOST` 换成你设备在 **该运行环境可达** 的地址。
 
 - **包版本**：若需固定版本，可将 `"mcp-divoom-lan"` 改为 `"mcp-divoom-lan@0.1.2"`。  
 - **安全**：勿将真实内网 IP、Token 写入对外可见的仓库；控制台可用 KMS 管理敏感项（见官方 MCP 开通说明）。
@@ -94,9 +119,24 @@ mcp-divoom-lan 是基于模型上下文协议（MCP）的 Divoom 局域网工具
 
 ## 与「MCP 广场」的关系
 
-- **广场**：浏览 [MCP 广场](https://bailian.console.aliyun.com/?tab=mcp#/mcp-market) 中已由平台收录的服务，点卡片查看 **NPX** 配置示例。  
-- **`mcp-divoom-lan`** 若未出现在广场，仍可按上文 **自定义 MCP** 使用 npm 包部署。  
-- 若贵司希望 **入驻广场公开展示**，请向 **阿里云百炼商务/合作伙伴** 或控制台 **工单** 咨询当前政策。
+### 「MCP 管理」里有，「MCP 广场」里看不到？
+
+**这是预期现象。**
+
+| 位置 | 含义 |
+|------|------|
+| **[MCP 管理](https://bailian.console.aliyun.com/?tab=app#/mcp-manage) → 自定义服务** | 当前账号下**自行创建/部署**的 MCP（如脚本 npx），状态「已部署」表示**本账号内**可用的自定义服务。 |
+| **[MCP 广场](https://bailian.console.aliyun.com/?tab=mcp#/mcp-market)** | 平台**对外展示、可检索**的服务目录，多为**官方预置或与阿里云合作上架**；**不会**因为你在管理里部署成功就自动出现在广场。 |
+
+**使用方式：** 在 **应用管理** 里给智能体/工作流 **添加 MCP** 时，从 **自定义服务** 列表里选用你部署的服务（例如 `mcp-divoom`），无需在广场搜同名条目。
+
+**若希望服务像高德一样出现在广场供所有用户发现：** 需 **工单 / 商务 / 伙伴生态** 等渠道向阿里云咨询是否可收录；帮助中心未提供与「提交后必进广场」等价的自助流程。
+
+### 其它说明
+
+- **广场**：浏览已收录服务，点卡片可复制 **NPX** 等示例。  
+- **`mcp-divoom-lan`** 未上广场时，仍用 **MCP 管理 → 自定义 MCP（脚本部署）** 即可。  
+- 若贵司推动 **入驻广场**，请以控制台与阿里云最新政策为准。
 
 ## 相关（本仓库）
 
