@@ -32,6 +32,7 @@ Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-spec
 - `watchface_set_clock_select` → `Channel/SetClockSelectId`
 - `watchface_get_brightness` → `Sys/GetBrightness`
 - `watchface_set_brightness` → `Channel/SetBrightness`
+- `watchface_onoff_screen` → `Channel/OnOffScreen` (1=on, 0=off)
 - `watchface_replace_dial_bg_file` → `POST /replace_clock_dial_bg`
 - `watchface_upload_file` → `POST /upload`
 - `watchface_create_local_clock` → `POST /create_local_clock`
@@ -45,6 +46,16 @@ The server exposes two MCP resources:
 
 - `divoom://guide/quick-reference`
 - `divoom://skill/watchface-customization`
+
+## MCP Bundle (.mcpb)
+
+For [MCPB](https://github.com/anthropics/mcpb)-compatible hosts (e.g. Claude desktop connectors, Smithery stdio releases), build a local bundle:
+
+1. Install the packer: `npm install -g @anthropic-ai/mcpb`
+2. From this package root: `npm run mcpb:pack`
+3. Output: `mcp-divoom-lan.mcpb` (gitignored). The staging directory `mcpb/staging/` is also gitignored.
+
+The bundle includes `dist/`, `resources/`, production `node_modules`, and a `manifest.json` with user fields for **device IP**, **port**, and **timeout**.
 
 ## Quick start
 
@@ -115,7 +126,7 @@ You can also copy `client-config.example.json` in this directory as a starting p
 2. Verify metadata: `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `RELEASE.md` as applicable.
 3. Run `npm run release:check`.
 4. Tag a GitHub release (e.g. `v0.1.1`) with screenshots and sample requests if helpful.
-5. Submit listings where appropriate (MCP Registry, Smithery, Glama, community indexes).
+5. Submit listings where appropriate (MCP Registry, Smithery, Glama, community indexes). For Glama, follow `GLAMA_SUBMISSION_READY.md` (includes `Dockerfile` and `glama.json` for registry builds and ownership claim). For Glama, follow `GLAMA_SUBMISSION_READY.md` (includes `Dockerfile` and `glama.json` for registry builds and ownership claim).
 6. Minimal demo flow: `watchface_get_local` → `watchface_patch_local` (font size/color) → `watchface_replace_dial_bg_file` (background).
 
 ## Files often used at release
