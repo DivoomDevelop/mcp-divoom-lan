@@ -125,7 +125,7 @@ You can also copy `client-config.example.json` in this directory as a starting p
 1. Use a dedicated repo (e.g. `mcp-divoom-lan`) with this package at the repo root.
 2. Verify metadata: `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `RELEASE.md` as applicable.
 3. Run `npm run release:check`.
-4. Tag a GitHub release (e.g. `v0.1.1`) with screenshots and sample requests if helpful.
+4. Tag a GitHub release (e.g. `v0.1.2`) with screenshots and sample requests if helpful.
 5. Submit listings where appropriate (MCP Registry, Smithery, Glama, [MCP.so](https://mcp.so/submit), community indexes). For Glama, follow `GLAMA_SUBMISSION_READY.md` (includes `Dockerfile` and `glama.json` for registry builds and ownership claim). For MCP.so, follow `MCP_SO_SUBMISSION_READY.md`. For Glama, follow `GLAMA_SUBMISSION_READY.md` (includes `Dockerfile` and `glama.json` for registry builds and ownership claim).
 6. Minimal demo flow: `watchface_get_local` → `watchface_patch_local` (font size/color) → `watchface_replace_dial_bg_file` (background).
 

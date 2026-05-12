@@ -1,0 +1,70 @@
+{
+  "manifest_version": "0.3",
+  "name": "mcp-divoom-lan",
+  "display_name": "Divoom LAN Watchface",
+  "version": "0.1.2",
+  "description": "MCP server for Divoom watchface customization over LAN (read/patch dials, brightness, uploads).",
+  "long_description": "Wraps the Divoom device LAN API as MCP tools with read-before-write safeguards. Configure your device IP and optional port, then use tools such as watchface_get_local and watchface_patch_local. See the GitHub repository for full documentation.",
+  "author": {
+    "name": "Divoom Developers"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DivoomDevelop/mcp-divoom-lan.git"
+  },
+  "homepage": "https://github.com/DivoomDevelop/mcp-divoom-lan#readme",
+  "documentation": "https://github.com/DivoomDevelop/mcp-divoom-lan/blob/main/README.md",
+  "support": "https://github.com/DivoomDevelop/mcp-divoom-lan/issues",
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "divoom",
+    "watchface",
+    "lan",
+    "pixel",
+    "model-context-protocol"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/index.js"],
+      "env": {
+        "DIVOOM_DEVICE_HOST": "${user_config.divoom_device_host}",
+        "DIVOOM_DEVICE_PORT": "${user_config.divoom_device_port}",
+        "DIVOOM_TIMEOUT_MS": "${user_config.divoom_timeout_ms}"
+      }
+    }
+  },
+  "tools_generated": true,
+  "user_config": {
+    "divoom_device_host": {
+      "type": "string",
+      "title": "Divoom device IP",
+      "description": "LAN IP address of the Divoom device (e.g. 192.168.1.120).",
+      "required": true
+    },
+    "divoom_device_port": {
+      "type": "number",
+      "title": "HTTP port",
+      "description": "Device HTTP port (commonly 9000).",
+      "default": 9000,
+      "required": false
+    },
+    "divoom_timeout_ms": {
+      "type": "number",
+      "title": "Request timeout (ms)",
+      "description": "HTTP timeout for device requests.",
+      "default": 45000,
+      "required": false
+    }
+  },
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=20.0.0"
+    }
+  }
+}

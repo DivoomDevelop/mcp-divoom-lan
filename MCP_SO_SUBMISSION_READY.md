@@ -52,7 +52,7 @@ Use **one** of the following JSON blocks (mcp.so may expect the full `mcpServers
 }
 ```
 
-> **Note:** The `npx -y mcp-divoom-lan` entry requires a published npm version that includes the `bin` field in `package.json` (present in this repo from the `bin` + shebang change). Until you publish that version to npm, use **Variant B** or **C** below on the form.
+> **npm:** From **0.1.2** on, the published package includes `bin` and a `dist/index.js` shebang so **`npx -y mcp-divoom-lan`** works. **Variant A** is the default recommendation for MCP.so and end users. Use **Variant B** / **C** for contributors (local `node_modules`, git clone, or pinned paths).
 
 ### Variant B — `node` + local `node_modules` path
 
