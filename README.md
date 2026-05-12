@@ -126,7 +126,7 @@ You can also copy `client-config.example.json` in this directory as a starting p
 2. Verify metadata: `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `RELEASE.md` as applicable.
 3. Run `npm run release:check`.
 4. Tag a GitHub release (e.g. `v0.1.2`) with screenshots and sample requests if helpful.
-5. Submit listings where appropriate (MCP Registry, Smithery, Glama, [MCP.so](https://mcp.so/submit), community indexes). For Glama, follow `GLAMA_SUBMISSION_READY.md` (includes `Dockerfile` and `glama.json` for registry builds and ownership claim). For MCP.so, follow `MCP_SO_SUBMISSION_READY.md`. For Glama, follow `GLAMA_SUBMISSION_READY.md` (includes `Dockerfile` and `glama.json` for registry builds and ownership claim).
+5. Submit listings where appropriate (MCP Registry, Smithery, Glama, [MCP.so](https://mcp.so/submit), community indexes). For Glama, follow `GLAMA_SUBMISSION_READY.md` (includes `Dockerfile` and `glama.json`). For MCP.so, follow `MCP_SO_SUBMISSION_READY.md`. For 火山引擎 MCP 清单，见 `VOLCENGINE_SUBMISSION_READY.md`（PR: https://github.com/volcengine/mcp-server/pull/398）。
 6. Minimal demo flow: `watchface_get_local` → `watchface_patch_local` (font size/color) → `watchface_replace_dial_bg_file` (background).
 
 ## Files often used at release
