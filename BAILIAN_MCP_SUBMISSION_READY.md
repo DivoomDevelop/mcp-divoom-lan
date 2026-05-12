@@ -35,8 +35,15 @@
 | 配置项 | 建议值 |
 |--------|--------|
 | **服务名称** | `Divoom LAN Watchface` 或 `mcp-divoom-lan` |
-| **描述** | 基于 MCP 的 Divoom 局域网表盘定制：读写本地表盘、替换底图、亮度与切盘、multipart 上传；需局域网内 HTTP 访问设备。 |
+| **描述** | 见下 **「详细描述（控制台 ≤500 字）」**，可直接粘贴。 |
 | **安装方式** | **npx** |
+
+#### 详细描述（控制台 ≤500 字）
+
+> 字数约 389（以控制台计数为准）。
+
+mcp-divoom-lan 是基于模型上下文协议（MCP）的 Divoom 局域网工具集，面向手表、像素屏等支持官方 LAN HTTP API 的设备。将设备能力封装为 MCP 工具：读取与补丁式修改本地表盘（GetLocalClockInfo / PatchLocalClockInfo，含 ItemList 与按角色补丁）、查询本地字体与商城表盘、切换当前表盘、读写亮度，并提供 multipart 流程以更换底图、上传文件、创建本地表盘；附带协议与安全要点资源。stdio 传输，须网络可达设备，配置 DIVOOM_DEVICE_HOST（可选 DIVOOM_DEVICE_PORT、DIVOOM_TIMEOUT_MS）。建议先读再改并回读校验；从云端重置本地等高风险操作须用户确认。MIT，Node 20+，npx -y mcp-divoom-lan（≥0.1.2）。
+
 | **部署方式** | 按调用频率选 **基础模式**（按次/时长）或 **极速模式**（常驻，费用更高）；详见 [MCP 简介-计费](https://help.aliyun.com/zh/model-studio/mcp-introduction)。 |
 | **部署地域** | 与其他百炼资源接近即可（文档示例常用北京）。 |
 
