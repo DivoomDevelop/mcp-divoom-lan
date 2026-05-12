@@ -37,7 +37,7 @@
 - [ ] Submit/update Smithery
 - [ ] Submit/update Glama (`GLAMA_SUBMISSION_READY.md`)
 - [ ] Submit/update MCP.so (`MCP_SO_SUBMISSION_READY.md`, [submit form](https://mcp.so/submit))
-- [ ] 火山引擎 MCP README 收录（`VOLCENGINE_SUBMISSION_READY.md`；跟进 [volcengine/mcp-server#398](https://github.com/volcengine/mcp-server/pull/398) 或后续 PR）
+- [ ] 阿里云百炼自定义 MCP（`BAILIAN_MCP_SUBMISSION_READY.md`；[帮助中心-自定义 MCP](https://help.aliyun.com/zh/model-studio/custom-mcp)）
 - [ ] Verify listing install instructions
 
 ## F. Post-release smoke test
