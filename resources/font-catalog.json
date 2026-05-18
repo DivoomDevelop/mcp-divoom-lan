@@ -1,0 +1,3759 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-05-18T02:03:24.214Z",
+  "source": {
+    "file": "divoom-watchface-visual-editor/public/font/font_info.cfg",
+    "basename": "font_info.cfg",
+    "counts": {
+      "total": 157,
+      "ttf": 123,
+      "image": 34,
+      "digits_only": 28,
+      "cjk": 37,
+      "latin": 89
+    }
+  },
+  "notes": [
+    "Font ids correspond to ItemList[i].font and ItemPatchList[i].patch.font.",
+    "type=1 means TTF (vector outlines); type=0 means image / bitmap font.",
+    "An image font with `charset:\"0123456789\"` only renders those literal characters; anything else is invisible.",
+    "TTF entries with empty `charset` rely on the embedded glyph coverage of the font file. CJK strings only render correctly when the chosen TTF is CJK-capable.",
+    "On the device, the file written for font id N is `(N+1).BIN` — keep this in mind when uploading custom fonts.",
+    "Use `Device/GetLocalFontList` (watchface_get_fonts_local) to confirm which font ids are actually installed on the target device before referencing them in ItemList."
+  ],
+  "scenarios": {
+    "time_digits": {
+      "label": "Hour/min/sec digits",
+      "description": "Pure numeric time slots (sec/min/hour/HH:MM/HH:MM:SS, world clock, love clock, hour/min decade/unit).",
+      "disp": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        75,
+        76,
+        199,
+        200,
+        201,
+        406,
+        407,
+        408,
+        409
+      ],
+      "requiredScript": [
+        "digits",
+        "digits-extended",
+        "latin"
+      ],
+      "preferTags": [
+        "digits-capable",
+        "digital",
+        "pixel",
+        "display",
+        "image-font"
+      ]
+    },
+    "date_digits": {
+      "label": "Date numeric",
+      "description": "Year/month/day numeric slots and combinations (year, mon, day, year-mon-day).",
+      "disp": [
+        7,
+        8,
+        9,
+        36,
+        153,
+        156,
+        196
+      ],
+      "requiredScript": [
+        "digits",
+        "digits-extended",
+        "latin"
+      ],
+      "preferTags": [
+        "digits-capable",
+        "display",
+        "image-font"
+      ]
+    },
+    "temperature_digits": {
+      "label": "Temperature numeric",
+      "description": "Temperature numeric variants and humidity/noise digits.",
+      "disp": [
+        32,
+        33,
+        96,
+        97,
+        157,
+        166,
+        238,
+        239,
+        254,
+        339,
+        342
+      ],
+      "requiredScript": [
+        "digits",
+        "digits-extended",
+        "latin"
+      ],
+      "preferTags": [
+        "digits-capable",
+        "display",
+        "digital"
+      ]
+    },
+    "forecast_digits": {
+      "label": "Forecast min/max digits",
+      "description": "Tomorrow / day+2 / day+3 / day+4 min/max digits.",
+      "disp": [
+        82,
+        83,
+        86,
+        87,
+        90,
+        91,
+        94,
+        95
+      ],
+      "requiredScript": [
+        "digits",
+        "digits-extended",
+        "latin"
+      ],
+      "preferTags": [
+        "digits-capable",
+        "display"
+      ]
+    },
+    "countdown_digits": {
+      "label": "Countdown digits",
+      "description": "Countdown days / sunrise-sunset countdown.",
+      "disp": [
+        51,
+        205
+      ],
+      "requiredScript": [
+        "digits",
+        "digits-extended",
+        "latin"
+      ],
+      "preferTags": [
+        "digits-capable",
+        "display"
+      ]
+    },
+    "ampm_marker": {
+      "label": "AM/PM marker",
+      "description": "Literal AM / PM in 12-hour mode.",
+      "disp": [
+        15
+      ],
+      "requiredScript": [
+        "latin"
+      ],
+      "preferTags": [
+        "latin-capable",
+        "digital",
+        "display",
+        "pixel"
+      ]
+    },
+    "weekday_short": {
+      "label": "Weekday short / English",
+      "description": "Two-letter, three-letter, full English weekday and tomorrow weekday short.",
+      "disp": [
+        6,
+        31,
+        37,
+        80,
+        84,
+        88,
+        92,
+        169,
+        170,
+        195
+      ],
+      "requiredScript": [
+        "latin"
+      ],
+      "preferTags": [
+        "latin-capable",
+        "sans",
+        "display"
+      ]
+    },
+    "weekday_zh": {
+      "label": "Weekday Chinese",
+      "description": "Chinese weekday strings (e.g., 周一 / 星期一).",
+      "disp": [
+        12,
+        171
+      ],
+      "requiredScript": [
+        "cjk"
+      ],
+      "preferTags": [
+        "cjk-capable"
+      ]
+    },
+    "month_abbr_en": {
+      "label": "Month abbreviation (English)",
+      "description": "English month abbreviations (Jan / Feb …) and full English month.",
+      "disp": [
+        27,
+        180,
+        194
+      ],
+      "requiredScript": [
+        "latin"
+      ],
+      "preferTags": [
+        "latin-capable",
+        "sans",
+        "display"
+      ]
+    },
+    "weather_text": {
+      "label": "Weather word",
+      "description": "Free-form weather word and forecast weather word slots.",
+      "disp": [
+        54,
+        81,
+        85,
+        89,
+        93
+      ],
+      "requiredScript": [
+        "cjk",
+        "latin"
+      ],
+      "preferTags": [
+        "sans",
+        "cjk-capable",
+        "latin-capable"
+      ]
+    },
+    "user_text": {
+      "label": "User / app text",
+      "description": "Multi-language free text inputs: user message, multi-text message, network text, user text.",
+      "disp": [
+        49,
+        56,
+        154,
+        155
+      ],
+      "requiredScript": [
+        "cjk",
+        "latin"
+      ],
+      "preferTags": [
+        "sans",
+        "cjk-capable",
+        "latin-capable"
+      ]
+    },
+    "lunar_text": {
+      "label": "Lunar text",
+      "description": "Lunar year/month/day, jieqi, good/bad/zodiac (always Chinese).",
+      "disp": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        216,
+        217
+      ],
+      "requiredScript": [
+        "cjk"
+      ],
+      "preferTags": [
+        "cjk-capable",
+        "serif",
+        "sans"
+      ]
+    },
+    "calendar_event_text": {
+      "label": "Calendar event",
+      "description": "Calendar event title / time strings.",
+      "disp": [
+        178,
+        179
+      ],
+      "requiredScript": [
+        "cjk",
+        "latin"
+      ],
+      "preferTags": [
+        "sans",
+        "cjk-capable",
+        "latin-capable"
+      ]
+    },
+    "song_title": {
+      "label": "Song title",
+      "description": "Currently playing song title.",
+      "disp": [
+        219
+      ],
+      "requiredScript": [
+        "cjk",
+        "latin"
+      ],
+      "preferTags": [
+        "sans",
+        "handwriting",
+        "display",
+        "cjk-capable",
+        "latin-capable"
+      ]
+    },
+    "song_lyrics": {
+      "label": "Song lyrics",
+      "description": "Currently playing song lyrics line.",
+      "disp": [
+        220
+      ],
+      "requiredScript": [
+        "cjk",
+        "latin"
+      ],
+      "preferTags": [
+        "sans",
+        "cjk-capable",
+        "latin-capable"
+      ]
+    },
+    "pixel_theme_dial": {
+      "label": "Pixel-art themed dials",
+      "description": "Time/date inside pixel-art watchfaces; match the pixel aesthetic to avoid jaggy mismatch.",
+      "disp": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        36,
+        156
+      ],
+      "requiredScript": [
+        "digits",
+        "latin"
+      ],
+      "preferTags": [
+        "pixel",
+        "digits-capable"
+      ]
+    },
+    "retro_digital_clock": {
+      "label": "Retro digital clock",
+      "description": "DS-Digital / Audiowide style digital clock dials (LED look).",
+      "disp": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "requiredScript": [
+        "digits",
+        "latin"
+      ],
+      "preferTags": [
+        "digital",
+        "digits-capable"
+      ]
+    },
+    "decorative_title": {
+      "label": "Decorative title",
+      "description": "App / message titles where artistic flair is desired (handwriting / display / brush).",
+      "disp": [
+        35,
+        49,
+        219
+      ],
+      "requiredScript": [
+        "latin",
+        "cjk"
+      ],
+      "preferTags": [
+        "display",
+        "handwriting",
+        "decorative"
+      ]
+    },
+    "emoji_glyphs": {
+      "label": "Emoji glyphs",
+      "description": "Slots whose text intentionally contains emoji codepoints.",
+      "disp": [
+        49,
+        56,
+        154,
+        155,
+        219,
+        220
+      ],
+      "requiredScript": [
+        "latin",
+        "cjk"
+      ],
+      "preferTags": [
+        "emoji"
+      ]
+    }
+  },
+  "fonts": [
+    {
+      "id": 6,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "002-Career",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 8,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "003-Absolute",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 10,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "003-Absolute",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 12,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "003-Absolute",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 14,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "004-Wander Brave",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 16,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "005-OPPOSans Medium",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "regular",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 18,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "006-Library 3 am",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 20,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "007-Keep Calm",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 22,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "008-smooth line 7",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 24,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "009-DS Digital",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "digital",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "retro_digital_clock",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 26,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "001-SourceHanSans",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 30,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "005-OPPOSans Heavy",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 38,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Alimama Square VF-Bold",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 48,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Parisish",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 50,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Alpin Gothic CG No2",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 52,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "OPPO Sans-Blod",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 54,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "HarmonyOS_SansSC_Black",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 56,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "HarmonyOS_SansSC_Bold",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 58,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "HarmonyOS_SansSC_Light",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "light",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 60,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "HarmonyOS_SansSC_Medium",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "regular",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 62,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "HarmonyOS_SansSC_Regular",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "regular",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 64,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "HarmonyOS_SansSC_Thin",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "light",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 66,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Square pixel 12 Simplified",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "pixel",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "pixel_theme_dial"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 80,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Alimama Square VF-SemiBold",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 82,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "MesseDuesseldorf-O1d3",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 84,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Big Pixel Shadowed Demo",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "pixel",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "pixel_theme_dial"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 88,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Nickainley",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 90,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Bebas Neue",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 92,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Pacifico",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 94,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Source font",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 96,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Open Sans —ExtraBold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 98,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "8-bit Arcade Out",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "pixel",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "pixel_theme_dial"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 100,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "SourceHanSansCN-Medium",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "regular",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 102,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Upheaval TT (BRK)",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 104,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Trueno-bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 106,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Trueno-black",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 108,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Krungthep",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 110,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "DS-Digital Bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "digital",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "retro_digital_clock",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 112,
+      "type": 0,
+      "type_name": "image",
+      "name": "webp font Digital",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digital",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "retro_digital_clock",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 114,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Big Shoulders Stencil—Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 116,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Audiowide",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "digital",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "retro_digital_clock",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 118,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "TrainOne-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "digital",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "retro_digital_clock",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 120,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "AllertaStencil-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 122,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "trueno-light",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "light",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 124,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Bangers-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 126,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "全语言Tahoma",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 128,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "SourceHanSans-Bold",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 132,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "SourceHanSans-Heavy",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 138,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Oxford-LAqy",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 140,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Bebas Neue-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 142,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Pacifico-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 144,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Silkscreen-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "pixel",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "decorative_title",
+        "pixel_theme_dial",
+        "song_title"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 146,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Dancing Script-Bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 148,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Dancing Script-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 152,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Playfair Display-Black",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 154,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Playfair Display-Black-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "regular",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 156,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Coiny-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 158,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "SoukouMincho",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 160,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "ZCOOL KuaiLe",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 162,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "HanaMin",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 164,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Libre_Baskerville-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "regular",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 166,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Pacifico-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 168,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Pangmen Zhengdao Bold Script",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "handwriting",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "lunar_text",
+        "song_lyrics",
+        "song_title",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 170,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Alimama Square Medium",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "regular",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 172,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Alimama Square SemiBold",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 174,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Rock_Salt",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 176,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Caveat-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 178,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Libre Baskerville-Bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 180,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Bitrimus",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 182,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "EmojiFont",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "emoji",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "emoji_glyphs",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": "Emoji font — pair with text fields rendering emoji characters; not a body font."
+    },
+    {
+      "id": 184,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "思源宋体SemiBold",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 186,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "ZCOOL GAODUANHEI",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 188,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "AlimamaAgileVF-Thin",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "light",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 190,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Bitrimus",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 192,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "汇文港黑v1.001",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 194,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "京东朗正体",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 196,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "站酷酷黑体",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 198,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Adrenaline-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 200,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "阿里巴巴普惠体-Heavy",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 202,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "BAUHS93",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 204,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "BukhariScript-lemD",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 206,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "DingTalk JinBuTi",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 208,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Nunito-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "regular",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 210,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Nunito-Black",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 212,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "DroidSerif",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 214,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "GLECB",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 216,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Silkscreen-Bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "display",
+        "latin-capable",
+        "pixel",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "decorative_title",
+        "pixel_theme_dial",
+        "song_title"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 218,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "GOST Common Italic",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "digital",
+        "italic",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "retro_digital_clock",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 220,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "GOST Common",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "digital",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "retro_digital_clock",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 222,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "8-bit Arcade In",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "pixel",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "pixel_theme_dial"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 224,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "IMPRISHA",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "digital",
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "retro_digital_clock",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 226,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "INFROMAN",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "digital",
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "retro_digital_clock",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 228,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "LeagueGothic-Condensed",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 230,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "LeagueGothic-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 232,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Project Space",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 234,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "RL Madena Variable",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 236,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Shrikhand-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "decorative",
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 238,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "思源宋体 SC-Bold",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 240,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "SourceHanSerifSC-ExtraLight",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "light",
+        "sans",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 242,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "SourceHanSerifSC-Heavy",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 246,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "SourceHanSerifSC-SemiBold",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "bold",
+        "cjk-capable",
+        "sans",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 248,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "verdanaz",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 250,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "vinet",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "display",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 252,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "优设标题黑",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 254,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "字制区喜脉喜欢体",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 256,
+      "type": 0,
+      "type_name": "image",
+      "name": "70*86",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 258,
+      "type": 0,
+      "type_name": "image",
+      "name": "20*26",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 260,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "AaCaoLeSongMianBaoYuan",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 262,
+      "type": 0,
+      "type_name": "image",
+      "name": "Blue time font",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 264,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "walbaum-fraktur.bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 266,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "OleoScript-Bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 268,
+      "type": 0,
+      "type_name": "image",
+      "name": "Pixel Machine Font 1",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font",
+        "pixel"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "pixel_theme_dial",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 270,
+      "type": 0,
+      "type_name": "image",
+      "name": "Pixel Machine Font 1",
+      "charset": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "script": "latin",
+      "style_tags": [
+        "image-font",
+        "latin-capable",
+        "pixel"
+      ],
+      "recommendedFor": [
+        "ampm_marker",
+        "month_abbr_en",
+        "pixel_theme_dial",
+        "weekday_short"
+      ],
+      "notes": "Image font; only characters in charset \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\" will render. Anything outside this set is invisible."
+    },
+    {
+      "id": 272,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "ArcadeClassic",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "pixel",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "pixel_theme_dial"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 274,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Upheaval TT (BRK)",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 276,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "ProggyClean Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "pixel",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "pixel_theme_dial"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 278,
+      "type": 0,
+      "type_name": "image",
+      "name": "Pastel Dream font",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 280,
+      "type": 0,
+      "type_name": "image",
+      "name": "波普艺术手写字体1",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 282,
+      "type": 0,
+      "type_name": "image",
+      "name": "波普艺术手写字体2",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 284,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Hisham LT Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 286,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Futura LT Bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 288,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Mexican Tequila",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 290,
+      "type": 0,
+      "type_name": "image",
+      "name": "像素霓城字体（紫）",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 292,
+      "type": 0,
+      "type_name": "image",
+      "name": "像素霓城字体（蓝）",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 294,
+      "type": 0,
+      "type_name": "image",
+      "name": "警戒信号烟雾字体",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 296,
+      "type": 0,
+      "type_name": "image",
+      "name": "海底泡泡屋时间字体",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 298,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Galmuri11-Bold",
+      "charset": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-°",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "digits-capable",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "ampm_marker",
+        "calendar_event_text",
+        "month_abbr_en",
+        "user_text",
+        "weather_text",
+        "weekday_short"
+      ],
+      "notes": "TTF marked with restricted charset \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-°\" — treat as a digits/letters-only fallback even though it is a TTF."
+    },
+    {
+      "id": 300,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Galmuri7",
+      "charset": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+      "script": "latin",
+      "style_tags": [
+        "digits-capable",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "ampm_marker",
+        "calendar_event_text",
+        "month_abbr_en",
+        "user_text",
+        "weather_text",
+        "weekday_short"
+      ],
+      "notes": "TTF marked with restricted charset \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\" — treat as a digits/letters-only fallback even though it is a TTF."
+    },
+    {
+      "id": 302,
+      "type": 0,
+      "type_name": "image",
+      "name": "咩咩好心情手写体1",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 304,
+      "type": 0,
+      "type_name": "image",
+      "name": "咩咩好心情手写体2",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 306,
+      "type": 0,
+      "type_name": "image",
+      "name": "咔滋一口不规则数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 308,
+      "type": 0,
+      "type_name": "image",
+      "name": "波普艺术方形绿色数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 310,
+      "type": 0,
+      "type_name": "image",
+      "name": "波普艺术方形粉色数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 312,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Jack Armstrong",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 314,
+      "type": 0,
+      "type_name": "image",
+      "name": "黑色描边手绘数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 316,
+      "type": 0,
+      "type_name": "image",
+      "name": "橙色铅笔手绘数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 318,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Great Vibes",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 320,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Caveat-bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "handwriting",
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 324,
+      "type": 0,
+      "type_name": "image",
+      "name": "粉色玻璃数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 326,
+      "type": 0,
+      "type_name": "image",
+      "name": "蒸汽波渐变数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 328,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Tahoma_Bold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "latin-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 330,
+      "type": 0,
+      "type_name": "image",
+      "name": "粘土数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 332,
+      "type": 0,
+      "type_name": "image",
+      "name": "小虎购物日粉色数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 334,
+      "type": 0,
+      "type_name": "image",
+      "name": "小虎购物日蓝色数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 336,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "SuperFoods",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "latin-capable",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 338,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Spectral SC-ExtraBold",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "bold",
+        "display",
+        "latin-capable",
+        "serif",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 340,
+      "type": 0,
+      "type_name": "image",
+      "name": "彩虹手账时间数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 342,
+      "type": 0,
+      "type_name": "image",
+      "name": "彩虹手账温度数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 344,
+      "type": 0,
+      "type_name": "image",
+      "name": "彩虹手账日期数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "decorative",
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "decorative_title",
+        "forecast_digits",
+        "song_title",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 346,
+      "type": 0,
+      "type_name": "image",
+      "name": "跨年报纸倒计时数字",
+      "charset": "0123456789adoTy",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "digits-capable",
+        "image-font",
+        "latin-capable"
+      ],
+      "recommendedFor": [
+        "ampm_marker",
+        "calendar_event_text",
+        "lunar_text",
+        "month_abbr_en",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_short",
+        "weekday_zh"
+      ],
+      "notes": "Image font; only characters in charset \"0123456789adoTy\" will render. Anything outside this set is invisible. Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 348,
+      "type": 0,
+      "type_name": "image",
+      "name": "节气画历-温度/年份-月份字体",
+      "charset": "0123456789.-/",
+      "script": "digits-extended",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font; only characters in charset \"0123456789.-/\" will render. Anything outside this set is invisible."
+    },
+    {
+      "id": 350,
+      "type": 0,
+      "type_name": "image",
+      "name": "节气画历日期数字",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font with digit-only glyphs; only the literal characters in `charset` will render — non-digit characters will show as blanks."
+    },
+    {
+      "id": 352,
+      "type": 0,
+      "type_name": "image",
+      "name": "节气画历农历字体",
+      "charset": "0123456789cdlnyz",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "digits-capable",
+        "image-font",
+        "latin-capable"
+      ],
+      "recommendedFor": [
+        "ampm_marker",
+        "calendar_event_text",
+        "lunar_text",
+        "month_abbr_en",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_short",
+        "weekday_zh"
+      ],
+      "notes": "Image font; only characters in charset \"0123456789cdlnyz\" will render. Anything outside this set is invisible. Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    },
+    {
+      "id": 354,
+      "type": 0,
+      "type_name": "image",
+      "name": "几何拼贴小字体",
+      "charset": "0123456789°-",
+      "script": "digits-extended",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font; only characters in charset \"0123456789°-\" will render. Anything outside this set is invisible."
+    },
+    {
+      "id": 356,
+      "type": 0,
+      "type_name": "image",
+      "name": "",
+      "charset": "0123456789°-",
+      "script": "digits-extended",
+      "style_tags": [
+        "digits-capable",
+        "image-font"
+      ],
+      "recommendedFor": [
+        "countdown_digits",
+        "date_digits",
+        "forecast_digits",
+        "temperature_digits",
+        "time_digits"
+      ],
+      "notes": "Image font; only characters in charset \"0123456789°-\" will render. Anything outside this set is invisible."
+    },
+    {
+      "id": 358,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "CaveatBrush-Regular",
+      "charset": "",
+      "script": "latin",
+      "style_tags": [
+        "decorative",
+        "handwriting",
+        "latin-capable",
+        "regular",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "decorative_title",
+        "song_title",
+        "user_text",
+        "weather_text"
+      ],
+      "notes": ""
+    },
+    {
+      "id": 360,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "站酷庆科黄油体",
+      "charset": "",
+      "script": "cjk",
+      "style_tags": [
+        "cjk-capable",
+        "sans",
+        "ttf"
+      ],
+      "recommendedFor": [
+        "calendar_event_text",
+        "lunar_text",
+        "song_lyrics",
+        "user_text",
+        "weather_text",
+        "weekday_zh"
+      ],
+      "notes": "Supports CJK glyphs — safe for Chinese/Japanese strings (e.g., disp 49/56/154/155/178/179/219/220)."
+    }
+  ]
+}

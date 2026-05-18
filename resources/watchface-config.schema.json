@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://divoomdevelop.github.io/divoom-watchface-visual-editor_v2/schemas/watchface-config.schema.json",
+  "title": "Divoom watchface config (editor JSON)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["ItemList"],
+  "properties": {
+    "ClockId": {
+      "type": "integer",
+      "description": "0 for new/local drafts; positive when synced from device template."
+    },
+    "NameCn": { "type": "string" },
+    "NameEn": { "type": "string" },
+    "ItemIdList": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Parallel ids for ItemList order; editor can regenerate from item_id."
+    },
+    "ItemList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["disp"],
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "description": "Stable string key for the item."
+        },
+        "disp": {
+          "type": "integer",
+          "description": "Display element type (see docs/generated/disp-catalog.json)."
+        },
+        "font": {
+          "type": "integer",
+          "description": "Font id from FontList in font_info.cfg / docs/generated/ai-font-catalog.json"
+        },
+        "size": { "type": "number" },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "w": { "type": "number" },
+        "h": { "type": "number" },
+        "alig": {
+          "type": "integer",
+          "description": "Alignment code used by editor (e.g. 1 left, 3 center — align with firmware docs)."
+        },
+        "sep": { "type": "number", "description": "Character spacing where applicable." },
+        "angle": { "type": "number" },
+        "hier": { "type": "integer", "description": "Layer/stack ordering hint." },
+        "transp": { "type": "number", "minimum": 0, "maximum": 100 },
+        "animation": { "type": "number" },
+        "image_id": { "type": "number" },
+        "image_addr": { "type": "string" },
+        "color_1": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+        "color_2": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+      }
+    }
+  }
+}

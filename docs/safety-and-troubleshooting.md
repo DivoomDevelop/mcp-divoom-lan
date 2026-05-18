@@ -33,9 +33,21 @@
 
 ### 6) 图像规格
 
-- 分辨率：`800x1280`
-- 格式：`JPEG` 或 `WebP`
-- 文件大小：按设备固件限制（常见上限约 `512000` 字节）
+底图 (`clock_bg.jpg|webp`，由
+`divoom_watchface_replace_clock_dial_bg_validate_saved_file` 校验)：
+
+- 分辨率：`800x1280`（竖屏）
+- 格式：`JPEG`（魔数 `FF D8`）或 `WebP`（`RIFF…WEBP`），不接 PNG/GIF
+- 文件大小：≤ `500 KiB`（`DIVOOM_REPLACE_DIAL_BG_MAX_FILE_BYTES`）
+
+tar.gz 内部元素槽位（`ItemList[i].image_addr` /
+`ItemPatchList[i].patch.bundle_image` 引用，由
+`wf_validate_bundle_slot_image_file` 校验）：
+
+- 格式：`JPEG / WebP / PNG`（`89 50 4E 47 …`），其它格式（GIF/BMP/TIFF…）
+  必须客户端转码后再打包
+- 单文件大小：与底图同上限
+- 叶子名 ≤ 95 字节，禁止子目录
 
 ## 二、常见问题排查
 
@@ -71,11 +83,29 @@
 
 ### 4) 图片相关失败
 
-排查：
+通用排查：
 
-- 尺寸是否为 `800x1280`
-- 格式是否 `JPEG/WebP`
+- 尺寸是否为 `800x1280`（仅底图必须）
 - 路径是否正确、文件是否可读
+
+按 `ReturnMessage` 定位：
+
+- `bundle image must be JPEG or WEBP` / `底图必须小于500KiB` —
+  对应底图校验（`divoom_watchface_replace_clock_dial_bg_validate_saved_file`）。
+  底图必须是 JPEG（`FF D8`）或 WebP（`RIFF…WEBP`），≤ 500 KiB。
+- `bundle element image must be JPEG, WEBP or PNG` —
+  对应元素槽位校验（`wf_validate_bundle_slot_image_file`）。tar.gz 里的
+  元素文件必须是 JPEG / WebP / PNG，常见原因是把 GIF / BMP 或动画 GIF 直接
+  打包了，需在客户端先转码。
+- `bundle element file missing` / `bundle_image leaf name invalid` —
+  叶子名拼错或 tar 里没这个文件，叶子名只允许 `[A-Za-z0-9._-]`，长度
+  ≤ 95 字节，禁子目录与相对路径。
+- `ItemList[i]: missing or empty string "item_id"` /
+  `ItemIdList[i]: missing or empty string` — `item_id`/`ItemIdList` 任何
+  一项空字符串都会拒。
+- `DialAssets:image requires raw JPEG/WebP second part` —
+  `DialAssets` 字段与第二段实际形态不一致，要么改 `DialAssets:bundle`
+  要么发单图。
 
 ### 5) 创建表盘失败
 

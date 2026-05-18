@@ -2,3 +2,5 @@ node_modules/
 dist/
 *.log
 *.tgz
+mcpb/staging/
+mcp-divoom-lan.mcpb

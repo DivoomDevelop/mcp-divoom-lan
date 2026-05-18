@@ -1,6 +1,8 @@
 # 指南关键点（中文）
 
 本页提炼局域网表盘定制的高优先级规则，便于 MCP 使用者快速落地。
+所有约束以设备固件为准（`divoom_app/src/app/divoom_http_server.c`、
+`divoom_app/src/middle/divoom_watchface_local_api.c`）。
 
 ## 传输规则
 
@@ -16,21 +18,153 @@
 3. `Device/PatchLocalClockInfo` 最小化修改
 4. 再次 `Device/GetLocalClockInfo` 回读确认
 
+## PATCH 选择路径（强烈推荐）
+
+`Device/PatchLocalClockInfo` 在固件里支持两类语义，选择不当会破坏 dial：
+
+| 编辑器侧操作 | 推荐路径 | 端点 | JSON | 第二段 |
+|---|---|---|---|---|
+| 仅修改字号/位置/颜色等字段 | **字段级补丁** | `POST /divoom_api` | `ItemPatchList[].{index, patch}` 仅含变更字段 | 无 |
+| 用户在编辑器里换了元素图（picker / drag-and-drop） | **字段级补丁 + 打包** | `POST /patch_local_clock` multipart | `ItemPatchList[].patch` 含 `bundle_image: <leaf>` | tar.gz：必含同名 leaf；可加 `clock_bg.jpg` |
+| 仅替换 dial 底图 | 字段级补丁 + 单图 | `POST /patch_local_clock` multipart | `clockSel` 即可（可附 `ItemPatchList`） | 单 `clock_bg.jpg` / `.webp` |
+| 增删 `ItemList` 项（长度变化） | 整表替换（兜底） | `POST /patch_local_clock` multipart | `ItemList` + `ItemIdList`（按需 `ItemPatchList`） | 视有无 leaf 决定单图或 tar.gz |
+
+**禁忌**：日常仅"改字号"也整表替换 + 重传同一份 tar.gz —— 设备会用编辑器自动生成的
+`item_${i+1}` 覆盖原本有意义的 `item_id`（如 `time_main`），破坏菜单/config 关联；同时
+没有 `ItemPatchList[].patch.bundle_image` 的元素 `.bin` 即使解压到设备也不会被绑定，
+浪费上传又看似什么都没改。
+
 ## 必须显式授权的操作
 
-- `watchface_create_local_clock` 只在用户明确提出“创建新表盘”时调用。
-- 对“改颜色/改字体”请求，禁止隐式新建表盘。
+- `watchface_create_local_clock` 只在用户明确提出"创建新表盘"时调用。
+- 对"改颜色/改字体"请求，禁止隐式新建表盘。
 
-## multipart 必要约束
+## multipart 强约束（与固件一致）
 
-- 每段都要有 `filename="..."`。
-- 每段带 `Content-Length`。
-- 常见图片约束：
-  - JPEG/WebP
-  - 分辨率必须 800x1280
-  - 大小通常低于约 512000 字节（视固件而定）
+适用于 `/create_local_clock`、`/patch_local_clock`、`/replace_clock_dial_bg`、
+`/upload`。违反会得到 `missing JSON part` / `missing file part` /
+`size mismatch` / `filename in multipart` 等错误。
+
+1. **必须两段，顺序固定：第一段 JSON，第二段文件。**
+2. **第一段** header：`Content-Disposition: form-data; name="json"; filename="cmd.json"`，
+   `Content-Type: application/json`，**带段内 `Content-Length: <jsonLen>`**，
+   body 为压缩后的命令 JSON。
+3. **第二段** header：`Content-Disposition: form-data; name="<任意>"; filename="<file_name>"`，
+   `Content-Type: application/octet-stream`，**带段内 `Content-Length: <fileLen>`**，
+   body 为文件字节。
+4. CRLF 换行；`Content-Type: multipart/form-data; boundary=<boundary>`，
+   **boundary 不能加引号**；正文以 `\r\n--<boundary>--\r\n` 结束。
+5. **每次请求只允许一个文件**。要传多个元素图，必须打包为单个
+   `clock_bg.tar.gz`（USTAR + gzip）。
+6. 外层 HTTP `Content-Length` 必须等于整个 body 字节数。
+
+`<file_name>` 决定写入路径 `/userdata/app_pic/<file_name>`。常用：
+- `clock_bg.jpg` / `clock_bg.webp`：仅底图。
+- `clock_bg.tar.gz`：底图 + 元素图组合。
+
+## DialAssets：单图 / 打包
+
+`Device/CreateLocalClock` 与 `Device/PatchLocalClockInfo` 用 `DialAssets`
+（或旧字段 `UseDialAssetBundle`）选择第二段形态：
+
+| `DialAssets` | 何时使用 | 第二段 file_name | 第二段 body |
+|--------------|----------|------------------|-------------|
+| `image` | `ItemList[i].image_addr` 全为空或全是 `http(s)` URL | `clock_bg.jpg` 或 `clock_bg.webp` | 单张底图 |
+| `bundle` | 任一 `image_addr` 是本机叶子名（如 `44465.bin`、`weather.gif`） | `clock_bg.tar.gz` | gzip USTAR 归档 |
+
+判定算法（编辑器实现，建议所有客户端遵循）：
+
+```
+leaves = unique(basename(image_addr))
+        for image_addr non-empty and not http(s)
+DialAssets = "image" if leaves is empty else "bundle"
+```
+
+### `clock_bg.tar.gz` 归档要求
+
+- 压缩：gzip；归档：USTAR (`magic="ustar\0"`, `version="00"`, `typeflag='0'`)。
+- 顶层文件 `clock_bg.jpg` 或 `clock_bg.webp`：CREATE 必带；
+  PATCH 仅当至少有一个 `ItemPatchList[].patch.bundle_image` 时可省略。
+- 对 CREATE 中每个 `ItemList[i].image_addr`、PATCH 中每个
+  `ItemPatchList[i].patch.bundle_image` 引用到的本地叶子名，
+  归档根目录下必须有同名文件（不要建子目录、不要相对路径）。
+- 叶子名 ≤ 95 字节 + NUL。
+- 跳过 `clock_bg.*` 与 `http(s)` URL（前者由我们写入，后者是设备已托管资源）。
+
+例：`ItemList` 引用 `44465.bin`、`weather.gif`，则 tar 内容为：
+
+```
+clock_bg.jpg
+44465.bin
+weather.gif
+```
+
+## ItemList / ItemIdList 校验
+
+固件 `wf_unpack_disp_items` 中：
+
+- 必填数字：`disp`, `font`, `x`, `y`, `w`, `h`, `size`, `alig`
+- 必填非空字符串：`color_1`（`#RRGGBB`）、`color_2`（`#RRGGBB`）、
+  **`item_id`**
+- 其它字段：`sep`, `image_id`, `image_addr`, `animation`, `angle`, `hier`,
+  `transp`，bundle 模式下还有 `bundle_image`
+
+`ItemIdList` 是平行字符串数组，每项必须非空，通常等于同位置的 `item_id`
+（如 `"item_1"`, `"time_main"`）。空串会触发
+`ItemList[i]: missing or empty string "item_id"`。
+
+### `alig` 取值（与固件一致）
+
+- `3` = 居中
+- `4` = 左对齐
+- `5` = 右对齐
+
+第三方旧工具的 `1`/`2` 必须先归一化（编辑器 `normalizeAligToDevice`
+在导入时自动完成）。
+
+### `ItemPatchList[].patch` 字段白名单
+
+`wf_apply_item_patch` 仅识别下列字段，其它键会被静默丢弃：
+
+- 数字：`size`、`size_delta`、`x`、`y`、`w`、`h`、`disp`、`alig`、`sep`、
+  `font`、`image_id`、`angle`、`hier`、`transp`、`animation`
+- 字符串：`image_addr`、`item_id`、`color_1`、`color_2` 与（multipart
+  专用）`bundle_image`
+
+> 推荐：除非显式重命名槽位，**不要**把 `item_id` 放进 `patch.*`。
+> HTML 编辑器只在字段差异里发可改属性，从不携带 `item_id`。
+
+## 图片约束
+
+底图（`clock_bg.jpg` / `clock_bg.webp`，由
+`divoom_watchface_replace_clock_dial_bg_validate_saved_file` 校验）：
+
+- 格式：仅 JPEG（`FF D8`）或 WebP（`RIFF....WEBP`）；不接 PNG/GIF。
+- 分辨率：必须 `800x1280`（竖屏）。
+- 体积：通常 < `512000` 字节（`DIVOOM_REPLACE_DIAL_BG_MAX_FILE_BYTES`）。
+
+元素槽位（tar.gz 内 `ItemList[i].image_addr` / `ItemPatchList[i].patch.bundle_image`
+引用的叶子，由 `wf_validate_bundle_slot_image_file` 校验）：
+
+- 格式：JPEG / WebP / PNG（`89 50 4E 47 0D 0A 1A 0A`）。
+- 体积上限同底图（`< DIVOOM_REPLACE_DIAL_BG_MAX_FILE_BYTES`）。
+- 不接受 GIF / BMP / TIFF 等其它格式；客户端打包前如遇这些格式应自行
+  转码到上述支持的三种之一（动画 GIF 转码会丢动画，仅留首帧）。
+
+整体：
+
+- 整个 tar.gz body 需小于设备上传上限（外层 `Content-Length` < 100 MiB）。
+
+## 显示元素 204（日出/日落时间）
+
+`DIVOOM_CLOCK_DISP_SUPPORT_SUNRISE_SUNSET_TIME` 在最新固件里**不再两边来回切**：
+
+- 当前时间在今日 `[sunrise, sunset]`（端点含）→ 只显示 sunset。
+- 其它时间（夜间/凌晨）→ 显示下一次有效 sunrise（已过当日日落则切换到次日日出）。
+
+UI 写法建议「日出或日落（按当前时间自动切换）」，避免误导用户认为它在闪烁切换。
 
 ## 高风险命令
 
 - `Device/ResetLocalClockFromServer`：先删本地 sys 侧文件。
-- `Channel/SetClockSelectId`：会立即切换当前显示表盘。
+- `Channel/SetClockSelectId`：会立即切换当前显示表盘（编辑器里的「显示表盘」按钮）。

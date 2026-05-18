@@ -1,0 +1,28 @@
+{
+  "ClockId": 0,
+  "NameCn": "AI Minimal",
+  "NameEn": "AI Minimal",
+  "ItemIdList": ["time_row"],
+  "ItemList": [
+    {
+      "item_id": "time_row",
+      "disp": 5,
+      "font": 26,
+      "size": 56,
+      "x": 100,
+      "y": 480,
+      "w": 600,
+      "h": 120,
+      "alig": 3,
+      "sep": 0,
+      "angle": 0,
+      "hier": 0,
+      "transp": 100,
+      "animation": 0,
+      "image_id": 0,
+      "image_addr": "",
+      "color_1": "#FFFFFF",
+      "color_2": "#000000"
+    }
+  ]
+}

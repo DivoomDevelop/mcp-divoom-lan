@@ -45,6 +45,46 @@ const RESOURCES = [
     mimeType: "text/markdown",
     fileName: "skill-quick-reference.md",
   },
+  {
+    uri: "divoom://font/catalog",
+    name: "Divoom Watchface Font Catalog",
+    description:
+      "Curated TTF and image-font catalog (id, type, name, charset, script, style tags, recommended scenarios) sourced from the visual editor's font_info.cfg. Use it to pick `ItemList[i].font` ids without guessing.",
+    mimeType: "application/json",
+    fileName: "font-catalog.json",
+  },
+  {
+    uri: "divoom://disp/catalog",
+    name: "Divoom Watchface Disp Catalog",
+    description:
+      "Catalog of every `disp` id supported by this firmware (194 entries) with English symbol, Chinese description, and heuristic hints for whether the slot expects an image asset or vector text. Use to pick `ItemList[i].disp` and to decide whether the slot needs an `image_addr` asset.",
+    mimeType: "application/json",
+    fileName: "disp-catalog.json",
+  },
+  {
+    uri: "divoom://watchface/schema",
+    name: "Divoom Watchface JSON Schema",
+    description:
+      "JSON Schema (draft 2020-12) for the editor's watchface config (`ItemList[]`, `ItemIdList`, `ClockId`, names). Validate generated payloads before sending them to PatchLocalClockInfo / CreateLocalClock.",
+    mimeType: "application/schema+json",
+    fileName: "watchface-config.schema.json",
+  },
+  {
+    uri: "divoom://watchface/example-minimal",
+    name: "Minimal Watchface Example",
+    description:
+      "Smallest valid watchface JSON (single time row at 800x1280). Use as a starting template before adding more `ItemList` rows.",
+    mimeType: "application/json",
+    fileName: "examples/ai-minimal-watchface.json",
+  },
+  {
+    uri: "divoom://guide/ai-watchface",
+    name: "AI Watchface Authoring Guide",
+    description:
+      "Editor-side narrative on AI-assisted watchface authoring: canvas conventions, font rules, where the catalogs come from, regeneration workflow.",
+    mimeType: "text/markdown",
+    fileName: "ai-watchface-guide.md",
+  },
 ] as const;
 
 const targetSchema = {
@@ -90,7 +130,7 @@ const tools: Tool[] = [
   {
     name: "watchface_patch_local",
     description:
-      "Call Device/PatchLocalClockInfo with precheck. Stops when current ItemList is empty to avoid unsafe patch flow.",
+      "Patch local dial via Device/PatchLocalClockInfo with precheck. Defaults to POST /divoom_api (JSON only) for pure metadata edits. Prefer ItemPatchList (per-index field diff) — DO NOT include item_id inside patch.* unless the user explicitly asks to rename a slot, since the firmware will overwrite the device-side item_id and break menu/config bindings. When dialAssetsPath is set, switches to multipart POST /patch_local_clock: first JSON part (Device/PatchLocalClockInfo, optional DialAssets), second part single JPEG/WebP dial backdrop or clock_bg.tar.gz bundle. Element slots inside the tarball must be JPEG, WebP, or PNG (validated by firmware wf_validate_bundle_slot_image_file). Use ItemPatchList[].patch.bundle_image=<leaf> to bind a tar leaf to that slot's img_addr; supplying ItemList alone is a full-table replace and should be avoided unless the row count actually changes.",
     inputSchema: {
       type: "object",
       properties: {
@@ -119,6 +159,21 @@ const tools: Tool[] = [
         itemPatchByRoleList: {
           type: "array",
           items: { type: "object" },
+        },
+        dialAssetsPath: {
+          type: "string",
+          description:
+            "Optional second multipart part. Either a single JPEG/WebP dial backdrop (`clock_bg.jpg|webp`, validated by divoom_watchface_replace_clock_dial_bg_validate_saved_file) or a `clock_bg.tar.gz` bundle. The tarball may contain `clock_bg.jpg|webp` plus the leaves listed by `ItemPatchList[].patch.bundle_image`. Element leaves inside the tar may be JPEG/WebP/PNG (PNG is element-only; backdrop must be JPEG/WebP). When set, the tool POSTs `/patch_local_clock` with the firmware-strict multipart layout.",
+        },
+        filePartName: {
+          type: "string",
+          description:
+            "Multipart field name for dialAssetsPath part. Default is current UTC ms timestamp.",
+        },
+        fileName: {
+          type: "string",
+          description:
+            "Multipart filename header for dialAssetsPath. Defaults to basename(dialAssetsPath).",
         },
       },
       additionalProperties: false,
@@ -204,14 +259,15 @@ const tools: Tool[] = [
   {
     name: "watchface_replace_dial_bg_file",
     description:
-      "POST /replace_clock_dial_bg using multipart (Device/ReplaceClockDialBgFile). Does not modify DeviceImageUrl.",
+      "POST /replace_clock_dial_bg using multipart (Device/ReplaceClockDialBgFile). Replaces the cached dial bitmap only — does NOT modify cfg DeviceImageUrl, and does NOT accept tar.gz. Backdrop is validated by divoom_watchface_replace_clock_dial_bg_validate_saved_file: JPEG (FF D8) or WebP (RIFF…WEBP) only, ≤ 500 KiB (DIVOOM_REPLACE_DIAL_BG_MAX_FILE_BYTES), recommended 800x1280 portrait.",
     inputSchema: {
       type: "object",
       properties: {
         target: targetSchema,
         imagePath: {
           type: "string",
-          description: "Absolute or relative image file path (JPEG/WebP, 800x1280 recommended).",
+          description:
+            "Absolute or relative image file path. Backdrop must be JPEG (FF D8) or WebP (RIFF…WEBP); PNG/GIF are rejected. Recommended 800x1280, ≤ 500 KiB.",
         },
         clockId: { type: "integer" },
         useCurrentDisplayClock: { type: "boolean" },
@@ -254,16 +310,20 @@ const tools: Tool[] = [
   {
     name: "watchface_create_local_clock",
     description:
-      "POST /create_local_clock with multipart. Explicit operation only; never auto-triggered by patch flow.",
+      "POST /create_local_clock (multipart) — Device/CreateLocalClock. metadata.DialAssets accepts 'auto' (default; sniffs gzip magic on the file part), 'image' (single JPEG/WebP backdrop), or 'bundle' (clock_bg.tar.gz). Legacy UseDialAssetBundle (0=image, non-0=bundle) is honored when DialAssets is omitted. Backdrop is JPEG/WebP only; element slots inside the tarball accept JPEG/WebP/PNG (firmware wf_validate_bundle_slot_image_file). Each ItemList[i] needs disp/font/x/y/w/h/size/alig numbers and color_1/color_2/item_id non-empty strings; ItemIdList must be a parallel non-empty string array. alig: 3=center, 4=left, 5=right.",
     inputSchema: {
       type: "object",
       properties: {
         target: targetSchema,
-        imagePath: { type: "string" },
+        imagePath: {
+          type: "string",
+          description:
+            "Either a single JPEG/WebP dial backdrop (recommend 800x1280, ≤ 500 KiB) or a `clock_bg.tar.gz` USTAR+gzip archive. Tar contents: required `clock_bg.jpg|webp` at the root plus one file per local leaf referenced by `ItemList[i].image_addr` (no subdirs, leaf basenames ≤ 95 bytes). Leaves may be JPEG/WebP/PNG; non-supported sources should be transcoded client-side.",
+        },
         metadata: {
           type: "object",
           description:
-            "First multipart JSON body. Include ClockName and ItemList. Tool will minify JSON automatically.",
+            "First multipart JSON: `ClockName`, `ItemList`, `ItemIdList`. Optional `DialAssets` (`auto`|`image`|`bundle`) or legacy `UseDialAssetBundle` (0/!=0). In bundle mode, `ItemList[i].bundle_image` is an alias for `image_addr` leaf and is also accepted. Tool minifies the JSON before sending.",
         },
         filePartName: {
           type: "string",
@@ -316,6 +376,93 @@ const tools: Tool[] = [
     inputSchema: {
       type: "object",
       properties: {},
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "watchface_disp_catalog",
+    description:
+      "Return the full `disp` id catalog (194 entries) that the firmware understands for `ItemList[i].disp` and `ItemPatchList[i].patch.disp`. Each entry includes English symbol, Chinese description, and heuristic hints (`likelyUsesRasterOrAssetLayer` for image/GIF slots; `oftenUsesVectorFontForText` for text slots). Use it together with `watchface_font_catalog`: text-leaning disps need a font id; raster-leaning disps need an `image_addr` asset.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        ids: {
+          type: "array",
+          items: { type: "integer" },
+          description: "Return only the entries whose disp id is in this list.",
+        },
+        nameContains: {
+          type: "string",
+          description: "Case-insensitive substring filter on the English symbol (e.g., 'WEATHER').",
+        },
+        descriptionContains: {
+          type: "string",
+          description: "Case-insensitive substring filter on the Chinese description (e.g., '日历').",
+        },
+        expects: {
+          type: "string",
+          enum: ["any", "image", "text"],
+          description:
+            "'image' = only slots whose hints.likelyUsesRasterOrAssetLayer is true; 'text' = only slots whose hints.oftenUsesVectorFontForText is true.",
+        },
+        limit: {
+          type: "integer",
+          description: "Max entries to return (default 80, max 300).",
+        },
+        idsOnly: {
+          type: "boolean",
+          description: "If true, return only `[{disp, name, description_zh}]` rows for a compact summary.",
+        },
+      },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "watchface_font_catalog",
+    description:
+      "Return a curated font catalog so agents can pick `ItemList[i].font` ids deterministically. Each entry includes id, type (1=TTF, 0=image-font), display name, original charset, derived script (digits / digits-extended / latin / cjk), style tags (sans/serif/pixel/digital/handwriting/display/decorative/bold/light/etc), and recommendedFor (scenario names like time_digits / temperature_digits / weather_text / user_text / lunar_text). The response also includes a `scenarios` map that lists which `disp` ids each scenario covers and which tags to prefer. Use the optional filters to narrow the result. Always cross-check with `watchface_get_fonts_local` before committing a font id to a real device, because the on-device font list may be a subset.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        type: {
+          type: "string",
+          enum: ["all", "ttf", "image"],
+          description: "Filter by font type. Default 'all'.",
+        },
+        script: {
+          type: "string",
+          enum: ["all", "digits", "digits-extended", "latin", "cjk"],
+          description: "Filter by derived script. 'digits' = image fonts whose charset is exactly 0-9.",
+        },
+        tag: {
+          type: "string",
+          description:
+            "Match a single style tag (e.g., 'pixel', 'digital', 'handwriting', 'sans', 'serif', 'cjk-capable').",
+        },
+        scenario: {
+          type: "string",
+          description:
+            "Filter to fonts whose `recommendedFor` includes this scenario (see top-level `scenarios` map for the full list).",
+        },
+        ids: {
+          type: "array",
+          items: { type: "integer" },
+          description: "Return only the entries whose id is in this list (useful after watchface_get_fonts_local).",
+        },
+        limit: {
+          type: "integer",
+          description: "Max number of font entries to return (default 50, max 200).",
+        },
+        idsOnly: {
+          type: "boolean",
+          description: "If true, return only `[{id, name, type_name, script}]` rows for a compact summary.",
+        },
+        includeScenarios: {
+          type: "boolean",
+          description:
+            "If true (default), include the top-level `scenarios` map in the response so the agent can map disp ids → preferred tags.",
+        },
+      },
       additionalProperties: false,
     },
   },
@@ -546,6 +693,77 @@ function textResult(data: unknown) {
   };
 }
 
+type FontCatalogEntry = {
+  id: number;
+  type: number;
+  type_name: "ttf" | "image";
+  name: string;
+  charset: string;
+  script: string;
+  style_tags: string[];
+  recommendedFor: string[];
+  notes: string;
+};
+
+type FontCatalog = {
+  schema: number;
+  generatedAt: string;
+  source: { file: string; basename: string; counts: Record<string, number> };
+  notes: string[];
+  scenarios: Record<
+    string,
+    {
+      label: string;
+      description: string;
+      disp: number[];
+      requiredScript: string[];
+      preferTags: string[];
+    }
+  >;
+  fonts: FontCatalogEntry[];
+};
+
+let cachedFontCatalog: FontCatalog | null = null;
+
+async function loadFontCatalog(): Promise<FontCatalog> {
+  if (cachedFontCatalog) return cachedFontCatalog;
+  const absolutePath = path.join(resourceRoot, "font-catalog.json");
+  const raw = await readFile(absolutePath, "utf8");
+  const parsed = JSON.parse(raw) as FontCatalog;
+  cachedFontCatalog = parsed;
+  return parsed;
+}
+
+type DispCatalogEntry = {
+  disp: number;
+  name: string;
+  description_zh: string;
+  hints: {
+    likelyUsesRasterOrAssetLayer?: boolean;
+    oftenUsesVectorFontForText?: boolean;
+    note?: string;
+  } | null;
+};
+
+type DispCatalog = {
+  schema: number;
+  generatedAt: string;
+  source: { editorRepo: string; base: string; generated: string | null; counts: Record<string, number> };
+  notes: string[];
+  displays: DispCatalogEntry[];
+};
+
+let cachedDispCatalog: DispCatalog | null = null;
+
+async function loadDispCatalog(): Promise<DispCatalog> {
+  if (cachedDispCatalog) return cachedDispCatalog;
+  const absolutePath = path.join(resourceRoot, "disp-catalog.json");
+  const raw = await readFile(absolutePath, "utf8");
+  const parsed = JSON.parse(raw) as DispCatalog;
+  cachedDispCatalog = parsed;
+  return parsed;
+}
+
 async function readResource(uri: string) {
   const descriptor = RESOURCES.find((item) => item.uri === uri);
   if (!descriptor) {
@@ -678,6 +896,40 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       throw new Error(
         "GetLocalClockInfo returned empty ItemList. Stop patching and switch to an editable clock first (watchface_set_clock_select). Do not auto-create a new clock unless explicitly requested.",
       );
+    }
+
+    const metadata: JsonRecord = {
+      ...body,
+      Command: "Device/PatchLocalClockInfo",
+      ReturnCode: 0,
+    };
+
+    const dialAssetsPath = optionalString(args.dialAssetsPath, "dialAssetsPath");
+    if (dialAssetsPath) {
+      const fileBytes = await readFile(path.resolve(dialAssetsPath));
+      const filePartName =
+        optionalString(args.filePartName, "filePartName") ?? `${Date.now()}`;
+      const fileName =
+        optionalString(args.fileName, "fileName") ??
+        path.basename(path.resolve(dialAssetsPath));
+      const boundary = "----DivoomMcpPatchClockBoundary7YA4YWxkTrZu0gW";
+      const multipartBody = buildMultipartTwoParts(
+        metadata,
+        fileBytes,
+        filePartName,
+        fileName,
+        boundary,
+      );
+      const result = await postMultipart(target, "/patch_local_clock", multipartBody, boundary);
+      return {
+        ...result,
+        requestMeta: metadata,
+        filePartName,
+        fileName,
+        dialAssetsPath: path.resolve(dialAssetsPath),
+        fileBytes: fileBytes.length,
+        transport: "POST /patch_local_clock multipart",
+      };
     }
 
     return callDivoomApi(target, "Device/PatchLocalClockInfo", body);
@@ -835,18 +1087,141 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     return callDivoomApi(target, command, payload);
   }
 
+  if (name === "watchface_disp_catalog") {
+    const catalog = await loadDispCatalog();
+    const idList =
+      args.ids === undefined
+        ? null
+        : ensureArray(args.ids, "ids").map((v) => requiredInteger(v, "ids[]"));
+    const nameContains = optionalString(args.nameContains, "nameContains");
+    const descriptionContains = optionalString(args.descriptionContains, "descriptionContains");
+    const expects = (optionalString(args.expects, "expects") ?? "any").toLowerCase();
+    const limitRaw = optionalInteger(args.limit, "limit");
+    const limit = Math.max(1, Math.min(300, limitRaw ?? 80));
+    const idsOnly = optionalBoolean(args.idsOnly, "idsOnly") ?? false;
+
+    let filtered = catalog.displays;
+    if (idList && idList.length > 0) {
+      const idSet = new Set(idList);
+      filtered = filtered.filter((entry) => idSet.has(entry.disp));
+    }
+    if (nameContains) {
+      const needle = nameContains.toUpperCase();
+      filtered = filtered.filter((entry) => entry.name.toUpperCase().includes(needle));
+    }
+    if (descriptionContains) {
+      const needle = descriptionContains.toLowerCase();
+      filtered = filtered.filter((entry) => entry.description_zh.toLowerCase().includes(needle));
+    }
+    if (expects === "image") {
+      filtered = filtered.filter((entry) => entry.hints?.likelyUsesRasterOrAssetLayer === true);
+    } else if (expects === "text") {
+      filtered = filtered.filter((entry) => entry.hints?.oftenUsesVectorFontForText === true);
+    } else if (expects !== "any") {
+      throw new Error("expects must be 'any', 'image', or 'text'.");
+    }
+
+    const truncated = filtered.length > limit;
+    const trimmed = filtered.slice(0, limit);
+    const displays = idsOnly
+      ? trimmed.map(({ disp, name, description_zh }) => ({ disp, name, description_zh }))
+      : trimmed;
+
+    return {
+      schema: catalog.schema,
+      generatedAt: catalog.generatedAt,
+      source: catalog.source,
+      counts: {
+        totalInCatalog: catalog.displays.length,
+        afterFilter: filtered.length,
+        returned: displays.length,
+        truncated,
+      },
+      notes: catalog.notes,
+      displays,
+    };
+  }
+
+  if (name === "watchface_font_catalog") {
+    const catalog = await loadFontCatalog();
+    const typeFilter = (optionalString(args.type, "type") ?? "all").toLowerCase();
+    const scriptFilter = (optionalString(args.script, "script") ?? "all").toLowerCase();
+    const tagFilter = optionalString(args.tag, "tag");
+    const scenarioFilter = optionalString(args.scenario, "scenario");
+    const limitRaw = optionalInteger(args.limit, "limit");
+    const limit = Math.max(1, Math.min(200, limitRaw ?? 50));
+    const idsOnly = optionalBoolean(args.idsOnly, "idsOnly") ?? false;
+    const includeScenarios = optionalBoolean(args.includeScenarios, "includeScenarios") ?? true;
+    const idList =
+      args.ids === undefined
+        ? null
+        : ensureArray(args.ids, "ids").map((v) => requiredInteger(v, "ids[]"));
+
+    let filtered = catalog.fonts;
+    if (idList && idList.length > 0) {
+      const idSet = new Set(idList);
+      filtered = filtered.filter((font) => idSet.has(font.id));
+    }
+    if (typeFilter === "ttf") {
+      filtered = filtered.filter((font) => font.type_name === "ttf");
+    } else if (typeFilter === "image") {
+      filtered = filtered.filter((font) => font.type_name === "image");
+    } else if (typeFilter !== "all") {
+      throw new Error("type must be 'all', 'ttf', or 'image'.");
+    }
+    if (scriptFilter !== "all") {
+      filtered = filtered.filter((font) => font.script === scriptFilter);
+    }
+    if (tagFilter) {
+      const wanted = tagFilter.toLowerCase();
+      filtered = filtered.filter((font) =>
+        font.style_tags.some((tag) => tag.toLowerCase() === wanted),
+      );
+    }
+    if (scenarioFilter) {
+      filtered = filtered.filter((font) => font.recommendedFor.includes(scenarioFilter));
+    }
+
+    const truncated = filtered.length > limit;
+    const trimmed = filtered.slice(0, limit);
+
+    const fonts = idsOnly
+      ? trimmed.map(({ id, name, type_name, script }) => ({ id, name, type_name, script }))
+      : trimmed;
+
+    return {
+      schema: catalog.schema,
+      generatedAt: catalog.generatedAt,
+      source: catalog.source,
+      counts: {
+        totalInCatalog: catalog.fonts.length,
+        afterFilter: filtered.length,
+        returned: fonts.length,
+        truncated,
+      },
+      notes: catalog.notes,
+      scenarios: includeScenarios ? catalog.scenarios : undefined,
+      fonts,
+    };
+  }
+
   if (name === "watchface_protocol_quick_reference") {
     const lines = [
-      "1) Always POST JSON to /divoom_api (never GET).",
-      "2) Root ReturnCode in request must be 0.",
-      "3) Read before write: GET current clock, then patch minimal fields.",
-      "4) For background cache replacement without URL change: POST /replace_clock_dial_bg.",
-      "5) For URL change workflow: POST /upload, then Device/PatchLocalClockInfo, then verify by GET.",
-      "6) Multipart parts must include filename=\"...\" and per-part Content-Length.",
-      "7) Typical image constraints: JPEG/WebP, exactly 800x1280, and below 512000 bytes.",
-      "8) ResetLocalClockFromServer is destructive (deletes local sys files first).",
-      "9) Do not auto-call watchface_create_local_clock for style/color patch requests.",
-      "10) If GetLocalClockInfo returns ItemList empty, stop and ask user to switch to an editable clock.",
+      "1) Always POST JSON to /divoom_api (never GET). Root ReturnCode in the request must be 0.",
+      "2) Read before write: Device/GetLocalClockInfo first; if ItemList is empty, stop and switch to an editable clock (Channel/SetClockSelectId) — do not auto-create.",
+      "3) Patch minimally with ItemPatchList (per-index field diff) and ItemPatchByRoleList (semantic role). Do NOT include item_id inside patch.* unless explicitly renaming a slot — the device-side item_id is referenced by menus/config bindings.",
+      "4) Only fall back to a full ItemList replacement when row count actually changes (rows added/removed). For pure metadata edits (size/x/y/font/color), POST /divoom_api JSON-only is enough.",
+      "5) When new bytes need to land on the device, switch to multipart /patch_local_clock or /create_local_clock. JSON part first (name=\"json\"; filename=\"cmd.json\"), file part second (filename=\"clock_bg.jpg|webp|tar.gz\"); both parts carry per-part Content-Length; boundary is unquoted; CRLF; single file per request.",
+      "6) DialAssets selection: 'image' = no local element leaves (or all http(s) URLs); 'bundle' = at least one ItemList[i].image_addr or ItemPatchList[i].patch.bundle_image is a local leaf — pack as clock_bg.tar.gz (USTAR + gzip).",
+      "7) Image format rules: dial backdrop is JPEG (FF D8) or WebP (RIFF…WEBP) only, ≤ 500 KiB, recommended 800x1280 portrait. Element slots inside the tarball accept JPEG/WebP/PNG (89 50 4E 47 …). GIF/BMP/TIFF must be transcoded client-side before packing.",
+      "8) Replace cached backdrop without changing cfg DeviceImageUrl: POST /replace_clock_dial_bg multipart (no tar.gz, JPEG/WebP only).",
+      "9) Replace cfg DeviceImageUrl: POST /upload to obtain a FileId, then Device/PatchLocalClockInfo with the new URL; verify with GetLocalClockInfo.",
+      "10) ItemList JSON requirements: numbers disp/font/x/y/w/h/size/alig; non-empty strings color_1/color_2/item_id (#RRGGBB hex). ItemIdList parallel non-empty strings. alig: 3=center, 4=left, 5=right (firmware-native).",
+      "11) Channel/SetClockSelectId switches the active dial on screen — confirm user intent before running.",
+      "12) Device/ResetLocalClockFromServer is destructive (deletes local sys-side files first).",
+      "13) Pick `ItemList[i].font` ids from `watchface_font_catalog` (or the `divoom://font/catalog` resource) — never hard-code an unknown id. Match the slot's content: digit-only image fonts (charset 0123456789) for time/date/temperature digits; CJK-capable TTFs for Chinese strings; pixel/digital/handwriting tags for stylistic dials. Cross-check the chosen id against `watchface_get_fonts_local` before patching a real device.",
+      "14) Pick `ItemList[i].disp` ids from `watchface_disp_catalog` (or the `divoom://disp/catalog` resource). Use `hints.likelyUsesRasterOrAssetLayer` to decide whether the slot expects an `image_addr` asset (image/GIF/PNG) and `hints.oftenUsesVectorFontForText` to decide whether to assign a font id.",
+      "15) When generating a fresh watchface JSON, validate the output against `divoom://watchface/schema` and start from `divoom://watchface/example-minimal` — keep `ItemIdList` parallel to `item_id` and stay inside the 800x1280 logical canvas.",
     ];
     return {
       rules: lines,
