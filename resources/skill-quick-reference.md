@@ -117,6 +117,25 @@ In bundle mode, leaf basenames inside the tar must exactly match the
   only) `bundle_image`. Any other key is silently ignored. Skip `item_id`
   unless renaming a slot.
 
+## `transp` & `hier` (AI generators often get this wrong)
+
+- **`transp`:** Treat as **opacity for visibility**. For anything that should **show on screen**, set **`transp: 100`**. **Many LLMs default missing/`transp: 0`, which renders fully invisible on device** — users think layout is broken when it is only transparency.
+- **`hier`:** Only **`0` = auto**, **`1` = bottom layer**, **`2` = top layer**. There is **no `hier: 3`**. Stack analog hands e.g. hour **`1`**, minute **`0`**, second **`2`**.
+
+## Analog pointer slots (`disp` 131 / 132 / 233)
+
+Square **`w = h`** layer shared by hour/minute/second; bitmap **`w`×`h`** with pivot at **center**,
+hand toward **12 o'clock**. Avoid **`800×1280`** hand sprites. Use **`transp: 100`**; use **`hier`**
+**`0`/`1`/`2`** so the second hand can paint on top (**`2`**). Details: `docs/tool-examples.md` §5b.
+
+## Image elements / net-gallery uniqueness
+
+Across a single dial **`ItemList`**, treat **image-backed `disp` types as at most one row per
+`disp`**. If duplicated, **later rows override earlier ones**. This is especially strict for the
+**network gallery** slots: **`disp` 13** (`NET_PIC`), **`173–175`** (`NET2_PIC`–`NET4_PIC`),
+**`125–130`** (`NET5_PIC`–`NET10_PIC`) — firmware symbols `DIVOOM_CLOCK_DISP_SUPPORT_NET*_PIC`.
+Full table: **`docs/disp-usage.md`** (section “图像元素唯一性（网络图库系列）”).
+
 ## Sunrise / sunset slot (`disp = 204`)
 
 The current firmware shows a single value rather than toggling:

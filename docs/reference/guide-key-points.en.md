@@ -123,6 +123,21 @@ and is conventionally the same value as the matching `item_id`
 (e.g. `"item_1"`, `"time_main"`). Empty strings cause
 `ItemList[i]: missing or empty string "item_id"`.
 
+### `transp` and `hier` (visibility / z-order — LLMs often fail here)
+
+- **`transp`:** Treat as **on-screen visibility / opacity**. Anything that must **appear** needs **`transp: 100`**. **Many AI-generated payloads omit the field or set `0`, which makes the layer invisible on-device** — looks like broken coordinates when it is only transparency.
+- **`hier`:** Only three levels — **`0`** automatic ordering, **`1`** **bottom** (painted first), **`2`** **top** (painted last, above others). **There is no `hier: 3`.** Typical analog clock: hour **`1`**, minute **`0`**, second **`2`**; tune on hardware.
+
+### Image / net-gallery slot uniqueness
+
+In a single dial **`ItemList`**, keep **at most one row per image-backed `disp`**.
+Duplicate **`disp`** rows tend to behave as **last-write-wins**, overwriting earlier bindings.
+
+The **network gallery** slots (`DIVOOM_CLOCK_DISP_SUPPORT_NET_PIC`, …) are the usual examples:
+**`disp` 13** (`NET_PIC`), **`173–175`** (`NET2_PIC`–`NET4_PIC`), **`125–130`**
+(`NET5_PIC`–`NET10_PIC`). Full table: **`docs/disp-usage.md`** (Chinese section
+「图像元素唯一性（网络图库系列）」).
+
 ### `alig` values (firmware-native)
 
 - `3` = center

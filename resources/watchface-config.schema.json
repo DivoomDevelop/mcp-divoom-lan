@@ -51,8 +51,16 @@
         },
         "sep": { "type": "number", "description": "Character spacing where applicable." },
         "angle": { "type": "number" },
-        "hier": { "type": "integer", "description": "Layer/stack ordering hint." },
-        "transp": { "type": "number", "minimum": 0, "maximum": 100 },
+        "hier": {
+          "type": "integer",
+          "description": "Z-order: 0 = automatic; 1 = bottom layer (drawn first); 2 = top layer (drawn last). Values above 2 are not meaningful on typical firmware — use only 0/1/2."
+        },
+        "transp": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Visibility / opacity: use 100 for any element that must be visible. AI-generated configs often use 0 (or omit), which makes layers invisible on-device."
+        },
         "animation": { "type": "number" },
         "image_id": { "type": "number" },
         "image_addr": { "type": "string" },

@@ -26,7 +26,7 @@ Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-spec
 ## Implemented tools
 
 - `watchface_get_local` → `Device/GetLocalClockInfo`
-- `watchface_patch_local` → `Device/PatchLocalClockInfo`
+- `watchface_patch_local` → `Device/PatchLocalClockInfo` (default `/divoom_api`); optional `dialAssetsPath` switches to multipart `POST /patch_local_clock` (same dial/tar.gz rules as `watchface_create_local_clock`)
 - `watchface_get_fonts_local` → `Device/GetLocalFontList`
 - `watchface_get_store_market_list` → `Device/GetStoreClockMarketList`
 - `watchface_set_clock_select` → `Channel/SetClockSelectId`
@@ -35,7 +35,7 @@ Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-spec
 - `watchface_onoff_screen` → `Channel/OnOffScreen` (1=on, 0=off)
 - `watchface_replace_dial_bg_file` → `POST /replace_clock_dial_bg`
 - `watchface_upload_file` → `POST /upload`
-- `watchface_create_local_clock` → `POST /create_local_clock`
+- `watchface_create_local_clock` → `POST /create_local_clock` (multipart: single dial image **or** `tar.gz`; JSON `DialAssets`/`UseDialAssetBundle` selects mode, default auto-detect gzip)
 - `watchface_reset_local_then_cloud` → `Device/ResetLocalClockFromServer`
 - `watchface_raw_command` → generic `POST /divoom_api`
 - `watchface_protocol_quick_reference` → key protocol constraints for the model
@@ -82,7 +82,8 @@ npm run release:check
 
 - `docs/README.md` — documentation index
 - `docs/quick-start.md` — minimal setup
-- `docs/tool-examples.md` — tool usage examples
+- `docs/tool-examples.md` — tool usage examples (includes §5b analog pointer layout)
+- `docs/disp-usage.md` — choosing `disp` ids (pointer layout `131/132/233`; net-gallery uniqueness `13/125–130/173–175`)
 - `docs/html-visual-editor.md` — using the visual editor with MCP
 - `docs/safety-and-troubleshooting.md` — safety and FAQs
 - `docs/reference/` — condensed protocol rules (EN/ZH)
@@ -145,7 +146,7 @@ Benefits:
 
 - Small MCP install suitable for all AI clients  
 - Non-developers can use the visual UI to understand `ItemList`, then let the AI apply patches  
-- Clear split between WYSIWYG editing and automated MCP writes  
+- Clear split between WYSIWYG editing and automated MCP writes
 
 ## Alignment with upstream docs
 

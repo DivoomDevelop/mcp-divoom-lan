@@ -48,6 +48,31 @@
    - 其它时间显示 **下一个日出**（跨过日落自动滚到次日）。
    面向用户时建议描述为「日出/日落时间（按当前时间自动切换）」。
 
+## 图像元素唯一性（网络图库系列）
+
+**在同一本地表盘的 `ItemList` 里，图像类元素每种 `disp` 原则上只应出现一行。** 若同一 `disp`
+被配置了多行（或等价的多实例），固件侧往往 **以后面的条目为准**，前面的会被覆盖或失效，
+表现为「只显示最后一次那张图 / 最后一次绑定」。
+
+下列 **网络图库** 槽位（固件侧 `DIVOOM_CLOCK_DISP_SUPPORT_NET*_PIC`）尤其典型——AGENT 生成表盘时
+**各自至多一行**，不要重复添加：
+
+| `disp` | 编辑器符号 | 中文说明 | 固件常量（参考） |
+|---:|---|---|---|
+| 13 | `NET_PIC` | 网络图库 | `DIVOOM_CLOCK_DISP_SUPPORT_NET_PIC` |
+| 173 | `NET2_PIC` | 网络图库2 | `DIVOOM_CLOCK_DISP_SUPPORT_NET2_PIC` |
+| 174 | `NET3_PIC` | 网络图库3 | `DIVOOM_CLOCK_DISP_SUPPORT_NET3_PIC` |
+| 175 | `NET4_PIC` | 网络图库4 | `DIVOOM_CLOCK_DISP_SUPPORT_NET4_PIC` |
+| 125 | `NET5_PIC` | 网络图库5 | `DIVOOM_CLOCK_DISP_SUPPORT_NET5_PIC` |
+| 126 | `NET6_PIC` | 网络图库6 | `DIVOOM_CLOCK_DISP_SUPPORT_NET6_PIC` |
+| 127 | `NET7_PIC` | 网络图库7 | `DIVOOM_CLOCK_DISP_SUPPORT_NET7_PIC` |
+| 128 | `NET8_PIC` | 网络图库8 | `DIVOOM_CLOCK_DISP_SUPPORT_NET8_PIC` |
+| 129 | `NET9_PIC` | 网络图库9 | `DIVOOM_CLOCK_DISP_SUPPORT_NET9_PIC` |
+| 130 | `NET10_PIC` | 网络图库10 | `DIVOOM_CLOCK_DISP_SUPPORT_NET10_PIC` |
+
+其它带本地 / 网络 **`image_addr`** 的槽位也建议遵循「**每种 `disp` 至多一行**」，除非编辑器或
+官方文档明确允许多实例。
+
 ## 与字体目录配合
 
 ```text
@@ -62,6 +87,22 @@ ItemList[i] is asset-driven (hints.likelyUsesRasterOrAssetLayer)
 ```
 
 详见 `docs/font-usage.md`。
+
+## 模拟指针类 `disp`（131 / 132 / 233）
+
+**`HOUR_POINT_IMAGE`（131）、`MIN_POINT_IMAGE`（132）、`SECOND_POINT_IMAGE`（233）**
+用于「_RESOURCE 指针图」驱动模拟时钟，而不是数字时间字符串。
+
+- **`ItemList[i].image_addr`**（或 PATCH 时的 **`bundle_image`**）指向 tar 里的叶子；每张图
+  的尺寸必须等于该条的 **`w`×`h`**。
+- **旋转枢轴**在图层矩形 **`(x,y,w,h)`** 的几何中心一侧（设备按指针类型旋转）；因此三根针
+  应共用同一 **`x,y,w,h`**，且素材以**正方形**最为稳妥。
+- 指针美术：**枢轴在画布中心**，针尖指向 **12 点（屏幕上方）**；禁止把指针画在 **`800×1280`**
+  全屏图的任意偏移位置来代替「方形图层」——会出现三根针围绕不同中心旋转的现象。
+- **`transp`**：**需要能看见的元素必须显式 `transp: 100`**。模型生成 JSON 时常默认为 **`0`**，设备上会 **整块透明看不见**（误以为坐标错了）。
+- **`hier`**（叠层，仅 **`0` / `1` / `2`**）：**`0`** = 自动；**`1`** = **底层**；**`2`** = **顶层**。秒针通常 **`2`**，时针常 **`1`**，分针可用 **`0`**，按真机微调。
+- 参考排版统计：`watchface_disp_catalog` 中上述 `disp` 的 **`typography.box.p50`**。
+- 实操示例：`docs/tool-examples.md` 第 **5b** 节。
 
 ## `typography` 排版统计（v0.1.4+）
 

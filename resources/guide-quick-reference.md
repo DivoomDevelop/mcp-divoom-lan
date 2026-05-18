@@ -167,6 +167,21 @@ Validation lives in `wf_unpack_disp_items` (firmware
 Other recognized keys: `sep`, `image_id`, `image_addr`, `animation`, `angle`,
 `hier`, `transp`, and (bundle only) `bundle_image`.
 
+**Analog pointer slots (`disp` 131 / 132 / 233 — `*_POINT_IMAGE`):** use one **square**
+layer (`w == h`) shared by hour/minute/second; each `image_addr` bitmap must match **`w`×`h`** with the
+hand pivot at the **image center** and the hand painted pointing to **12 o'clock**. Do **not** use a
+full **`800×1280`** hand sprite — rotation will not share the dial center.
+
+**`transp`:** Use **`100`** for every layer that must be visible. **AI generators often emit `0`, which makes the layer invisible on-device** (looks like bad coordinates).
+
+**`hier`:** Only **`0`** (auto), **`1`** (bottom / drawn first), **`2`** (top / drawn last). **No `hier: 3+`.** Typical analog clock: hour **`1`**, minute **`0`**, second **`2`**.
+
+**Image / net-gallery slots (`NET_PIC` family):** In one dial, **do not duplicate the same
+`disp`** for asset-backed image slots — firmware tends to keep **only the last row**, overwriting
+earlier ones. Especially **`disp` 13 (`NET_PIC`)**, **`125–130` (`NET5_PIC` … `NET10_PIC`)**, and
+**`173–175` (`NET2_PIC` … `NET4_PIC`)** (`DIVOOM_CLOCK_DISP_SUPPORT_NET*_PIC`): **at most one row each**.
+See `docs/disp-usage.md` (Chinese) for the full table.
+
 `ItemIdList` is a parallel array of strings; each entry **must be non-empty**
 and is conventionally the same string as the matching `item_id` (e.g.
 `"item_1"`, `"time_main"`). Empty strings on either side cause
