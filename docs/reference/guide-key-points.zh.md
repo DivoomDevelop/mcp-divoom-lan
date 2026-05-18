@@ -58,6 +58,8 @@
    `clock_bg.tar.gz`（USTAR + gzip）。
 6. 外层 HTTP `Content-Length` 必须等于整个 body 字节数。
 
+**传输文件打包（`divoom_http_server_upload_get_file_info`）：** 固件历史上要求每个 multipart 段带段内 `Content-Length`；浏览器 `FormData` 常以 boundary 分界而不写每段长度。固件侧正在补充：无 `Content-Length` 时按 boundary 终止解析，并修正 JSON 段之后定位文件数据的指针；**编辑器与 MCP 客户端仍应手动构造带段内 `Content-Length` 的 multipart**，以兼容各版本固件。
+
 `<file_name>` 决定写入路径 `/userdata/app_pic/<file_name>`。常用：
 - `clock_bg.jpg` / `clock_bg.webp`：仅底图。
 - `clock_bg.tar.gz`：底图 + 元素图组合。

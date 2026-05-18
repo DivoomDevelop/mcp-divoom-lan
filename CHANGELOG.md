@@ -6,6 +6,18 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-05-15
+
+### Changed
+
+- Document multipart transport packaging for device firmware
+  (`divoom_http_server_upload_get_file_info`): per-part `Content-Length` vs
+  browser `FormData`, boundary-terminated fallback work-in-progress, and JSON→file
+  pointer fix — synced across `resources/skill-quick-reference.md`,
+  `resources/guide-quick-reference.md`, `docs/reference/guide-key-points.*`,
+  Anthropic skill `skills/divoom-watchface-mcp/SKILL.md`, and MCP tool
+  descriptions plus `watchface_protocol_quick_reference` rule **5a**.
+
 ## [0.1.4] - 2026-05-18
 
 ### Added

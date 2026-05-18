@@ -21,21 +21,7 @@ HTML editor's behavior (see `divoom_app/tools/divoom-watchface-visual-editor`).
 4. Only fall back to a full `ItemList` replacement when row count actually
    changes (rows added/removed). For pure metadata edits (size/x/y/font/color),
    `POST /divoom_api` JSON-only is enough — no multipart overhead.
-5. Keep `font` values as numeric ids. Pick them with the
-   `watchface_font_catalog` tool (or read the `divoom://font/catalog`
-   resource): match `script` to the slot's content (digits-only image fonts
-   for time/date/temperature digits; `cjk` TTFs for Chinese strings;
-   `pixel` / `digital` / `handwriting` tags for stylistic dials). Always
-   cross-check with `Device/GetLocalFontList` before patching a real device.
-   Pick `disp` ids the same way via `watchface_disp_catalog` /
-   `divoom://disp/catalog`; respect `hints.likelyUsesRasterOrAssetLayer`
-   (slot needs `image_addr` asset) vs. `hints.oftenUsesVectorFontForText`
-   (slot is text-driven and needs a font id). When generating a brand-new
-   watchface JSON, validate it against `divoom://watchface/schema` and use
-   `divoom://watchface/example-minimal` as the seed.
-   **For pleasing layouts:** clone `ItemList` from `watchface_template_search`
-   / `divoom://templates/curated`, then refine geometry per-row via
-   `watchface_layout_suggest` (reads `disp-catalog.typography` medians).
+5. Keep `font` values as numeric ids returned by `Device/GetLocalFontList`.
 6. To replace the cached backdrop without touching cfg `DeviceImageUrl`, use
    `POST /replace_clock_dial_bg` (no tarball, JPEG/WebP only).
 7. To upload new dial backdrop **and/or** element bitmaps while applying
@@ -72,6 +58,23 @@ Applies to `/create_local_clock`, `/patch_local_clock`, `/replace_clock_dial_bg`
   `clock_bg.tar.gz` (USTAR + gzip; leaf names match `image_addr` basenames).
 - `<file_name>` is what gets written to `/userdata/app_pic/`. Use
   `clock_bg.jpg` / `clock_bg.webp` for image, `clock_bg.tar.gz` for bundle.
+
+### Firmware multipart parser (`divoom_http_server_upload_get_file_info`)
+
+**English:** The device resolves each file-bearing multipart segment using
+`divoom_http_server_upload_get_file_info`. It expects **per-part
+`Content-Length`** on every segment. Typical browser **`FormData`** emits
+boundary-delimited parts **without** per-part lengths. Firmware work-in-progress
+adds **boundary-terminated** parsing when `Content-Length` is missing and fixes
+pointer math **after the JSON part** when locating the binary file payload.
+Editors and MCP clients should **still assemble multipart with explicit
+per-part `Content-Length`** for compatibility across firmware versions.
+
+**中文（传输文件打包要求）：** 固件在 `divoom_http_server_upload_get_file_info`
+中要求每个文件段必须有 `Content-Length`，而浏览器 `FormData` 通常只使用 boundary
+分隔、不包含每段 `Content-Length`。正在实现固件在无 `Content-Length` 时用 boundary
+终止解析，并修复 JSON 段之后定位文件数据的指针计算；编辑器侧改为手动构造带
+`Content-Length` 的 multipart 以提高兼容性。
 
 ## DialAssets selection
 

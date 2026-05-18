@@ -63,6 +63,8 @@ Applies to `/create_local_clock`, `/patch_local_clock`,
    a single `clock_bg.tar.gz` (USTAR + gzip).
 6. The outer HTTP `Content-Length` must equal the full body size.
 
+**Firmware parser (`divoom_http_server_upload_get_file_info`):** The device historically expects **per-part `Content-Length`** on every multipart segment; browser **`FormData`** often emits boundary-delimited parts **without** per-part lengths. Firmware work-in-progress adds boundary-terminated parsing when lengths are absent and fixes pointer math after the JSON part when locating file bytes; editors and MCP clients should **still send explicit per-part lengths** for compatibility.
+
 `<file_name>` is what gets written to `/userdata/app_pic/`. Use
 `clock_bg.jpg` / `clock_bg.webp` for image mode and
 `clock_bg.tar.gz` for bundle mode.

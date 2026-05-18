@@ -141,7 +141,7 @@ const tools: Tool[] = [
   {
     name: "watchface_patch_local",
     description:
-      "Patch local dial via Device/PatchLocalClockInfo with precheck. Defaults to POST /divoom_api (JSON only) for pure metadata edits. Prefer ItemPatchList (per-index field diff) — DO NOT include item_id inside patch.* unless the user explicitly asks to rename a slot, since the firmware will overwrite the device-side item_id and break menu/config bindings. When dialAssetsPath is set, switches to multipart POST /patch_local_clock: first JSON part (Device/PatchLocalClockInfo, optional DialAssets), second part single JPEG/WebP dial backdrop or clock_bg.tar.gz bundle. Element slots inside the tarball must be JPEG, WebP, or PNG (validated by firmware wf_validate_bundle_slot_image_file). Use ItemPatchList[].patch.bundle_image=<leaf> to bind a tar leaf to that slot's img_addr; supplying ItemList alone is a full-table replace and should be avoided unless the row count actually changes.",
+      "Patch local dial via Device/PatchLocalClockInfo with precheck. Defaults to POST /divoom_api (JSON only) for pure metadata edits. Prefer ItemPatchList (per-index field diff) — DO NOT include item_id inside patch.* unless the user explicitly asks to rename a slot, since the firmware will overwrite the device-side item_id and break menu/config bindings. When dialAssetsPath is set, switches to multipart POST /patch_local_clock: first JSON part (Device/PatchLocalClockInfo, optional DialAssets), second part single JPEG/WebP dial backdrop or clock_bg.tar.gz bundle. Element slots inside the tarball must be JPEG, WebP, or PNG (validated by firmware wf_validate_bundle_slot_image_file). Use ItemPatchList[].patch.bundle_image=<leaf> to bind a tar leaf to that slot's img_addr; supplying ItemList alone is a full-table replace and should be avoided unless the row count actually changes. Multipart framing (Content-Length / boundary / manual construction): see watchface_upload_file description and resources/skill-quick-reference.md.",
     inputSchema: {
       type: "object",
       properties: {
@@ -270,7 +270,7 @@ const tools: Tool[] = [
   {
     name: "watchface_replace_dial_bg_file",
     description:
-      "POST /replace_clock_dial_bg using multipart (Device/ReplaceClockDialBgFile). Replaces the cached dial bitmap only — does NOT modify cfg DeviceImageUrl, and does NOT accept tar.gz. Backdrop is validated by divoom_watchface_replace_clock_dial_bg_validate_saved_file: JPEG (FF D8) or WebP (RIFF…WEBP) only, ≤ 500 KiB (DIVOOM_REPLACE_DIAL_BG_MAX_FILE_BYTES), recommended 800x1280 portrait.",
+      "POST /replace_clock_dial_bg using multipart (Device/ReplaceClockDialBgFile). Replaces the cached dial bitmap only — does NOT modify cfg DeviceImageUrl, and does NOT accept tar.gz. Backdrop is validated by divoom_watchface_replace_clock_dial_bg_validate_saved_file: JPEG (FF D8) or WebP (RIFF…WEBP) only, ≤ 500 KiB (DIVOOM_REPLACE_DIAL_BG_MAX_FILE_BYTES), recommended 800x1280 portrait. Multipart framing notes: watchface_upload_file description.",
     inputSchema: {
       type: "object",
       properties: {
@@ -298,7 +298,7 @@ const tools: Tool[] = [
   {
     name: "watchface_upload_file",
     description:
-      "POST /upload with multipart. First JSON part is caller-provided metadata (product-specific Command).",
+      "POST /upload with multipart. First JSON part is caller-provided metadata (product-specific Command). 传输文件打包要求：固件在 divoom_http_server_upload_get_file_info 中要求每个文件段必须有 Content-Length，而浏览器 FormData 通常只使用 boundary 分隔、不包含每段 Content-Length。正在实现固件在无 Content-Length 时用 boundary 终止解析，并修复 JSON 段之后定位文件数据的指针计算；编辑器侧改为手动构造带 Content-Length 的 multipart 以提高兼容性。This server builds multipart with per-part Content-Length.",
     inputSchema: {
       type: "object",
       properties: {
@@ -321,7 +321,7 @@ const tools: Tool[] = [
   {
     name: "watchface_create_local_clock",
     description:
-      "POST /create_local_clock (multipart) — Device/CreateLocalClock. metadata.DialAssets accepts 'auto' (default; sniffs gzip magic on the file part), 'image' (single JPEG/WebP backdrop), or 'bundle' (clock_bg.tar.gz). Legacy UseDialAssetBundle (0=image, non-0=bundle) is honored when DialAssets is omitted. Backdrop is JPEG/WebP only; element slots inside the tarball accept JPEG/WebP/PNG (firmware wf_validate_bundle_slot_image_file). Each ItemList[i] needs disp/font/x/y/w/h/size/alig numbers and color_1/color_2/item_id non-empty strings; ItemIdList must be a parallel non-empty string array. alig: 3=center, 4=left, 5=right.",
+      "POST /create_local_clock (multipart) — Device/CreateLocalClock. metadata.DialAssets accepts 'auto' (default; sniffs gzip magic on the file part), 'image' (single JPEG/WebP backdrop), or 'bundle' (clock_bg.tar.gz). Legacy UseDialAssetBundle (0=image, non-0=bundle) is honored when DialAssets is omitted. Backdrop is JPEG/WebP only; element slots inside the tarball accept JPEG/WebP/PNG (firmware wf_validate_bundle_slot_image_file). Each ItemList[i] needs disp/font/x/y/w/h/size/alig numbers and color_1/color_2/item_id non-empty strings; ItemIdList must be a parallel non-empty string array. alig: 3=center, 4=left, 5=right. Multipart framing (Content-Length per part): see watchface_upload_file description.",
     inputSchema: {
       type: "object",
       properties: {
@@ -1492,6 +1492,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       "3) Patch minimally with ItemPatchList (per-index field diff) and ItemPatchByRoleList (semantic role). Do NOT include item_id inside patch.* unless explicitly renaming a slot — the device-side item_id is referenced by menus/config bindings.",
       "4) Only fall back to a full ItemList replacement when row count actually changes (rows added/removed). For pure metadata edits (size/x/y/font/color), POST /divoom_api JSON-only is enough.",
       "5) When new bytes need to land on the device, switch to multipart /patch_local_clock or /create_local_clock. JSON part first (name=\"json\"; filename=\"cmd.json\"), file part second (filename=\"clock_bg.jpg|webp|tar.gz\"); both parts carry per-part Content-Length; boundary is unquoted; CRLF; single file per request.",
+      "5a) Multipart packaging (divoom_http_server_upload_get_file_info): firmware expects per-part Content-Length on each segment; browser FormData often uses boundary-only framing without per-part lengths. Firmware adds boundary-terminated parsing when lengths are absent and fixes JSON→file pointer math; still prefer explicit per-part Content-Length (this server's multipart builders do so).",
       "6) DialAssets selection: 'image' = no local element leaves (or all http(s) URLs); 'bundle' = at least one ItemList[i].image_addr or ItemPatchList[i].patch.bundle_image is a local leaf — pack as clock_bg.tar.gz (USTAR + gzip).",
       "7) Image format rules: dial backdrop is JPEG (FF D8) or WebP (RIFF…WEBP) only, ≤ 500 KiB, recommended 800x1280 portrait. Element slots inside the tarball accept JPEG/WebP/PNG (89 50 4E 47 …). GIF/BMP/TIFF must be transcoded client-side before packing.",
       "8) Replace cached backdrop without changing cfg DeviceImageUrl: POST /replace_clock_dial_bg multipart (no tar.gz, JPEG/WebP only).",

@@ -101,6 +101,17 @@ Content-Length: <fileLen>\r\n\r\n
 `clock_bg.jpg` / `clock_bg.webp` for single-image dial uploads, and
 `clock_bg.tar.gz` for bundled element packs.
 
+### Firmware note (`divoom_http_server_upload_get_file_info`)
+
+Per-part `Content-Length` on **each** multipart segment is what the parser keys
+off today. **`FormData` in browsers** often omits those headers (boundary-only
+framing). Firmware is gaining boundary-terminated fallback without per-part
+lengths and correcting how the reader jumps from the JSON segment to file
+bytes; **clients should still send explicit per-part lengths** for predictable
+behavior.
+
+**传输文件打包要求：** 固件在 `divoom_http_server_upload_get_file_info` 中要求每个文件段必须有 `Content-Length`，而浏览器 `FormData` 通常只使用 boundary 分隔、不包含每段 `Content-Length`。正在实现固件在无 `Content-Length` 时用 boundary 终止解析，并修复 JSON 段之后定位文件数据的指针计算；编辑器侧改为手动构造带 `Content-Length` 的 multipart 以提高兼容性。
+
 ## DialAssets: single image vs tarball
 
 JSON commands `Device/CreateLocalClock` and `Device/PatchLocalClockInfo` choose
