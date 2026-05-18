@@ -167,10 +167,9 @@ Validation lives in `wf_unpack_disp_items` (firmware
 Other recognized keys: `sep`, `image_id`, `image_addr`, `animation`, `angle`,
 `hier`, `transp`, and (bundle only) `bundle_image`.
 
-**Analog pointer slots (`disp` 131 / 132 / 233 — `*_POINT_IMAGE`):** use one **square**
-layer (`w == h`) shared by hour/minute/second; each `image_addr` bitmap must match **`w`×`h`** with the
-hand pivot at the **image center** and the hand painted pointing to **12 o'clock**. Do **not** use a
-full **`800×1280`** hand sprite — rotation will not share the dial center.
+**Analog pointer slots (`DIVOOM_CLOCK_DISP_SUPPORT_*_POINT_IMAGE` — **`disp` 131 / 132 / 233**,
+editor **`HOUR_POINT_IMAGE` / `MIN_POINT_IMAGE` / `SECOND_POINT_IMAGE`):** **Mandatory:** one shared **square**
+layer (**`w == h`**) for hour/minute/second — identical **`x,y,w,h`** on all three rows — center pivot rotation (hand painted at bitmap center, toward **12 o'clock**). Bitmap size **`w`×`w`**. Do **not** use mismatched skinny rectangles or a full **`800×1280`** hand sprite. Reference export **`ClockId 60012`** (`clock60012.cfg`). See **`docs/disp-usage.md`** / **`docs/tool-examples.md` §5b**.
 
 **`transp`:** Use **`100`** for every layer that must be visible. **AI generators often emit `0`, which makes the layer invisible on-device** (looks like bad coordinates).
 

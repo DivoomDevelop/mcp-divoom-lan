@@ -122,11 +122,9 @@ In bundle mode, leaf basenames inside the tar must exactly match the
 - **`transp`:** Treat as **opacity for visibility**. For anything that should **show on screen**, set **`transp: 100`**. **Many LLMs default missing/`transp: 0`, which renders fully invisible on device** — users think layout is broken when it is only transparency.
 - **`hier`:** Only **`0` = auto**, **`1` = bottom layer**, **`2` = top layer**. There is **no `hier: 3`**. Stack analog hands e.g. hour **`1`**, minute **`0`**, second **`2`**.
 
-## Analog pointer slots (`disp` 131 / 132 / 233)
+## Analog pointer slots (`DIVOOM_CLOCK_DISP_SUPPORT_*_POINT_IMAGE`: **131** / **132** / **233**)
 
-Square **`w = h`** layer shared by hour/minute/second; bitmap **`w`×`h`** with pivot at **center**,
-hand toward **12 o'clock**. Avoid **`800×1280`** hand sprites. Use **`transp: 100`**; use **`hier`**
-**`0`/`1`/`2`** so the second hand can paint on top (**`2`**). Details: `docs/tool-examples.md` §5b.
+**Required:** shared **square** bbox (**`w = h`**, **same `x,y,w,h`** on all three `ItemList` rows); each PNG/WebP/JPEG is **`w`×`w`**, **pivot at square center**, hand toward **12 o'clock** (firmware rotates around layer center). **Never** three different thin rectangles or **`800×1280`** full-screen needles. Good reference: device export **`ClockId 60012`** (`clock60012.cfg`). **`transp: 100`**; **`hier`** **`0`/`1`/`2`** with second often **`2`**. Details: `docs/tool-examples.md` §5b, `docs/disp-usage.md`.
 
 ## Image elements / net-gallery uniqueness
 

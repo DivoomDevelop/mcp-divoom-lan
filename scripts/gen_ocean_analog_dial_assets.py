@@ -1,10 +1,15 @@
 """
-Generate ocean-themed dial backdrop + square PNG hands for Divoom POINT_IMAGE slots.
+Generate ocean-themed dial backdrop + square PNG hands for Divoom pointer slots.
 
-Firmware rotates analog hands around the center of the layer box (x,y,w,h). Each
-hand image must be exactly w×h with the pivot at the image center and the hand
-drawn pointing toward 12 o'clock (up, -Y). Do not use full-screen 800×1280 hand
-sprites — see docs/tool-examples.md.
+Uses firmware pointer types (same square bbox for all three rows):
+  DIVOOM_CLOCK_DISP_SUPPORT_HOUR_POINT_IMAGE = 131
+  DIVOOM_CLOCK_DISP_SUPPORT_MIN_POINT_IMAGE = 132
+  DIVOOM_CLOCK_DISP_SUPPORT_SECOND_POINT_IMAGE = 233
+
+Rotation is around the center of the layer box (x,y,w,h). Each hand bitmap must
+match w×h with w==h (square), pivot at image center, hand toward 12 o'clock.
+Do not use full-screen 800×1280 hand sprites or mismatched skinny rectangles —
+see docs/tool-examples.md §5b and a good export example ClockId 60012 (e.g. clock60012.cfg).
 """
 
 from __future__ import annotations

@@ -128,6 +128,15 @@ and is conventionally the same value as the matching `item_id`
 - **`transp`:** Treat as **on-screen visibility / opacity**. Anything that must **appear** needs **`transp: 100`**. **Many AI-generated payloads omit the field or set `0`, which makes the layer invisible on-device** — looks like broken coordinates when it is only transparency.
 - **`hier`:** Only three levels — **`0`** automatic ordering, **`1`** **bottom** (painted first), **`2`** **top** (painted last, above others). **There is no `hier: 3`.** Typical analog clock: hour **`1`**, minute **`0`**, second **`2`**; tune on hardware.
 
+### Analog pointer images (`disp` 131 / 132 / 233)
+
+Firmware constants: **`DIVOOM_CLOCK_DISP_SUPPORT_HOUR_POINT_IMAGE` (131)**,
+**`DIVOOM_CLOCK_DISP_SUPPORT_MIN_POINT_IMAGE` (132)**,
+**`DIVOOM_CLOCK_DISP_SUPPORT_SECOND_POINT_IMAGE` (233)**.
+
+- **Required:** all three rows share the **same square bbox** (**`w == h`**) and the **same** **`x,y,w,h`**; each bitmap is **`w`×`w`** with the **hand pivot at the square center** and the hand pointing to **12 o'clock** (center rotation). Do **not** use three different skinny rectangles or a full **`800×1280`** hand sprite.
+- Reference export: **`ClockId 60012`** (e.g. `clock60012.cfg`). See **`docs/disp-usage.md`** and **`docs/tool-examples.md` §5b**.
+
 ### Image / net-gallery slot uniqueness
 
 In a single dial **`ItemList`**, keep **at most one row per image-backed `disp`**.

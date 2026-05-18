@@ -90,19 +90,28 @@ ItemList[i] is asset-driven (hints.likelyUsesRasterOrAssetLayer)
 
 ## 模拟指针类 `disp`（131 / 132 / 233）
 
-**`HOUR_POINT_IMAGE`（131）、`MIN_POINT_IMAGE`（132）、`SECOND_POINT_IMAGE`（233）**
-用于「_RESOURCE 指针图」驱动模拟时钟，而不是数字时间字符串。
+固件常量名（与 C 枚举一致，便于对照工程代码）：
 
-- **`ItemList[i].image_addr`**（或 PATCH 时的 **`bundle_image`**）指向 tar 里的叶子；每张图
-  的尺寸必须等于该条的 **`w`×`h`**。
-- **旋转枢轴**在图层矩形 **`(x,y,w,h)`** 的几何中心一侧（设备按指针类型旋转）；因此三根针
-  应共用同一 **`x,y,w,h`**，且素材以**正方形**最为稳妥。
-- 指针美术：**枢轴在画布中心**，针尖指向 **12 点（屏幕上方）**；禁止把指针画在 **`800×1280`**
-  全屏图的任意偏移位置来代替「方形图层」——会出现三根针围绕不同中心旋转的现象。
-- **`transp`**：**需要能看见的元素必须显式 `transp: 100`**。模型生成 JSON 时常默认为 **`0`**，设备上会 **整块透明看不见**（误以为坐标错了）。
-- **`hier`**（叠层，仅 **`0` / `1` / `2`**）：**`0`** = 自动；**`1`** = **底层**；**`2`** = **顶层**。秒针通常 **`2`**，时针常 **`1`**，分针可用 **`0`**，按真机微调。
-- 参考排版统计：`watchface_disp_catalog` 中上述 `disp` 的 **`typography.box.p50`**。
-- 实操示例：`docs/tool-examples.md` 第 **5b** 节。
+| `disp` | 编辑器符号 | 固件常量 |
+|---:|---|---|
+| 131 | `HOUR_POINT_IMAGE`（时针指针） | `DIVOOM_CLOCK_DISP_SUPPORT_HOUR_POINT_IMAGE` |
+| 132 | `MIN_POINT_IMAGE`（分针指针） | `DIVOOM_CLOCK_DISP_SUPPORT_MIN_POINT_IMAGE` |
+| 233 | `SECOND_POINT_IMAGE`（秒针指针） | `DIVOOM_CLOCK_DISP_SUPPORT_SECOND_POINT_IMAGE` |
+
+**硬性约定（不按此做容易错位、「三根针各绕各的轴」）：**
+
+1. **三根指针必须使用同一组图层矩形**：**完全相同**的 **`x` / `y` / `w` / `h`**。
+2. **必须使用正方形**：**`w = h`**。不要用三根互不相同的细长矩形框（例如时针 `60×240`、分针 `40×280`）——即便盒子中心碰巧对齐，仍不如正方形稳妥且易与素材不匹配。
+3. **中心旋转**：每张指针图的像素尺寸为 **`w`×`w`**（与正方形边长相等）；指针枢轴在**正方形画布的正中央**，针默认指向 **12 点（屏幕上方）**，固件绕该**图层几何中心**旋转。
+4. **禁止**用 **`800×1280`** 整屏图只在某一角落画一根针来代替上述正方形图层——旋转锚点会错。
+5. **参考配置**：设备导出表 **`ClockId 60012`**（示例文件名如 **`clock60012.cfg`**）中，三根指针条目 **`disp` 131 / 132 / 233** 共用同一正方形 `x,y,w,h`，即为推荐写法。
+
+**其它：**
+
+- **`ItemList[i].image_addr`**（或 PATCH **`bundle_image`**）指向 tar 叶子；解码后尺寸须等于 **`w`×`h`**。
+- **`transp`**：须 **`100`** 才能看见（勿默认 **`0`**）。**`hier`**：仅 **`0`** 自动 / **`1`** 底 / **`2`** 顶。
+- 参考排版统计：`watchface_disp_catalog` 里上述 `disp` 的 **`typography.box.p50`**。
+- 实操示例：`docs/tool-examples.md` 第 **5b** 节、`scripts/gen_ocean_analog_dial_assets.py`。
 
 ## `typography` 排版统计（v0.1.4+）
 
