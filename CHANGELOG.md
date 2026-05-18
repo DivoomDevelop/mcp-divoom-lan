@@ -6,6 +6,32 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-05-18
+
+### Added
+
+- **Curated template library (~20 skeleton watchfaces)** mined from the HTML
+  editor's `public/template/config/*.cfg`: resource `divoom://templates/curated`
+  (`resources/templates-curated.json`) plus tool **`watchface_template_search`**
+  (filters: `tagsAll`, `tagsAny`, `bucket`, `clockIds`, `minItems`, `maxItems`,
+  `dispPresent`, `nameContains`, `includeWatchface`).
+- **Per-disp typography aggregates** merged into `divoom://disp/catalog`: each
+  display row may include **`typography`** (`size`/`box` p10–p50–p90 quantiles,
+  `alig.mode`, `colorHints`) computed across bundled marketplace configs.
+  Tool **`watchface_layout_suggest`** returns `suggestedItemFields` (median
+  geometry + common colors) for a chosen `disp` + canvas reminder.
+- **Generator `scripts/build-templates-and-typography.mjs`** (npm script
+  `build:templates`) emits `templates-curated.json` +
+  `disp-typography-overlay.json`; **`scripts/sync-editor-ai-bundle.mjs`** now
+  runs font-catalog refresh → writes interim disp-catalog → runs typography →
+  merges overlay back into `disp-catalog.json`.
+- **`watchface_protocol_quick_reference`** rules **16–17** document template
+  cloning + layout suggestion workflow.
+- **Docs:** `docs/templates-curated.md`; expanded `docs/disp-usage.md`,
+  `docs/quick-start.md` §10, `resources/skill-quick-reference.md`.
+- **Runtime:** MCP server `version` field now tracks `package.json` via
+  `readFileSync` (no more hard-coded drift).
+
 ## [0.1.3] - 2026-05-18
 
 ### Added

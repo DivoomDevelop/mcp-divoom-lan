@@ -63,6 +63,19 @@ ItemList[i] is asset-driven (hints.likelyUsesRasterOrAssetLayer)
 
 详见 `docs/font-usage.md`。
 
+## `typography` 排版统计（v0.1.4+）
+
+同步编辑器 bundle 后，`divoom://disp/catalog` 里每个 `disp` 可能多一段 **`typography`**：
+
+- 来自编辑器自带的 `public/template/config/*.cfg` 聚合（上架模板几何分布）。
+- `size` / `box.{x,y,w,h}` 的 `p10` / `p50` / `p90`：新手默认用 **`p50`（中位数）** 当初始 `size/x/y/w/h`。
+- `alig.mode`：模板里出现最多的对齐（3 居中 / 4 左 / 5 右）。
+- `colorHints.color_*_common`：该 disp 下最常见的 `#RRGGBB`，仅作配色启发。
+
+快捷工具：**`watchface_layout_suggest`**（传 `disp`）会直接吐出一份合并后的 **`suggestedItemFields`**（median + 常见色）。
+
+这不是固件校验规则；最终仍以预览与真机效果为准。
+
 ## 维护方式
 
 ```bash

@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -27,6 +28,8 @@ const DEFAULT_TIMEOUT_MS = parseIntegerOrDefault(process.env.DIVOOM_TIMEOUT_MS, 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const resourceRoot = path.resolve(__dirname, "../resources");
+
+const PKG_VERSION = JSON.parse(readFileSync(path.join(__dirname, "../package.json"), "utf8")).version as string;
 
 const RESOURCES = [
   {
@@ -84,6 +87,14 @@ const RESOURCES = [
       "Editor-side narrative on AI-assisted watchface authoring: canvas conventions, font rules, where the catalogs come from, regeneration workflow.",
     mimeType: "text/markdown",
     fileName: "ai-watchface-guide.md",
+  },
+  {
+    uri: "divoom://templates/curated",
+    name: "Curated Watchface Templates",
+    description:
+      "~20 designer-made skeleton watchfaces mined from the HTML editor's bundled marketplace configs (`public/template/config`). Each entry lists tags (weather, lunar, pixel_theme, …), stats, and a stripped `watchface` JSON (ClockId, names, ItemIdList, ItemList) safe to clone before swapping fonts/colors. Does not include DeviceImageUrl.",
+    mimeType: "application/json",
+    fileName: "templates-curated.json",
   },
 ] as const;
 
@@ -466,6 +477,75 @@ const tools: Tool[] = [
       additionalProperties: false,
     },
   },
+  {
+    name: "watchface_template_search",
+    description:
+      "Search the curated template library (`divoom://templates/curated`): ~20 marketplace-derived watchface skeletons with tags such as weather, lunar_calendar, split_time_digits, pixel_theme, asset_heavy. Prefer cloning an existing ItemList layout before inventing raw coordinates. Filters support tagsAll/tagsAny, bucket, clockIds, item-count bounds, and dispPresent (template must include that disp id). Set includeWatchface=false for a compact summary without the full ItemList payload.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        tagsAll: {
+          type: "array",
+          items: { type: "string" },
+          description: "Template must contain every listed tag (AND semantics).",
+        },
+        tagsAny: {
+          type: "array",
+          items: { type: "string" },
+          description: "Template must contain at least one listed tag (OR semantics).",
+        },
+        bucket: {
+          type: "string",
+          description: "Pick list bucket label from the curated generator (e.g. split_time_digits, weather, pixel_theme).",
+        },
+        clockIds: {
+          type: "array",
+          items: { type: "integer" },
+          description: "Restrict to explicit ClockId values.",
+        },
+        minItems: { type: "integer", description: "Minimum ItemList row count." },
+        maxItems: { type: "integer", description: "Maximum ItemList row count." },
+        dispPresent: {
+          type: "integer",
+          description: "Keep templates that already contain at least one row with this disp id.",
+        },
+        nameContains: {
+          type: "string",
+          description: "Case-insensitive substring match on NameCn or NameEn.",
+        },
+        limit: {
+          type: "integer",
+          description: "Max templates to return (default 8, max 25).",
+        },
+        includeWatchface: {
+          type: "boolean",
+          description: "If false, omit the nested watchface.ItemList payload (default true).",
+        },
+      },
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "watchface_layout_suggest",
+    description:
+      "Return layout hints for a single disp id by combining disp-catalog metadata with aggregated typography (median size/x/y/w/h, frequent colors, alignment mode) mined from bundled marketplace templates. Use before authoring a new ItemList row or ItemPatchList.patch fragment — values are soft guidance, not firmware-enforced. Always clamp boxes to the logical canvas (typically 800×1280).",
+    inputSchema: {
+      type: "object",
+      properties: {
+        disp: { type: "integer", description: "Target ItemList[i].disp." },
+        canvasWidth: {
+          type: "integer",
+          description: "Logical canvas width for clamp reminders (default 800).",
+        },
+        canvasHeight: {
+          type: "integer",
+          description: "Logical canvas height for clamp reminders (default 1280).",
+        },
+      },
+      required: ["disp"],
+      additionalProperties: false,
+    },
+  },
 ];
 
 function parseIntegerOrDefault(input: string | undefined, fallback: number): number {
@@ -535,6 +615,21 @@ function optionalBoolean(input: unknown, fieldName: string): boolean | undefined
     throw new Error(`${fieldName} must be a boolean.`);
   }
   return input;
+}
+
+function ensureArrayOfStrings(input: unknown, fieldName: string): string[] {
+  if (!Array.isArray(input)) {
+    throw new Error(`${fieldName} must be an array of strings.`);
+  }
+  const out: string[] = [];
+  for (let i = 0; i < input.length; i++) {
+    const x = input[i];
+    if (typeof x !== "string") {
+      throw new Error(`${fieldName}[${i}] must be a string.`);
+    }
+    out.push(x);
+  }
+  return out;
 }
 
 function ensureArray(input: unknown, fieldName: string): unknown[] {
@@ -734,6 +829,19 @@ async function loadFontCatalog(): Promise<FontCatalog> {
   return parsed;
 }
 
+type TypographyBlock = {
+  sampleCount: number;
+  size: { p10: number | null; p50: number | null; p90: number | null };
+  box: {
+    x: { p10: number | null; p50: number | null; p90: number | null };
+    y: { p10: number | null; p50: number | null; p90: number | null };
+    w: { p10: number | null; p50: number | null; p90: number | null };
+    h: { p10: number | null; p50: number | null; p90: number | null };
+  };
+  alig?: { mode: number };
+  colorHints: { color_1_common: string[]; color_2_common: string[] };
+};
+
 type DispCatalogEntry = {
   disp: number;
   name: string;
@@ -743,6 +851,7 @@ type DispCatalogEntry = {
     oftenUsesVectorFontForText?: boolean;
     note?: string;
   } | null;
+  typography?: TypographyBlock;
 };
 
 type DispCatalog = {
@@ -761,6 +870,41 @@ async function loadDispCatalog(): Promise<DispCatalog> {
   const raw = await readFile(absolutePath, "utf8");
   const parsed = JSON.parse(raw) as DispCatalog;
   cachedDispCatalog = parsed;
+  return parsed;
+}
+
+type CuratedTemplateRow = {
+  bucket: string;
+  clockId: number;
+  nameCn: string;
+  nameEn: string;
+  tags: string[];
+  stats: {
+    itemCount: number;
+    uniqueDisps: number;
+    rasterSlotRatio: number;
+    dominantFonts: { id: number; share: number }[];
+  };
+  watchface: JsonRecord;
+};
+
+type CuratedTemplatesFile = {
+  schema: number;
+  generatedAt: string;
+  source: Record<string, unknown>;
+  notes: string[];
+  tagIndex: Record<string, number[]>;
+  templates: CuratedTemplateRow[];
+};
+
+let cachedCuratedTemplates: CuratedTemplatesFile | null = null;
+
+async function loadCuratedTemplates(): Promise<CuratedTemplatesFile> {
+  if (cachedCuratedTemplates) return cachedCuratedTemplates;
+  const absolutePath = path.join(resourceRoot, "templates-curated.json");
+  const raw = await readFile(absolutePath, "utf8");
+  const parsed = JSON.parse(raw) as CuratedTemplatesFile;
+  cachedCuratedTemplates = parsed;
   return parsed;
 }
 
@@ -1205,6 +1349,142 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     };
   }
 
+  if (name === "watchface_template_search") {
+    const curated = await loadCuratedTemplates();
+    const tagsAll =
+      args.tagsAll === undefined ? [] : ensureArrayOfStrings(args.tagsAll, "tagsAll");
+    const tagsAny =
+      args.tagsAny === undefined ? [] : ensureArrayOfStrings(args.tagsAny, "tagsAny");
+    const bucketFilter =
+      args.bucket === undefined || args.bucket === null
+        ? undefined
+        : String(args.bucket).trim();
+    const clockIdFilter =
+      args.clockIds === undefined
+        ? null
+        : ensureArray(args.clockIds, "clockIds").map((v) => requiredInteger(v, "clockIds[]"));
+    const minItems = optionalInteger(args.minItems, "minItems");
+    const maxItems = optionalInteger(args.maxItems, "maxItems");
+    const dispPresent = optionalInteger(args.dispPresent, "dispPresent");
+    const nameContainsRaw = args.nameContains;
+    const nameContains =
+      typeof nameContainsRaw === "string" && nameContainsRaw.trim().length > 0
+        ? nameContainsRaw.trim().toLowerCase()
+        : undefined;
+    const limitRaw = optionalInteger(args.limit, "limit");
+    const limit = Math.max(1, Math.min(25, limitRaw ?? 8));
+    const includeWatchface = optionalBoolean(args.includeWatchface, "includeWatchface") ?? true;
+
+    let filtered = curated.templates;
+    if (bucketFilter) {
+      filtered = filtered.filter((t) => t.bucket === bucketFilter);
+    }
+    if (clockIdFilter && clockIdFilter.length > 0) {
+      const idSet = new Set(clockIdFilter);
+      filtered = filtered.filter((t) => idSet.has(t.clockId));
+    }
+    if (tagsAll.length > 0) {
+      filtered = filtered.filter((t) => tagsAll.every((tag) => t.tags.includes(tag)));
+    }
+    if (tagsAny.length > 0) {
+      filtered = filtered.filter((t) => tagsAny.some((tag) => t.tags.includes(tag)));
+    }
+    if (minItems !== undefined) {
+      filtered = filtered.filter((t) => t.stats.itemCount >= minItems);
+    }
+    if (maxItems !== undefined) {
+      filtered = filtered.filter((t) => t.stats.itemCount <= maxItems);
+    }
+    if (dispPresent !== undefined) {
+      filtered = filtered.filter((t) => {
+        const items = t.watchface.ItemList;
+        if (!Array.isArray(items)) return false;
+        return items.some((row) => {
+          const rec = row as JsonRecord;
+          const d = rec.disp;
+          return typeof d === "number" && Number.isInteger(d) && d === dispPresent;
+        });
+      });
+    }
+    if (nameContains) {
+      filtered = filtered.filter(
+        (t) =>
+          t.nameCn.toLowerCase().includes(nameContains) ||
+          t.nameEn.toLowerCase().includes(nameContains),
+      );
+    }
+
+    const truncated = filtered.length > limit;
+    const trimmed = filtered.slice(0, limit);
+    const templates = trimmed.map((t) => {
+      if (includeWatchface) return t;
+      const { watchface: _wf, ...rest } = t;
+      void _wf;
+      return {
+        ...rest,
+        watchfaceMeta: {
+          clockId: t.clockId,
+          itemCount: t.stats.itemCount,
+        },
+      };
+    });
+
+    return {
+      schema: curated.schema,
+      generatedAt: curated.generatedAt,
+      source: curated.source,
+      counts: {
+        totalCurated: curated.templates.length,
+        afterFilter: filtered.length,
+        returned: templates.length,
+        truncated,
+      },
+      notes: curated.notes,
+      tagIndex: curated.tagIndex,
+      templates,
+    };
+  }
+
+  if (name === "watchface_layout_suggest") {
+    const dispId = requiredInteger(args.disp, "disp");
+    const catalog = await loadDispCatalog();
+    const entry = catalog.displays.find((d) => d.disp === dispId);
+    if (!entry) {
+      throw new Error(`disp ${dispId} not found in disp-catalog.`);
+    }
+    const canvasW = optionalInteger(args.canvasWidth, "canvasWidth") ?? 800;
+    const canvasH = optionalInteger(args.canvasHeight, "canvasHeight") ?? 1280;
+    const tw = entry.typography;
+    let suggestedItemFields: JsonRecord | null = null;
+    if (tw) {
+      suggestedItemFields = {
+        size: tw.size.p50,
+        x: tw.box.x.p50,
+        y: tw.box.y.p50,
+        w: tw.box.w.p50,
+        h: tw.box.h.p50,
+        alig: tw.alig?.mode ?? 3,
+      };
+      const c1 = tw.colorHints.color_1_common[0];
+      const c2 = tw.colorHints.color_2_common[0];
+      if (c1) suggestedItemFields.color_1 = c1;
+      if (c2) suggestedItemFields.color_2 = c2;
+    }
+
+    return {
+      canvas: { width: canvasW, height: canvasH },
+      disp: entry.disp,
+      name: entry.name,
+      description_zh: entry.description_zh,
+      hints: entry.hints,
+      typography: tw ?? null,
+      suggestedItemFields,
+      guidance: suggestedItemFields
+        ? "Apply suggestedItemFields as the baseline geometry for this disp (medians from bundled marketplace templates). Clamp x/y/w/h inside the canvas and iterate after preview on hardware."
+        : "No typography aggregate exists for this disp yet — copy a similar row from watchface_template_search or watchface_get_local instead.",
+    };
+  }
+
   if (name === "watchface_protocol_quick_reference") {
     const lines = [
       "1) Always POST JSON to /divoom_api (never GET). Root ReturnCode in the request must be 0.",
@@ -1222,6 +1502,8 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       "13) Pick `ItemList[i].font` ids from `watchface_font_catalog` (or the `divoom://font/catalog` resource) — never hard-code an unknown id. Match the slot's content: digit-only image fonts (charset 0123456789) for time/date/temperature digits; CJK-capable TTFs for Chinese strings; pixel/digital/handwriting tags for stylistic dials. Cross-check the chosen id against `watchface_get_fonts_local` before patching a real device.",
       "14) Pick `ItemList[i].disp` ids from `watchface_disp_catalog` (or the `divoom://disp/catalog` resource). Use `hints.likelyUsesRasterOrAssetLayer` to decide whether the slot expects an `image_addr` asset (image/GIF/PNG) and `hints.oftenUsesVectorFontForText` to decide whether to assign a font id.",
       "15) When generating a fresh watchface JSON, validate the output against `divoom://watchface/schema` and start from `divoom://watchface/example-minimal` — keep `ItemIdList` parallel to `item_id` and stay inside the 800x1280 logical canvas.",
+      "16) Before inventing coordinates from scratch, query `watchface_template_search` or read `divoom://templates/curated`, then clone an ItemList skeleton whose tags match your target scenario (weather, lunar, pixel_theme, …).",
+      "17) Call `watchface_layout_suggest` with `disp` to seed `size/x/y/w/h/alig` plus frequent `color_*` pairs using median statistics embedded in `disp-catalog.typography`.",
     ];
     return {
       rules: lines,
@@ -1239,7 +1521,7 @@ async function main() {
   const server = new Server(
     {
       name: "mcp-divoom-lan",
-      version: "0.1.0",
+      version: PKG_VERSION,
     },
     {
       capabilities: {

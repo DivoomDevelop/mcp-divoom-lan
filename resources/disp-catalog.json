@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-05-18T02:03:24.096Z",
+  "generatedAt": "2026-05-18T03:01:18.165Z",
   "source": {
     "editorRepo": "divoom-watchface-visual-editor",
     "base": "src/editor/app.js (DISP_NAME_MAP + DISP_COMMENT_ZH_MAP)",
@@ -14,7 +14,8 @@
     "`description_zh` mirrors the editor's DISP_COMMENT_ZH_MAP — keep it as authoritative human description.",
     "`hints.likelyUsesRasterOrAssetLayer = true` means the slot usually expects an image_addr asset (image/GIF/PNG); `font` may be ignored by the firmware.",
     "`hints.oftenUsesVectorFontForText = true` means the slot is text-driven — combine with watchface_font_catalog (script: cjk/latin/digits) to pick a font id.",
-    "Special slot 204 (SUNRISE_SUNSET_TIME): firmware now displays sunset between today's sunrise/sunset window, otherwise the next sunrise — describe as 'sunrise OR sunset (auto-switch by current time)' in any user-facing UI."
+    "Special slot 204 (SUNRISE_SUNSET_TIME): firmware now displays sunset between today's sunrise/sunset window, otherwise the next sunrise — describe as 'sunrise OR sunset (auto-switch by current time)' in any user-facing UI.",
+    "`typography` (merged after running scripts/build-templates-and-typography.mjs) summarizes size/x/y/w/h quantiles and frequent colors mined from bundled marketplace templates — heuristic layout hints only, not enforced by firmware."
   ],
   "displays": [
     {
@@ -25,6 +26,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 5,
+        "size": {
+          "p10": 26,
+          "p50": 64,
+          "p90": 179
+        },
+        "box": {
+          "x": {
+            "p10": 33,
+            "p50": 328,
+            "p90": 648
+          },
+          "y": {
+            "p10": 78,
+            "p50": 580,
+            "p90": 825
+          },
+          "w": {
+            "p10": 26,
+            "p50": 68,
+            "p90": 204
+          },
+          "h": {
+            "p10": 20,
+            "p50": 64,
+            "p90": 168
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#64e1f5",
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -35,6 +79,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 34,
+        "size": {
+          "p10": 0,
+          "p50": 200,
+          "p90": 294
+        },
+        "box": {
+          "x": {
+            "p10": 59,
+            "p50": 432,
+            "p90": 536
+          },
+          "y": {
+            "p10": 45,
+            "p50": 231,
+            "p90": 583
+          },
+          "w": {
+            "p10": 172,
+            "p50": 282,
+            "p90": 428
+          },
+          "h": {
+            "p10": 122,
+            "p50": 210,
+            "p90": 328
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#ff8b00"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -45,6 +132,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 34,
+        "size": {
+          "p10": 0,
+          "p50": 215,
+          "p90": 300
+        },
+        "box": {
+          "x": {
+            "p10": 17,
+            "p50": 61,
+            "p90": 331
+          },
+          "y": {
+            "p10": 23,
+            "p50": 91,
+            "p90": 461
+          },
+          "w": {
+            "p10": 172,
+            "p50": 309,
+            "p90": 437
+          },
+          "h": {
+            "p10": 122,
+            "p50": 232,
+            "p90": 381
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#ef7718"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -55,6 +185,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 273,
+        "size": {
+          "p10": 56,
+          "p50": 96,
+          "p90": 216
+        },
+        "box": {
+          "x": {
+            "p10": 21,
+            "p50": 178,
+            "p90": 474
+          },
+          "y": {
+            "p10": 15,
+            "p50": 802,
+            "p90": 1143
+          },
+          "w": {
+            "p10": 195,
+            "p50": 364,
+            "p90": 688
+          },
+          "h": {
+            "p10": 68,
+            "p50": 127,
+            "p90": 262
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#333333"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -65,6 +238,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 101,
+          "p50": 105,
+          "p90": 109
+        },
+        "box": {
+          "x": {
+            "p10": 44,
+            "p50": 65,
+            "p90": 85
+          },
+          "y": {
+            "p10": 131,
+            "p50": 472,
+            "p90": 812
+          },
+          "w": {
+            "p10": 492,
+            "p50": 547,
+            "p90": 601
+          },
+          "h": {
+            "p10": 123,
+            "p50": 127,
+            "p90": 131
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#fedd9a"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -85,6 +300,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 15,
+        "size": {
+          "p10": 34,
+          "p50": 56,
+          "p90": 102
+        },
+        "box": {
+          "x": {
+            "p10": 68,
+            "p50": 266,
+            "p90": 588
+          },
+          "y": {
+            "p10": 93,
+            "p50": 497,
+            "p90": 1120
+          },
+          "w": {
+            "p10": 94,
+            "p50": 169,
+            "p90": 279
+          },
+          "h": {
+            "p10": 38,
+            "p50": 68,
+            "p90": 112
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#c84a49"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -95,6 +353,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 107,
+        "size": {
+          "p10": 32,
+          "p50": 38,
+          "p90": 113
+        },
+        "box": {
+          "x": {
+            "p10": 118,
+            "p50": 246,
+            "p90": 601
+          },
+          "y": {
+            "p10": 155,
+            "p50": 1126,
+            "p90": 1159
+          },
+          "w": {
+            "p10": 60,
+            "p50": 79,
+            "p90": 188
+          },
+          "h": {
+            "p10": 40,
+            "p50": 50,
+            "p90": 125
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#b9b9b9"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -105,6 +406,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 5,
+        "size": {
+          "p10": 13,
+          "p50": 64,
+          "p90": 128
+        },
+        "box": {
+          "x": {
+            "p10": 113,
+            "p50": 227,
+            "p90": 421
+          },
+          "y": {
+            "p10": 436,
+            "p50": 816,
+            "p90": 1054
+          },
+          "w": {
+            "p10": 75,
+            "p50": 156,
+            "p90": 174
+          },
+          "h": {
+            "p10": 54,
+            "p50": 127,
+            "p90": 142
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#d8d3bc",
+            "#c84a49",
+            "#f2f2f4"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -125,6 +469,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 178,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 0,
+            "p50": 0,
+            "p90": 0
+          },
+          "y": {
+            "p10": 0,
+            "p50": 0,
+            "p90": 0
+          },
+          "w": {
+            "p10": 800,
+            "p50": 800,
+            "p90": 800
+          },
+          "h": {
+            "p10": 1280,
+            "p50": 1280,
+            "p90": 1280
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -145,6 +530,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 5,
+        "size": {
+          "p10": 45,
+          "p50": 100,
+          "p90": 127
+        },
+        "box": {
+          "x": {
+            "p10": 64,
+            "p50": 114,
+            "p90": 472
+          },
+          "y": {
+            "p10": 194,
+            "p50": 395,
+            "p90": 680
+          },
+          "w": {
+            "p10": 59,
+            "p50": 161,
+            "p90": 246
+          },
+          "h": {
+            "p10": 50,
+            "p50": 121,
+            "p90": 139
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#000001",
+            "#fcaa02"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -155,6 +583,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 112,
+        "size": {
+          "p10": 44,
+          "p50": 44,
+          "p90": 130
+        },
+        "box": {
+          "x": {
+            "p10": 1,
+            "p50": 276,
+            "p90": 399
+          },
+          "y": {
+            "p10": 239,
+            "p50": 632,
+            "p90": 959
+          },
+          "w": {
+            "p10": 250,
+            "p50": 278,
+            "p90": 798
+          },
+          "h": {
+            "p10": 59,
+            "p50": 72,
+            "p90": 174
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#ffba25"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -165,6 +636,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 39,
+        "size": {
+          "p10": 36,
+          "p50": 52,
+          "p90": 53
+        },
+        "box": {
+          "x": {
+            "p10": 30,
+            "p50": 49,
+            "p90": 319
+          },
+          "y": {
+            "p10": 243,
+            "p50": 865,
+            "p90": 1011
+          },
+          "w": {
+            "p10": 317,
+            "p50": 382,
+            "p90": 740
+          },
+          "h": {
+            "p10": 48,
+            "p50": 66,
+            "p90": 86
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#d2d2d4",
+            "#d0d3d9"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -195,6 +709,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 32,
+          "p50": 36,
+          "p90": 39
+        },
+        "box": {
+          "x": {
+            "p10": 415,
+            "p50": 456,
+            "p90": 496
+          },
+          "y": {
+            "p10": 693,
+            "p50": 915,
+            "p90": 1137
+          },
+          "w": {
+            "p10": 133,
+            "p50": 144,
+            "p90": 154
+          },
+          "h": {
+            "p10": 47,
+            "p50": 53,
+            "p90": 59
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#a19700"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -205,6 +761,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 6,
+        "size": {
+          "p10": 30,
+          "p50": 36,
+          "p90": 44
+        },
+        "box": {
+          "x": {
+            "p10": 60,
+            "p50": 111,
+            "p90": 313
+          },
+          "y": {
+            "p10": 801,
+            "p50": 1097,
+            "p90": 1189
+          },
+          "w": {
+            "p10": 142,
+            "p50": 174,
+            "p90": 253
+          },
+          "h": {
+            "p10": 30,
+            "p50": 36,
+            "p90": 65
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#eebd72",
+            "#f1d89a"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -215,6 +814,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 32,
+          "p50": 36,
+          "p90": 39
+        },
+        "box": {
+          "x": {
+            "p10": 272,
+            "p50": 293,
+            "p90": 314
+          },
+          "y": {
+            "p10": 693,
+            "p50": 915,
+            "p90": 1137
+          },
+          "w": {
+            "p10": 133,
+            "p50": 146,
+            "p90": 159
+          },
+          "h": {
+            "p10": 47,
+            "p50": 53,
+            "p90": 59
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#a19700"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -225,6 +866,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 33,
+          "p50": 33,
+          "p90": 33
+        },
+        "box": {
+          "x": {
+            "p10": 53,
+            "p50": 53,
+            "p90": 53
+          },
+          "y": {
+            "p10": 638,
+            "p50": 638,
+            "p90": 638
+          },
+          "w": {
+            "p10": 182,
+            "p50": 182,
+            "p90": 182
+          },
+          "h": {
+            "p10": 45,
+            "p50": 45,
+            "p90": 45
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#a19700"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -235,6 +917,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 33,
+          "p50": 34,
+          "p90": 36
+        },
+        "box": {
+          "x": {
+            "p10": 57,
+            "p50": 63,
+            "p90": 357
+          },
+          "y": {
+            "p10": 904,
+            "p50": 1042,
+            "p90": 1065
+          },
+          "w": {
+            "p10": 212,
+            "p50": 331,
+            "p90": 343
+          },
+          "h": {
+            "p10": 102,
+            "p50": 110,
+            "p90": 206
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#f30e16"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -245,6 +969,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 33,
+          "p50": 34,
+          "p90": 36
+        },
+        "box": {
+          "x": {
+            "p10": 411,
+            "p50": 430,
+            "p90": 535
+          },
+          "y": {
+            "p10": 909,
+            "p50": 1071,
+            "p90": 1137
+          },
+          "w": {
+            "p10": 212,
+            "p50": 331,
+            "p90": 343
+          },
+          "h": {
+            "p10": 110,
+            "p50": 110,
+            "p90": 206
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#a19700"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -265,6 +1031,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 31,
+        "size": {
+          "p10": 36,
+          "p50": 46,
+          "p90": 77
+        },
+        "box": {
+          "x": {
+            "p10": 108,
+            "p50": 373,
+            "p90": 572
+          },
+          "y": {
+            "p10": 98,
+            "p50": 638,
+            "p90": 1149
+          },
+          "w": {
+            "p10": 86,
+            "p50": 123,
+            "p90": 200
+          },
+          "h": {
+            "p10": 38,
+            "p50": 59,
+            "p90": 88
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#333333"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -275,6 +1084,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 37,
+        "size": {
+          "p10": 24,
+          "p50": 36,
+          "p90": 55
+        },
+        "box": {
+          "x": {
+            "p10": 34,
+            "p50": 338,
+            "p90": 545
+          },
+          "y": {
+            "p10": 105,
+            "p50": 452,
+            "p90": 1155
+          },
+          "w": {
+            "p10": 176,
+            "p50": 277,
+            "p90": 434
+          },
+          "h": {
+            "p10": 31,
+            "p50": 47,
+            "p90": 75
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#333333",
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -285,6 +1137,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 24,
+        "size": {
+          "p10": 42,
+          "p50": 96,
+          "p90": 147
+        },
+        "box": {
+          "x": {
+            "p10": 43,
+            "p50": 336,
+            "p90": 553
+          },
+          "y": {
+            "p10": 189,
+            "p50": 718,
+            "p90": 1063
+          },
+          "w": {
+            "p10": 111,
+            "p50": 177,
+            "p90": 272
+          },
+          "h": {
+            "p10": 41,
+            "p50": 101,
+            "p90": 155
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#ff3474"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -315,6 +1210,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 82,
+        "size": {
+          "p10": 36,
+          "p50": 42,
+          "p90": 86
+        },
+        "box": {
+          "x": {
+            "p10": 0,
+            "p50": 36,
+            "p90": 149
+          },
+          "y": {
+            "p10": 174,
+            "p50": 486,
+            "p90": 867
+          },
+          "w": {
+            "p10": 240,
+            "p50": 240,
+            "p90": 800
+          },
+          "h": {
+            "p10": 60,
+            "p50": 60,
+            "p90": 135
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#d2d2d4",
+            "#ffffff",
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -325,6 +1263,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 44,
+        "size": {
+          "p10": 38,
+          "p50": 38,
+          "p90": 38
+        },
+        "box": {
+          "x": {
+            "p10": 118,
+            "p50": 136,
+            "p90": 138
+          },
+          "y": {
+            "p10": 1186,
+            "p50": 1186,
+            "p90": 1207
+          },
+          "w": {
+            "p10": 170,
+            "p50": 170,
+            "p90": 262
+          },
+          "h": {
+            "p10": 50,
+            "p50": 50,
+            "p90": 50
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#b9b9b9",
+            "#333333"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -335,6 +1316,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 102,
+        "size": {
+          "p10": 38,
+          "p50": 39,
+          "p90": 96
+        },
+        "box": {
+          "x": {
+            "p10": 71,
+            "p50": 136,
+            "p90": 533
+          },
+          "y": {
+            "p10": 148,
+            "p50": 1108,
+            "p90": 1157
+          },
+          "w": {
+            "p10": 100,
+            "p50": 113,
+            "p90": 250
+          },
+          "h": {
+            "p10": 47,
+            "p50": 50,
+            "p90": 108
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#e71f19",
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -345,6 +1369,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 81,
+        "size": {
+          "p10": 30,
+          "p50": 30,
+          "p90": 70
+        },
+        "box": {
+          "x": {
+            "p10": 32,
+            "p50": 36,
+            "p90": 241
+          },
+          "y": {
+            "p10": 342,
+            "p50": 676,
+            "p90": 993
+          },
+          "w": {
+            "p10": 210,
+            "p50": 240,
+            "p90": 368
+          },
+          "h": {
+            "p10": 42,
+            "p50": 42,
+            "p90": 100
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#b7b7b7",
+            "#ffffff",
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -355,6 +1422,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 9,
+        "size": {
+          "p10": 54,
+          "p50": 54,
+          "p90": 55
+        },
+        "box": {
+          "x": {
+            "p10": 32,
+            "p50": 32,
+            "p90": 32
+          },
+          "y": {
+            "p10": 956,
+            "p50": 1171,
+            "p90": 1171
+          },
+          "w": {
+            "p10": 306,
+            "p50": 306,
+            "p90": 310
+          },
+          "h": {
+            "p10": 80,
+            "p50": 80,
+            "p90": 80
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#bcbcbc",
+            "#d1d3dc"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -365,6 +1474,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 82,
+        "size": {
+          "p10": 44,
+          "p50": 44,
+          "p90": 94
+        },
+        "box": {
+          "x": {
+            "p10": 342,
+            "p50": 554,
+            "p90": 554
+          },
+          "y": {
+            "p10": 242,
+            "p50": 626,
+            "p90": 1009
+          },
+          "w": {
+            "p10": 210,
+            "p50": 210,
+            "p90": 368
+          },
+          "h": {
+            "p10": 60,
+            "p50": 60,
+            "p90": 125
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#e0140c"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -375,6 +1527,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 24,
+        "size": {
+          "p10": 33,
+          "p50": 54,
+          "p90": 60
+        },
+        "box": {
+          "x": {
+            "p10": 100,
+            "p50": 400,
+            "p90": 657
+          },
+          "y": {
+            "p10": 314,
+            "p50": 623,
+            "p90": 952
+          },
+          "w": {
+            "p10": 95,
+            "p50": 297,
+            "p90": 368
+          },
+          "h": {
+            "p10": 45,
+            "p50": 72,
+            "p90": 100
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#3aed3a",
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -395,6 +1590,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 5,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 47,
+            "p50": 47,
+            "p90": 47
+          },
+          "y": {
+            "p10": 321,
+            "p50": 657,
+            "p90": 993
+          },
+          "w": {
+            "p10": 210,
+            "p50": 210,
+            "p90": 210
+          },
+          "h": {
+            "p10": 140,
+            "p50": 140,
+            "p90": 140
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -425,6 +1661,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 12,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 319,
+            "p50": 320,
+            "p90": 322
+          },
+          "y": {
+            "p10": 294,
+            "p50": 295,
+            "p90": 299
+          },
+          "w": {
+            "p10": 156,
+            "p50": 162,
+            "p90": 162
+          },
+          "h": {
+            "p10": 156,
+            "p50": 162,
+            "p90": 162
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -435,6 +1712,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 61,
+        "size": {
+          "p10": 24,
+          "p50": 36,
+          "p90": 64
+        },
+        "box": {
+          "x": {
+            "p10": 40,
+            "p50": 91,
+            "p90": 401
+          },
+          "y": {
+            "p10": 60,
+            "p50": 658,
+            "p90": 1039
+          },
+          "w": {
+            "p10": 196,
+            "p50": 400,
+            "p90": 651
+          },
+          "h": {
+            "p10": 38,
+            "p50": 64,
+            "p90": 290
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#333333",
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -455,6 +1775,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 25,
+        "size": {
+          "p10": 50,
+          "p50": 80,
+          "p90": 128
+        },
+        "box": {
+          "x": {
+            "p10": 43,
+            "p50": 187,
+            "p90": 473
+          },
+          "y": {
+            "p10": 83,
+            "p50": 742,
+            "p90": 1084
+          },
+          "w": {
+            "p10": 146,
+            "p50": 237,
+            "p90": 355
+          },
+          "h": {
+            "p10": 63,
+            "p50": 96,
+            "p90": 161
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#333333"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -465,6 +1828,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 4,
+        "size": {
+          "p10": 34,
+          "p50": 40,
+          "p90": 68
+        },
+        "box": {
+          "x": {
+            "p10": 66,
+            "p50": 248,
+            "p90": 391
+          },
+          "y": {
+            "p10": 436,
+            "p50": 816,
+            "p90": 1105
+          },
+          "w": {
+            "p10": 350,
+            "p50": 464,
+            "p90": 667
+          },
+          "h": {
+            "p10": 46,
+            "p50": 61,
+            "p90": 103
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#333333",
+            "#e4b36d"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -475,6 +1881,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 30,
+        "size": {
+          "p10": 24,
+          "p50": 36,
+          "p90": 61
+        },
+        "box": {
+          "x": {
+            "p10": 30,
+            "p50": 200,
+            "p90": 547
+          },
+          "y": {
+            "p10": 182,
+            "p50": 591,
+            "p90": 1044
+          },
+          "w": {
+            "p10": 139,
+            "p50": 193,
+            "p90": 377
+          },
+          "h": {
+            "p10": 31,
+            "p50": 47,
+            "p90": 111
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#333333"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -505,6 +1954,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 57,
+            "p50": 57,
+            "p90": 57
+          },
+          "y": {
+            "p10": 70,
+            "p50": 70,
+            "p90": 70
+          },
+          "w": {
+            "p10": 686,
+            "p50": 686,
+            "p90": 686
+          },
+          "h": {
+            "p10": 686,
+            "p50": 686,
+            "p90": 686
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -525,6 +2015,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 21,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 30,
+            "p50": 102,
+            "p90": 313
+          },
+          "y": {
+            "p10": 25,
+            "p50": 196,
+            "p90": 794
+          },
+          "w": {
+            "p10": 80,
+            "p50": 160,
+            "p90": 340
+          },
+          "h": {
+            "p10": 100,
+            "p50": 247,
+            "p90": 433
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -535,6 +2066,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 21,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 202,
+            "p50": 305,
+            "p90": 485
+          },
+          "y": {
+            "p10": 25,
+            "p50": 203,
+            "p90": 794
+          },
+          "w": {
+            "p10": 80,
+            "p50": 160,
+            "p90": 340
+          },
+          "h": {
+            "p10": 100,
+            "p50": 247,
+            "p90": 433
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -545,6 +2117,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 21,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 82,
+            "p50": 248,
+            "p90": 438
+          },
+          "y": {
+            "p10": 25,
+            "p50": 358,
+            "p90": 794
+          },
+          "w": {
+            "p10": 80,
+            "p50": 160,
+            "p90": 340
+          },
+          "h": {
+            "p10": 100,
+            "p50": 247,
+            "p90": 433
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -555,6 +2168,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 21,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 305,
+            "p50": 500,
+            "p90": 600
+          },
+          "y": {
+            "p10": 25,
+            "p50": 358,
+            "p90": 794
+          },
+          "w": {
+            "p10": 80,
+            "p50": 160,
+            "p90": 340
+          },
+          "h": {
+            "p10": 100,
+            "p50": 247,
+            "p90": 433
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -565,6 +2219,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 413,
+            "p50": 413,
+            "p90": 413
+          },
+          "y": {
+            "p10": 54,
+            "p50": 54,
+            "p90": 54
+          },
+          "w": {
+            "p10": 96,
+            "p50": 96,
+            "p90": 96
+          },
+          "h": {
+            "p10": 96,
+            "p50": 96,
+            "p90": 96
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -585,6 +2280,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 15,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 36,
+            "p50": 140,
+            "p90": 457
+          },
+          "y": {
+            "p10": 44,
+            "p50": 204,
+            "p90": 874
+          },
+          "w": {
+            "p10": 149,
+            "p50": 270,
+            "p90": 525
+          },
+          "h": {
+            "p10": 83,
+            "p50": 100,
+            "p90": 907
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -615,6 +2351,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 451,
+            "p50": 629,
+            "p90": 629
+          },
+          "y": {
+            "p10": 107,
+            "p50": 107,
+            "p90": 609
+          },
+          "w": {
+            "p10": 50,
+            "p50": 50,
+            "p90": 50
+          },
+          "h": {
+            "p10": 65,
+            "p50": 65,
+            "p90": 109
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -625,6 +2402,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 520,
+            "p50": 680,
+            "p90": 680
+          },
+          "y": {
+            "p10": 107,
+            "p50": 107,
+            "p90": 609
+          },
+          "w": {
+            "p10": 50,
+            "p50": 50,
+            "p90": 50
+          },
+          "h": {
+            "p10": 65,
+            "p50": 65,
+            "p90": 109
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -635,6 +2453,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 621,
+            "p50": 621,
+            "p90": 621
+          },
+          "y": {
+            "p10": 734,
+            "p50": 734,
+            "p90": 734
+          },
+          "w": {
+            "p10": 50,
+            "p50": 50,
+            "p90": 50
+          },
+          "h": {
+            "p10": 120,
+            "p50": 120,
+            "p90": 120
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -645,6 +2504,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 695,
+            "p50": 695,
+            "p90": 695
+          },
+          "y": {
+            "p10": 734,
+            "p50": 734,
+            "p90": 734
+          },
+          "w": {
+            "p10": 50,
+            "p50": 50,
+            "p90": 50
+          },
+          "h": {
+            "p10": 120,
+            "p50": 120,
+            "p90": 120
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -655,6 +2555,48 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 4,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 45
+        },
+        "box": {
+          "x": {
+            "p10": 122,
+            "p50": 337,
+            "p90": 527
+          },
+          "y": {
+            "p10": 133,
+            "p50": 178,
+            "p90": 253
+          },
+          "w": {
+            "p10": 40,
+            "p50": 95,
+            "p90": 208
+          },
+          "h": {
+            "p10": 29,
+            "p50": 53,
+            "p90": 65
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -665,6 +2607,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 10,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 74,
+            "p50": 528,
+            "p90": 685
+          },
+          "y": {
+            "p10": 32,
+            "p50": 116,
+            "p90": 1044
+          },
+          "w": {
+            "p10": 76,
+            "p50": 96,
+            "p90": 131
+          },
+          "h": {
+            "p10": 76,
+            "p50": 96,
+            "p90": 131
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -705,6 +2688,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 45,
+            "p50": 45,
+            "p90": 45
+          },
+          "y": {
+            "p10": 259,
+            "p50": 259,
+            "p90": 259
+          },
+          "w": {
+            "p10": 256,
+            "p50": 256,
+            "p90": 256
+          },
+          "h": {
+            "p10": 256,
+            "p50": 256,
+            "p90": 256
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -715,6 +2739,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 140,
+            "p50": 383,
+            "p90": 526
+          },
+          "y": {
+            "p10": 32,
+            "p50": 105,
+            "p90": 390
+          },
+          "w": {
+            "p10": 117,
+            "p50": 175,
+            "p90": 490
+          },
+          "h": {
+            "p10": 46,
+            "p50": 77,
+            "p90": 793
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -725,6 +2790,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 10,
+        "size": {
+          "p10": 19,
+          "p50": 32,
+          "p90": 39
+        },
+        "box": {
+          "x": {
+            "p10": 28,
+            "p50": 78,
+            "p90": 454
+          },
+          "y": {
+            "p10": 725,
+            "p50": 948,
+            "p90": 1020
+          },
+          "w": {
+            "p10": 70,
+            "p50": 122,
+            "p90": 215
+          },
+          "h": {
+            "p10": 20,
+            "p50": 32,
+            "p90": 57
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#ff7ade"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -735,6 +2843,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 15,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 65,
+            "p50": 132,
+            "p90": 461
+          },
+          "y": {
+            "p10": 806,
+            "p50": 972,
+            "p90": 1064
+          },
+          "w": {
+            "p10": 51,
+            "p50": 82,
+            "p90": 136
+          },
+          "h": {
+            "p10": 49,
+            "p50": 82,
+            "p90": 136
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -745,6 +2894,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 9,
+        "size": {
+          "p10": 28,
+          "p50": 32,
+          "p90": 38
+        },
+        "box": {
+          "x": {
+            "p10": 8,
+            "p50": 65,
+            "p90": 640
+          },
+          "y": {
+            "p10": 854,
+            "p50": 1132,
+            "p90": 1167
+          },
+          "w": {
+            "p10": 82,
+            "p50": 160,
+            "p90": 256
+          },
+          "h": {
+            "p10": 31,
+            "p50": 32,
+            "p90": 51
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#ffa755"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -755,6 +2947,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 9,
+        "size": {
+          "p10": 28,
+          "p50": 32,
+          "p90": 38
+        },
+        "box": {
+          "x": {
+            "p10": 8,
+            "p50": 65,
+            "p90": 439
+          },
+          "y": {
+            "p10": 854,
+            "p50": 1180,
+            "p90": 1215
+          },
+          "w": {
+            "p10": 84,
+            "p50": 160,
+            "p90": 256
+          },
+          "h": {
+            "p10": 31,
+            "p50": 32,
+            "p90": 51
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#55cfff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -765,6 +3000,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 10,
+        "size": {
+          "p10": 19,
+          "p50": 32,
+          "p90": 39
+        },
+        "box": {
+          "x": {
+            "p10": 73,
+            "p50": 254,
+            "p90": 454
+          },
+          "y": {
+            "p10": 838,
+            "p50": 995,
+            "p90": 1045
+          },
+          "w": {
+            "p10": 70,
+            "p50": 122,
+            "p90": 215
+          },
+          "h": {
+            "p10": 20,
+            "p50": 32,
+            "p90": 57
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#ffd500"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -775,6 +3053,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 15,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 209,
+            "p50": 355,
+            "p90": 469
+          },
+          "y": {
+            "p10": 890,
+            "p50": 972,
+            "p90": 1064
+          },
+          "w": {
+            "p10": 51,
+            "p50": 82,
+            "p90": 136
+          },
+          "h": {
+            "p10": 49,
+            "p50": 82,
+            "p90": 136
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -785,6 +3104,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 9,
+        "size": {
+          "p10": 28,
+          "p50": 32,
+          "p90": 38
+        },
+        "box": {
+          "x": {
+            "p10": 215,
+            "p50": 235,
+            "p90": 640
+          },
+          "y": {
+            "p10": 919,
+            "p50": 1132,
+            "p90": 1167
+          },
+          "w": {
+            "p10": 82,
+            "p50": 160,
+            "p90": 256
+          },
+          "h": {
+            "p10": 31,
+            "p50": 32,
+            "p90": 51
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#ffa755"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -795,6 +3157,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 9,
+        "size": {
+          "p10": 28,
+          "p50": 32,
+          "p90": 38
+        },
+        "box": {
+          "x": {
+            "p10": 222,
+            "p50": 268,
+            "p90": 439
+          },
+          "y": {
+            "p10": 919,
+            "p50": 1180,
+            "p90": 1215
+          },
+          "w": {
+            "p10": 84,
+            "p50": 160,
+            "p90": 256
+          },
+          "h": {
+            "p10": 31,
+            "p50": 32,
+            "p90": 51
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#55cfff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -805,6 +3210,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 10,
+        "size": {
+          "p10": 19,
+          "p50": 32,
+          "p90": 39
+        },
+        "box": {
+          "x": {
+            "p10": 73,
+            "p50": 431,
+            "p90": 514
+          },
+          "y": {
+            "p10": 851,
+            "p50": 1021,
+            "p90": 1103
+          },
+          "w": {
+            "p10": 70,
+            "p50": 122,
+            "p90": 215
+          },
+          "h": {
+            "p10": 20,
+            "p50": 32,
+            "p90": 57
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#6af529"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -815,6 +3263,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 15,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 291,
+            "p50": 456,
+            "p90": 610
+          },
+          "y": {
+            "p10": 918,
+            "p50": 1063,
+            "p90": 1088
+          },
+          "w": {
+            "p10": 51,
+            "p50": 82,
+            "p90": 136
+          },
+          "h": {
+            "p10": 49,
+            "p50": 82,
+            "p90": 136
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -825,6 +3314,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 9,
+        "size": {
+          "p10": 28,
+          "p50": 32,
+          "p90": 38
+        },
+        "box": {
+          "x": {
+            "p10": 362,
+            "p50": 414,
+            "p90": 640
+          },
+          "y": {
+            "p10": 1023,
+            "p50": 1132,
+            "p90": 1167
+          },
+          "w": {
+            "p10": 82,
+            "p50": 160,
+            "p90": 256
+          },
+          "h": {
+            "p10": 31,
+            "p50": 32,
+            "p90": 51
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#ffa755"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -835,6 +3367,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 9,
+        "size": {
+          "p10": 28,
+          "p50": 32,
+          "p90": 38
+        },
+        "box": {
+          "x": {
+            "p10": 375,
+            "p50": 414,
+            "p90": 546
+          },
+          "y": {
+            "p10": 1023,
+            "p50": 1180,
+            "p90": 1215
+          },
+          "w": {
+            "p10": 84,
+            "p50": 160,
+            "p90": 256
+          },
+          "h": {
+            "p10": 31,
+            "p50": 32,
+            "p90": 51
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#55cfff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -845,6 +3420,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 9,
+        "size": {
+          "p10": 19,
+          "p50": 32,
+          "p90": 42
+        },
+        "box": {
+          "x": {
+            "p10": 70,
+            "p50": 504,
+            "p90": 657
+          },
+          "y": {
+            "p10": 779,
+            "p50": 1121,
+            "p90": 1168
+          },
+          "w": {
+            "p10": 68,
+            "p50": 84,
+            "p90": 177
+          },
+          "h": {
+            "p10": 20,
+            "p50": 32,
+            "p90": 59
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#8f16fa"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -855,6 +3473,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 12,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 278,
+            "p50": 575,
+            "p90": 665
+          },
+          "y": {
+            "p10": 972,
+            "p50": 1091,
+            "p90": 1167
+          },
+          "w": {
+            "p10": 50,
+            "p50": 80,
+            "p90": 154
+          },
+          "h": {
+            "p10": 48,
+            "p50": 80,
+            "p90": 154
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -865,6 +3524,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 28,
+          "p50": 28,
+          "p90": 45
+        },
+        "box": {
+          "x": {
+            "p10": 348,
+            "p50": 575,
+            "p90": 606
+          },
+          "y": {
+            "p10": 1102,
+            "p50": 1180,
+            "p90": 1211
+          },
+          "w": {
+            "p10": 81,
+            "p50": 160,
+            "p90": 164
+          },
+          "h": {
+            "p10": 30,
+            "p50": 32,
+            "p90": 58
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#8f16fa"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -875,6 +3577,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 28,
+          "p50": 28,
+          "p90": 45
+        },
+        "box": {
+          "x": {
+            "p10": 421,
+            "p50": 606,
+            "p90": 651
+          },
+          "y": {
+            "p10": 1088,
+            "p50": 1156,
+            "p90": 1164
+          },
+          "w": {
+            "p10": 80,
+            "p50": 160,
+            "p90": 164
+          },
+          "h": {
+            "p10": 30,
+            "p50": 32,
+            "p90": 58
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#8f16fa"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -885,6 +3630,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 28,
+          "p50": 36,
+          "p90": 59
+        },
+        "box": {
+          "x": {
+            "p10": 159,
+            "p50": 602,
+            "p90": 650
+          },
+          "y": {
+            "p10": 354,
+            "p50": 654,
+            "p90": 750
+          },
+          "w": {
+            "p10": 73,
+            "p50": 116,
+            "p90": 190
+          },
+          "h": {
+            "p10": 30,
+            "p50": 51,
+            "p90": 65
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#f64043",
+            "#333333"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -895,6 +3683,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 28,
+          "p50": 36,
+          "p90": 59
+        },
+        "box": {
+          "x": {
+            "p10": 286,
+            "p50": 404,
+            "p90": 501
+          },
+          "y": {
+            "p10": 354,
+            "p50": 654,
+            "p90": 750
+          },
+          "w": {
+            "p10": 73,
+            "p50": 116,
+            "p90": 190
+          },
+          "h": {
+            "p10": 30,
+            "p50": 51,
+            "p90": 65
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#f64043",
+            "#333333"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -905,6 +3736,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 4,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 0,
+            "p50": 24,
+            "p90": 111
+          },
+          "y": {
+            "p10": 537,
+            "p50": 781,
+            "p90": 850
+          },
+          "w": {
+            "p10": 147,
+            "p50": 491,
+            "p90": 800
+          },
+          "h": {
+            "p10": 147,
+            "p50": 201,
+            "p90": 220
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -915,6 +3787,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 16,
+        "size": {
+          "p10": 28,
+          "p50": 56,
+          "p90": 60
+        },
+        "box": {
+          "x": {
+            "p10": 116,
+            "p50": 400,
+            "p90": 491
+          },
+          "y": {
+            "p10": 351,
+            "p50": 763,
+            "p90": 791
+          },
+          "w": {
+            "p10": 168,
+            "p50": 336,
+            "p90": 368
+          },
+          "h": {
+            "p10": 39,
+            "p50": 85,
+            "p90": 100
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#3aed3a",
+            "#ffffff",
+            "#371919"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -925,6 +3840,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 13,
+        "size": {
+          "p10": 33,
+          "p50": 60,
+          "p90": 60
+        },
+        "box": {
+          "x": {
+            "p10": 138,
+            "p50": 400,
+            "p90": 400
+          },
+          "y": {
+            "p10": 730,
+            "p50": 903,
+            "p90": 991
+          },
+          "w": {
+            "p10": 171,
+            "p50": 368,
+            "p90": 368
+          },
+          "h": {
+            "p10": 43,
+            "p50": 100,
+            "p90": 100
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ff4337",
+            "#ffffff",
+            "#371919"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -995,6 +3953,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 4,
+        "size": {
+          "p10": 33,
+          "p50": 49,
+          "p90": 52
+        },
+        "box": {
+          "x": {
+            "p10": 135,
+            "p50": 138,
+            "p90": 335
+          },
+          "y": {
+            "p10": 718,
+            "p50": 791,
+            "p90": 864
+          },
+          "w": {
+            "p10": 181,
+            "p50": 275,
+            "p90": 304
+          },
+          "h": {
+            "p10": 44,
+            "p50": 64,
+            "p90": 69
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#371919",
+            "#ffffff",
+            "#ff5d1a"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1005,6 +4006,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 30,
+          "p50": 37,
+          "p90": 43
+        },
+        "box": {
+          "x": {
+            "p10": 525,
+            "p50": 560,
+            "p90": 594
+          },
+          "y": {
+            "p10": 708,
+            "p50": 791,
+            "p90": 874
+          },
+          "w": {
+            "p10": 162,
+            "p50": 200,
+            "p90": 237
+          },
+          "h": {
+            "p10": 39,
+            "p50": 48,
+            "p90": 57
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#ff5d1a"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1015,6 +4058,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 45,
+          "p50": 45,
+          "p90": 45
+        },
+        "box": {
+          "x": {
+            "p10": 52,
+            "p50": 52,
+            "p90": 52
+          },
+          "y": {
+            "p10": 972,
+            "p50": 972,
+            "p90": 972
+          },
+          "w": {
+            "p10": 153,
+            "p50": 153,
+            "p90": 153
+          },
+          "h": {
+            "p10": 59,
+            "p50": 59,
+            "p90": 59
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ff5d1a"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1025,6 +4109,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 30,
+          "p50": 37,
+          "p90": 43
+        },
+        "box": {
+          "x": {
+            "p10": 53,
+            "p50": 134,
+            "p90": 215
+          },
+          "y": {
+            "p10": 854,
+            "p50": 907,
+            "p90": 959
+          },
+          "w": {
+            "p10": 211,
+            "p50": 442,
+            "p90": 672
+          },
+          "h": {
+            "p10": 39,
+            "p50": 48,
+            "p90": 57
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#ff5d1a"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1035,6 +4161,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 45,
+          "p50": 45,
+          "p90": 45
+        },
+        "box": {
+          "x": {
+            "p10": 419,
+            "p50": 419,
+            "p90": 419
+          },
+          "y": {
+            "p10": 972,
+            "p50": 972,
+            "p90": 972
+          },
+          "w": {
+            "p10": 153,
+            "p50": 153,
+            "p90": 153
+          },
+          "h": {
+            "p10": 59,
+            "p50": 59,
+            "p90": 59
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ff5d1a"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1045,6 +4212,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 45,
+          "p50": 45,
+          "p90": 45
+        },
+        "box": {
+          "x": {
+            "p10": 603,
+            "p50": 603,
+            "p90": 603
+          },
+          "y": {
+            "p10": 972,
+            "p50": 972,
+            "p90": 972
+          },
+          "w": {
+            "p10": 153,
+            "p50": 153,
+            "p90": 153
+          },
+          "h": {
+            "p10": 59,
+            "p50": 59,
+            "p90": 59
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ff5d1a"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1185,6 +4393,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 19,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 88,
+            "p50": 240,
+            "p90": 525
+          },
+          "y": {
+            "p10": 82,
+            "p50": 271,
+            "p90": 808
+          },
+          "w": {
+            "p10": 130,
+            "p50": 212,
+            "p90": 469
+          },
+          "h": {
+            "p10": 130,
+            "p50": 212,
+            "p90": 469
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1195,6 +4444,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 20,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 57,
+            "p50": 164,
+            "p90": 487
+          },
+          "y": {
+            "p10": 70,
+            "p50": 235,
+            "p90": 768
+          },
+          "w": {
+            "p10": 166,
+            "p50": 308,
+            "p90": 609
+          },
+          "h": {
+            "p10": 166,
+            "p50": 308,
+            "p90": 609
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1225,6 +4515,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 25,
+        "size": {
+          "p10": 32,
+          "p50": 48,
+          "p90": 92
+        },
+        "box": {
+          "x": {
+            "p10": 64,
+            "p50": 272,
+            "p90": 540
+          },
+          "y": {
+            "p10": 548,
+            "p50": 954,
+            "p90": 1149
+          },
+          "w": {
+            "p10": 136,
+            "p50": 236,
+            "p90": 321
+          },
+          "h": {
+            "p10": 32,
+            "p50": 62,
+            "p90": 125
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#ff5500"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1235,6 +4568,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 11,
+        "size": {
+          "p10": 32,
+          "p50": 40,
+          "p90": 100
+        },
+        "box": {
+          "x": {
+            "p10": 35,
+            "p50": 484,
+            "p90": 567
+          },
+          "y": {
+            "p10": 777,
+            "p50": 903,
+            "p90": 1114
+          },
+          "w": {
+            "p10": 158,
+            "p50": 236,
+            "p90": 300
+          },
+          "h": {
+            "p10": 32,
+            "p50": 56,
+            "p90": 121
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffef",
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1245,6 +4621,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 30,
+        "size": {
+          "p10": 32,
+          "p50": 53,
+          "p90": 96
+        },
+        "box": {
+          "x": {
+            "p10": 30,
+            "p50": 87,
+            "p90": 496
+          },
+          "y": {
+            "p10": 232,
+            "p50": 813,
+            "p90": 1100
+          },
+          "w": {
+            "p10": 131,
+            "p50": 185,
+            "p90": 301
+          },
+          "h": {
+            "p10": 32,
+            "p50": 65,
+            "p90": 120
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#014967"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1255,6 +4674,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 26,
+        "size": {
+          "p10": 34,
+          "p50": 44,
+          "p90": 52
+        },
+        "box": {
+          "x": {
+            "p10": 139,
+            "p50": 340,
+            "p90": 489
+          },
+          "y": {
+            "p10": 225,
+            "p50": 1126,
+            "p90": 1211
+          },
+          "w": {
+            "p10": 232,
+            "p50": 306,
+            "p90": 430
+          },
+          "h": {
+            "p10": 41,
+            "p50": 60,
+            "p90": 80
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#333333",
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -1285,6 +4747,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 49,
+        "size": {
+          "p10": 28,
+          "p50": 48,
+          "p90": 112
+        },
+        "box": {
+          "x": {
+            "p10": 83,
+            "p50": 285,
+            "p90": 513
+          },
+          "y": {
+            "p10": 193,
+            "p50": 484,
+            "p90": 1167
+          },
+          "w": {
+            "p10": 120,
+            "p50": 198,
+            "p90": 336
+          },
+          "h": {
+            "p10": 38,
+            "p50": 56,
+            "p90": 127
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#ffffff",
+            "#1a0e03"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1295,6 +4800,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 14,
+        "size": {
+          "p10": 22,
+          "p50": 42,
+          "p90": 77
+        },
+        "box": {
+          "x": {
+            "p10": 31,
+            "p50": 97,
+            "p90": 601
+          },
+          "y": {
+            "p10": 400,
+            "p50": 973,
+            "p90": 1170
+          },
+          "w": {
+            "p10": 128,
+            "p50": 200,
+            "p90": 646
+          },
+          "h": {
+            "p10": 26,
+            "p50": 55,
+            "p90": 93
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#333333",
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1315,6 +4863,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 4,
+        "size": {
+          "p10": 17,
+          "p50": 30,
+          "p90": 56
+        },
+        "box": {
+          "x": {
+            "p10": 56,
+            "p50": 72,
+            "p90": 375
+          },
+          "y": {
+            "p10": 336,
+            "p50": 804,
+            "p90": 1074
+          },
+          "w": {
+            "p10": 71,
+            "p50": 71,
+            "p90": 140
+          },
+          "h": {
+            "p10": 21,
+            "p50": 34,
+            "p90": 61
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#f64043"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1335,6 +4926,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 96,
+            "p50": 98,
+            "p90": 100
+          },
+          "y": {
+            "p10": 144,
+            "p50": 302,
+            "p90": 460
+          },
+          "w": {
+            "p10": 599,
+            "p50": 604,
+            "p90": 609
+          },
+          "h": {
+            "p10": 31,
+            "p50": 35,
+            "p90": 39
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1345,6 +4977,48 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 13,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 201,
+            "p50": 575,
+            "p90": 669
+          },
+          "y": {
+            "p10": 117,
+            "p50": 607,
+            "p90": 1071
+          },
+          "w": {
+            "p10": 43,
+            "p50": 85,
+            "p90": 117
+          },
+          "h": {
+            "p10": 36,
+            "p50": 80,
+            "p90": 148
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#40473c"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1355,6 +5029,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 16,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 26,
+            "p50": 135,
+            "p90": 483
+          },
+          "y": {
+            "p10": 206,
+            "p50": 741,
+            "p90": 970
+          },
+          "w": {
+            "p10": 153,
+            "p50": 315,
+            "p90": 747
+          },
+          "h": {
+            "p10": 85,
+            "p50": 273,
+            "p90": 767
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1365,6 +5080,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 8,
+            "p50": 35,
+            "p90": 243
+          },
+          "y": {
+            "p10": 6,
+            "p50": 329,
+            "p90": 832
+          },
+          "w": {
+            "p10": 284,
+            "p50": 404,
+            "p90": 768
+          },
+          "h": {
+            "p10": 99,
+            "p50": 640,
+            "p90": 1074
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1375,6 +5131,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 448,
+            "p50": 455,
+            "p90": 461
+          },
+          "y": {
+            "p10": 853,
+            "p50": 895,
+            "p90": 937
+          },
+          "w": {
+            "p10": 271,
+            "p50": 275,
+            "p90": 279
+          },
+          "h": {
+            "p10": 271,
+            "p50": 275,
+            "p90": 279
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1385,6 +5182,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 11,
+        "size": {
+          "p10": 30,
+          "p50": 36,
+          "p90": 40
+        },
+        "box": {
+          "x": {
+            "p10": 8,
+            "p50": 84,
+            "p90": 376
+          },
+          "y": {
+            "p10": 229,
+            "p50": 562,
+            "p90": 1044
+          },
+          "w": {
+            "p10": 87,
+            "p50": 121,
+            "p90": 161
+          },
+          "h": {
+            "p10": 36,
+            "p50": 46,
+            "p90": 56
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#343277",
+            "#273035"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1395,6 +5235,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 11,
+        "size": {
+          "p10": 30,
+          "p50": 36,
+          "p90": 40
+        },
+        "box": {
+          "x": {
+            "p10": 230,
+            "p50": 376,
+            "p90": 668
+          },
+          "y": {
+            "p10": 229,
+            "p50": 754,
+            "p90": 1070
+          },
+          "w": {
+            "p10": 85,
+            "p50": 121,
+            "p90": 161
+          },
+          "h": {
+            "p10": 36,
+            "p50": 46,
+            "p90": 56
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#343277",
+            "#273035"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1425,6 +5308,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 8,
+        "size": {
+          "p10": 27,
+          "p50": 36,
+          "p90": 76
+        },
+        "box": {
+          "x": {
+            "p10": 60,
+            "p50": 87,
+            "p90": 455
+          },
+          "y": {
+            "p10": 282,
+            "p50": 920,
+            "p90": 932
+          },
+          "w": {
+            "p10": 170,
+            "p50": 390,
+            "p90": 543
+          },
+          "h": {
+            "p10": 20,
+            "p50": 46,
+            "p90": 82
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#fd4b0f",
+            "#a8ff00"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1435,6 +5361,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 6,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 22,
+            "p50": 608,
+            "p90": 661
+          },
+          "y": {
+            "p10": 32,
+            "p50": 113,
+            "p90": 670
+          },
+          "w": {
+            "p10": 70,
+            "p50": 96,
+            "p90": 130
+          },
+          "h": {
+            "p10": 70,
+            "p50": 96,
+            "p90": 130
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1505,6 +5472,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 28,
+          "p50": 50,
+          "p90": 58
+        },
+        "box": {
+          "x": {
+            "p10": 243,
+            "p50": 320,
+            "p90": 344
+          },
+          "y": {
+            "p10": 510,
+            "p50": 951,
+            "p90": 1059
+          },
+          "w": {
+            "p10": 104,
+            "p50": 178,
+            "p90": 370
+          },
+          "h": {
+            "p10": 39,
+            "p50": 60,
+            "p90": 81
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ff8b00",
+            "#333333",
+            "#705425"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -1535,6 +5545,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 40,
+          "p50": 64,
+          "p90": 82
+        },
+        "box": {
+          "x": {
+            "p10": 116,
+            "p50": 171,
+            "p90": 380
+          },
+          "y": {
+            "p10": 864,
+            "p50": 1053,
+            "p90": 1146
+          },
+          "w": {
+            "p10": 135,
+            "p50": 168,
+            "p90": 265
+          },
+          "h": {
+            "p10": 53,
+            "p50": 85,
+            "p90": 90
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#785a3e",
+            "#f9c730"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 5
+        }
       }
     },
     {
@@ -1545,6 +5598,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 40,
+          "p50": 40,
+          "p90": 59
+        },
+        "box": {
+          "x": {
+            "p10": 282,
+            "p50": 324,
+            "p90": 325
+          },
+          "y": {
+            "p10": 1038,
+            "p50": 1136,
+            "p90": 1156
+          },
+          "w": {
+            "p10": 67,
+            "p50": 69,
+            "p90": 95
+          },
+          "h": {
+            "p10": 50,
+            "p50": 56,
+            "p90": 79
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#f9c730"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1555,6 +5650,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 40,
+          "p50": 40,
+          "p90": 59
+        },
+        "box": {
+          "x": {
+            "p10": 397,
+            "p50": 409,
+            "p90": 411
+          },
+          "y": {
+            "p10": 1038,
+            "p50": 1136,
+            "p90": 1156
+          },
+          "w": {
+            "p10": 66,
+            "p50": 69,
+            "p90": 95
+          },
+          "h": {
+            "p10": 50,
+            "p50": 56,
+            "p90": 79
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#f9c730"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1565,6 +5702,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 40,
+          "p50": 40,
+          "p90": 59
+        },
+        "box": {
+          "x": {
+            "p10": 504,
+            "p50": 509,
+            "p90": 547
+          },
+          "y": {
+            "p10": 1038,
+            "p50": 1136,
+            "p90": 1156
+          },
+          "w": {
+            "p10": 64,
+            "p50": 69,
+            "p90": 95
+          },
+          "h": {
+            "p10": 50,
+            "p50": 56,
+            "p90": 79
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#f9c730"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1575,6 +5754,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 6,
+        "size": {
+          "p10": 78,
+          "p50": 90,
+          "p90": 114
+        },
+        "box": {
+          "x": {
+            "p10": 136,
+            "p50": 264,
+            "p90": 384
+          },
+          "y": {
+            "p10": 323,
+            "p50": 934,
+            "p90": 1073
+          },
+          "w": {
+            "p10": 227,
+            "p50": 323,
+            "p90": 374
+          },
+          "h": {
+            "p10": 76,
+            "p50": 101,
+            "p90": 117
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000",
+            "#fd4b0f",
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1585,6 +5807,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 77,
+          "p50": 83,
+          "p90": 89
+        },
+        "box": {
+          "x": {
+            "p10": 120,
+            "p50": 165,
+            "p90": 209
+          },
+          "y": {
+            "p10": 1140,
+            "p50": 1156,
+            "p90": 1172
+          },
+          "w": {
+            "p10": 341,
+            "p50": 345,
+            "p90": 349
+          },
+          "h": {
+            "p10": 71,
+            "p50": 76,
+            "p90": 81
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#fd4b0f",
+            "#000001"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1595,6 +5859,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 6,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 63,
+            "p50": 218,
+            "p90": 423
+          },
+          "y": {
+            "p10": 323,
+            "p50": 948,
+            "p90": 1091
+          },
+          "w": {
+            "p10": 90,
+            "p50": 114,
+            "p90": 157
+          },
+          "h": {
+            "p10": 83,
+            "p50": 103,
+            "p90": 123
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1605,6 +5910,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 2,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 544,
+            "p50": 586,
+            "p90": 628
+          },
+          "y": {
+            "p10": 616,
+            "p50": 833,
+            "p90": 1049
+          },
+          "w": {
+            "p10": 135,
+            "p50": 164,
+            "p90": 193
+          },
+          "h": {
+            "p10": 135,
+            "p50": 164,
+            "p90": 193
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1615,6 +5961,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 28,
+          "p50": 28,
+          "p90": 28
+        },
+        "box": {
+          "x": {
+            "p10": 391,
+            "p50": 391,
+            "p90": 391
+          },
+          "y": {
+            "p10": 864,
+            "p50": 864,
+            "p90": 864
+          },
+          "w": {
+            "p10": 319,
+            "p50": 319,
+            "p90": 319
+          },
+          "h": {
+            "p10": 51,
+            "p50": 51,
+            "p90": 51
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1675,6 +6062,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 64,
+            "p50": 64,
+            "p90": 64
+          },
+          "y": {
+            "p10": 36,
+            "p50": 36,
+            "p90": 36
+          },
+          "w": {
+            "p10": 130,
+            "p50": 130,
+            "p90": 130
+          },
+          "h": {
+            "p10": 90,
+            "p50": 90,
+            "p90": 90
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1715,6 +6143,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 88,
+            "p50": 236,
+            "p90": 504
+          },
+          "y": {
+            "p10": 188,
+            "p50": 372,
+            "p90": 792
+          },
+          "w": {
+            "p10": 157,
+            "p50": 196,
+            "p90": 538
+          },
+          "h": {
+            "p10": 157,
+            "p50": 196,
+            "p90": 538
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1725,6 +6194,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 182,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 18,
+            "p50": 108,
+            "p90": 258
+          },
+          "y": {
+            "p10": 74,
+            "p50": 257,
+            "p90": 548
+          },
+          "w": {
+            "p10": 289,
+            "p50": 519,
+            "p90": 758
+          },
+          "h": {
+            "p10": 256,
+            "p50": 631,
+            "p90": 928
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1755,6 +6265,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 141,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 33,
+            "p50": 110,
+            "p90": 549
+          },
+          "y": {
+            "p10": 131,
+            "p50": 835,
+            "p90": 1145
+          },
+          "w": {
+            "p10": 64,
+            "p50": 90,
+            "p90": 212
+          },
+          "h": {
+            "p10": 60,
+            "p50": 84,
+            "p90": 200
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1775,6 +6327,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 280,
+          "p50": 280,
+          "p90": 280
+        },
+        "box": {
+          "x": {
+            "p10": 0,
+            "p50": 0,
+            "p90": 0
+          },
+          "y": {
+            "p10": 73,
+            "p50": 73,
+            "p90": 73
+          },
+          "w": {
+            "p10": 800,
+            "p50": 800,
+            "p90": 800
+          },
+          "h": {
+            "p10": 280,
+            "p50": 280,
+            "p90": 280
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#30837d"
+          ],
+          "color_2_common": [
+            "#984d24"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1785,6 +6378,51 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 6,
+        "size": {
+          "p10": 26,
+          "p50": 26,
+          "p90": 26
+        },
+        "box": {
+          "x": {
+            "p10": 87,
+            "p50": 170,
+            "p90": 375
+          },
+          "y": {
+            "p10": 351,
+            "p50": 975,
+            "p90": 987
+          },
+          "w": {
+            "p10": 370,
+            "p50": 370,
+            "p90": 370
+          },
+          "h": {
+            "p10": 230,
+            "p50": 230,
+            "p90": 230
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#3f1616",
+            "#b34420"
+          ],
+          "color_2_common": [
+            "#ff9ccb",
+            "#ff8b00",
+            "#ff8bbd"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1825,6 +6463,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 82,
+        "size": {
+          "p10": 25,
+          "p50": 48,
+          "p90": 100
+        },
+        "box": {
+          "x": {
+            "p10": 16,
+            "p50": 128,
+            "p90": 566
+          },
+          "y": {
+            "p10": 170,
+            "p50": 941,
+            "p90": 1220
+          },
+          "w": {
+            "p10": 100,
+            "p50": 136,
+            "p90": 352
+          },
+          "h": {
+            "p10": 28,
+            "p50": 58,
+            "p90": 158
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000",
+            "#b9b9b9"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1835,6 +6516,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 0,
+            "p50": 0,
+            "p90": 0
+          },
+          "y": {
+            "p10": 0,
+            "p50": 0,
+            "p90": 0
+          },
+          "w": {
+            "p10": 800,
+            "p50": 800,
+            "p90": 800
+          },
+          "h": {
+            "p10": 1280,
+            "p50": 1280,
+            "p90": 1280
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1845,6 +6567,48 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 35,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 11,
+            "p50": 464,
+            "p90": 484
+          },
+          "y": {
+            "p10": 140,
+            "p50": 773,
+            "p90": 943
+          },
+          "w": {
+            "p10": 256,
+            "p50": 256,
+            "p90": 458
+          },
+          "h": {
+            "p10": 256,
+            "p50": 256,
+            "p90": 338
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1865,6 +6629,49 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 24,
+        "size": {
+          "p10": 25,
+          "p50": 25,
+          "p90": 84
+        },
+        "box": {
+          "x": {
+            "p10": 18,
+            "p50": 18,
+            "p90": 501
+          },
+          "y": {
+            "p10": 762,
+            "p50": 1198,
+            "p90": 1199
+          },
+          "w": {
+            "p10": 93,
+            "p50": 93,
+            "p90": 280
+          },
+          "h": {
+            "p10": 33,
+            "p50": 33,
+            "p90": 113
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff",
+            "#696969",
+            "#8394c4"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1875,6 +6682,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 102,
+          "p50": 128,
+          "p90": 146
+        },
+        "box": {
+          "x": {
+            "p10": 243,
+            "p50": 310,
+            "p90": 389
+          },
+          "y": {
+            "p10": 227,
+            "p50": 927,
+            "p90": 983
+          },
+          "w": {
+            "p10": 197,
+            "p50": 200,
+            "p90": 226
+          },
+          "h": {
+            "p10": 116,
+            "p50": 126,
+            "p90": 127
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#000000"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 3
+        }
       }
     },
     {
@@ -1885,6 +6733,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 5,
+        "size": {
+          "p10": 1,
+          "p50": 1,
+          "p90": 1
+        },
+        "box": {
+          "x": {
+            "p10": 166,
+            "p50": 313,
+            "p90": 503
+          },
+          "y": {
+            "p10": 174,
+            "p50": 628,
+            "p90": 881
+          },
+          "w": {
+            "p10": 132,
+            "p50": 148,
+            "p90": 455
+          },
+          "h": {
+            "p10": 133,
+            "p50": 148,
+            "p90": 455
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1895,6 +6784,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 3,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 1
+        },
+        "box": {
+          "x": {
+            "p10": 173,
+            "p50": 425,
+            "p90": 499
+          },
+          "y": {
+            "p10": 417,
+            "p50": 683,
+            "p90": 998
+          },
+          "w": {
+            "p10": 149,
+            "p50": 152,
+            "p90": 494
+          },
+          "h": {
+            "p10": 149,
+            "p50": 153,
+            "p90": 495
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1905,6 +6835,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 1,
+          "p50": 1,
+          "p90": 1
+        },
+        "box": {
+          "x": {
+            "p10": 472,
+            "p50": 472,
+            "p90": 472
+          },
+          "y": {
+            "p10": 637,
+            "p50": 637,
+            "p90": 637
+          },
+          "w": {
+            "p10": 244,
+            "p50": 244,
+            "p90": 244
+          },
+          "h": {
+            "p10": 245,
+            "p50": 245,
+            "p90": 245
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1915,6 +6886,47 @@
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 1,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 475,
+            "p50": 475,
+            "p90": 475
+          },
+          "y": {
+            "p10": 973,
+            "p50": 973,
+            "p90": 973
+          },
+          "w": {
+            "p10": 217,
+            "p50": 217,
+            "p90": 217
+          },
+          "h": {
+            "p10": 222,
+            "p50": 222,
+            "p90": 222
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1925,6 +6937,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 18,
+            "p50": 125,
+            "p90": 326
+          },
+          "y": {
+            "p10": 33,
+            "p50": 107,
+            "p90": 750
+          },
+          "w": {
+            "p10": 76,
+            "p50": 106,
+            "p90": 163
+          },
+          "h": {
+            "p10": 110,
+            "p50": 165,
+            "p90": 200
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1935,6 +6988,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 7,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 169,
+            "p50": 211,
+            "p90": 410
+          },
+          "y": {
+            "p10": 33,
+            "p50": 108,
+            "p90": 750
+          },
+          "w": {
+            "p10": 76,
+            "p50": 106,
+            "p90": 163
+          },
+          "h": {
+            "p10": 110,
+            "p50": 165,
+            "p90": 200
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1945,6 +7039,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 8,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 348,
+            "p50": 489,
+            "p90": 592
+          },
+          "y": {
+            "p10": 76,
+            "p50": 108,
+            "p90": 707
+          },
+          "w": {
+            "p10": 77,
+            "p50": 124,
+            "p90": 162
+          },
+          "h": {
+            "p10": 111,
+            "p50": 166,
+            "p90": 195
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     },
     {
@@ -1955,6 +7090,47 @@
         "likelyUsesRasterOrAssetLayer": false,
         "oftenUsesVectorFontForText": true,
         "note": "Heuristic only; firmware may differ. Validate in editor preview when unsure."
+      },
+      "typography": {
+        "sampleCount": 6,
+        "size": {
+          "p10": 0,
+          "p50": 0,
+          "p90": 0
+        },
+        "box": {
+          "x": {
+            "p10": 418,
+            "p50": 609,
+            "p90": 647
+          },
+          "y": {
+            "p10": 68,
+            "p50": 169,
+            "p90": 793
+          },
+          "w": {
+            "p10": 76,
+            "p50": 97,
+            "p90": 156
+          },
+          "h": {
+            "p10": 110,
+            "p50": 143,
+            "p90": 199
+          }
+        },
+        "colorHints": {
+          "color_1_common": [
+            "#ffffff"
+          ],
+          "color_2_common": [
+            "#ff0000"
+          ]
+        },
+        "alig": {
+          "mode": 4
+        }
       }
     }
   ]

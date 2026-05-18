@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "mcp-divoom-lan",
   "display_name": "Divoom LAN Watchface",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "MCP server for Divoom watchface customization over LAN (read/patch dials, brightness, uploads).",
   "long_description": "Wraps the Divoom device LAN API as MCP tools with read-before-write safeguards. Configure your device IP and optional port, then use tools such as watchface_get_local and watchface_patch_local. See the GitHub repository for full documentation.",
   "author": {

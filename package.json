@@ -1,6 +1,6 @@
 {
   "name": "mcp-divoom-lan",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "mcpName": "io.github.DivoomDevelop/mcp-divoom-lan",
   "description": "MCP server for Divoom LAN watchface customization",
   "repository": {
@@ -23,6 +23,7 @@
     "check": "tsc -p tsconfig.json --noEmit",
     "sync:editor": "node scripts/sync-editor-ai-bundle.mjs",
     "build:font-catalog": "node scripts/build-font-catalog.mjs",
+    "build:templates": "node scripts/build-templates-and-typography.mjs",
     "release:check": "npm run check && npm run build && npm pack --dry-run",
     "prepack": "npm run build",
     "mcpb:staging": "node scripts/build-mcpb.mjs",

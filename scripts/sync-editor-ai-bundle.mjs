@@ -3,11 +3,13 @@
  * 把 HTML 可视化编辑器（divoom-watchface-visual-editor_v2）的 AI 资料同步到
  * MCP 包的 `resources/`，让任意 AGENT 通过 MCP 资源/工具就能拿到：
  *
- *   - `resources/font-catalog.json`            （由 build-font-catalog.mjs 生成；这里仅顺带触发）
- *   - `resources/disp-catalog.json`            （disp id + 英文符号 + 中文注释 + 启发式提示）
- *   - `resources/watchface-config.schema.json` （ItemList JSON Schema）
- *   - `resources/examples/ai-minimal-watchface.json` （最小可用样例）
- *   - `resources/ai-watchface-guide.md`        （编辑器侧的 AI 指南）
+ *   - `resources/font-catalog.json`            （由 build-font-catalog.mjs 生成）
+ *   - `resources/disp-catalog.json`            （disp + 中文注释 + hints + **typography**）
+ *   - `resources/templates-curated.json`       （由 build-templates-and-typography.mjs）
+ *   - `resources/disp-typography-overlay.json` （中间产物；合并进 disp-catalog）
+ *   - `resources/watchface-config.schema.json`
+ *   - `resources/examples/ai-minimal-watchface.json`
+ *   - `resources/ai-watchface-guide.md`
  *
  * 用法：
  *   node scripts/sync-editor-ai-bundle.mjs [path/to/divoom-watchface-visual-editor]
@@ -142,7 +144,8 @@ function buildEnrichedDispCatalog() {
       "`description_zh` mirrors the editor's DISP_COMMENT_ZH_MAP — keep it as authoritative human description.",
       "`hints.likelyUsesRasterOrAssetLayer = true` means the slot usually expects an image_addr asset (image/GIF/PNG); `font` may be ignored by the firmware.",
       "`hints.oftenUsesVectorFontForText = true` means the slot is text-driven — combine with watchface_font_catalog (script: cjk/latin/digits) to pick a font id.",
-      "Special slot 204 (SUNRISE_SUNSET_TIME): firmware now displays sunset between today's sunrise/sunset window, otherwise the next sunrise — describe as 'sunrise OR sunset (auto-switch by current time)' in any user-facing UI."
+      "Special slot 204 (SUNRISE_SUNSET_TIME): firmware now displays sunset between today's sunrise/sunset window, otherwise the next sunrise — describe as 'sunrise OR sunset (auto-switch by current time)' in any user-facing UI.",
+      "`typography` (merged after running scripts/build-templates-and-typography.mjs) summarizes size/x/y/w/h quantiles and frequent colors mined from bundled marketplace templates — heuristic layout hints only, not enforced by firmware."
     ],
     displays
   };
@@ -165,17 +168,16 @@ function syncFontCatalog() {
   }
 }
 
+function mergeTypographyIntoCatalog(catalog, overlay) {
+  if (!catalog?.displays || !overlay?.byDisp || typeof overlay.byDisp !== "object") return;
+  for (const row of catalog.displays) {
+    const block = overlay.byDisp[String(row.disp)];
+    if (block) row.typography = block;
+  }
+}
+
 function main() {
   ensureDir(resourcesRoot);
-
-  const dispCatalog = buildEnrichedDispCatalog();
-  if (dispCatalog) {
-    const dst = path.join(resourcesRoot, "disp-catalog.json");
-    fs.writeFileSync(dst, JSON.stringify(dispCatalog, null, 2) + "\n");
-    console.log(
-      `[sync-editor-ai-bundle] wrote resources/disp-catalog.json (${dispCatalog.displays.length} disps)`
-    );
-  }
 
   copyIfExists(
     "docs/watchface-config.schema.json",
@@ -190,6 +192,39 @@ function main() {
   copyIfExists("docs/AI_WATCHFACE_GUIDE.md", "ai-watchface-guide.md", "editor AI guide");
 
   syncFontCatalog();
+
+  const dispCatalog = buildEnrichedDispCatalog();
+  const dispPath = path.join(resourcesRoot, "disp-catalog.json");
+  if (dispCatalog) {
+    fs.writeFileSync(dispPath, JSON.stringify(dispCatalog, null, 2) + "\n");
+    console.log(
+      `[sync-editor-ai-bundle] wrote resources/disp-catalog.json (${dispCatalog.displays.length} disps, pre-typography)`
+    );
+  }
+
+  const typographyScript = path.join(__dirname, "build-templates-and-typography.mjs");
+  const ty = spawnSync(process.execPath, [typographyScript, editorAbs], {
+    stdio: "inherit",
+    cwd: repoRoot
+  });
+  if (ty.status !== 0) {
+    console.error("[sync-editor-ai-bundle] build-templates-and-typography failed");
+    process.exit(ty.status ?? 1);
+  }
+
+  if (dispCatalog) {
+    const overlayPath = path.join(resourcesRoot, "disp-typography-overlay.json");
+    if (fs.existsSync(overlayPath)) {
+      try {
+        const overlay = JSON.parse(fs.readFileSync(overlayPath, "utf8"));
+        mergeTypographyIntoCatalog(dispCatalog, overlay);
+        fs.writeFileSync(dispPath, JSON.stringify(dispCatalog, null, 2) + "\n");
+        console.log("[sync-editor-ai-bundle] merged typography into disp-catalog.json");
+      } catch (e) {
+        console.warn("[sync-editor-ai-bundle] typography merge skipped:", e);
+      }
+    }
+  }
 
   console.log("[sync-editor-ai-bundle] done. Editor repo:", editorAbs);
 }

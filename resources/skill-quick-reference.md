@@ -33,6 +33,9 @@ HTML editor's behavior (see `divoom_app/tools/divoom-watchface-visual-editor`).
    (slot is text-driven and needs a font id). When generating a brand-new
    watchface JSON, validate it against `divoom://watchface/schema` and use
    `divoom://watchface/example-minimal` as the seed.
+   **For pleasing layouts:** clone `ItemList` from `watchface_template_search`
+   / `divoom://templates/curated`, then refine geometry per-row via
+   `watchface_layout_suggest` (reads `disp-catalog.typography` medians).
 6. To replace the cached backdrop without touching cfg `DeviceImageUrl`, use
    `POST /replace_clock_dial_bg` (no tarball, JPEG/WebP only).
 7. To upload new dial backdrop **and/or** element bitmaps while applying

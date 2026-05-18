@@ -110,3 +110,19 @@ npm run build
 - 请求/响应样例：`docs/examples/`
 - 协议关键点提炼：`docs/reference/`
 - 编辑器侧 AI 指南：资源 `divoom://guide/ai-watchface`（`docs/ai-watchface-guide.md` 同源）
+
+## 10) 模板克隆 + 排版默认值（漂亮表盘）
+
+从零手写坐标最容易丑。**优先**：
+
+- 资源：`divoom://templates/curated`（约 20 套从编辑器上架 cfg 挖出来的骨架）
+- 工具：`watchface_template_search`（按 `tagsAll` / `tagsAny` / `bucket` /
+  `dispPresent` 过滤）
+- 工具：`watchface_layout_suggest`（按 `disp` 取 `typography` 的中位数
+  `size/x/y/w/h/alig` + 常见 `color_*`）
+
+推荐流程：先 `watchface_template_search({ tagsAny: ["weather"] })` 挑一套接近主题的
+`ItemList`，再对每个改动过的 `disp` 调用 `watchface_layout_suggest` 微调几何，
+最后用 `watchface_font_catalog` 替换字体并用 `watchface_get_fonts_local` 确认设备可用。
+
+详见 `docs/templates-curated.md`。

@@ -118,5 +118,7 @@ npm run sync:editor -- path/to/divoom-watchface-visual-editor
 
 - `docs/disp-usage.md` — how to pick `ItemList[i].disp` (text vs. image
   slots, sunrise/sunset auto-switch, etc.).
+- `docs/templates-curated.md` — marketplace-derived template skeletons +
+  `watchface_template_search` workflow.
 - Resource `divoom://watchface/schema` and `divoom://watchface/example-minimal`
   for full-watchface JSON validation and a starting template.
