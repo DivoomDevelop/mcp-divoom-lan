@@ -1,0 +1,99 @@
+﻿下面是一份 anthropics/skills（Divoom skill）后续如何更新 的操作说明，默认你已经在 GitHub 上 fork 了 anthropics/skills（例如 DivoomDevelop/skills），并在本机有 tmp-anthropic-skills 这种克隆目录；若没有，可从「首次准备」开始。
+
+一、仓库关系（心里要有数）
+远程	含义
+https://github.com/anthropics/skills.git
+上游官方，只读同步用
+https://github.com/DivoomDevelop/skills.git（示例）
+你的 fork，你的分支往这儿 push
+PR
+从 fork 某分支 → anthropics/skills 的 main（你们当时是 PR #1121）
+Skill 相关文件主要是：
+
+skills/divoom-watchface-mcp/SKILL.md
+.claude-plugin/marketplace.json（example-skills 里要有 ./skills/divoom-watchface-mcp）
+二、首次准备（只做一次）
+Fork
+浏览器打开 https://github.com/anthropics/skills → Fork 到你的账号/组织（如 DivoomDevelop）。
+
+克隆自己的 fork，并加 upstream
+
+git clone https://github.com/DivoomDevelop/skills.git tmp-anthropic-skills
+cd tmp-anthropic-skills
+git remote add upstream https://github.com/anthropics/skills.git
+git fetch upstream
+开发与 PR 用分支（可与现有一致）
+
+git checkout -b add-divoom-watchface-mcp-skill
+git push -u origin add-divoom-watchface-mcp-skill
+在 GitHub 提 PR
+DivoomDevelop/skills:add-divoom-watchface-mcp-skill → anthropics/skills:main。
+合并前，以后所有更新都 往同一分支推，PR 会自动刷新。
+
+三、每次要更新 Skill 时的推荐流程
+1. 切到 skill 分支并同步上游（减少冲突）
+cd Z:\...\tmp-anthropic-skills   # 你的实际路径
+git fetch upstream
+git checkout add-divoom-watchface-mcp-skill
+git merge upstream/main
+# 若有冲突：解决后 git add / git commit
+说明：
+
+用 merge 或 rebase 均可；团队习惯 merge 更省事。
+若官方大改 marketplace.json，冲突多在你改的 example-skills 列表，保留两边的 skill 路径合并即可。
+2. 编辑内容（与 mcp-divoom-lan 对齐）
+建议每次发 MCP 新版本时检查并更新 SKILL.md 中例如：
+
+npm 包名、版本或文档链接（如有硬编码）
+工具列表是否与 mcp-divoom-lan 的 watchface_* 一致
+安全规则（空 ItemList、禁止隐式建表盘等）
+v2 编辑器 GitHub / Pages URL
+mcpName / Registry 若你在 SKILL 里写了
+marketplace.json 通常 不用动；只有当你 改名、换路径、或 example-skills 结构调整 时才改。
+
+3. 提交并推到 fork
+git add skills/divoom-watchface-mcp/SKILL.md
+# 若改了 marketplace：
+git add .claude-plugin/marketplace.json
+git commit -m "docs(skills): sync divoom-watchface-mcp with mcp-divoom-lan v0.1.x"
+git push origin add-divoom-watchface-mcp-skill
+4. PR 侧
+打开已有 PR（例如 **https://github.com/anthropics/skills/pull/1121**），确认 Commits / Files changed 已更新。
+若 Review 有评论，在该分支继续改 → commit → push，不要关 PR 重开（除非维护者要求）。
+5. 合并之后
+anthropics/skills main 里会有你的 SKILL；用户拉官方仓库或通过 Claude 插件市场配置 anthropics/skills 时才能 公开检索到（具体展示方式随产品而变）。
+之后若再更新：仍建议 fetch upstream + merge → 改 SKILL → push 同分支**；若 PR 已合并，应 **从最新 main` 建新分支再提新 PR（见下文）。
+四、PR 已经合并以后，再想改 Skill
+从 最新官方 main 拉分支（不要在很旧的分支上堆新 PR）：
+git fetch upstream
+git checkout main
+git pull upstream main
+git push origin main        # 同步你的 fork 的 main（可选但推荐）
+git checkout -b update-divoom-skill-2026-xx
+改 SKILL.md（及必要的 marketplace.json）。
+git push -u origin update-divoom-skill-2026-xx
+在 GitHub 新开 PR → anthropics/skills。
+五、和 mcp-divoom-lan 发版怎么对上
+建议 顺序（与之前 MCP 流程一致）：
+
+mcp-divoom-lan：改代码 → 升版本 → npm publish → （可选）Registry / Smithery / README。
+再改 SKILL.md：把「用户如何安装、工具名、链接、版本说明」写成与当前文档一致。
+push anthropics/skills PR，描述里可写：Aligns with mcp-divoom-lan vX.Y.Z on npm。
+这样审稿人能看到 MCP 与 Skill 一致。
+
+六、常见问题
+情况	处理
+merge upstream/main 冲突
+重点看 .claude-plugin/marketplace.json，保留 divoom-watchface-mcp 条目，其余按上游合并。
+只想改 SKILL，不想动别的
+只 add SKILL.md，避免误提交整个克隆里无关文件。
+fork 很久没同步
+先 merge upstream/main 再改，减少 PR 里无关 diff。
+七、最短「检查清单」（复制用）
+[ ] git fetch upstream && git checkout add-divoom-watchface-mcp-skill && git merge upstream/main
+[ ] 更新 skills/divoom-watchface-mcp/SKILL.md（与 mcp-divoom-lan 一致）
+[ ] （按需）更新 .claude-plugin/marketplace.json
+[ ] git commit / git push origin add-divoom-watchface-mcp-skill
+[ ] 看 PR #1121（或新 PR）是否已更新
+[ ] （若 PR 已合并过）从 main 拉新分支再提 PR
+如果你愿意，可以把 本机 tmp-anthropic-skills 的实际路径 和 当前用的是否仍是 PR #1121 固定写进 mcp-divoom-lan 的 CONTRIBUTING.md 或 docs/，以后团队只盯仓库文档即可。

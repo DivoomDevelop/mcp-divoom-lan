@@ -1,0 +1,52 @@
+﻿更新smithery.ai的MCP发布文档
+
+下面是一份 以后改了 mcp-divoom-lan 建议按顺序做的事（按你是否需要「对外发布」裁剪步骤）。
+
+1. 本地开发与自检
+在 tools/mcp-divoom-lan（或你克隆的仓库根）改代码。
+运行：npm run check（或至少 npm run build）。
+本地连设备做一次冒烟（任选）：npm start / Cursor 里调几个 watchface_*。
+2. 版本号（只要对外发版就做）
+编辑 package.json 的 version（semver，例如 0.1.1 → 0.1.2）。
+同步这些文件里的版本（若存在且需要一致）：
+CHANGELOG.md（新增一节）
+server.json：version 与 packages[0].version
+mcpb/manifest.json 里的 version（可选用脚本从 package.json 读，你们当前是 build-mcpb.mjs 会覆盖 manifest 里的 version，模板里可保留占位或手动对齐）
+3. 发 npm（用户用 npx / 安装包）
+cd <mcp-divoom-lan 根目录>
+npm run release:check
+npm publish --access public
+确认：npm view mcp-divoom-lan version 与预期一致。
+
+4. 更新 MCP Registry（元数据）
+# 需已安装 mcp-publisher，且 server.json 与 npm 版本、mcpName 一致
+mcp-publisher validate -f .\server.json
+mcp-publisher login github   # 若 token 过期再登录
+mcp-publisher publish
+5. 打 MCPB 并更新 Smithery
+npm run mcpb:pack
+# 得到 mcp-divoom-lan.mcpb 后
+smithery auth login          # 若需要
+smithery namespace use aijun # 或你的 namespace
+smithery mcp publish .\mcp-divoom-lan.mcpb -n aijun/mcp-divoom-lan
+网络盘若很慢，staging 里 npm install 可能十几二十分钟，属正常。
+
+6. Git 提交推送（DivoomDevelop/mcp-divoom-lan）
+提交：源码与配置（src/、package.json、CHANGELOG.md、server.json、mcpb/manifest.json、scripts/、README.md 等）。
+
+不要提交： node_modules/、dist/（若你策略是不提交构建产物）、mcpb/staging/、*.mcpb、*.tgz。
+
+若 dist 应随仓库发布：在你们的流程里可改为提交 dist 或由 CI 构建。
+
+7. 其它（按需）
+目标	动作
+Anthropic skill
+改 tmp-anthropic-skills / PR 里 SKILL.md，推送分支更新 PR。
+可视化编辑器 v2
+在 divoom-watchface-visual-editor_v2 仓库单独发版/部署 Pages。
+文档里的链接
+README 中 npm、GitHub、Smithery、Pages 是否与当前版本一致。
+一句话流程
+改代码 → 升版本 + 写 CHANGELOG → npm publish → mcp-publisher publish → npm run mcpb:pack → smithery mcp publish → git push。
+
+若某次只是 私有调试、不给别人用：做到 第 1 步 + 本地跑 即可；npm / Registry / Smithery 都可以跳过。

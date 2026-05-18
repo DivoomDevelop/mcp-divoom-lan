@@ -28,8 +28,9 @@ Core workflows:
 
 ## Install / Command
 
-- Command: `node`
-- Args: `["/ABSOLUTE/PATH/to/mcp-divoom-lan/dist/index.js"]`
+- **npm:** `npx -y mcp-divoom-lan` with env `DIVOOM_DEVICE_HOST`, optional `DIVOOM_DEVICE_PORT` (9000), `DIVOOM_TIMEOUT_MS` (45000).
+- **MCPB:** Build with `npm run mcpb:pack` in [mcp-divoom-lan](https://github.com/DivoomDevelop/mcp-divoom-lan); install `mcp-divoom-lan.mcpb` in a host that supports MCP Bundles; publish the same file to registries (e.g. Smithery) that accept stdio bundles.
+- **From source:** `node dist/index.js` after `npm run build`.
 
 ## Environment
 

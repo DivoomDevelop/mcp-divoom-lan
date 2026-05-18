@@ -36,8 +36,22 @@
 
 - 先读后写：不要盲写未知 `index`
 - 尽量使用 `itemPatchList` / `itemPatchByRoleList`，避免整表覆盖
-- 图片操作遵循规格：`800x1280`、`JPEG/WebP`
-- 危险命令（重置、切换）应有明确用户意图
+- `patch.*` 不要发 `item_id`（编辑器实现里也是这样，避免覆盖设备元数据）
+- 底图必须 JPEG/WebP，800×1280，≤ 500 KiB；tar.gz 元素允许 JPEG/WebP/PNG
+- `alig`：`3`=居中、`4`=左、`5`=右（与固件一致；编辑器在导入时把旧 `1/2`
+  归一化）
+- 危险命令（`watchface_set_clock_select` / `watchface_reset_local_then_cloud`）
+  必须有明确用户意图
+
+## 编辑器侧的 LAN UX 行为（与 MCP 保持一致）
+
+为了和 MCP 的安全约束同步，HTML 编辑器内置以下行为：
+
+- 未选择 LAN 设备时，「创建表盘」/「应用配置」/「显示表盘」三个按钮置灰禁用
+- LAN 操作的成功/错误反馈用居中 `<dialog>` 弹出，不再用浏览器 `alert()`
+- 模板表盘预览自动按 `preview-stage` 容器尺寸缩放，不出滚动条
+- 本地元素图按文件**魔数**（不是扩展名）识别 JPEG/WebP/GIF/PNG/BMP，
+  非设备支持格式（GIF/BMP/TIFF）会被透明转码成 JPEG 后再打入 tar.gz
 
 ## 可视化能力范围建议
 
