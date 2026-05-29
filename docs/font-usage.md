@@ -1,8 +1,10 @@
 # 字体选择指南（给 AGENT）
 
 This page tells AI agents how to choose `ItemList[i].font` ids on Divoom dials
-without hand-tuning. Two surfaces are exposed:
+without hand-tuning. Three surfaces are exposed:
 
+- Resource: `divoom://font/guide` (Markdown) — **start here** for visual style,
+  mood, scenario index, and per-id descriptions (157 fonts)
 - Resource: `divoom://font/catalog` (JSON, `application/json`)
 - Tool: `watchface_font_catalog` (filterable view of the same catalog)
 
@@ -116,6 +118,8 @@ npm run sync:editor -- path/to/divoom-watchface-visual-editor
 
 ## See also
 
+- Resource `divoom://font/guide` — full visual/style guide synced from the
+  editor's `docs/generated/ai-font-guide.md`.
 - `docs/disp-usage.md` — how to pick `ItemList[i].disp` (text vs. image
   slots, sunrise/sunset auto-switch, etc.).
 - `docs/templates-curated.md` — marketplace-derived template skeletons +

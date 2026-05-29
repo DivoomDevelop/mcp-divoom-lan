@@ -10,6 +10,7 @@
  *   - `resources/watchface-config.schema.json`
  *   - `resources/examples/ai-minimal-watchface.json`
  *   - `resources/ai-watchface-guide.md`
+ *   - `resources/ai-font-guide.md`           （编辑器 docs/generated/ai-font-guide.md）
  *
  * 用法：
  *   node scripts/sync-editor-ai-bundle.mjs [path/to/divoom-watchface-visual-editor]
@@ -190,6 +191,11 @@ function main() {
     "minimal watchface example"
   );
   copyIfExists("docs/AI_WATCHFACE_GUIDE.md", "ai-watchface-guide.md", "editor AI guide");
+  copyIfExists(
+    "docs/generated/ai-font-guide.md",
+    "ai-font-guide.md",
+    "editor AI font guide (visual style + use cases per font id)"
+  );
 
   syncFontCatalog();
 

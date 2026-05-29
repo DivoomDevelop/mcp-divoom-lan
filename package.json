@@ -1,6 +1,6 @@
 {
   "name": "mcp-divoom-lan",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "mcpName": "io.github.DivoomDevelop/mcp-divoom-lan",
   "description": "MCP server for Divoom LAN watchface customization",
   "repository": {

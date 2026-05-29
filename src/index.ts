@@ -57,6 +57,14 @@ const RESOURCES = [
     fileName: "font-catalog.json",
   },
   {
+    uri: "divoom://font/guide",
+    name: "Divoom Watchface Font AI Guide",
+    description:
+      "Human-readable guide for all 157 editor fonts: visual style, mood, recommended use cases, scenario index, TTF vs image_glyph styling rules, and per-id descriptions. Read this before `divoom://font/catalog` when choosing fonts for themed dials.",
+    mimeType: "text/markdown",
+    fileName: "ai-font-guide.md",
+  },
+  {
     uri: "divoom://disp/catalog",
     name: "Divoom Watchface Disp Catalog",
     description:
@@ -431,7 +439,7 @@ const tools: Tool[] = [
   {
     name: "watchface_font_catalog",
     description:
-      "Return a curated font catalog so agents can pick `ItemList[i].font` ids deterministically. Each entry includes id, type (1=TTF, 0=image-font), display name, original charset, derived script (digits / digits-extended / latin / cjk), style tags (sans/serif/pixel/digital/handwriting/display/decorative/bold/light/etc), and recommendedFor (scenario names like time_digits / temperature_digits / weather_text / user_text / lunar_text). The response also includes a `scenarios` map that lists which `disp` ids each scenario covers and which tags to prefer. Use the optional filters to narrow the result. Always cross-check with `watchface_get_fonts_local` before committing a font id to a real device, because the on-device font list may be a subset.",
+      "Return a curated font catalog so agents can pick `ItemList[i].font` ids deterministically. Each entry includes id, type (1=TTF, 0=image-font), display name, original charset, derived script (digits / digits-extended / latin / cjk), style tags (sans/serif/pixel/digital/handwriting/display/decorative/bold/light/etc), and recommendedFor (scenario names like time_digits / temperature_digits / weather_text / user_text / lunar_text). The response also includes a `scenarios` map that lists which `disp` ids each scenario covers and which tags to prefer. For visual style and mood per font id, read MCP resource `divoom://font/guide` first. Use the optional filters to narrow the result. Always cross-check with `watchface_get_fonts_local` before committing a font id to a real device, because the on-device font list may be a subset.",
     inputSchema: {
       type: "object",
       properties: {
@@ -1500,7 +1508,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       "10) ItemList JSON requirements: numbers disp/font/x/y/w/h/size/alig; non-empty strings color_1/color_2/item_id (#RRGGBB hex). ItemIdList parallel non-empty strings. alig: 3=center, 4=left, 5=right (firmware-native).",
       "11) Channel/SetClockSelectId switches the active dial on screen — confirm user intent before running.",
       "12) Device/ResetLocalClockFromServer is destructive (deletes local sys-side files first).",
-      "13) Pick `ItemList[i].font` ids from `watchface_font_catalog` (or the `divoom://font/catalog` resource) — never hard-code an unknown id. Match the slot's content: digit-only image fonts (charset 0123456789) for time/date/temperature digits; CJK-capable TTFs for Chinese strings; pixel/digital/handwriting tags for stylistic dials. Cross-check the chosen id against `watchface_get_fonts_local` before patching a real device.",
+      "13) Pick `ItemList[i].font` ids from `watchface_font_catalog` (or `divoom://font/catalog`). Read `divoom://font/guide` first for visual style, mood, and scenario-based recommendations per font id. Never hard-code an unknown id. Match the slot's content: digit-only image fonts (charset 0123456789) for time/date/temperature digits; CJK-capable TTFs for Chinese strings; pixel/digital/handwriting tags for stylistic dials. Cross-check the chosen id against `watchface_get_fonts_local` before patching a real device.",
       "14) Pick `ItemList[i].disp` ids from `watchface_disp_catalog` (or the `divoom://disp/catalog` resource). Use `hints.likelyUsesRasterOrAssetLayer` to decide whether the slot expects an `image_addr` asset (image/GIF/PNG) and `hints.oftenUsesVectorFontForText` to decide whether to assign a font id.",
       "15) When generating a fresh watchface JSON, validate the output against `divoom://watchface/schema` and start from `divoom://watchface/example-minimal` — keep `ItemIdList` parallel to `item_id` and stay inside the 800x1280 logical canvas.",
       "16) Before inventing coordinates from scratch, query `watchface_template_search` or read `divoom://templates/curated`, then clone an ItemList skeleton whose tags match your target scenario (weather, lunar, pixel_theme, …).",

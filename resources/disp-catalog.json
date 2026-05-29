@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-05-18T03:01:18.165Z",
+  "generatedAt": "2026-05-29T10:38:02.986Z",
   "source": {
     "editorRepo": "divoom-watchface-visual-editor",
     "base": "src/editor/app.js (DISP_NAME_MAP + DISP_COMMENT_ZH_MAP)",
@@ -4388,7 +4388,7 @@
     {
       "disp": 131,
       "name": "HOUR_POINT_IMAGE",
-      "description_zh": "时间小时指针",
+      "description_zh": "时间小时指针：须使用正方形指针图（像素比 1:1）；与分针 disp132、秒针 disp233 三者共用同一组正方形布局框（x/y/w/h 完全一致且 w=h）。绕框几何中心 (x+w/2,y+h/2) 旋转；素材在未旋转时应让尖端朝向画布正上方（12 点基准）。层级 hier：时针最小、秒针最大（惯例 hier 1/2/3）。",
       "hints": {
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
@@ -4439,7 +4439,7 @@
     {
       "disp": 132,
       "name": "MIN_POINT_IMAGE",
-      "description_zh": "时间分钟指针",
+      "description_zh": "时间分钟指针：规则与 disp131 相同——正方形指针图、与时针 disp131、秒针 disp233 共用同一正方形 x/y/w/h（w=h）、绕框中心旋转、12 点方向为尖端朝上；hier 介于时针与秒针之间。",
       "hints": {
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,
@@ -6138,7 +6138,7 @@
     {
       "disp": 233,
       "name": "SECOND_POINT_IMAGE",
-      "description_zh": "时间秒钟指针",
+      "description_zh": "时间秒钟指针：规则与 disp131 相同——正方形指针图、与时针分针共用同一正方形 x/y/w/h（w=h）、绕框中心旋转、12 点方向为尖端朝上；hier 设为三张指针中最大，使秒针绘在最上层。",
       "hints": {
         "likelyUsesRasterOrAssetLayer": true,
         "oftenUsesVectorFontForText": false,

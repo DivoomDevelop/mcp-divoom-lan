@@ -4,7 +4,21 @@ All notable changes to this project are documented in this file.
 
 This project follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.1.6] - 2026-05-29
+
+### Added
+
+- **Font AI guide resource:** `divoom://font/guide` (`resources/ai-font-guide.md`)
+  synced from the HTML editor's `docs/generated/ai-font-guide.md` — per-font
+  visual style, mood, use cases, scenario index, and TTF vs image_glyph rules.
+- **`sync:editor`** now copies `ai-font-guide.md` alongside the existing AI
+  bundle (font catalog, disp catalog, schema, minimal example).
+
+### Changed
+
+- `watchface_font_catalog` tool description and `watchface_protocol_quick_reference`
+  rule 13 now point agents to read `divoom://font/guide` before filtering the
+  JSON catalog.
 
 ## [0.1.5] - 2026-05-15
 

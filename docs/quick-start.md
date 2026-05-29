@@ -79,6 +79,7 @@ npm run build
 
 写 `ItemList[i].font` 之前，先翻字体目录：
 
+- 资源：`divoom://font/guide`（Markdown，**首选** — 每款字体的视觉特点与场景推荐）
 - 资源：`divoom://font/catalog`（JSON）
 - 工具：`watchface_font_catalog`（按 `type/script/tag/scenario/ids` 过滤）
 
