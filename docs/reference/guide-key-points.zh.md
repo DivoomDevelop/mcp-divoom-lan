@@ -18,6 +18,19 @@
 3. `Device/PatchLocalClockInfo` 最小化修改
 4. 再次 `Device/GetLocalClockInfo` 回读确认
 
+## 表盘快照（视觉验收）
+
+创建或修改表盘（或切换当前表盘）后，抓取设备真实渲染结果：
+
+1. `POST /divoom_api`，`Command: "Device/GetScreenSnapshot"`，`ReturnCode: 0`
+   （固件 `DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT`）。
+2. **等待 2 秒** — 设备异步将 LVGL 画面编码为 WebP（`divoom_device_save_screen_snapshot`）。
+3. `GET http://<设备IP>:9000/userdata/snapshot.webp`（HTTP 静态文件；响应里
+   `snapShotPath` 可能为 `/userdata/app_pic/snapshot.webp`）。
+4. 用 WebP 与设计稿或上一次快照对比，验证布局、颜色、字体与素材绑定。
+
+MCP 工具：`watchface_get_screen_snapshot`（可选 `savePath` 保存到本地做 diff）。
+
 ## PATCH 选择路径（强烈推荐）
 
 `Device/PatchLocalClockInfo` 在固件里支持两类语义，选择不当会破坏 dial：

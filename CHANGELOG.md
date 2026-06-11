@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file.
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [0.1.7] - 2026-06-09
+
+### Added
+
+- **`watchface_get_screen_snapshot` tool:** wraps `Device/GetScreenSnapshot`
+  (`DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT`). After create/patch/switch, sends the
+  command, waits **2 seconds** (default), then HTTP GETs
+  `http://<host>:9000/userdata/snapshot.webp` for visual verification. Optional
+  `savePath` writes the WebP locally for diff against design mocks.
+- Documented snapshot workflow in `guide-quick-reference.md`,
+  `skill-quick-reference.md`, `docs/reference/guide-key-points.*`, README, and
+  `watchface_protocol_quick_reference` rule **18**.
+
 ## [0.1.6] - 2026-05-29
 
 ### Added

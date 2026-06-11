@@ -19,6 +19,17 @@ customization. All wire-format requirements come from the device firmware
 3. `Device/PatchLocalClockInfo` with minimal patch
 4. `Device/GetLocalClockInfo` again for verification
 
+## Screen snapshot (visual verification)
+
+After creating/patching a watchface or switching the active dial:
+
+1. `Device/GetScreenSnapshot` (`DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT`)
+2. Wait **2 seconds**
+3. `GET http://<host>:9000/userdata/snapshot.webp`
+4. Compare the WebP with your design or a prior snapshot
+
+MCP: `watchface_get_screen_snapshot`
+
 ## PATCH path selection (strongly recommended)
 
 The firmware accepts two PATCH semantics; choosing the wrong one will

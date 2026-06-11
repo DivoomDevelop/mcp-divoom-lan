@@ -23,6 +23,7 @@ Wire-format requirements below are derived directly from the device firmware
 - `Device/ReplaceClockDialBgFile`
 - `Device/GetLocalFontList`
 - `Device/GetStoreClockMarketList`
+- `Device/GetScreenSnapshot` — capture on-screen dial WebP (`DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT`)
 - `Channel/SetClockSelectId` (switches the on-screen dial)
 - `Sys/GetBrightness` / `Channel/SetBrightness`
 - `Channel/OnOffScreen`
@@ -57,6 +58,23 @@ matrix; agents on top of this MCP should mirror it for predictable behavior:
    add `bundle_image: <leaf>` to that index's patch.
 5. Send and re-read with `GetLocalClockInfo` to verify.
 6. Do not auto-create a new clock for color/style patch requests.
+
+## Screen snapshot (visual verification)
+
+After **creating or patching** a watchface (or switching the active dial), capture
+what the device actually renders:
+
+1. `POST /divoom_api` with `Command: "Device/GetScreenSnapshot"` and
+   `ReturnCode: 0` (firmware enum `DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT`).
+2. **Wait 2 seconds** — the device encodes the LVGL framebuffer to WebP
+   asynchronously (`divoom_device_save_screen_snapshot`).
+3. `GET http://<DEVICE_IP>:9000/userdata/snapshot.webp` (HTTP static file;
+   firmware may also report `snapShotPath` as `/userdata/app_pic/snapshot.webp`).
+4. Compare the WebP against your mockup or a prior snapshot to validate layout,
+   colors, fonts, and asset binding.
+
+MCP tool: `watchface_get_screen_snapshot` (optional `savePath` to write the file
+locally for diff/vision review).
 
 ## Multipart wire format (firmware-strict)
 

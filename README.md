@@ -37,6 +37,7 @@ Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-spec
 - `watchface_upload_file` → `POST /upload`
 - `watchface_create_local_clock` → `POST /create_local_clock` (multipart: single dial image **or** `tar.gz`; JSON `DialAssets`/`UseDialAssetBundle` selects mode, default auto-detect gzip)
 - `watchface_reset_local_then_cloud` → `Device/ResetLocalClockFromServer`
+- `watchface_get_screen_snapshot` → `Device/GetScreenSnapshot` (wait 2s, then GET `/userdata/snapshot.webp` for visual diff)
 - `watchface_raw_command` → generic `POST /divoom_api`
 - `watchface_protocol_quick_reference` → key protocol constraints for the model
 

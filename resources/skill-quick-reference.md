@@ -30,7 +30,12 @@ HTML editor's behavior (see `divoom_app/tools/divoom-watchface-visual-editor`).
 8. To make `DeviceImageUrl` point to a new file, use `POST /upload` then
    `Device/PatchLocalClockInfo` with the new URL.
 9. Verify changes by calling `Device/GetLocalClockInfo` after every write.
-10. Do not call `watchface_create_local_clock` unless the user explicitly asks
+10. **Visual snapshot:** after create/patch/switch, call
+    `Device/GetScreenSnapshot` (`DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT`), **wait
+    2 seconds**, then `GET http://<host>:9000/userdata/snapshot.webp`. Compare
+    the WebP with your design or a prior capture (MCP:
+    `watchface_get_screen_snapshot`).
+11. Do not call `watchface_create_local_clock` unless the user explicitly asks
     to create a new clock.
 
 ## Risky operations (require explicit user intent)

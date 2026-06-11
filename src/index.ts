@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -370,6 +370,35 @@ const tools: Tool[] = [
         parentItemId: { type: "integer" },
       },
       required: ["clockId"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "watchface_get_screen_snapshot",
+    description:
+      "Capture the on-screen watchface as WebP for visual verification after create/patch/switch. Sends Device/GetScreenSnapshot (firmware DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT), waits for the device to write snapshot.webp, then HTTP GETs the file. Default wait is 2000 ms after the command — do not fetch immediately. Default URL path is /userdata/snapshot.webp (also tries snapShotPath from the API response, e.g. /userdata/app_pic/snapshot.webp). Use the saved/downloaded WebP to compare layout against your intent. Optional savePath writes bytes locally for diff or vision review.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        target: targetSchema,
+        waitMs: {
+          type: "integer",
+          description:
+            "Milliseconds to wait after Device/GetScreenSnapshot before HTTP GET (default 2000). Firmware encodes LVGL snapshot asynchronously.",
+          default: 2000,
+        },
+        snapshotHttpPath: {
+          type: "string",
+          description:
+            "HTTP path for GET snapshot file. Default /userdata/snapshot.webp → http://<host>:<port>/userdata/snapshot.webp",
+          default: "/userdata/snapshot.webp",
+        },
+        savePath: {
+          type: "string",
+          description:
+            "Optional local path to write the downloaded WebP (for visual diff against design mocks).",
+        },
+      },
       additionalProperties: false,
     },
   },
@@ -783,6 +812,55 @@ async function callDivoomApi(
 ) {
   const request = { ...payload, Command: command, ReturnCode: 0 };
   return postJson(target, "/divoom_api", request);
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function extractSnapShotPath(responseJson: unknown): string | undefined {
+  if (!responseJson || typeof responseJson !== "object" || Array.isArray(responseJson)) {
+    return undefined;
+  }
+  const path = (responseJson as JsonRecord).snapShotPath;
+  return typeof path === "string" && path.length > 0 ? path : undefined;
+}
+
+async function fetchDeviceSnapshotWebp(
+  target: DeviceTarget,
+  httpPath: string,
+): Promise<{ url: string; httpStatus: number; bytes: Buffer; contentType: string | null }> {
+  const normalized = httpPath.startsWith("/") ? httpPath : `/${httpPath}`;
+  const url = `http://${target.host}:${target.port}${normalized}`;
+  const response = await fetch(url, {
+    method: "GET",
+    signal: AbortSignal.timeout(target.timeoutMs),
+  });
+  const contentType = response.headers.get("content-type");
+  if (!response.ok) {
+    return { url, httpStatus: response.status, bytes: Buffer.alloc(0), contentType };
+  }
+  const arrayBuffer = await response.arrayBuffer();
+  return {
+    url,
+    httpStatus: response.status,
+    bytes: Buffer.from(arrayBuffer),
+    contentType,
+  };
+}
+
+function isLikelyWebp(bytes: Buffer): boolean {
+  return (
+    bytes.length >= 12 &&
+    bytes[0] === 0x52 &&
+    bytes[1] === 0x49 &&
+    bytes[2] === 0x46 &&
+    bytes[3] === 0x46 &&
+    bytes[8] === 0x57 &&
+    bytes[9] === 0x45 &&
+    bytes[10] === 0x42 &&
+    bytes[11] === 0x50
+  );
 }
 
 function textResult(data: unknown) {
@@ -1231,6 +1309,85 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     return callDivoomApi(target, "Device/ResetLocalClockFromServer", payload);
   }
 
+  if (name === "watchface_get_screen_snapshot") {
+    const target = resolveTarget(args.target);
+    const waitMsRaw = optionalInteger(args.waitMs, "waitMs");
+    const waitMs = Math.max(0, waitMsRaw ?? 2000);
+    const snapshotHttpPath =
+      optionalString(args.snapshotHttpPath, "snapshotHttpPath") ?? "/userdata/snapshot.webp";
+    const savePath = optionalString(args.savePath, "savePath");
+
+    const apiResult = await callDivoomApi(target, "Device/GetScreenSnapshot");
+    const snapShotPath = extractSnapShotPath(apiResult.responseJson);
+    await sleep(waitMs);
+
+    const candidatePaths: string[] = [snapshotHttpPath];
+    if (snapShotPath && !candidatePaths.includes(snapShotPath)) {
+      candidatePaths.push(snapShotPath);
+    }
+    if (
+      !candidatePaths.includes("/userdata/app_pic/snapshot.webp") &&
+      snapshotHttpPath !== "/userdata/app_pic/snapshot.webp"
+    ) {
+      candidatePaths.push("/userdata/app_pic/snapshot.webp");
+    }
+
+    let fetchResult: Awaited<ReturnType<typeof fetchDeviceSnapshotWebp>> | null = null;
+    const attempts: Array<{ httpPath: string; httpStatus: number; byteLength: number }> = [];
+    for (const httpPath of candidatePaths) {
+      const attempt = await fetchDeviceSnapshotWebp(target, httpPath);
+      attempts.push({
+        httpPath,
+        httpStatus: attempt.httpStatus,
+        byteLength: attempt.bytes.length,
+      });
+      if (attempt.httpStatus === 200 && attempt.bytes.length > 0 && isLikelyWebp(attempt.bytes)) {
+        fetchResult = attempt;
+        break;
+      }
+    }
+
+    if (!fetchResult) {
+      return {
+        ok: false,
+        command: "Device/GetScreenSnapshot",
+        firmwareCommand: "DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT",
+        waitMs,
+        snapShotPath: snapShotPath ?? "/userdata/app_pic/snapshot.webp",
+        snapshotHttpUrl: `http://${target.host}:${target.port}${snapshotHttpPath.startsWith("/") ? snapshotHttpPath : `/${snapshotHttpPath}`}`,
+        apiResult,
+        attempts,
+        guidance:
+          "After create/patch/switch, call this tool to capture the dial. Wait 2s (default) before GET. Compare the WebP against your design. Retry once if the file is still empty.",
+      };
+    }
+
+    let savedTo: string | undefined;
+    if (savePath) {
+      await writeFile(savePath, fetchResult.bytes);
+      savedTo = savePath;
+    }
+
+    return {
+      ok: true,
+      command: "Device/GetScreenSnapshot",
+      firmwareCommand: "DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT",
+      waitMs,
+      snapShotPath: snapShotPath ?? "/userdata/app_pic/snapshot.webp",
+      snapshotHttpUrl: fetchResult.url,
+      byteLength: fetchResult.bytes.length,
+      contentType: fetchResult.contentType,
+      savedTo,
+      apiResult,
+      attempts,
+      usageNotes: [
+        "Use after Device/CreateLocalClock, Device/PatchLocalClockInfo, or Channel/SetClockSelectId when you need a visual ground truth.",
+        "Default flow: POST Device/GetScreenSnapshot → wait 2s → GET http://<host>:9000/userdata/snapshot.webp",
+        "Compare the downloaded WebP with mockups or a prior snapshot to validate layout, colors, and asset binding.",
+      ],
+    };
+  }
+
   if (name === "watchface_raw_command") {
     const target = resolveTarget(args.target);
     const command = requiredString(args.command, "command");
@@ -1513,6 +1670,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       "15) When generating a fresh watchface JSON, validate the output against `divoom://watchface/schema` and start from `divoom://watchface/example-minimal` — keep `ItemIdList` parallel to `item_id` and stay inside the 800x1280 logical canvas.",
       "16) Before inventing coordinates from scratch, query `watchface_template_search` or read `divoom://templates/curated`, then clone an ItemList skeleton whose tags match your target scenario (weather, lunar, pixel_theme, …).",
       "17) Call `watchface_layout_suggest` with `disp` to seed `size/x/y/w/h/alig` plus frequent `color_*` pairs using median statistics embedded in `disp-catalog.typography`.",
+      "18) Visual verification: after create/patch/switch, call `watchface_get_screen_snapshot` (Device/GetScreenSnapshot / DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT). Wait 2s, then GET http://<host>:9000/userdata/snapshot.webp (firmware may also report snapShotPath `/userdata/app_pic/snapshot.webp`). Compare the WebP against your design or a prior snapshot.",
     ];
     return {
       rules: lines,
