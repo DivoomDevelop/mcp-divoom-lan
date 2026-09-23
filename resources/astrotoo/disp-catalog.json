@@ -1,0 +1,4797 @@
+{
+  "schema": 1,
+  "model": "astrotoo",
+  "generatedAt": "2026-09-22T13:22:12.429Z",
+  "source": {
+    "base": "AstroToo simulator src/divoom_light/include/divoom_disp_clock.h + divoom_light/*.c",
+    "counts": {
+      "total": 478
+    }
+  },
+  "notes": [
+    "Hardware 530; 480x480.",
+    "No TimesFrame typography is used."
+  ],
+  "displays": [
+    {
+      "disp": 1,
+      "name": "SECOND",
+      "description_zh": "时间秒",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 2,
+      "name": "MIN",
+      "description_zh": "时间分",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 3,
+      "name": "HOUR",
+      "description_zh": "时间小时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 4,
+      "name": "HOUR_MIN",
+      "description_zh": "小时：分钟",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 5,
+      "name": "HOUR_MIN_SEC",
+      "description_zh": "小时:分钟:钞",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 6,
+      "name": "ENG_WEEK",
+      "description_zh": "星期英文",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 7,
+      "name": "YEAR",
+      "description_zh": "年　（数字）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 8,
+      "name": "DAY",
+      "description_zh": "日（数字）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 9,
+      "name": "MON",
+      "description_zh": "月（数字）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 10,
+      "name": "DIVOOM_HOT16",
+      "description_zh": "推荐图库16",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 11,
+      "name": "DIVOOM_HOT32",
+      "description_zh": "推荐图库32",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 12,
+      "name": "CHINA_WEEK",
+      "description_zh": "星期中文",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 13,
+      "name": "NET_PIC",
+      "description_zh": "网络图库",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 14,
+      "name": "APP_PIC_DATA",
+      "description_zh": "app图片加数据",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 15,
+      "name": "TIME_AM_PM",
+      "description_zh": "此标记只有在１２小时制才能显示,上下午标记",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 16,
+      "name": "APP_ITEM_DATA1",
+      "description_zh": "app单元项数据",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 17,
+      "name": "APP_ITEM_NAME1",
+      "description_zh": "app单元项标题",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 18,
+      "name": "WEATHER_GIF16",
+      "description_zh": "天气16的图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 19,
+      "name": "NOISE",
+      "description_zh": "噪音",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 20,
+      "name": "CHINA_DAY",
+      "description_zh": "农历日 天干地支",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 21,
+      "name": "CHINA_YEAR",
+      "description_zh": "农历年　天干地支",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 22,
+      "name": "CHINA_MON",
+      "description_zh": "农历月　　天干地支",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 23,
+      "name": "CHINA_JIEQI",
+      "description_zh": "农历节气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 24,
+      "name": "CHINA_GOOD",
+      "description_zh": "农历宜做",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 25,
+      "name": "CHINA_BAD",
+      "description_zh": "农历忌",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 26,
+      "name": "CHINA_CONST",
+      "description_zh": "星座",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 27,
+      "name": "ENG_MON",
+      "description_zh": "英文    jan",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 28,
+      "name": "CHINA_MON_2",
+      "description_zh": "农历月(正月，腊月)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 29,
+      "name": "CHINA_DAY_2",
+      "description_zh": "农历日(初一，十五)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 30,
+      "name": "CHINA_YEAR_2",
+      "description_zh": "农历年(牛年)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 31,
+      "name": "ENG_WEEK_ALL",
+      "description_zh": "星期英文(全字母)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 32,
+      "name": "TEMP_DIGIT",
+      "description_zh": "温度数字显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 33,
+      "name": "NOISE_DIGIT",
+      "description_zh": "噪音数字显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 34,
+      "name": "NOISE_IMAGE",
+      "description_zh": "噪音图像显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 35,
+      "name": "APP_TITLE",
+      "description_zh": "app显示主题,人名或者文章标题",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 36,
+      "name": "MON_YEAR",
+      "description_zh": "月－年（数字）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 37,
+      "name": "ENG_WEEK_THREE",
+      "description_zh": "星期英文三个字母缩写)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 38,
+      "name": "APP_ITEM_DATA2",
+      "description_zh": "app单元项数据",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 39,
+      "name": "ENG_MONTH_DOT_DAY",
+      "description_zh": "英文月点数字日",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 40,
+      "name": "APP_ITEM_DATA3",
+      "description_zh": "app单元项数据",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 41,
+      "name": "APP_ITEM_DATA4",
+      "description_zh": "app单元项数据",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 42,
+      "name": "APP_CON_DATA",
+      "description_zh": "app显示数据轮播",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 43,
+      "name": "APP_ITEM_NAME3",
+      "description_zh": "app单元项标题暂时不会使用",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 45,
+      "name": "APP_PICTRUE",
+      "description_zh": "app显示图片信息",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 46,
+      "name": "LEFT16_PICTRUE",
+      "description_zh": "显示图片信息　对应config里面的LeftPic              id = 0",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 47,
+      "name": "RIGHT16_PICTRUE",
+      "description_zh": "显示图片信息        对应config里面的RightPic       id = 1",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 48,
+      "name": "MID32_PICTRUE",
+      "description_zh": "显示图片３２信息          对应config里面的MidPic       id = 2",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 49,
+      "name": "TEXT_MESSAGE",
+      "description_zh": "文字提醒框           对应config里面的UserMessage",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 50,
+      "name": "EQ_EFFECT",
+      "description_zh": "EQ效果",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 51,
+      "name": "COUNT_DOWN_DAY",
+      "description_zh": "倒计时天数据显示           对应config里面的CountDownDate",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 52,
+      "name": "GAME_LEVEL",
+      "description_zh": "游戏等级显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 53,
+      "name": "DATE_WEEK_YEAR",
+      "description_zh": "数字日期-三位英文月份-年份",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 54,
+      "name": "WEATHER_WORD",
+      "description_zh": "天气文字",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 55,
+      "name": "WEATHER_GIF32",
+      "description_zh": "天气32的图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 56,
+      "name": "MUL_TEXT_MESSAGE",
+      "description_zh": "多行文字提醒框           对应config里面的UserMessage",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 57,
+      "name": "HOUR_IMAGE",
+      "description_zh": "时间小时图像       id = 3",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 58,
+      "name": "MIN_IMAGE",
+      "description_zh": "时间分钟图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 59,
+      "name": "HOUR_DECADE_IMAGE",
+      "description_zh": "时间小时十位图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 60,
+      "name": "HOUR_UNIT_IMAGE",
+      "description_zh": "时间小时个位图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 61,
+      "name": "MIN_DECADE_IMAGE",
+      "description_zh": "时间分钟十位图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 62,
+      "name": "MIN_UNIT_IMAGE",
+      "description_zh": "时间分钟个位图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 63,
+      "name": "WEATHER_GIF64",
+      "description_zh": "天气64的图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 64,
+      "name": "WEATHER_GIF8",
+      "description_zh": "天气8的图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 66,
+      "name": "WEEK_GIF",
+      "description_zh": "星期用图形表示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 67,
+      "name": "HOUR_ACTIVE_GIF",
+      "description_zh": "整点报时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 68,
+      "name": "SECOND_GIF",
+      "description_zh": "时间秒图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 69,
+      "name": "MON_DECADE_IMAGE",
+      "description_zh": "时间月十位图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 70,
+      "name": "MON_UNIT_IMAGE",
+      "description_zh": "时间月个位图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 71,
+      "name": "MDAY_DECADE_IMAGE",
+      "description_zh": "时间日十位图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 72,
+      "name": "MDAY_UNIT_IMAGE",
+      "description_zh": "时间日个位图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 73,
+      "name": "AM_PM_IMAGE",
+      "description_zh": "ＡＭ-ＰＭ显示图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 74,
+      "name": "WIFI_SIGNAL_IMAGE",
+      "description_zh": "wifi信号强度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 75,
+      "name": "SINGLE_WORLD_TIME_HOUR",
+      "description_zh": "某个世界时间小时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 76,
+      "name": "SINGLE_WORLD_TIME_MIN",
+      "description_zh": "某个世界时间分钟",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 77,
+      "name": "SINGLE_WORLD_TIME_CITY",
+      "description_zh": "某个世界时间城市名",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 78,
+      "name": "DIVOOM_USER_HEAD_IMG",
+      "description_zh": "用户头像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 79,
+      "name": "MON_ALL_IMAGE",
+      "description_zh": "日期月的图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 80,
+      "name": "TOMMOROW_WEEK_TWO",
+      "description_zh": "明天的星期二英文字母",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 81,
+      "name": "TOMMOROW_WEATHER",
+      "description_zh": "明天的天气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 82,
+      "name": "TOMMOROW_MAX_TEMP",
+      "description_zh": "明天的最高气温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 83,
+      "name": "TOMMOROW_MIN_TEMP",
+      "description_zh": "明天的最低气温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 84,
+      "name": "AFTER_TOM_WEEK_TWO",
+      "description_zh": "后天星期两字母",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 85,
+      "name": "AFTER_TOM_WEATHER",
+      "description_zh": "后天的天气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 86,
+      "name": "AFTER_TOM_MAX_TEMP",
+      "description_zh": "后天最高温度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 87,
+      "name": "AFTER_TOM_MIN_TEMP",
+      "description_zh": "后天最低温度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 88,
+      "name": "THREE_DAY_WEEK_TWO",
+      "description_zh": "大后天星期两字母",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 89,
+      "name": "THREE_DAY_WEATHER",
+      "description_zh": "大后天的天气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 90,
+      "name": "THREE_DAY_MAX_TEMP",
+      "description_zh": "大后天最高温度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 91,
+      "name": "THREE_DAY_MIN_TEMP",
+      "description_zh": "大后天最低温度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 92,
+      "name": "FOUR_DAY_WEEK_TWO",
+      "description_zh": "后后天星期两字母",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 93,
+      "name": "FOUR_DAY_WEATHER",
+      "description_zh": "后后天的天气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 94,
+      "name": "FOUR_DAY_MIN_TEMP",
+      "description_zh": "后后天的最低温度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 95,
+      "name": "FOUR_DAY_MAX_TEMP",
+      "description_zh": "后后天的最高温度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 96,
+      "name": "TODAY_MAX_TEMP",
+      "description_zh": "当天最高气温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 97,
+      "name": "TODAY_MIN_TEMP",
+      "description_zh": "当天最低气温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 98,
+      "name": "SPOTIFY_EQ_INFO",
+      "description_zh": "spotify音乐ＥＱ",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 99,
+      "name": "APP_ITEM_DATA5",
+      "description_zh": "app单元项数据",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 100,
+      "name": "APP_ITEM_DATA6",
+      "description_zh": "app单元项数据",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 101,
+      "name": "CHINA_Y_M_D_S",
+      "description_zh": "农历年月日生肖",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 102,
+      "name": "CHINA_Y_J_INFO",
+      "description_zh": "农历宜忌混合",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 103,
+      "name": "CHINA_M_D_S",
+      "description_zh": "农历月日",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 104,
+      "name": "RSS_NEWS_INFO",
+      "description_zh": "RSS新闻显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 105,
+      "name": "DAY_NIGHT_FLAG",
+      "description_zh": "白天黑夜模式",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 106,
+      "name": "SMALL_EQ_EFFECT",
+      "description_zh": "小区域EQ效果",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 107,
+      "name": "HOUR_ACTIVE_GIF_NO_TIME",
+      "description_zh": "整点报时, 不显示时间",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 108,
+      "name": "FIVE_MIN_ACTIVE_GIF",
+      "description_zh": "五分钟间隔显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 109,
+      "name": "NEW_YEAR_COUNT_DOWN_DAY",
+      "description_zh": "新年倒计时显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 110,
+      "name": "QR_CODE_PIC",
+      "description_zh": "二维码显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 111,
+      "name": "WEATHER_LOCAL_GIF",
+      "description_zh": "本地天气GIF",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 112,
+      "name": "APP_ITEM_DATA7",
+      "description_zh": "app单元项数据7",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 113,
+      "name": "APP_ITEM_DATA8",
+      "description_zh": "app单元项数据8",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 114,
+      "name": "APP_ITEM_DATA9",
+      "description_zh": "app单元项数据9",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 115,
+      "name": "APP_ITEM_DATA10",
+      "description_zh": "app单元项数据10",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 116,
+      "name": "APP_ITEM_DATA11",
+      "description_zh": "app单元项数据11",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 117,
+      "name": "APP_ITEM_DATA12",
+      "description_zh": "app单元项数据12",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 118,
+      "name": "APP_NET_DATA1",
+      "description_zh": "app网络数据1",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 119,
+      "name": "APP_NET_DATA2",
+      "description_zh": "app网络数据2",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 120,
+      "name": "APP_NET_DATA3",
+      "description_zh": "app网络数据3",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 121,
+      "name": "APP_NET_DATA4",
+      "description_zh": "app网络数据4",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 122,
+      "name": "APP_NET_DATA5",
+      "description_zh": "app网络数据5",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 123,
+      "name": "APP_NET_DATA6",
+      "description_zh": "app网络数据6",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 124,
+      "name": "WEATHER_GIF_CUSTOM",
+      "description_zh": "用户天气表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 125,
+      "name": "NET5_PIC",
+      "description_zh": "网络图库5",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 126,
+      "name": "NET6_PIC",
+      "description_zh": "网络图库6",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 127,
+      "name": "NET7_PIC",
+      "description_zh": "网络图库7",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 128,
+      "name": "NET8_PIC",
+      "description_zh": "网络图库8",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 129,
+      "name": "NET9_PIC",
+      "description_zh": "网络图库9",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 130,
+      "name": "NET10_PIC",
+      "description_zh": "网络图库10",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 131,
+      "name": "HOUR_POINT_IMAGE",
+      "description_zh": "时间小时指针",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 132,
+      "name": "MIN_POINT_IMAGE",
+      "description_zh": "时间分钟指针",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 133,
+      "name": "PIXEL_EQ_DIAL",
+      "description_zh": "eq律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 134,
+      "name": "PIXEL_CLOUD1_DIAL",
+      "description_zh": "云图推荐1表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 135,
+      "name": "PIXEL_USER_DEFINE1_DIAL",
+      "description_zh": "云图自定义1表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 136,
+      "name": "PIXEL_USER_DEFINE2_DIAL",
+      "description_zh": "云图自定义2表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 137,
+      "name": "PIXEL_USER_DEFINE3_DIAL",
+      "description_zh": "云图自定义3表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 138,
+      "name": "PIXEL_USER_DEFINE4_DIAL",
+      "description_zh": "云图自定义4表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 139,
+      "name": "PIXEL_USER_DEFINE5_DIAL",
+      "description_zh": "云图自定义5表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 140,
+      "name": "PIXEL_USER_DEFINE6_DIAL",
+      "description_zh": "云图自定义6表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 141,
+      "name": "PIXEL_USER_DEFINE7_DIAL",
+      "description_zh": "云图自定义7表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 142,
+      "name": "PIXEL_USER_DEFINE8_DIAL",
+      "description_zh": "云图自定义8表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 143,
+      "name": "PIXEL_USER_DEFINE9_DIAL",
+      "description_zh": "云图自定义9表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 144,
+      "name": "PIXEL_USER_DEFINE10_DIAL",
+      "description_zh": "云图自定义10表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 145,
+      "name": "PIXEL_CLOUD2_DIAL",
+      "description_zh": "云图推荐2表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 146,
+      "name": "PIXEL_CLOUD3_DIAL",
+      "description_zh": "云图推荐3表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 147,
+      "name": "WIND_SPEED",
+      "description_zh": "风速",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 148,
+      "name": "VISIBILITY",
+      "description_zh": "可见度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 149,
+      "name": "NOISE_HUMI_OUT",
+      "description_zh": "室外湿度",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 150,
+      "name": "APP_PICTRUE2",
+      "description_zh": "app显示图片信息2",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 151,
+      "name": "APP_PICTRUE3",
+      "description_zh": "app显示图片信息3",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 152,
+      "name": "APP_PICTRUE4",
+      "description_zh": "app显示图片信息4",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 153,
+      "name": "YEAR_MON_DAY",
+      "description_zh": "年/月/日",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 156,
+      "name": "MON_DAY",
+      "description_zh": "月/日",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 157,
+      "name": "TODAY_LOWEST_TEMP_TO_HIGHEST_TEMP",
+      "description_zh": "当日最低温度到最高温度 12C-23C",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 158,
+      "name": "YEAR_MONTH_ACRONYM",
+      "description_zh": "年.月英文缩写",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 159,
+      "name": "DAY_WEEK_ACRONYM",
+      "description_zh": "日数字.星期大写缩写",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 166,
+      "name": "NOISE_DB",
+      "description_zh": "噪音数字+db",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 169,
+      "name": "FIRST_DAY_WEEK",
+      "description_zh": "今天",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 170,
+      "name": "SMALL_WEEK_DAT",
+      "description_zh": "星期大小写",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 171,
+      "name": "WEEK_GIF_CUSTOM",
+      "description_zh": "用户星期显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 172,
+      "name": "TEMP_PIC",
+      "description_zh": "摄氏度/华氏度图片",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 173,
+      "name": "NET2_PIC",
+      "description_zh": "网络图库2",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 174,
+      "name": "NET3_PIC",
+      "description_zh": "网络图库3",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 175,
+      "name": "NET4_PIC",
+      "description_zh": "网络图库4",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 178,
+      "name": "CALENDAR_EVENT_NAME",
+      "description_zh": "日历活动标题",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 179,
+      "name": "CALENDAR_EVENT_TIME",
+      "description_zh": "日历活动时间",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 180,
+      "name": "ENG_MON_ALL",
+      "description_zh": "月份全拼",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 182,
+      "name": "ALARM_ICON",
+      "description_zh": "闹钟图标显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 185,
+      "name": "PIXEL_CLOUD4_DIAL",
+      "description_zh": "云图推荐4表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 186,
+      "name": "PIXEL_CLOUD5_DIAL",
+      "description_zh": "云图推荐5表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 187,
+      "name": "PIXEL_CLOUD6_DIAL",
+      "description_zh": "云图推荐6表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 188,
+      "name": "PIXEL_CLOUD7_DIAL",
+      "description_zh": "云图推荐7表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 189,
+      "name": "PIXEL_CLOUD8_DIAL",
+      "description_zh": "云图推荐8表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 190,
+      "name": "PIXEL_VARIABLE_DIAL",
+      "description_zh": "边框表盘中的像素艺术位置",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 191,
+      "name": "TIDAL_MOMENT",
+      "description_zh": "潮汐曲线",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 193,
+      "name": "MONTH_DAY_YEAR",
+      "description_zh": "月日年（年两位数字）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 194,
+      "name": "MONTH_ABBREVIATIONS",
+      "description_zh": "月份大小写缩写",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 195,
+      "name": "WEEK_ABBREVIATIONS",
+      "description_zh": "星期大小写两位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 196,
+      "name": "YEAR_TWO_DIGITS",
+      "description_zh": "年份两位数字",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 198,
+      "name": "DAYS_OF_LOVE",
+      "description_zh": "恋爱天数",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 199,
+      "name": "HOUR_OF_LOVE",
+      "description_zh": "恋爱小时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 200,
+      "name": "MIN_OF_LOVE",
+      "description_zh": "恋爱分钟",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 201,
+      "name": "SEC_OF_LOVE",
+      "description_zh": "恋爱秒",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 202,
+      "name": "HALLOW_DAY",
+      "description_zh": "万圣节倒计时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 203,
+      "name": "CHRISTMAS_DAY",
+      "description_zh": "圣诞节倒计时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 204,
+      "name": "SUNRISE_SUNSET_TIME",
+      "description_zh": "日出日落时间，日出时间到立马显示日落时间，反之亦然",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 205,
+      "name": "SUNRISE_SUNSET_COUNT_DOWN_TIME",
+      "description_zh": "日出日落倒计时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 206,
+      "name": "SUNRISE_SUNSET_PIC",
+      "description_zh": "日出日落显示图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 207,
+      "name": "PHASE_MOON",
+      "description_zh": "月相图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 208,
+      "name": "PHASE_MOON_NAME",
+      "description_zh": "月相名称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 209,
+      "name": "PHASE_MOON2",
+      "description_zh": "明天月相图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 210,
+      "name": "PHASE_MOON3",
+      "description_zh": "后天月相图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 211,
+      "name": "PHASE_MOON_NAME2",
+      "description_zh": "明天月相名称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 212,
+      "name": "PHASE_MOON_NAME3",
+      "description_zh": "后天月相名称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 215,
+      "name": "SECOND_DAY",
+      "description_zh": "明天号数",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 216,
+      "name": "THIRD_DAY",
+      "description_zh": "后天号数",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 217,
+      "name": "PHASE_MOON_NAME1",
+      "description_zh": "今天月相名称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 218,
+      "name": "SUNRISE_SUNSET_PIC2",
+      "description_zh": "日出日落显示图2",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 219,
+      "name": "MUSIC_TITLE",
+      "description_zh": "歌名",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 220,
+      "name": "MUSIC_WORD",
+      "description_zh": "歌词",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 221,
+      "name": "PIXEL_CLOUD9_DIAL",
+      "description_zh": "云图推荐9表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 222,
+      "name": "PIXEL_CLOUD10_DIAL",
+      "description_zh": "云图推荐10表盘,使用在播放列表中",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 223,
+      "name": "PIXEL_EQ2_DIAL",
+      "description_zh": "eq2律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 224,
+      "name": "PIXEL_EQ3_DIAL",
+      "description_zh": "eq3律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 225,
+      "name": "PIXEL_EQ4_DIAL",
+      "description_zh": "eq4律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 226,
+      "name": "PIXEL_EQ5_DIAL",
+      "description_zh": "eq5律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 227,
+      "name": "PIXEL_EQ6_DIAL",
+      "description_zh": "eq6律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 228,
+      "name": "PIXEL_EQ7_DIAL",
+      "description_zh": "eq7律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 229,
+      "name": "PIXEL_EQ8_DIAL",
+      "description_zh": "eq8律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 230,
+      "name": "PIXEL_EQ9_DIAL",
+      "description_zh": "eq9律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 231,
+      "name": "PIXEL_EQ10_DIAL",
+      "description_zh": "eq10律动表盘",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 232,
+      "name": "DIVOOM_APP_ANIMATION",
+      "description_zh": "DIVOOM APP发过来的动画",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 233,
+      "name": "SECOND_POINT_IMAGE",
+      "description_zh": "时间秒钟指针",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 234,
+      "name": "PHOTO_ALBUM",
+      "description_zh": "相册显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 236,
+      "name": "SET_COMPONENT_TIME_STYLE",
+      "description_zh": "组件时间样式",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 237,
+      "name": "SET_COMPONENT_DATE_STYLE",
+      "description_zh": "组件日期格式",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 238,
+      "name": "TODAY_MAX_TEMP_H",
+      "description_zh": "当天最高气温H",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 239,
+      "name": "TODAY_MIN_TEMP_L",
+      "description_zh": "当天最低气温L",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 240,
+      "name": "WEBP_WEATHER",
+      "description_zh": "webp天气图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 241,
+      "name": "CALENDAR_DATES",
+      "description_zh": "日历号数 1~17",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 242,
+      "name": "HOUR_MIN_COLOR",
+      "description_zh": "小时/冒号/分钟单独调色",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 243,
+      "name": "DIVOOM_SYS_ANIMATION",
+      "description_zh": "DIVOOM 系统发过来的动画",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 244,
+      "name": "WEEK_ALL_FRIST_BIG",
+      "description_zh": "星期全称首字母大写",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 245,
+      "name": "CALENDAR_WATCH",
+      "description_zh": "日历表1显示(370*230、不带星期)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 246,
+      "name": "APP_ITEM_DATA13",
+      "description_zh": "app单元项数据13",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 247,
+      "name": "APP_ITEM_DATA14",
+      "description_zh": "app单元项数据14",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 248,
+      "name": "APP_ITEM_DATA15",
+      "description_zh": "app单元项数据15",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 249,
+      "name": "APP_ITEM_DATA16",
+      "description_zh": "app单元项数据16",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 250,
+      "name": "APP_ITEM_DATA17",
+      "description_zh": "app单元项数据17",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 251,
+      "name": "APP_ITEM_DATA18",
+      "description_zh": "app单元项数据18",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 252,
+      "name": "APP_ITEM_DATA19",
+      "description_zh": "app单元项数据19",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 253,
+      "name": "APP_ITEM_DATA20",
+      "description_zh": "app单元项数据20",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 254,
+      "name": "TEMP_DIGIT2",
+      "description_zh": "温度数字显示(只带°)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 255,
+      "name": "TOMMOROW_LOWEST_TEMP_TO_HIGHEST_TEMP",
+      "description_zh": "明天最低温到最高温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 256,
+      "name": "AFTER_TOM_LOWEST_TEMP_TO_HIGHEST_TEMP",
+      "description_zh": "后天最低温到最高温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 257,
+      "name": "THREE_DAY_LOWEST_TEMP_TO_HIGHEST_TEMP",
+      "description_zh": "大后天最低温到最高温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 258,
+      "name": "FOUR_DAY_LOWEST_TEMP_TO_HIGHEST_TEMP",
+      "description_zh": "后后天最低温到最高温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 259,
+      "name": "WEEK_MONTH_DAY",
+      "description_zh": "星期全称大小写,月份缩写大小写,号数",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 260,
+      "name": "WEBP_FULL_WEATHER",
+      "description_zh": "webp全屏天气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 261,
+      "name": "DAIL_COMPONENT_START_ID",
+      "description_zh": "子表盘组件开始ID",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 280,
+      "name": "DAIL_COMPONENT_END_ID",
+      "description_zh": "表盘组件结束ID",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 281,
+      "name": "TIME_DIGIT_IMAGE0",
+      "description_zh": "时间数字0,这个在显示时显示小时十位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 282,
+      "name": "TIME_DIGIT_IMAGE1",
+      "description_zh": "时间数字1，这个在显示时显示小时个位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 283,
+      "name": "TIME_DIGIT_IMAGE2",
+      "description_zh": "时间数字2,这个在显示时显示分钟十位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 284,
+      "name": "TIME_DIGIT_IMAGE3",
+      "description_zh": "时间数字3,这个在显示时显示分钟个位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 291,
+      "name": "DIY_TEXT_MESSAGE1",
+      "description_zh": "用户自定义文本",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 292,
+      "name": "DIY_TEXT_MESSAGE2",
+      "description_zh": "用户自定义文本",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 293,
+      "name": "DIY_TEXT_MESSAGE3",
+      "description_zh": "用户自定义文本",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 294,
+      "name": "DIY_TEXT_MESSAGE4",
+      "description_zh": "用户自定义文本",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 295,
+      "name": "DIY_TEXT_MESSAGE5",
+      "description_zh": "用户自定义文本",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 296,
+      "name": "DIY_TEXT_MESSAGE6",
+      "description_zh": "用户自定义文本",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 297,
+      "name": "FIVE_DAY_WEATHER",
+      "description_zh": "第五天的天气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 298,
+      "name": "SIX_DAY_WEATHER",
+      "description_zh": "第六天的天气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 303,
+      "name": "FIVE_DAY_WEEK_TWO",
+      "description_zh": "第五天星期两字母",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 304,
+      "name": "SIX_DAY_WEEK_TWO",
+      "description_zh": "第六天星期两字母",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 305,
+      "name": "FIVE_DAY_LOWEST_TEMP_TO_HIGHEST_TEMP",
+      "description_zh": "第五天最低温到最高温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 306,
+      "name": "SIX_DAY_LOWEST_TEMP_TO_HIGHEST_TEMP",
+      "description_zh": "第六天最低温到最高温",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 307,
+      "name": "CALENDAR_WATCH2",
+      "description_zh": "日历表显示2(231*148、带星期, 单字母)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 308,
+      "name": "CALENDAR_WATCH3",
+      "description_zh": "日历表显示3(322*240、带星期)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 309,
+      "name": "CALENDAR_WATCH4",
+      "description_zh": "日历表显示4(314*234、带星期)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 310,
+      "name": "HOUR_FORMAT",
+      "description_zh": "12-24小时制",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 311,
+      "name": "HOUR_CONTDOWN",
+      "description_zh": "时钟倒计时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 312,
+      "name": "MIN_CONTDOWN",
+      "description_zh": "分钟倒计时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 313,
+      "name": "SEC_CONTDOWN",
+      "description_zh": "秒钟倒计时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 314,
+      "name": "AUTHOR_HEAD_IMG",
+      "description_zh": "作者头像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 315,
+      "name": "AUTHOR_NICK_NAME",
+      "description_zh": "作者昵称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 316,
+      "name": "IMAGE_NAME",
+      "description_zh": "作品名称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 317,
+      "name": "APP_ITEM_DATA21",
+      "description_zh": "app单元项数据21",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 318,
+      "name": "APP_ITEM_DATA22",
+      "description_zh": "app单元项数据22",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 319,
+      "name": "APP_ITEM_DATA23",
+      "description_zh": "app单元项数据23",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 320,
+      "name": "APP_ITEM_DATA24",
+      "description_zh": "app单元项数据24",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 321,
+      "name": "APP_ITEM_DATA25",
+      "description_zh": "app单元项数据25",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 322,
+      "name": "APP_ITEM_DATA26",
+      "description_zh": "app单元项数据26",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 323,
+      "name": "APP_ITEM_DATA27",
+      "description_zh": "app单元项数据27",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 324,
+      "name": "APP_ITEM_DATA28",
+      "description_zh": "app单元项数据28",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 325,
+      "name": "APP_ITEM_DATA29",
+      "description_zh": "app单元项数据29",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 326,
+      "name": "APP_ITEM_DATA30",
+      "description_zh": "app单元项数据30",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 327,
+      "name": "APP_ITEM_DATA31",
+      "description_zh": "app单元项数据31",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 328,
+      "name": "APP_ITEM_DATA32",
+      "description_zh": "app单元项数据32",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 329,
+      "name": "APP_ITEM_DATA33",
+      "description_zh": "app单元项数据33",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 330,
+      "name": "APP_ITEM_DATA34",
+      "description_zh": "app单元项数据34",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 331,
+      "name": "APP_ITEM_DATA35",
+      "description_zh": "app单元项数据35",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 332,
+      "name": "APP_ITEM_DATA36",
+      "description_zh": "app单元项数据36",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 333,
+      "name": "APP_ITEM_DATA37",
+      "description_zh": "app单元项数据37",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 334,
+      "name": "APP_ITEM_DATA38",
+      "description_zh": "app单元项数据38",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 335,
+      "name": "APP_ITEM_DATA39",
+      "description_zh": "app单元项数据39",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 336,
+      "name": "APP_ITEM_DATA40",
+      "description_zh": "app单元项数据40",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 337,
+      "name": "MONTH_ACRONYM_TWO",
+      "description_zh": "月英文2位缩写",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 338,
+      "name": "WIND_SPEED_ONLY",
+      "description_zh": "风速(不带单位)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 339,
+      "name": "TEMP_DIGIT3",
+      "description_zh": "温度数字显示(带℃/℉)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 340,
+      "name": "ATMOSPHERIC_PRESSURE",
+      "description_zh": "气压(带hPa)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 341,
+      "name": "MONTH_FULL_NAME",
+      "description_zh": "月份大小写全称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 342,
+      "name": "HUMI_ONLY_NUM",
+      "description_zh": "湿度纯数字显示「50(%在底图)」",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 343,
+      "name": "MONG_DATE_WEEK",
+      "description_zh": "月(英文大写3位)-日-星期(大写3位)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 344,
+      "name": "CALENDAR_WATCH5",
+      "description_zh": "日历表显示5",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 345,
+      "name": "CALENDAR_WATCH6",
+      "description_zh": "日历表显示6(318*170、带星期)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 346,
+      "name": "TEXT_TITLE",
+      "description_zh": "文字提醒框   标题        对应config里面的UserTitle",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 347,
+      "name": "CALENDAR_WATCH7",
+      "description_zh": "日历表显示7(293*199、带星期)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 348,
+      "name": "ROTAETE_IMAGE1",
+      "description_zh": "图像旋转效果1",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 349,
+      "name": "ROTAETE_IMAGE2",
+      "description_zh": "图像旋转效果2",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 350,
+      "name": "ROTAETE_IMAGE3",
+      "description_zh": "图像旋转效果3",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 351,
+      "name": "CALENDAR_WATCH8",
+      "description_zh": "日历表显示8(370*230、带星期)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 352,
+      "name": "ROTAETE_IMAGE4",
+      "description_zh": "图像旋转效果4",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 354,
+      "name": "TIME_PLAN_COUNT_DOWN_TIME",
+      "description_zh": "时间安排倒计时（分钟:秒）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 355,
+      "name": "TIME_PLAN_DISP_TIME",
+      "description_zh": "时间安排时间段显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 356,
+      "name": "DIALY_DISP_TIME",
+      "description_zh": "纪念日显示时间",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 357,
+      "name": "DIALY_DISP_NAME",
+      "description_zh": "纪念日显示名称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 358,
+      "name": "TIME_PLAN_DISP_NAME",
+      "description_zh": "时间安排显示名称",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 359,
+      "name": "ROTATE_MUL_IMAGE",
+      "description_zh": "多张图旋转",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 360,
+      "name": "LABOR_DAY_COUNTDOWN",
+      "description_zh": "劳动节倒计时 5/1",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 361,
+      "name": "DAY_OF_THE_DEAD_COUNTDOWN",
+      "description_zh": "亡灵日倒计时 11/1",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 362,
+      "name": "CHILDREN_DAY_COUNTDOWN",
+      "description_zh": "儿童节倒计时 6/1",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 363,
+      "name": "VALENTINE_DAY_COUNTDOWN",
+      "description_zh": "情人节倒计时 2/14",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 364,
+      "name": "APP_PICTRUE_URL",
+      "description_zh": "app显示图片外部URL",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 365,
+      "name": "SPECIAL_YEAR_MONTH_DAY",
+      "description_zh": "显示特定的年.月.日",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 366,
+      "name": "SPECIAL_PASSED_YEAR",
+      "description_zh": "正计时-年（不带单位）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 367,
+      "name": "SPECIAL_PASSED_MONTH",
+      "description_zh": "正计时-月（不带单位）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 368,
+      "name": "SPECIAL_PASSED_DAY",
+      "description_zh": "正计时-日（不带单位）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 369,
+      "name": "SPECIAL_PASSED_HOUR",
+      "description_zh": "正计时-小时（不带单位）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 370,
+      "name": "SPECIAL_PASSED_MIN",
+      "description_zh": "正计时-分钟（不带单位）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 371,
+      "name": "SPECIAL_PASSED_SEC",
+      "description_zh": "正计时-秒（不带单位）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 372,
+      "name": "TEXT_MESSAGE2",
+      "description_zh": "文字提醒框   2        对应config里面的UserMessage2",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 373,
+      "name": "TEXT_MESSAGE3",
+      "description_zh": "文字提醒框   3        对应config里面的UserMessage3",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 374,
+      "name": "TEXT_MESSAGE4",
+      "description_zh": "文字提醒框   4        对应config里面的UserMessage4",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 375,
+      "name": "TEXT_MESSAGE5",
+      "description_zh": "文字提醒框   5       对应config里面的UserMessage5",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 376,
+      "name": "WEATHER_WORD_CN",
+      "description_zh": "中文天气类型（晴）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 377,
+      "name": "WEEK_CN",
+      "description_zh": "中文星期（星期一）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 378,
+      "name": "MONTH_DAY_CN",
+      "description_zh": "中文月份日期（12月15日）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 379,
+      "name": "WEEK_ABBREVIATIONS_CN",
+      "description_zh": "中文星期简写（周一）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 380,
+      "name": "TOMMOROW_WEEK_TWO_CN",
+      "description_zh": "第二天中文星期简写（周一）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 381,
+      "name": "AFTER_TOM_WEEK_TWO_CN",
+      "description_zh": "第三天中文星期简写（周一）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 382,
+      "name": "THREE_DAY_WEEK_TWO_CN",
+      "description_zh": "第四天中文星期简写（周一）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 383,
+      "name": "FOUR_DAY_WEEK_TWO_CN",
+      "description_zh": "第五天中文星期简写（周一）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 384,
+      "name": "MONTH_DAY_WEEK_CN",
+      "description_zh": "中文月份日期星期（12月25日 星期三）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 385,
+      "name": "MONTH_CN",
+      "description_zh": "中文月份（一月）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 386,
+      "name": "CHINA_TAISHEN",
+      "description_zh": "胎神位置",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 387,
+      "name": "CHINA_JIAZIWUXING",
+      "description_zh": "甲子五行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 388,
+      "name": "CHINA_PENGZU",
+      "description_zh": "彭祖百忌",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 389,
+      "name": "CHINA_CHONG",
+      "description_zh": "冲煞",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 390,
+      "name": "WORLD_HOUR_POINT",
+      "description_zh": "世界时间时针",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 391,
+      "name": "WORLD_MIN_POINT",
+      "description_zh": "世界时间分针",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 392,
+      "name": "CALENDAR_WATCH9",
+      "description_zh": "日历表显示9(325*221,不带星期, 极简时光特有)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 394,
+      "name": "PHOTO_ALBUM2",
+      "description_zh": "相册2显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 395,
+      "name": "PHOTO_ALBUM3",
+      "description_zh": "相册3显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 396,
+      "name": "PHOTO_ALBUM4",
+      "description_zh": "相册4显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 397,
+      "name": "TODO_LIST",
+      "description_zh": "计划清单",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 398,
+      "name": "TEXT_MESSAGE6",
+      "description_zh": "文字提醒框   6       对应config里面的UserMessage6",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 399,
+      "name": "TEXT_MESSAGE7",
+      "description_zh": "文字提醒框   7       对应config里面的UserMessage7",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 400,
+      "name": "TEXT_MESSAGE8",
+      "description_zh": "文字提醒框   8       对应config里面的UserMessage8",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 401,
+      "name": "TEXT_MESSAGE9",
+      "description_zh": "文字提醒框   9       对应config里面的UserMessage9",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 402,
+      "name": "TEXT_MESSAGE10",
+      "description_zh": "文字提醒框   10       对应config里面的UserMessage10",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 403,
+      "name": "CALENDAR_WATCH10",
+      "description_zh": "日历表10显示(325*221、不带星期,图标用图)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 404,
+      "name": "CALENDAR_WATCH11",
+      "description_zh": "日历表11显示(248*210 带星期单字母）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 405,
+      "name": "CALENDAR_WATCH12",
+      "description_zh": "日历表12显示(370*230、带星期单字母)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 406,
+      "name": "HOUR_DECADE",
+      "description_zh": "时间小时十位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 407,
+      "name": "HOUR_UNIT",
+      "description_zh": "时间小时个位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 408,
+      "name": "MIN_DECADE",
+      "description_zh": "时间分钟十位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 409,
+      "name": "MIN_UNIT",
+      "description_zh": "时间分钟个位",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 410,
+      "name": "TEXT_MESSAGE_AUTO_WRAPS",
+      "description_zh": "文字提醒框1自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 411,
+      "name": "TEXT_MESSAGE2_AUTO_WRAPS",
+      "description_zh": "文字提醒框2自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 412,
+      "name": "TEXT_MESSAGE3_AUTO_WRAPS",
+      "description_zh": "文字提醒框3自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 413,
+      "name": "TEXT_MESSAGE4_AUTO_WRAPS",
+      "description_zh": "文字提醒框4自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 414,
+      "name": "TEXT_MESSAGE5_AUTO_WRAPS",
+      "description_zh": "文字提醒框5自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 415,
+      "name": "TEXT_MESSAGE6_AUTO_WRAPS",
+      "description_zh": "文字提醒框6自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 416,
+      "name": "TEXT_MESSAGE7_AUTO_WRAPS",
+      "description_zh": "文字提醒框7自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 417,
+      "name": "TEXT_MESSAGE8_AUTO_WRAPS",
+      "description_zh": "文字提醒框8自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 418,
+      "name": "TEXT_MESSAGE9_AUTO_WRAPS",
+      "description_zh": "文字提醒框9自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 419,
+      "name": "TEXT_MESSAGE10_AUTO_WRAPS",
+      "description_zh": "文字提醒框10自动换行",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 420,
+      "name": "CALENDAR_WATCH13",
+      "description_zh": "日历表显示13(293*199、带星期单字母)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 421,
+      "name": "CALENDAR_WATCH14",
+      "description_zh": "日历表显示14(258*240、带星期三字母,图标用图)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 423,
+      "name": "CALENDAR_WATCH15",
+      "description_zh": "日历表显示15(506*238、不带星期, 图标用图)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 426,
+      "name": "COUNT_DOWN_DAY_1",
+      "description_zh": "倒计时天数-1显示           对应config里面的CountDownDate",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 427,
+      "name": "MIN_CONTDOWN_1",
+      "description_zh": "分钟倒计时+1",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 428,
+      "name": "GOOGLE_CALENDAR_TODO_LIST",
+      "description_zh": "谷歌日历待办事项",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 429,
+      "name": "PHOTO_ALBUM5",
+      "description_zh": "相册5显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 430,
+      "name": "PHOTO_ALBUM6",
+      "description_zh": "相册6显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 431,
+      "name": "PHOTO_ALBUM7",
+      "description_zh": "相册7显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 432,
+      "name": "PHOTO_ALBUM8",
+      "description_zh": "相册8显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 433,
+      "name": "PHOTO_ALBUM9",
+      "description_zh": "相册9显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 434,
+      "name": "PHOTO_ALBUM10",
+      "description_zh": "相册10显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 435,
+      "name": "PHOTO_ALBUM11",
+      "description_zh": "相册11显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 436,
+      "name": "PHOTO_ALBUM12",
+      "description_zh": "相册12显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 437,
+      "name": "PHOTO_ALBUM13",
+      "description_zh": "相册13显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 438,
+      "name": "PHOTO_ALBUM14",
+      "description_zh": "相册14显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 439,
+      "name": "PHOTO_ALBUM15",
+      "description_zh": "相册15显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 440,
+      "name": "PHOTO_ALBUM16",
+      "description_zh": "相册16显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 441,
+      "name": "PHOTO_ALBUM17",
+      "description_zh": "相册17显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 442,
+      "name": "PHOTO_ALBUM18",
+      "description_zh": "相册18显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 443,
+      "name": "PHOTO_ALBUM19",
+      "description_zh": "相册19显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 444,
+      "name": "PHOTO_ALBUM20",
+      "description_zh": "相册20显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 445,
+      "name": "TODAY_WEATHER",
+      "description_zh": "今天天气",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 446,
+      "name": "PHOTO_ALBUMID1",
+      "description_zh": "显示PhotoAlbumId1不播视频",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 447,
+      "name": "PHOTO_ALBUMID2",
+      "description_zh": "显示PhotoAlbumId2不播视频",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 448,
+      "name": "TEXT_MESSAGE11",
+      "description_zh": "文字提醒框11       对应config里面的UserMessage11",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 449,
+      "name": "TEXT_MESSAGE12",
+      "description_zh": "文字提醒框12       对应config里面的UserMessage12",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 450,
+      "name": "TEXT_MESSAGE13",
+      "description_zh": "文字提醒框13       对应config里面的UserMessage13",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 451,
+      "name": "TEXT_MESSAGE14",
+      "description_zh": "文字提醒框14       对应config里面的UserMessage14",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 452,
+      "name": "TEXT_MESSAGE15",
+      "description_zh": "文字提醒框15       对应config里面的UserMessage15",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 453,
+      "name": "TEXT_MESSAGE16",
+      "description_zh": "文字提醒框16       对应config里面的UserMessage16",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 454,
+      "name": "HUMI_LEVEL",
+      "description_zh": "湿度等级图像（分七个等级）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 455,
+      "name": "CALENDAR_WATCH16",
+      "description_zh": "日历表16显示(340*221、不带星期,图标用图)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 456,
+      "name": "CHINESE_HOUR_IMAGE",
+      "description_zh": "十二时辰图片显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 458,
+      "name": "WORD_OF_THE_DAY",
+      "description_zh": "每日一词",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 459,
+      "name": "CALENDAR_WATCH17",
+      "description_zh": "日历表17显示(370*300、不带星期,图标用图)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 460,
+      "name": "STOCK_LINE",
+      "description_zh": "股票曲线",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 461,
+      "name": "SOLAR_TERMS_IMAGE",
+      "description_zh": "节气（节日）图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 462,
+      "name": "VISIBILITY_LEVEL",
+      "description_zh": "可见度等级图像（分七个等级）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 463,
+      "name": "ATMOSPHERIC_PRESSURE_LEVEL",
+      "description_zh": "气压等级图像（分七个等级）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 464,
+      "name": "TEMP_LEVEL",
+      "description_zh": "温度等级图像（分七个等级）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 465,
+      "name": "CUSTOM_CLOUD_PHOTO",
+      "description_zh": "客户定制云相册",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 466,
+      "name": "SEC_DECADE",
+      "description_zh": "秒钟十位数字(TTF字体)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 467,
+      "name": "SEC_UNIT",
+      "description_zh": "秒钟个位数字(TTF字体)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 468,
+      "name": "WEEK_MONTH_ALL_DAY",
+      "description_zh": "星期全称大小写,月份全称大小写 日",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 469,
+      "name": "CALENDAR_WATCH18",
+      "description_zh": "日历表显示18（318*170，单字母）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 470,
+      "name": "MARBLE",
+      "description_zh": "弹珠（弹珠游戏表盘专属）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 471,
+      "name": "VIDEO_DISP",
+      "description_zh": "视频显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 472,
+      "name": "CALENDAR_WATCH19",
+      "description_zh": "日历表显示19（544*187，不带星期，图标用图）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 473,
+      "name": "TODAY_TIME_CHANGE",
+      "description_zh": "当天时间变化图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 474,
+      "name": "LUNAR_MON_AND_DAY",
+      "description_zh": "农历月日四字（正月初一）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 475,
+      "name": "SPRING_FESTIVAL_IMAGE",
+      "description_zh": "新春图像（马年除夕到十五显示不同图像，除夕前和十五后不同图像）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 476,
+      "name": "ENGLISH_NOW_DISP",
+      "description_zh": "现在英文显示（Now）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 477,
+      "name": "NEXT_FIRST_HOUR_TEXT",
+      "description_zh": "接下来的第一个整点时间显示（09:00）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 478,
+      "name": "NEXT_SECOND_HOUR_TEXT",
+      "description_zh": "接下来的第二个整点时间显示（10:00）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 479,
+      "name": "NEXT_THIRD_HOUR_TEXT",
+      "description_zh": "接下来的第三个整点时间显示（11:00）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 480,
+      "name": "NOW_WEATHER_IMAGE",
+      "description_zh": "现在天气图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 481,
+      "name": "NEXT_FIRST_WEATHER_IMAGE",
+      "description_zh": "接下来的第一个整点天气图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 482,
+      "name": "NEXT_SECOND_WEATHER_IMAGE",
+      "description_zh": "接下来的第二个整点天气图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 483,
+      "name": "NEXT_THIRD_WEATHER_IMAGE",
+      "description_zh": "接下来的第三个整点天气图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 484,
+      "name": "NEXT_FOURTH_WEATHER_IMAGE",
+      "description_zh": "接下来的第四个整点天气图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 485,
+      "name": "NEXT_FOURTH_TEXT",
+      "description_zh": "接下来的第四个整点时间显示（12:00）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 486,
+      "name": "NEXT_FIRST_HOUR_TEMP",
+      "description_zh": "接下来的第一个整点温度（20°）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 487,
+      "name": "NEXT_SECOND_HOUR_TEMP",
+      "description_zh": "接下来的第二个整点温度（20°）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 488,
+      "name": "NEXT_THIRD_HOUR_TEMP",
+      "description_zh": "接下来的第三个整点温度（20°）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 489,
+      "name": "NEXT_FOURTH_HOUR_TEMP",
+      "description_zh": "接下来的第四个整点温度（20°）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 490,
+      "name": "MUSIC_SINGER",
+      "description_zh": "歌手",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 491,
+      "name": "MUSIC_PREV_WORD",
+      "description_zh": "上一句歌词",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 492,
+      "name": "BATTERY",
+      "description_zh": "电池电量",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 495,
+      "name": "STOCK_TREND_PIC",
+      "description_zh": "全屏趋势图片显示(先涨后跌)-国外-绿涨红跌",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 496,
+      "name": "DYNAMIC_COMPONET",
+      "description_zh": "活动组件，用于AI，显示其它所有信息",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 497,
+      "name": "AI_EMOJI",
+      "description_zh": "AI表情包显示元素",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 498,
+      "name": "AI_TEXT",
+      "description_zh": "AI文本提示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 499,
+      "name": "NEXT_EVENT_TITLE",
+      "description_zh": "下一个日程标题",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 500,
+      "name": "NEXT_EVENT_TIME",
+      "description_zh": "下一个日程时间 HH:MM-HH:MM",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 501,
+      "name": "NEXT_EVENT_REMAINING",
+      "description_zh": "今日剩余活动数",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 502,
+      "name": "NEXT_EVENT_COUNTDOWN",
+      "description_zh": "下一活动倒计时 HH:MM:SS",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 503,
+      "name": "NEXT_EVENT_COLOR",
+      "description_zh": "谷歌活动颜色标识",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 504,
+      "name": "GOOGLE_CALENDAR_HEATMAP",
+      "description_zh": "谷歌日历热力图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 505,
+      "name": "AI_BACKGROUD",
+      "description_zh": "AI背景",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 506,
+      "name": "NEXT_EVENT_ACTIVE_MARK",
+      "description_zh": "谷歌日历今日表盘-进行中事件行高亮框",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 507,
+      "name": "TODAY_ACTIVITIES",
+      "description_zh": "今日活动（07 EVENTS TODAY）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 508,
+      "name": "DIAL_SPECIAL_ITEM1",
+      "description_zh": "表盘特殊元素1",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 510,
+      "name": "DIAL_FOUR_DOT_IMAGE_ITEM1",
+      "description_zh": "饮料每60秒随机刷新，在12瓶饮料中随机抽取",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 511,
+      "name": "DIAL_FOUR_DOT_IMAGE_ITEM2",
+      "description_zh": "饮料每60秒随机刷新，在12瓶饮料中随机抽取",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 512,
+      "name": "DIAL_AI_TEXT_ITEM2",
+      "description_zh": "文本特殊元素（情绪补给站） 显示对应饮料文本内容，三个文案，2-3小时轮播",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 513,
+      "name": "WORK_MODE_IMAGE",
+      "description_zh": "音频来源图像（TF/BF/AUX/UAC）四张图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 514,
+      "name": "VOLUME_IMAGE",
+      "description_zh": "音量图像0-16个等级（配17张图）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 515,
+      "name": "WEATHER_PART_IMAGE",
+      "description_zh": "局部动画（雨天，雪天，雾天不显示）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 516,
+      "name": "HOT128_IMAGE",
+      "description_zh": "128*128像素图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 518,
+      "name": "ALARM_TITLE",
+      "description_zh": "闹钟标题(未设定闹钟则显示无标题）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 519,
+      "name": "ALARM_COUNTDOWN",
+      "description_zh": "闹钟倒计时（例1h21m）未设定闹钟显示0h00m",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 520,
+      "name": "ALARM_TIME",
+      "description_zh": "闹钟时间显示（未设定闹钟则显示--:--）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 521,
+      "name": "DAILY_SENTENCE",
+      "description_zh": "每日一句（30个短句随机）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 522,
+      "name": "COUNT_UP_SECOND",
+      "description_zh": "正计时秒数显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 523,
+      "name": "NEXT_SOLAR_TERM_IMAGE",
+      "description_zh": "下一个节气图像",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 524,
+      "name": "NEXT_SOLAR_TERM_COUNTDOWN",
+      "description_zh": "下一个节气倒计时天数",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 525,
+      "name": "SPRING_FESTIVAL_COUNTDOWN",
+      "description_zh": "春节倒计时",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 526,
+      "name": "AMPM_BIG",
+      "description_zh": "AM/PM大写显示",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 527,
+      "name": "WEBP2_WEATHER",
+      "description_zh": "webp2天气图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 528,
+      "name": "WEBP3_WEATHER",
+      "description_zh": "webp3天气图",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 529,
+      "name": "FOUR_SEASON_IMAGE",
+      "description_zh": "四季变换图像（春夏秋冬）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 530,
+      "name": "PHASE_MOON_NAME_EN",
+      "description_zh": "月相名称(英文)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 531,
+      "name": "THREE_MUSIC_WORD",
+      "description_zh": "三行歌词",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 532,
+      "name": "POETRY_SHORT",
+      "description_zh": "诗词短句",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 533,
+      "name": "HOT_IMAGE_DISP_TIME",
+      "description_zh": "显示时间",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 534,
+      "name": "CALENDAR_WATCH20",
+      "description_zh": "日历表显示20(231*148、星期显示为日，一...六)",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 535,
+      "name": "MONTH_CN_SOLAR",
+      "description_zh": "中文月份（一月）阳历",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 536,
+      "name": "FINANCE_TREND_PIC",
+      "description_zh": "金融涨跌图片（2帧：涨/跌，国内外一致）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 537,
+      "name": "DAILY_SENTENCE_PIC",
+      "description_zh": "每日一句（30个短句图片随机）",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": true,
+        "oftenUsesVectorFontForText": false,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    },
+    {
+      "disp": 1000,
+      "name": "HTTP_UPLOAD_PROGRESS",
+      "description_zh": "",
+      "hints": {
+        "likelyUsesRasterOrAssetLayer": false,
+        "oftenUsesVectorFontForText": true,
+        "note": "AstroToo renderer symbol; dynamic data may require a corresponding device service."
+      }
+    }
+  ]
+}

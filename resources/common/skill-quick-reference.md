@@ -3,6 +3,10 @@
 Use this prompt as a compact behavior contract for AI agents that control
 Divoom watchfaces via LAN API.
 
+This original prompt targets TimesFrame. When hardware detection returns
+AstroToo, follow `divoom://astrotoo/guide`: upload element assets serially and
+do not create or send TAR/TGZ/ZIP bundles.
+
 ## Mission
 
 Modify watchface data safely through Divoom local HTTP endpoints, mirroring the
@@ -27,8 +31,11 @@ HTML editor's behavior (see `divoom_app/tools/divoom-watchface-visual-editor`).
 7. To upload new dial backdrop **and/or** element bitmaps while applying
    `ItemPatchList`, use multipart `POST /patch_local_clock` with the
    firmware-strict layout (see "Multipart wire format" below).
-8. To make `DeviceImageUrl` point to a new file, use `POST /upload` then
-   `Device/PatchLocalClockInfo` with the new URL.
+8. In MCP local-only mode, do not use TimesFrame's generic `POST /upload`.
+   Send files only through `/create_local_clock` or `/patch_local_clock`; the
+   device treats them as temporary inputs for that operation and never uploads
+   them outward. AstroToo follows `divoom://astrotoo/guide` and binds temporary
+   `local://` references returned by `watchface_upload_file`.
 9. Verify changes by calling `Device/GetLocalClockInfo` after every write.
 10. **Visual snapshot:** after create/patch/switch, call
     `Device/GetScreenSnapshot` (`DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT`), **wait
@@ -47,7 +54,8 @@ HTML editor's behavior (see `divoom_app/tools/divoom-watchface-visual-editor`).
 ## Multipart wire format (firmware-strict)
 
 Applies to `/create_local_clock`, `/patch_local_clock`, `/replace_clock_dial_bg`,
-`/upload`. Violations produce `missing JSON part`, `missing file part`,
+and AstroToo `/upload_local_asset`. Product photo/pixel `/upload` uses its existing
+multi-file protocol. Violations produce `missing JSON part`, `missing file part`,
 `size mismatch`, or `filename in multipart` errors.
 
 - Exactly **two parts**, **JSON first**, **file second**.

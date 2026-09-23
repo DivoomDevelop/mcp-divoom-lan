@@ -3,7 +3,7 @@
  * Scan the visual editor's bundled marketplace templates (`public/template/config/*.cfg`)
  * to derive:
  *   1) Per-disp typography statistics (merged into disp-catalog by sync-editor-ai-bundle).
- *   2) A small curated template library for AI agents (`resources/templates-curated.json`).
+ *   2) A small curated template library for AI agents (`resources/timesframe/templates-curated.json`).
  *
  * Usage:
  *   node scripts/build-templates-and-typography.mjs [path/to/divoom-watchface-visual-editor]
@@ -18,7 +18,7 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
-const resourcesRoot = path.join(repoRoot, "resources");
+const resourcesRoot = path.join(repoRoot, "resources", "timesframe");
 
 const SPLIT_TIME_DISPS = new Set([406, 407, 408, 409]);
 const LUNAR_DISPS = new Set([20, 21, 22, 23, 24, 25, 26, 216, 217]);
@@ -447,13 +447,14 @@ function main() {
     };
   });
 
+  const generatedAt = new Date().toISOString();
   const curatedPath = path.join(resourcesRoot, "templates-curated.json");
   fs.writeFileSync(
     curatedPath,
     JSON.stringify(
       {
         schema: 1,
-        generatedAt: new Date().toISOString(),
+        generatedAt,
         source: {
           editorRepo: "divoom-watchface-visual-editor",
           templateDir: "public/template/config",
@@ -473,6 +474,29 @@ function main() {
     ) + "\n",
   );
   console.log("[build-templates-and-typography] wrote", curatedPath, "templates:", templates.length);
+
+  const clocks = templates.map((template) => {
+    const items = template.watchface.ItemList ?? [];
+    return {
+      clockId: template.clockId, nameCn: template.nameCn, nameEn: template.nameEn,
+      isDefault: false, sources: ["timesframe-curated"], tags: template.tags,
+      itemIds: [...new Set(items.map((item) => String(item.item_id ?? "")).filter(Boolean))],
+      disps: [...new Set(items.map((item) => Number(item.disp)).filter(Number.isFinite))].sort((a, b) => a - b),
+      fonts: [...new Set(items.map((item) => Number(item.font)).filter(Number.isFinite))].sort((a, b) => a - b),
+      itemCount: items.length, stats: template.stats,
+    };
+  });
+  const source = { editorRepo: "divoom-watchface-visual-editor", templateDir: "public/template/config" };
+  fs.writeFileSync(path.join(resourcesRoot, "clock-catalog.json"), JSON.stringify({
+    schema: 1, model: "timesframe", generatedAt, source,
+    counts: { configurations: clocks.length, defaults: 0 },
+    notes: ["TimesFrame-only catalog. Clock IDs, fonts, disp IDs and item IDs do not apply to other products."],
+    defaultClockIds: [], clocks,
+  }, null, 2) + "\n");
+  fs.writeFileSync(path.join(resourcesRoot, "clock-configs.json"), JSON.stringify({
+    schema: 1, model: "timesframe", generatedAt, source,
+    configurations: Object.fromEntries(templates.map((template) => [template.clockId, template.watchface])),
+  }, null, 2) + "\n");
 
   console.log("[build-templates-and-typography] done. Editor:", editorAbs);
 }

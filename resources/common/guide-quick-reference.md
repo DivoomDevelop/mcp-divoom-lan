@@ -5,6 +5,10 @@ Wire-format requirements below are derived directly from the device firmware
 (`divoom_app/src/app/divoom_http_server.c`,
 `divoom_app/src/middle/divoom_watchface_local_api.c`).
 
+This original resource describes TimesFrame semantics. For AstroToo, use
+`divoom://astrotoo/guide`; AstroToo uploads element assets one file at a time
+and rejects TAR/TGZ/ZIP bundles.
+
 ## Core transport rules
 
 - API entry: `POST http://<DEVICE_IP>:<PORT>/divoom_api`
@@ -79,7 +83,9 @@ locally for diff/vision review).
 ## Multipart wire format (firmware-strict)
 
 These rules apply to **`POST /create_local_clock`**, **`POST /patch_local_clock`**,
-**`POST /replace_clock_dial_bg`** and **`POST /upload`**. Failing to follow them
+**`POST /replace_clock_dial_bg`** and AstroToo **`POST /upload_local_asset`**.
+Product photo/pixel **`POST /upload`** keeps its existing multi-file protocol.
+Failing to follow the strict two-part routes
 results in `missing JSON part`, `missing file part`, `size mismatch`, or
 `filename in multipart` errors from the device.
 
@@ -289,12 +295,17 @@ Outer transport:
 - Second part: dial JPEG/WebP only (no tarball, no PNG).
 - Replaces the cached bitmap only; cfg `DeviceImageUrl` is NOT updated.
 
-### `POST /upload`
+### `POST /upload_local_asset` and product `POST /upload`
 
-- Generic upload that lets `DeviceImageUrl` reference the file later via
-  `Device/PatchLocalClockInfo`.
-- First JSON part: product-specific metadata (e.g. photo album upload).
-- Second part: a single file. Use multiple `/upload` calls for multiple files.
+- The firmware has a historical generic upload entry, but MCP local-only mode
+  blocks it for TimesFrame because it dispatches to the device network task.
+- Send TimesFrame watchface files only as the second part of
+  `/create_local_clock` or `/patch_local_clock`. They are staging inputs for
+  that operation and are removed after processing; they are never uploaded
+  outward.
+- AstroToo uses `/upload_local_asset` with `Device/UploadLocalAsset`, as described
+  by `divoom://astrotoo/guide`, and returns temporary `local://` references.
+  Its photo/pixel product flow remains on `/upload` and is not used by MCP.
 
 ## Sunrise / sunset behavior (for `disp = 204`)
 

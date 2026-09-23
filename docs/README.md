@@ -3,20 +3,28 @@
 如果你是第一次接触 Divoom MCP，按下面顺序阅读：
 
 1. `quick-start.md`：5 分钟跑通安装和首个调用
-2. `tool-examples.md`：核心功能示例（改表盘、选表盘、亮度、新建表盘）
-3. `html-visual-editor.md`：如何配合 HTML 可视化编辑器（含公开仓库地址）
-4. `safety-and-troubleshooting.md`：风险边界与常见问题
-5. `reference/`：协议关键规则提炼（中英）
-6. `examples/`：请求/响应示例与目录清单
+2. `mcp-tools.md`：21 个 MCP 工具 API、机型范围和文件策略
+3. `astrotoo-and-multiple-devices.md`：硬件识别、多设备并行及 AstroToo 本地保存
+4. `adding-products.md`：新增产品注册、独立资料目录和接入检查
+5. `tool-examples.md`：核心功能示例（含 AstroToo 逐文件上传、新建及指针表盘）
+6. `html-visual-editor.md`：如何配合 HTML 可视化编辑器（含公开仓库地址）
+7. `safety-and-troubleshooting.md`：风险边界与常见问题
+8. `reference/`：协议关键规则提炼（中英）
+9. `examples/`：请求/响应示例与目录清单
 
 补充：**`disp-usage.md`** 中含「图像元素唯一性」及网络图库 `disp`（`13` / `125–130` / `173–175`）与固件常量对照表，建模 **`ItemList` 前应阅读**。
 
 ## 目标能力
 
+当前共提供 21 个 MCP 工具：15 个设备工具和 6 个离线/机型感知设计工具。完整清单见 `mcp-tools.md`。
+
+- 查询设备型号和 LAN 能力（`watchface_get_device_info`）
 - 修改本地表盘内容（`watchface_patch_local`）
 - 切换当前表盘（`watchface_set_clock_select`）
 - 调整亮度（`watchface_set_brightness`）
 - 创建新本地表盘（`watchface_create_local_clock`）
+- 按每台设备返回的 `Hardware` 自动区分 TimesFrame 与 AstroToo
+- 在一个 MCP 服务中通过 `target.host` 控制多台设备
 
 ## 前置条件（必须）
 

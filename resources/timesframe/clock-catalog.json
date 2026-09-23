@@ -1,0 +1,1271 @@
+{
+  "schema": 1,
+  "model": "timesframe",
+  "generatedAt": "2026-05-29T10:38:03.332Z",
+  "source": {
+    "editorRepo": "divoom-watchface-visual-editor",
+    "templateDir": "public/template/config"
+  },
+  "counts": {
+    "configurations": 20,
+    "defaults": 0
+  },
+  "notes": [
+    "TimesFrame-only catalog. Clock IDs, fonts, disp IDs and item IDs do not apply to other products."
+  ],
+  "defaultClockIds": [],
+  "clocks": [
+    {
+      "clockId": 25,
+      "nameCn": "泡泡字体",
+      "nameEn": "Bubble Font",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        59,
+        60,
+        61,
+        62
+      ],
+      "fonts": [
+        6
+      ],
+      "tags": [
+        "sparse_layout",
+        "asset_heavy"
+      ],
+      "itemCount": 4,
+      "stats": {
+        "itemCount": 4,
+        "uniqueDisps": 4,
+        "rasterSlotRatio": 1,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 91,
+      "nameCn": "天气预报1",
+      "nameEn": "Weather Forecast 1",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        4,
+        54,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        147,
+        148,
+        149,
+        159,
+        240,
+        254
+      ],
+      "fonts": [
+        6,
+        16,
+        30
+      ],
+      "tags": [
+        "dense_layout",
+        "weather"
+      ],
+      "itemCount": 26,
+      "stats": {
+        "itemCount": 26,
+        "uniqueDisps": 26,
+        "rasterSlotRatio": 0.192,
+        "dominantFonts": [
+          {
+            "id": 16,
+            "share": 0.769
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 93,
+      "nameCn": "天气预报3",
+      "nameEn": "Weather Forecast 3",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        4,
+        54,
+        74,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        96,
+        97,
+        147,
+        148,
+        149,
+        159,
+        176,
+        177,
+        182,
+        240,
+        254
+      ],
+      "fonts": [
+        6,
+        16,
+        30
+      ],
+      "tags": [
+        "dense_layout",
+        "weather",
+        "large_time"
+      ],
+      "itemCount": 26,
+      "stats": {
+        "itemCount": 26,
+        "uniqueDisps": 26,
+        "rasterSlotRatio": 0.231,
+        "dominantFonts": [
+          {
+            "id": 16,
+            "share": 0.731
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 95,
+      "nameCn": "天气预报4",
+      "nameEn": "Weather Forecast4",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        4,
+        53,
+        54,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        240,
+        244,
+        254,
+        260
+      ],
+      "fonts": [
+        6,
+        16,
+        18
+      ],
+      "tags": [
+        "dense_layout",
+        "weather",
+        "large_time"
+      ],
+      "itemCount": 23,
+      "stats": {
+        "itemCount": 23,
+        "uniqueDisps": 23,
+        "rasterSlotRatio": 0.261,
+        "dominantFonts": [
+          {
+            "id": 16,
+            "share": 0.696
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 255,
+      "nameCn": "简约时间 01",
+      "nameEn": "Reduced Time 01",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        2,
+        3,
+        8,
+        27,
+        32,
+        37,
+        73,
+        74,
+        148,
+        149,
+        172,
+        182,
+        218,
+        240,
+        310
+      ],
+      "fonts": [
+        6,
+        66
+      ],
+      "tags": [
+        "asset_heavy",
+        "pixel_theme"
+      ],
+      "itemCount": 15,
+      "stats": {
+        "itemCount": 15,
+        "uniqueDisps": 15,
+        "rasterSlotRatio": 0.467,
+        "dominantFonts": [
+          {
+            "id": 66,
+            "share": 0.533
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 257,
+      "nameCn": "皓月时分",
+      "nameEn": "Bright Moon",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        1,
+        4,
+        7,
+        27,
+        37,
+        73,
+        74,
+        131,
+        132,
+        156,
+        171,
+        176,
+        177,
+        182,
+        233,
+        311,
+        312,
+        313
+      ],
+      "fonts": [
+        6,
+        24
+      ],
+      "tags": [
+        "dense_layout",
+        "cjk_text",
+        "large_time",
+        "asset_heavy",
+        "digital_theme"
+      ],
+      "itemCount": 18,
+      "stats": {
+        "itemCount": 18,
+        "uniqueDisps": 18,
+        "rasterSlotRatio": 0.389,
+        "dominantFonts": [
+          {
+            "id": 24,
+            "share": 0.611
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 362,
+      "nameCn": "书籍照片",
+      "nameEn": "photos of books",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "PhotoAlbumId"
+      ],
+      "disps": [
+        4,
+        8,
+        31,
+        49,
+        51,
+        54,
+        80,
+        81,
+        84,
+        85,
+        88,
+        89,
+        92,
+        93,
+        157,
+        169,
+        234,
+        240,
+        255,
+        256,
+        257,
+        258,
+        341,
+        347
+      ],
+      "fonts": [
+        6,
+        30,
+        52,
+        88,
+        126
+      ],
+      "tags": [
+        "dense_layout",
+        "weather",
+        "cjk_text",
+        "large_time"
+      ],
+      "itemCount": 26,
+      "stats": {
+        "itemCount": 26,
+        "uniqueDisps": 24,
+        "rasterSlotRatio": 0.231,
+        "dominantFonts": [
+          {
+            "id": 52,
+            "share": 0.577
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 441,
+      "nameCn": "经典街机",
+      "nameEn": "Retro Arcade",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        4,
+        37,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        156,
+        169,
+        240
+      ],
+      "fonts": [
+        6,
+        102
+      ],
+      "tags": [
+        "dense_layout",
+        "weather",
+        "large_time"
+      ],
+      "itemCount": 23,
+      "stats": {
+        "itemCount": 23,
+        "uniqueDisps": 23,
+        "rasterSlotRatio": 0.217,
+        "dominantFonts": [
+          {
+            "id": 102,
+            "share": 0.783
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 532,
+      "nameCn": "天气预报1（中文）",
+      "nameEn": "Weather Forecast 1",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        4,
+        8,
+        81,
+        82,
+        83,
+        85,
+        86,
+        87,
+        89,
+        90,
+        91,
+        93,
+        94,
+        95,
+        96,
+        97,
+        147,
+        148,
+        149,
+        240,
+        254,
+        376,
+        377,
+        380,
+        381,
+        382,
+        383
+      ],
+      "fonts": [
+        6,
+        30,
+        52,
+        56,
+        60
+      ],
+      "tags": [
+        "dense_layout",
+        "weather"
+      ],
+      "itemCount": 27,
+      "stats": {
+        "itemCount": 27,
+        "uniqueDisps": 27,
+        "rasterSlotRatio": 0.185,
+        "dominantFonts": [
+          {
+            "id": 52,
+            "share": 0.407
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 537,
+      "nameCn": "天气预报3（中文）",
+      "nameEn": "Weather Forecast 3",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        4,
+        74,
+        81,
+        82,
+        83,
+        85,
+        86,
+        87,
+        89,
+        90,
+        91,
+        96,
+        97,
+        147,
+        148,
+        149,
+        176,
+        177,
+        182,
+        240,
+        254,
+        376,
+        380,
+        381,
+        382,
+        384
+      ],
+      "fonts": [
+        6,
+        16,
+        30,
+        52
+      ],
+      "tags": [
+        "dense_layout",
+        "weather",
+        "large_time"
+      ],
+      "itemCount": 26,
+      "stats": {
+        "itemCount": 26,
+        "uniqueDisps": 26,
+        "rasterSlotRatio": 0.231,
+        "dominantFonts": [
+          {
+            "id": 16,
+            "share": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 539,
+      "nameCn": "假期时光",
+      "nameEn": "Pockets of Forever",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [],
+      "fonts": [],
+      "tags": [
+        "sparse_layout"
+      ],
+      "itemCount": 0,
+      "stats": {
+        "itemCount": 0,
+        "uniqueDisps": 0,
+        "rasterSlotRatio": 0,
+        "dominantFonts": []
+      }
+    },
+    {
+      "clockId": 659,
+      "nameCn": "农历",
+      "nameEn": "lunar calendar",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [],
+      "disps": [
+        4,
+        7,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        29,
+        31,
+        37,
+        377,
+        378,
+        386,
+        387,
+        388,
+        389
+      ],
+      "fonts": [
+        242
+      ],
+      "tags": [
+        "dense_layout",
+        "lunar_calendar",
+        "large_time"
+      ],
+      "itemCount": 17,
+      "stats": {
+        "itemCount": 17,
+        "uniqueDisps": 17,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 242,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 735,
+      "nameCn": "海底泡泡屋",
+      "nameEn": "Aqua Clock",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "SubClockId_",
+        "SubClockId_0"
+      ],
+      "disps": [
+        7,
+        8,
+        27,
+        37,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        180,
+        240,
+        261,
+        406,
+        407,
+        408,
+        409,
+        410,
+        421
+      ],
+      "fonts": [
+        6,
+        144,
+        296,
+        298,
+        300
+      ],
+      "tags": [
+        "dense_layout",
+        "split_time_digits",
+        "weather"
+      ],
+      "itemCount": 32,
+      "stats": {
+        "itemCount": 32,
+        "uniqueDisps": 31,
+        "rasterSlotRatio": 0.219,
+        "dominantFonts": [
+          {
+            "id": 298,
+            "share": 0.625
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 840,
+      "nameCn": "时光轴",
+      "nameEn": "Timeline",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "SubClock_0",
+        "SubClock_1",
+        "SubClock_10",
+        "SubClock_11",
+        "SubClock_12",
+        "SubClock_13",
+        "SubClock_14",
+        "SubClock_15",
+        "SubClock_2",
+        "SubClock_3",
+        "SubClock_4",
+        "SubClock_5",
+        "SubClock_6",
+        "SubClock_7",
+        "SubClock_8",
+        "SubClock_9",
+        "SubClockId_"
+      ],
+      "disps": [
+        4,
+        8,
+        13,
+        36,
+        37,
+        49,
+        234,
+        346,
+        372,
+        373,
+        374,
+        375,
+        394,
+        395,
+        396,
+        398,
+        399,
+        400,
+        401,
+        402,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        440,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453
+      ],
+      "fonts": [
+        6,
+        104,
+        126
+      ],
+      "tags": [
+        "dense_layout",
+        "cjk_text",
+        "large_time",
+        "asset_heavy"
+      ],
+      "itemCount": 38,
+      "stats": {
+        "itemCount": 38,
+        "uniqueDisps": 38,
+        "rasterSlotRatio": 0.447,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.447
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 863,
+      "nameCn": "时光轴",
+      "nameEn": "Timeline",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "SubClock_0",
+        "SubClock_1",
+        "SubClock_10",
+        "SubClock_11",
+        "SubClock_12",
+        "SubClock_13",
+        "SubClock_14",
+        "SubClock_15",
+        "SubClock_2",
+        "SubClock_3",
+        "SubClock_4",
+        "SubClock_5",
+        "SubClock_6",
+        "SubClock_7",
+        "SubClock_8",
+        "SubClock_9",
+        "SubClockId_"
+      ],
+      "disps": [
+        4,
+        8,
+        13,
+        36,
+        37,
+        49,
+        234,
+        346,
+        372,
+        373,
+        374,
+        375,
+        394,
+        395,
+        396,
+        398,
+        399,
+        400,
+        401,
+        402,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        437,
+        438,
+        439,
+        440,
+        448,
+        449,
+        450,
+        451,
+        452,
+        453
+      ],
+      "fonts": [
+        6,
+        104,
+        126
+      ],
+      "tags": [
+        "dense_layout",
+        "cjk_text",
+        "large_time",
+        "asset_heavy"
+      ],
+      "itemCount": 38,
+      "stats": {
+        "itemCount": 38,
+        "uniqueDisps": 38,
+        "rasterSlotRatio": 0.447,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.447
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 873,
+      "nameCn": "成长记",
+      "nameEn": "Growth Record",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "SubClock_0",
+        "SubClock_1",
+        "SubClock_10",
+        "SubClock_11",
+        "SubClock_2",
+        "SubClock_3",
+        "SubClock_4",
+        "SubClock_5",
+        "SubClock_6",
+        "SubClock_7",
+        "SubClock_8",
+        "SubClock_9",
+        "SubClockId_"
+      ],
+      "disps": [
+        4,
+        13,
+        49,
+        153,
+        234,
+        346,
+        365,
+        372,
+        373,
+        374,
+        375,
+        394,
+        395,
+        396,
+        398,
+        399,
+        400,
+        401,
+        402,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        448,
+        449
+      ],
+      "fonts": [
+        6,
+        80
+      ],
+      "tags": [
+        "dense_layout",
+        "cjk_text",
+        "large_time",
+        "asset_heavy"
+      ],
+      "itemCount": 29,
+      "stats": {
+        "itemCount": 29,
+        "uniqueDisps": 29,
+        "rasterSlotRatio": 0.448,
+        "dominantFonts": [
+          {
+            "id": 80,
+            "share": 0.552
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 874,
+      "nameCn": "成长记",
+      "nameEn": "Growth Record",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "SubClock_0",
+        "SubClock_1",
+        "SubClock_10",
+        "SubClock_11",
+        "SubClock_2",
+        "SubClock_3",
+        "SubClock_4",
+        "SubClock_5",
+        "SubClock_6",
+        "SubClock_7",
+        "SubClock_8",
+        "SubClock_9",
+        "SubClockId_"
+      ],
+      "disps": [
+        4,
+        13,
+        49,
+        153,
+        234,
+        346,
+        365,
+        372,
+        373,
+        374,
+        375,
+        394,
+        395,
+        396,
+        398,
+        399,
+        400,
+        401,
+        402,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        448,
+        449
+      ],
+      "fonts": [
+        6,
+        126,
+        156
+      ],
+      "tags": [
+        "dense_layout",
+        "cjk_text",
+        "large_time",
+        "asset_heavy"
+      ],
+      "itemCount": 29,
+      "stats": {
+        "itemCount": 29,
+        "uniqueDisps": 29,
+        "rasterSlotRatio": 0.448,
+        "dominantFonts": [
+          {
+            "id": 126,
+            "share": 0.517
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 997,
+      "nameCn": "年度照片",
+      "nameEn": "Photo of the Year",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "SubClock_0",
+        "SubClock_1",
+        "SubClock_10",
+        "SubClock_11",
+        "SubClock_2",
+        "SubClock_3",
+        "SubClock_4",
+        "SubClock_5",
+        "SubClock_6",
+        "SubClock_7",
+        "SubClock_8",
+        "SubClock_9",
+        "SubClockId_"
+      ],
+      "disps": [
+        4,
+        13,
+        49,
+        234,
+        259,
+        372,
+        373,
+        374,
+        375,
+        394,
+        395,
+        396,
+        398,
+        399,
+        400,
+        401,
+        402,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        448,
+        449
+      ],
+      "fonts": [
+        6,
+        104,
+        126
+      ],
+      "tags": [
+        "dense_layout",
+        "cjk_text",
+        "large_time",
+        "asset_heavy"
+      ],
+      "itemCount": 27,
+      "stats": {
+        "itemCount": 27,
+        "uniqueDisps": 27,
+        "rasterSlotRatio": 0.481,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.481
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 999,
+      "nameCn": "年度照片",
+      "nameEn": "Photo of the Year",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "SubClock_0",
+        "SubClock_1",
+        "SubClock_10",
+        "SubClock_11",
+        "SubClock_2",
+        "SubClock_3",
+        "SubClock_4",
+        "SubClock_5",
+        "SubClock_6",
+        "SubClock_7",
+        "SubClock_8",
+        "SubClock_9",
+        "SubClockId_"
+      ],
+      "disps": [
+        4,
+        13,
+        49,
+        156,
+        234,
+        372,
+        373,
+        374,
+        375,
+        394,
+        395,
+        396,
+        398,
+        399,
+        400,
+        401,
+        402,
+        429,
+        430,
+        431,
+        432,
+        433,
+        434,
+        435,
+        436,
+        448,
+        449
+      ],
+      "fonts": [
+        6,
+        104,
+        126
+      ],
+      "tags": [
+        "dense_layout",
+        "cjk_text",
+        "large_time",
+        "asset_heavy"
+      ],
+      "itemCount": 27,
+      "stats": {
+        "itemCount": 27,
+        "uniqueDisps": 27,
+        "rasterSlotRatio": 0.481,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.481
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 1001,
+      "nameCn": "万圣节",
+      "nameEn": "Hallowmas",
+      "isDefault": false,
+      "sources": [
+        "timesframe-curated"
+      ],
+      "itemIds": [
+        "PhotoAlbumId",
+        "SubClock_0",
+        "SubClock_1",
+        "SubClock_2",
+        "SubClockId_"
+      ],
+      "disps": [
+        5,
+        13,
+        49,
+        80,
+        81,
+        84,
+        85,
+        88,
+        89,
+        92,
+        93,
+        157,
+        169,
+        173,
+        174,
+        234,
+        240,
+        255,
+        256,
+        257,
+        258,
+        261,
+        262,
+        263,
+        372,
+        373,
+        374,
+        375
+      ],
+      "fonts": [
+        6,
+        104,
+        126
+      ],
+      "tags": [
+        "dense_layout",
+        "cjk_text",
+        "weather",
+        "large_time"
+      ],
+      "itemCount": 28,
+      "stats": {
+        "itemCount": 28,
+        "uniqueDisps": 28,
+        "rasterSlotRatio": 0.321,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.429
+          }
+        ]
+      }
+    }
+  ]
+}

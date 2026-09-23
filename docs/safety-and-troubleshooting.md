@@ -36,11 +36,11 @@
 底图 (`clock_bg.jpg|webp`，由
 `divoom_watchface_replace_clock_dial_bg_validate_saved_file` 校验)：
 
-- 分辨率：`800x1280`（竖屏）
+- 分辨率：TimesFrame 为 `800x1280`（竖屏），AstroToo 为 `480x480`
 - 格式：`JPEG`（魔数 `FF D8`）或 `WebP`（`RIFF…WEBP`），不接 PNG/GIF
 - 文件大小：≤ `500 KiB`（`DIVOOM_REPLACE_DIAL_BG_MAX_FILE_BYTES`）
 
-tar.gz 内部元素槽位（`ItemList[i].image_addr` /
+TimesFrame tar.gz 内部元素槽位（`ItemList[i].image_addr` /
 `ItemPatchList[i].patch.bundle_image` 引用，由
 `wf_validate_bundle_slot_image_file` 校验）：
 
@@ -48,6 +48,11 @@ tar.gz 内部元素槽位（`ItemList[i].image_addr` /
   必须客户端转码后再打包
 - 单文件大小：与底图同上限
 - 叶子名 ≤ 95 字节，禁止子目录
+
+AstroToo 不支持 TAR/TGZ/ZIP。每个元素文件分别调用一次
+`watchface_upload_file`（专用 `/upload_local_asset`），再把返回的临时 `local://...` 绑定到本轮创建或修改。照片/像素业务仍使用独立的 `/upload`。
+成功提交后已绑定素材进入持久目录，未绑定素材重启时清理。TimesFrame 通用
+`/upload` 被 MCP 禁止；两种机型的 LAN 接收文件都不会向外部服务器上传。
 
 ## 二、常见问题排查
 

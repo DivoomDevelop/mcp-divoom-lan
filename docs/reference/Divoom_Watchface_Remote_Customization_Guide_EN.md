@@ -4,6 +4,11 @@ This document is a compact MCP-oriented guide for day-to-day operations.
 
 For complete product protocol details, maintain the full upstream guide in your source repository and treat this file as a quick operational companion.
 
+This file retains the historical TimesFrame protocol semantics. MCP local-only
+mode blocks TimesFrame's generic `/upload`; watchface files are accepted only as
+temporary create/patch inputs, removed after processing, and never uploaded
+outward. For AstroToo, use `docs/astrotoo-and-multiple-devices.md`.
+
 ## Core endpoints
 
 - `POST /divoom_api`

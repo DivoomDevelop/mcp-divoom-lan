@@ -1,6 +1,6 @@
 # 核心功能示例
 
-本文给出四类常见需求的 MCP 调用参数示例。
+本文给出修改、切换、亮度、新建、素材更新、换底图以及 AstroToo 逐文件上传的 MCP 调用参数示例。
 
 ---
 
@@ -40,7 +40,19 @@
 }
 ```
 
-可先用 `watchface_get_store_market_list` 获取候选列表，再选择 `ClockId`。
+先用 `watchface_clock_catalog` 查询当前产品的候选项，避免把另一个产品的 `ClockId`、字体或元素含义带进来：
+
+```json
+{
+  "target": { "host": "192.168.13.142", "port": 9000 },
+  "nameContains": "NBA",
+  "defaultOnly": true,
+  "limit": 10,
+  "includeConfig": false
+}
+```
+
+要查看指定表盘的原始 AstroToo 配置，可传 `clockIds:[101]` 和 `includeConfig:true`。`watchface_get_store_market_list` 仍用于读取设备已经缓存的市场表盘列表。
 
 ---
 
@@ -280,3 +292,79 @@ weather_pack.bin
 
 该方式用于"替换解码缓存"，不会改 cfg 里的 URL 字段；`/replace_clock_dial_bg`
 只接受单张 JPEG/WebP 第二段，不接受 tar.gz。
+
+---
+
+## 8) AstroToo：逐文件上传元素后创建表盘
+
+先确认设备型号和本地保存能力：
+
+```json
+{
+  "target": {
+    "host": "192.168.13.142",
+    "port": 9000,
+    "model": "auto"
+  }
+}
+```
+
+工具：`watchface_get_device_info`。返回结果应包含 `model:"astrotoo"`、
+`hardware:530` 和 `capabilities.LocalOnly:true`。
+
+每个指针或图标分别调用一次 `watchface_upload_file`，调用之间保持串行：
+
+```json
+{
+  "target": { "host": "192.168.13.142", "port": 9000 },
+  "filePath": "C:/watchface/hour.png",
+  "fileName": "hour.png",
+  "metadata": {}
+}
+```
+
+依次上传 `hour.png`、`minute.png`、`second.png`，从每次响应的
+`responseJson.FileId` 取得 `local://...`。把三个值分别写入完整配置中对应条目的
+`image_addr`，再调用：
+
+```json
+{
+  "target": { "host": "192.168.13.142", "port": 9000 },
+  "imagePath": "C:/watchface/clock_bg.webp",
+  "fileName": "clock_bg.webp",
+  "metadata": {
+    "ClockName": "春日指针表盘",
+    "DialAssets": "image",
+    "ItemIdList": ["hour", "minute", "second", "date"],
+    "ItemList": [
+      {
+        "item_id": "hour",
+        "disp": 131,
+        "font": 0,
+        "x": 40,
+        "y": 40,
+        "w": 400,
+        "h": 400,
+        "size": 0,
+        "alig": 3,
+        "sep": 0,
+        "hier": 1,
+        "transp": 100,
+        "image_addr": "local://从时针上传响应取得",
+        "color_1": "#FFFFFF",
+        "color_2": "#000000"
+      }
+    ]
+  }
+}
+```
+
+上面的 `ItemList` 只展示一条指针结构；实际提交时必须包含与 `ItemIdList` 一一对应的
+全部条目。完整的三指针加日期示例位于
+`artifacts/astrotoo-spring-watchface/create-payload.json`，端到端调用示例位于
+`artifacts/astrotoo-spring-watchface/create-via-mcp.mjs`。
+
+AstroToo 不接受 TAR/TGZ/ZIP。`local://...` 是该设备上的临时传输引用；创建或修改
+成功后，固件把已绑定素材移动到表盘持久目录。未绑定素材在重启时清理，也不会上传到
+外部服务器。TimesFrame 的通用 `/upload` 在 MCP 中被禁止，其创建/修改接收文件同样
+只作为本次操作的设备端暂存输入。

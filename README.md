@@ -1,6 +1,6 @@
 # mcp-divoom-lan
 
-`mcp-divoom-lan` is an open-source MCP server that wraps Divoom watchface LAN APIs as standard tools for AI clients.
+`mcp-divoom-lan` is an open-source MCP server that wraps Divoom TimesFrame and AstroToo watchface LAN APIs as standard tools for AI clients. One server can control several devices: every operation first reads `Device/GetHardwareVersion` from that target and selects the product profile from the returned `Hardware` value.
 
 It works together with the **v2** HTML visual editor for modifying watchfaces, switching faces, adjusting brightness, and creating new local watchfaces.
 
@@ -19,34 +19,64 @@ Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-spec
 
 ## Default safety policy (important)
 
+- **Identify every target first:** `Hardware` 510/511/512 selects TimesFrame; 530 selects AstroToo. Unknown hardware is rejected. `DeviceType` is not used for product detection.
 - **Read before write:** call `watchface_get_local`, then `watchface_patch_local`, then read back to verify.
 - If `GetLocalClockInfo` returns an **empty `ItemList`:** stop writes; switch to an editable watchface first.
 - Do **not** call `watchface_create_local_clock` unless the user clearly asks to create a new one (no implicit creation).
 
-## Implemented tools
+## Implemented tools (21)
 
+Device tools (15):
+
+- `watchface_get_device_info` → hardware identification and LAN capability report
 - `watchface_get_local` → `Device/GetLocalClockInfo`
-- `watchface_patch_local` → `Device/PatchLocalClockInfo` (default `/divoom_api`); optional `dialAssetsPath` switches to multipart `POST /patch_local_clock` (same dial/tar.gz rules as `watchface_create_local_clock`)
+- `watchface_patch_local` → `Device/PatchLocalClockInfo` (default `/divoom_api`); optional `dialAssetsPath` switches to multipart `POST /patch_local_clock`. TimesFrame can use tar.gz; AstroToo accepts one backdrop and uses prior per-file `local://` uploads for elements.
 - `watchface_get_fonts_local` → `Device/GetLocalFontList`
 - `watchface_get_store_market_list` → `Device/GetStoreClockMarketList`
-- `watchface_set_clock_select` → `Channel/SetClockSelectId`
+- `watchface_set_clock_select` → `Channel/SetClockSelectId` (TimesFrame queues a paired request inside one serialized MCP operation so a manual selection suppresses the active traditional schedule for the current period; AstroToo sends once)
 - `watchface_get_brightness` → `Sys/GetBrightness`
 - `watchface_set_brightness` → `Channel/SetBrightness`
 - `watchface_onoff_screen` → `Channel/OnOffScreen` (1=on, 0=off)
 - `watchface_replace_dial_bg_file` → `POST /replace_clock_dial_bg`
-- `watchface_upload_file` → `POST /upload`
-- `watchface_create_local_clock` → `POST /create_local_clock` (multipart: single dial image **or** `tar.gz`; JSON `DialAssets`/`UseDialAssetBundle` selects mode, default auto-detect gzip)
+- `watchface_upload_file` → AstroToo-only `POST /upload_local_asset`; returns a temporary `local://` staging reference consumed by a successful create/patch. AstroToo keeps product photo/pixel `POST /upload` separate. TimesFrame generic `/upload` is blocked in local-only MCP mode.
+- `watchface_create_local_clock` → `POST /create_local_clock` (TimesFrame: single image or tar.gz; AstroToo: one 480×480 backdrop after uploading element files individually)
 - `watchface_reset_local_then_cloud` → `Device/ResetLocalClockFromServer`
-- `watchface_get_screen_snapshot` → `Device/GetScreenSnapshot` (wait 2s, then GET `/userdata/snapshot.webp` for visual diff)
+- `watchface_get_screen_snapshot` → `Device/GetScreenSnapshot` (downloads the returned AstroToo snapshot path; TimesFrame keeps its WebP fallback)
 - `watchface_raw_command` → generic `POST /divoom_api`
+
+Offline/model-aware authoring tools (6):
+
 - `watchface_protocol_quick_reference` → key protocol constraints for the model
+- `watchface_clock_catalog` → product-specific ClockId, Chinese/English names, fonts, disp and item-id semantics; optional native configuration
+- `watchface_disp_catalog` → model-specific `disp` catalog and filters
+- `watchface_font_catalog` → model-specific font catalog; with a live AstroToo target it merges local availability into the AstroToo names
+- `watchface_template_search` → curated TimesFrame or AstroToo watchface templates
+- `watchface_layout_suggest` → model-specific layout hints; AstroToo never receives TimesFrame coordinate statistics
 
 ## Resources (context for the model)
 
-The server exposes two MCP resources:
+Product data is stored by directory: `resources/timesframe`, `resources/astrotoo`, and `resources/common`. `resources/products.json` records Hardware mappings, canvas sizes, and directory names. A future product gets its own directory and registry entry; runtime loaders never fall back to another product's data.
 
+The original resource URIs retain TimesFrame semantics. AstroToo has separate 480×480 resources:
+
+- `divoom://products/catalog`
 - `divoom://guide/quick-reference`
 - `divoom://skill/watchface-customization`
+- `divoom://font/catalog`
+- `divoom://font/guide`
+- `divoom://disp/catalog`
+- `divoom://watchface/schema`
+- `divoom://watchface/example-minimal`
+- `divoom://guide/ai-watchface`
+- `divoom://templates/curated`
+- `divoom://astrotoo/guide`
+- `divoom://astrotoo/disp/catalog`
+- `divoom://astrotoo/font/catalog`
+- `divoom://astrotoo/clocks/catalog`
+- `divoom://astrotoo/clocks/configs`
+- `divoom://astrotoo/templates/curated`
+- `divoom://astrotoo/watchface/example-minimal`
+- `divoom://astrotoo/watchface/schema`
 
 ## MCP Bundle (.mcpb)
 
@@ -73,6 +103,16 @@ Development (watch rebuild):
 npm run dev
 ```
 
+Regenerate AstroToo resources from the simulator and Divoom command server:
+
+```powershell
+$env:DIVOOM_ASTROTOO_SIMULATOR_ROOT='D:\work\divoom_product\timebox\trunck\device\tool_src\lv_sim_visual_studio\LvglAstroTooSimulator'
+$env:DIVOOM_ASTROTOO_DEVICE_ID='300400436'
+npm run build:astrotoo
+```
+
+The generator calls `https://appchina.divoom-gz.com/` + command string with a JSON body. It obtains default IDs from `Device/GetClockDefaultList` (`IsDefault=1`), font names from `Device/GetFontForAI`, and missing configurations from `Device/GetClockInfoV3`.
+
 Pre-release check (typecheck, build, pack dry-run):
 
 ```bash
@@ -83,6 +123,9 @@ npm run release:check
 
 - `docs/README.md` — documentation index
 - `docs/quick-start.md` — minimal setup
+- `docs/mcp-tools.md` — complete 21-tool API catalog and model-specific file policy
+- `docs/astrotoo-and-multiple-devices.md` — hardware detection, multiple targets, and AstroToo local storage
+- `docs/adding-products.md` — product registry, isolated resource directories, and onboarding checks
 - `docs/tool-examples.md` — tool usage examples (includes §5b analog pointer layout)
 - `docs/disp-usage.md` — choosing `disp` ids (pointer layout `131/132/233`; net-gallery uniqueness `13/125–130/173–175`)
 - `docs/html-visual-editor.md` — using the visual editor with MCP
@@ -94,9 +137,10 @@ npm run release:check
 
 - `DIVOOM_DEVICE_HOST` — device LAN IP (e.g. `192.168.1.120`)
 - `DIVOOM_DEVICE_PORT` — HTTP port, default `9000`
+- `DIVOOM_DEVICE_MODEL` — `auto` (default), `timesframe`, or `astrotoo`; explicit values are compatibility checks, except `timesframe` can support legacy firmware without the hardware query
 - `DIVOOM_TIMEOUT_MS` — request timeout ms, default `45000`
 
-If `DIVOOM_DEVICE_HOST` is unset, each tool call must pass `target.host`.
+If `DIVOOM_DEVICE_HOST` is unset, each tool call must pass `target.host`. To control several devices, pass a different `target` on each call. The server serializes a complete operation per `host:port` while allowing independent devices to run concurrently.
 
 ## Example client config (stdio)
 
@@ -113,6 +157,7 @@ If `DIVOOM_DEVICE_HOST` is unset, each tool call must pass `target.host`.
       "env": {
         "DIVOOM_DEVICE_HOST": "192.168.1.120",
         "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_DEVICE_MODEL": "auto",
         "DIVOOM_TIMEOUT_MS": "45000"
       }
     }

@@ -6,14 +6,18 @@
 
 ## MCP 入口
 
-- 资源：`divoom://disp/catalog`（JSON，`application/json`，194 个条目）
-- 工具：`watchface_disp_catalog` —— 支持下面过滤参数：
+- TimesFrame 资源：`divoom://disp/catalog`（JSON，`application/json`，194 个条目）
+- AstroToo 资源：`divoom://astrotoo/disp/catalog`
+- 工具：`watchface_disp_catalog` —— 先用 `model` 或在线 `target` 选择机型，再支持下面过滤参数：
   - `ids: number[]` —— 只取指定的 disp id
   - `nameContains: string` —— 在英文符号上做大小写不敏感的子串匹配（如 `WEATHER`）
   - `descriptionContains: string` —— 在中文描述里做匹配（如 `日历`）
   - `expects: "any" | "image" | "text"` —— 用启发式信号筛
   - `limit: number` —— 默认 80，最大 300
   - `idsOnly: boolean` —— 仅返回 `[{disp,name,description_zh}]` 紧凑视图
+
+下文涉及 `clock_bg.tar.gz` 的打包规则只适用于 TimesFrame。AstroToo 图片元素
+必须逐个调用 `watchface_upload_file`，并用返回的临时 `local://...` 绑定。
 
 数据来源：
 

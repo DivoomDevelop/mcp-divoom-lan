@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * 由 HTML 编辑器的 `public/font/font_info.cfg` 生成给 AGENT 用的字体目录
- * `resources/font-catalog.json`。
+ * `resources/timesframe/font-catalog.json`。
  *
  * 用法：
  *   node scripts/build-font-catalog.mjs [path/to/font_info.cfg]
@@ -382,7 +382,7 @@ const out = {
   fonts
 };
 
-const outPath = path.resolve(repoRoot, "resources/font-catalog.json");
+const outPath = path.resolve(repoRoot, "resources/timesframe/font-catalog.json");
 fs.mkdirSync(path.dirname(outPath), { recursive: true });
 fs.writeFileSync(outPath, JSON.stringify(out, null, 2) + "\n");
 console.log(

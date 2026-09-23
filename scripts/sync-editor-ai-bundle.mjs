@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 /**
  * 把 HTML 可视化编辑器（divoom-watchface-visual-editor_v2）的 AI 资料同步到
- * MCP 包的 `resources/`，让任意 AGENT 通过 MCP 资源/工具就能拿到：
+ * MCP 包的 `resources/timesframe/`，让任意 AGENT 通过 MCP 资源/工具就能拿到：
  *
- *   - `resources/font-catalog.json`            （由 build-font-catalog.mjs 生成）
- *   - `resources/disp-catalog.json`            （disp + 中文注释 + hints + **typography**）
- *   - `resources/templates-curated.json`       （由 build-templates-and-typography.mjs）
- *   - `resources/disp-typography-overlay.json` （中间产物；合并进 disp-catalog）
- *   - `resources/watchface-config.schema.json`
- *   - `resources/examples/ai-minimal-watchface.json`
- *   - `resources/ai-watchface-guide.md`
- *   - `resources/ai-font-guide.md`           （编辑器 docs/generated/ai-font-guide.md）
+ *   - `resources/timesframe/font-catalog.json`
+ *   - `resources/timesframe/disp-catalog.json`
+ *   - `resources/timesframe/templates-curated.json`
+ *   - `resources/timesframe/disp-typography-overlay.json`
+ *   - `resources/timesframe/watchface-config.schema.json`
+ *   - `resources/timesframe/example-minimal.json`
+ *   - `resources/timesframe/ai-watchface-guide.md`
+ *   - `resources/timesframe/ai-font-guide.md`
  *
  * 用法：
  *   node scripts/sync-editor-ai-bundle.mjs [path/to/divoom-watchface-visual-editor]
@@ -29,7 +29,7 @@ import { spawnSync } from "node:child_process";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
-const resourcesRoot = path.join(repoRoot, "resources");
+const resourcesRoot = path.join(repoRoot, "resources", "timesframe");
 
 const explicit = process.argv[2];
 const fromEnv = process.env.DIVOOM_EDITOR_REPO;
@@ -187,7 +187,7 @@ function main() {
   );
   copyIfExists(
     "docs/examples/ai-minimal-watchface.json",
-    "examples/ai-minimal-watchface.json",
+    "example-minimal.json",
     "minimal watchface example"
   );
   copyIfExists("docs/AI_WATCHFACE_GUIDE.md", "ai-watchface-guide.md", "editor AI guide");
@@ -204,7 +204,7 @@ function main() {
   if (dispCatalog) {
     fs.writeFileSync(dispPath, JSON.stringify(dispCatalog, null, 2) + "\n");
     console.log(
-      `[sync-editor-ai-bundle] wrote resources/disp-catalog.json (${dispCatalog.displays.length} disps, pre-typography)`
+      `[sync-editor-ai-bundle] wrote resources/timesframe/disp-catalog.json (${dispCatalog.displays.length} disps, pre-typography)`
     );
   }
 

@@ -13,14 +13,12 @@ import {
   type Tool,
 } from "@modelcontextprotocol/sdk/types.js";
 
+import { identify, serial, assertResponse, requireLocal, PRODUCTS, PROFILES, type Model, type Target, type IdentifiedTarget } from "./devices.js";
 type JsonRecord = Record<string, unknown>;
 
-type DeviceTarget = {
-  host: string;
-  port: number;
-  timeoutMs: number;
-};
+type DeviceTarget = Target;
 
+const DEFAULT_MODEL = process.env.DIVOOM_DEVICE_MODEL ?? "auto";
 const DEFAULT_HOST = (process.env.DIVOOM_DEVICE_HOST ?? "").trim();
 const DEFAULT_PORT = parseIntegerOrDefault(process.env.DIVOOM_DEVICE_PORT, 9000);
 const DEFAULT_TIMEOUT_MS = parseIntegerOrDefault(process.env.DIVOOM_TIMEOUT_MS, 45_000);
@@ -33,12 +31,19 @@ const PKG_VERSION = JSON.parse(readFileSync(path.join(__dirname, "../package.jso
 
 const RESOURCES = [
   {
+    uri: "divoom://products/catalog",
+    name: "Divoom Product Registry",
+    description: "Registered products, Hardware versions, canvas sizes, and isolated resource directories.",
+    mimeType: "application/json",
+    fileName: "products.json",
+  },
+  {
     uri: "divoom://guide/quick-reference",
     name: "Divoom Watchface Guide Quick Reference",
     description:
       "Key LAN API constraints and command flow for watchface customization.",
     mimeType: "text/markdown",
-    fileName: "guide-quick-reference.md",
+    fileName: "common/guide-quick-reference.md",
   },
   {
     uri: "divoom://skill/watchface-customization",
@@ -46,7 +51,7 @@ const RESOURCES = [
     description:
       "Compact prompt that teaches agents how to safely operate the Divoom LAN API.",
     mimeType: "text/markdown",
-    fileName: "skill-quick-reference.md",
+    fileName: "common/skill-quick-reference.md",
   },
   {
     uri: "divoom://font/catalog",
@@ -54,7 +59,7 @@ const RESOURCES = [
     description:
       "Curated TTF and image-font catalog (id, type, name, charset, script, style tags, recommended scenarios) sourced from the visual editor's font_info.cfg. Use it to pick `ItemList[i].font` ids without guessing.",
     mimeType: "application/json",
-    fileName: "font-catalog.json",
+    fileName: "timesframe/font-catalog.json",
   },
   {
     uri: "divoom://font/guide",
@@ -62,7 +67,7 @@ const RESOURCES = [
     description:
       "Human-readable guide for all 157 editor fonts: visual style, mood, recommended use cases, scenario index, TTF vs image_glyph styling rules, and per-id descriptions. Read this before `divoom://font/catalog` when choosing fonts for themed dials.",
     mimeType: "text/markdown",
-    fileName: "ai-font-guide.md",
+    fileName: "timesframe/ai-font-guide.md",
   },
   {
     uri: "divoom://disp/catalog",
@@ -70,7 +75,7 @@ const RESOURCES = [
     description:
       "Catalog of every `disp` id supported by this firmware (194 entries) with English symbol, Chinese description, and heuristic hints for whether the slot expects an image asset or vector text. Use to pick `ItemList[i].disp` and to decide whether the slot needs an `image_addr` asset.",
     mimeType: "application/json",
-    fileName: "disp-catalog.json",
+    fileName: "timesframe/disp-catalog.json",
   },
   {
     uri: "divoom://watchface/schema",
@@ -78,7 +83,7 @@ const RESOURCES = [
     description:
       "JSON Schema (draft 2020-12) for the editor's watchface config (`ItemList[]`, `ItemIdList`, `ClockId`, names). Validate generated payloads before sending them to PatchLocalClockInfo / CreateLocalClock.",
     mimeType: "application/schema+json",
-    fileName: "watchface-config.schema.json",
+    fileName: "timesframe/watchface-config.schema.json",
   },
   {
     uri: "divoom://watchface/example-minimal",
@@ -86,7 +91,7 @@ const RESOURCES = [
     description:
       "Smallest valid watchface JSON (single time row at 800x1280). Use as a starting template before adding more `ItemList` rows.",
     mimeType: "application/json",
-    fileName: "examples/ai-minimal-watchface.json",
+    fileName: "timesframe/example-minimal.json",
   },
   {
     uri: "divoom://guide/ai-watchface",
@@ -94,7 +99,7 @@ const RESOURCES = [
     description:
       "Editor-side narrative on AI-assisted watchface authoring: canvas conventions, font rules, where the catalogs come from, regeneration workflow.",
     mimeType: "text/markdown",
-    fileName: "ai-watchface-guide.md",
+    fileName: "timesframe/ai-watchface-guide.md",
   },
   {
     uri: "divoom://templates/curated",
@@ -102,8 +107,19 @@ const RESOURCES = [
     description:
       "~20 designer-made skeleton watchfaces mined from the HTML editor's bundled marketplace configs (`public/template/config`). Each entry lists tags (weather, lunar, pixel_theme, …), stats, and a stripped `watchface` JSON (ClockId, names, ItemIdList, ItemList) safe to clone before swapping fonts/colors. Does not include DeviceImageUrl.",
     mimeType: "application/json",
-    fileName: "templates-curated.json",
+    fileName: "timesframe/templates-curated.json",
   },
+  ...[
+    ["divoom://astrotoo/guide", "AstroToo LAN Guide", "guide.md", "text/markdown"],
+    ["divoom://astrotoo/disp/catalog", "AstroToo Disp Catalog", "disp-catalog.json", "application/json"],
+    ["divoom://astrotoo/font/catalog", "AstroToo Font Policy", "font-catalog.json", "application/json"],
+    ["divoom://astrotoo/clocks/catalog", "AstroToo Clock Catalog", "clock-catalog.json", "application/json"],
+    ["divoom://astrotoo/clocks/configs", "AstroToo Clock Configurations", "clock-configs.json", "application/json"],
+    ["divoom://astrotoo/templates/curated", "AstroToo Templates", "templates-curated.json", "application/json"],
+    ["divoom://astrotoo/watchface/example-minimal", "AstroToo Minimal Watchface", "example-minimal.json", "application/json"],
+    ["divoom://astrotoo/watchface/schema", "AstroToo Watchface Schema", "watchface-config.schema.json", "application/schema+json"],
+  ].map(([uri, name, file, mimeType]) => ({ uri, name, fileName: PRODUCTS.astrotoo.resourceDir + "/" + file, mimeType,
+    description: "AstroToo Hardware 530 only; 480x480, local assets and on-device fonts." })),
 ] as const;
 
 const targetSchema = {
@@ -111,6 +127,8 @@ const targetSchema = {
   description:
     "Optional per-call target override. If omitted, environment variables are used.",
   properties: {
+    model: { type: "string", enum: ["auto", "timesframe", "astrotoo"], default: "auto",
+      description: "Normally auto: query Hardware first. Explicit timesframe is only a legacy firmware fallback." },
     host: {
       type: "string",
       description: "Device LAN IP. Example: 192.168.1.120",
@@ -149,7 +167,7 @@ const tools: Tool[] = [
   {
     name: "watchface_patch_local",
     description:
-      "Patch local dial via Device/PatchLocalClockInfo with precheck. Defaults to POST /divoom_api (JSON only) for pure metadata edits. Prefer ItemPatchList (per-index field diff) — DO NOT include item_id inside patch.* unless the user explicitly asks to rename a slot, since the firmware will overwrite the device-side item_id and break menu/config bindings. When dialAssetsPath is set, switches to multipart POST /patch_local_clock: first JSON part (Device/PatchLocalClockInfo, optional DialAssets), second part single JPEG/WebP dial backdrop or clock_bg.tar.gz bundle. Element slots inside the tarball must be JPEG, WebP, or PNG (validated by firmware wf_validate_bundle_slot_image_file). Use ItemPatchList[].patch.bundle_image=<leaf> to bind a tar leaf to that slot's img_addr; supplying ItemList alone is a full-table replace and should be avoided unless the row count actually changes. Pointer fixes (131/132/233 = DIVOOM_CLOCK_DISP_SUPPORT_*_POINT_IMAGE): shared square x/y/w/h, w×w PNGs, center rotation; ref ClockId 60012; transp 100; hier 0/1/2 only — docs/tool-examples.md §5b. Avoid duplicate image-backed disp rows (NET_PIC family); docs/disp-usage.md. Multipart framing: watchface_upload_file description and resources/skill-quick-reference.md.",
+      "Patch local dial via Device/PatchLocalClockInfo with precheck. Defaults to POST /divoom_api (JSON only) for pure metadata edits. Prefer ItemPatchList (per-index field diff) — DO NOT include item_id inside patch.* unless the user explicitly asks to rename a slot, since the firmware will overwrite the device-side item_id and break menu/config bindings. When dialAssetsPath is set, switches to multipart POST /patch_local_clock. TimesFrame accepts a single JPEG/WebP backdrop or clock_bg.tar.gz bundle. AstroToo accepts one JPEG/WebP backdrop only: upload every element separately with watchface_upload_file, bind its returned local:// FileId in image_addr, and never send TAR/TGZ/ZIP or bundle_image. Supplying ItemList alone is a full-table replace and should be avoided unless the row count actually changes. Pointer fixes (131/132/233 = DIVOOM_CLOCK_DISP_SUPPORT_*_POINT_IMAGE): shared square x/y/w/h, w×w PNGs, center rotation; transp 100; hier 0/1/2 only. Avoid duplicate image-backed disp rows (NET_PIC family); docs/disp-usage.md.",
     inputSchema: {
       type: "object",
       properties: {
@@ -169,7 +187,7 @@ const tools: Tool[] = [
         },
         itemIdList: {
           type: "array",
-          items: { type: "integer" },
+          items: { type: "string" },
         },
         itemPatchList: {
           type: "array",
@@ -182,7 +200,7 @@ const tools: Tool[] = [
         dialAssetsPath: {
           type: "string",
           description:
-            "Optional second multipart part. Either a single JPEG/WebP dial backdrop (`clock_bg.jpg|webp`, validated by divoom_watchface_replace_clock_dial_bg_validate_saved_file) or a `clock_bg.tar.gz` bundle. The tarball may contain `clock_bg.jpg|webp` plus the leaves listed by `ItemPatchList[].patch.bundle_image`. Element leaves inside the tar may be JPEG/WebP/PNG (PNG is element-only; backdrop must be JPEG/WebP). When set, the tool POSTs `/patch_local_clock` with the firmware-strict multipart layout.",
+            "Optional second multipart part. AstroToo: one JPEG/WebP backdrop only; element files must already have been uploaded individually and referenced by local:// FileId. TimesFrame: either a single backdrop or clock_bg.tar.gz bundle. When set, the tool POSTs /patch_local_clock.",
         },
         filePartName: {
           type: "string",
@@ -223,12 +241,17 @@ const tools: Tool[] = [
   },
   {
     name: "watchface_set_clock_select",
-    description: "Call Channel/SetClockSelectId with ClockId.",
+    description:
+      "Call Channel/SetClockSelectId with ClockId. TimesFrame queues a pair of identical requests in one serialized MCP operation so a manual selection suppresses an active traditional clock schedule for its current period; AstroToo sends it once.",
     inputSchema: {
       type: "object",
       properties: {
         target: targetSchema,
         clockId: { type: "integer" },
+        sysUpdateTime: {
+          type: "integer",
+          description: "Optional device clock revision. Omitted by default to preserve the original TimesFrame request shape.",
+        },
       },
       required: ["clockId"],
       additionalProperties: false,
@@ -278,7 +301,7 @@ const tools: Tool[] = [
   {
     name: "watchface_replace_dial_bg_file",
     description:
-      "POST /replace_clock_dial_bg using multipart (Device/ReplaceClockDialBgFile). Replaces the cached dial bitmap only — does NOT modify cfg DeviceImageUrl, and does NOT accept tar.gz. Backdrop is validated by divoom_watchface_replace_clock_dial_bg_validate_saved_file: JPEG (FF D8) or WebP (RIFF…WEBP) only, ≤ 500 KiB (DIVOOM_REPLACE_DIAL_BG_MAX_FILE_BYTES), recommended 800x1280 portrait. Multipart framing notes: watchface_upload_file description.",
+      "POST /replace_clock_dial_bg using multipart (Device/ReplaceClockDialBgFile). Replaces the cached dial bitmap only and does not accept archives. Backdrop must be JPEG or WebP and less than 500 KiB. Required dimensions are selected from hardware: TimesFrame 800x1280, AstroToo 480x480.",
     inputSchema: {
       type: "object",
       properties: {
@@ -286,7 +309,7 @@ const tools: Tool[] = [
         imagePath: {
           type: "string",
           description:
-            "Absolute or relative image file path. Backdrop must be JPEG (FF D8) or WebP (RIFF…WEBP); PNG/GIF are rejected. Recommended 800x1280, ≤ 500 KiB.",
+            "Absolute or relative JPEG/WebP path. Required size: TimesFrame 800x1280 or AstroToo 480x480; file must be less than 500 KiB.",
         },
         clockId: { type: "integer" },
         useCurrentDisplayClock: { type: "boolean" },
@@ -306,7 +329,7 @@ const tools: Tool[] = [
   {
     name: "watchface_upload_file",
     description:
-      "POST /upload with multipart. First JSON part is caller-provided metadata (product-specific Command). 传输文件打包要求：固件在 divoom_http_server_upload_get_file_info 中要求每个文件段必须有 Content-Length，而浏览器 FormData 通常只使用 boundary 分隔、不包含每段 Content-Length。正在实现固件在无 Content-Length 时用 boundary 终止解析，并修复 JSON 段之后定位文件数据的指针计算；编辑器侧改为手动构造带 Content-Length 的 multipart 以提高兼容性。This server builds multipart with per-part Content-Length.",
+      "AstroToo-only POST /upload_local_asset with one multipart file. Assets must be sent serially, one file per call, using Device/UploadLocalAsset metadata. Each success returns a temporary local:// FileId which must be bound by a successful create or patch; firmware then atomically moves the staging file into durable watchface storage. Unbound uploads are cleared on reboot and are never uploaded outward. TAR/TGZ/ZIP are rejected. The product photo/pixel POST /upload route is kept separate. TimesFrame generic /upload is blocked in MCP local-only mode; use create/patch multipart assets instead.",
     inputSchema: {
       type: "object",
       properties: {
@@ -329,7 +352,7 @@ const tools: Tool[] = [
   {
     name: "watchface_create_local_clock",
     description:
-      "POST /create_local_clock (multipart) — Device/CreateLocalClock. metadata.DialAssets accepts 'auto' (default; sniffs gzip magic on the file part), 'image' (single JPEG/WebP backdrop), or 'bundle' (clock_bg.tar.gz). Legacy UseDialAssetBundle (0=image, non-0=bundle) is honored when DialAssets is omitted. Backdrop is JPEG/WebP only; element slots inside the tarball accept JPEG/WebP/PNG (firmware wf_validate_bundle_slot_image_file). Each ItemList[i] needs disp/font/x/y/w/h/size/alig numbers and color_1/color_2/item_id non-empty strings; ItemIdList must be a parallel non-empty string array. alig: 3=center, 4=left, 5=right. Pointer slots DIVOOM_CLOCK_DISP_SUPPORT_HOUR_POINT_IMAGE=131, MIN_POINT_IMAGE=132, SECOND_POINT_IMAGE=233: mandatory shared square w=h and identical x,y,w,h on all three rows; w×w bitmaps; center pivot, hand toward 12 o'clock — never full-screen 800×1280 layers or mismatched thin rects; reference ClockId 60012 export. transp: MUST use 100 for visible layers — LLMs often emit 0 → invisible on device. hier: ONLY 0=auto, 1=bottom, 2=top (no tier 3+). See docs/tool-examples.md §5b. Uniqueness: do not duplicate the same image-backed disp in one dial — later rows overwrite earlier ones; especially NET_PIC family (disp 13, 125–130, 173–175, DIVOOM_CLOCK_DISP_SUPPORT_NET*_PIC); see docs/disp-usage.md. Multipart framing (Content-Length per part): see watchface_upload_file description.",
+      "POST /create_local_clock (multipart) — Device/CreateLocalClock. TimesFrame accepts DialAssets image/auto/bundle and may use clock_bg.tar.gz. AstroToo accepts DialAssets=image only: upload every element separately with watchface_upload_file, put each returned local:// FileId in ItemList[i].image_addr, then call this tool with one 480x480 JPEG/WebP backdrop. AstroToo rejects TAR/TGZ/ZIP, UseDialAssetBundle!=0, and bundle_image. Each ItemList row needs numeric disp/font/x/y/w/h/size/alig and non-empty color_1/color_2/item_id; ItemIdList must be parallel. Pointer slots 131/132/233 use one shared square box and square upward-pointing images with center pivot; transp=100; hier is 0/1/2.",
     inputSchema: {
       type: "object",
       properties: {
@@ -337,12 +360,12 @@ const tools: Tool[] = [
         imagePath: {
           type: "string",
           description:
-            "Either a single JPEG/WebP dial backdrop (recommend 800x1280, ≤ 500 KiB) or a `clock_bg.tar.gz` USTAR+gzip archive. Tar contents: required `clock_bg.jpg|webp` at the root plus one file per local leaf referenced by `ItemList[i].image_addr` (no subdirs, leaf basenames ≤ 95 bytes). Leaves may be JPEG/WebP/PNG; non-supported sources should be transcoded client-side.",
+            "Single JPEG/WebP backdrop (TimesFrame 800x1280; AstroToo 480x480; less than 500 KiB). TimesFrame also supports clock_bg.tar.gz. AstroToo never accepts an archive here.",
         },
         metadata: {
           type: "object",
           description:
-            "First multipart JSON: `ClockName`, `ItemList`, `ItemIdList`. Optional `DialAssets` (`auto`|`image`|`bundle`) or legacy `UseDialAssetBundle` (0/!=0). In bundle mode, `ItemList[i].bundle_image` is an alias for `image_addr` leaf and is also accepted. Tool minifies the JSON before sending.",
+            "First multipart JSON: ClockName, ItemList, ItemIdList. AstroToo requires DialAssets=image and local:// image_addr values from prior per-file uploads. TimesFrame may use auto/image/bundle and legacy UseDialAssetBundle.",
         },
         filePartName: {
           type: "string",
@@ -376,7 +399,7 @@ const tools: Tool[] = [
   {
     name: "watchface_get_screen_snapshot",
     description:
-      "Capture the on-screen watchface as WebP for visual verification after create/patch/switch. Sends Device/GetScreenSnapshot (firmware DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT), waits for the device to write snapshot.webp, then HTTP GETs the file. Default wait is 2000 ms after the command — do not fetch immediately. Default URL path is /userdata/snapshot.webp (also tries snapShotPath from the API response, e.g. /userdata/app_pic/snapshot.webp). Use the saved/downloaded WebP to compare layout against your intent. Optional savePath writes bytes locally for diff or vision review.",
+      "Capture the rendered screen for visual verification after create/patch/switch. Sends Device/GetScreenSnapshot, then downloads and validates the exact snapShotPath returned by AstroToo (currently BMP); TimesFrame retains its WebP fallback paths. Optional savePath writes the image locally for review.",
     inputSchema: {
       type: "object",
       properties: {
@@ -384,19 +407,19 @@ const tools: Tool[] = [
         waitMs: {
           type: "integer",
           description:
-            "Milliseconds to wait after Device/GetScreenSnapshot before HTTP GET (default 2000). Firmware encodes LVGL snapshot asynchronously.",
+            "Milliseconds to wait after Device/GetScreenSnapshot before HTTP GET (default 2000; mainly for asynchronous TimesFrame firmware).",
           default: 2000,
         },
         snapshotHttpPath: {
           type: "string",
           description:
-            "HTTP path for GET snapshot file. Default /userdata/snapshot.webp → http://<host>:<port>/userdata/snapshot.webp",
+            "TimesFrame fallback HTTP path. AstroToo always uses snapShotPath from the current response.",
           default: "/userdata/snapshot.webp",
         },
         savePath: {
           type: "string",
           description:
-            "Optional local path to write the downloaded WebP (for visual diff against design mocks).",
+            "Optional local path to write the downloaded snapshot image.",
         },
       },
       additionalProperties: false,
@@ -428,9 +451,29 @@ const tools: Tool[] = [
     },
   },
   {
+    name: "watchface_clock_catalog",
+    description:
+      "Query product-specific ClockId, Chinese/English names, font ids, disp ids, item ids, and optional source configuration. AstroToo data is generated from both simulator clocksys directories; its default set comes from Device/GetClockDefaultList with IsDefault=1. TimesFrame data remains independent.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        clockIds: { type: "array", items: { type: "integer" }, description: "Restrict to ClockId values." },
+        nameContains: { type: "string", description: "Case-insensitive substring in NameCn or NameEn." },
+        defaultOnly: { type: "boolean", description: "AstroToo: return only IDs reported by the default-list command." },
+        fonts: { type: "array", items: { type: "integer" }, description: "Require at least one of these product-specific font ids." },
+        disps: { type: "array", items: { type: "integer" }, description: "Require at least one of these product-specific disp ids." },
+        itemIdContains: { type: "string", description: "Substring match against product-specific item_id values." },
+        tagsAny: { type: "array", items: { type: "string" }, description: "Require at least one generated tag." },
+        limit: { type: "integer", description: "Max rows to return (default 50, max 200)." },
+        includeConfig: { type: "boolean", description: "Include the native watchface configuration for each returned row." },
+      },
+      additionalProperties: false,
+    },
+  },
+  {
     name: "watchface_disp_catalog",
     description:
-      "Return the full `disp` id catalog (194 entries) that the firmware understands for `ItemList[i].disp` and `ItemPatchList[i].patch.disp`. Each entry includes English symbol, Chinese description, and heuristic hints (`likelyUsesRasterOrAssetLayer` for image/GIF slots; `oftenUsesVectorFontForText` for text slots). Use it together with `watchface_font_catalog`: text-leaning disps need a font id; raster-leaning disps need an `image_addr` asset.",
+      "Return the selected product's `disp` catalog for `ItemList[i].disp` and `ItemPatchList[i].patch.disp`. TimesFrame and AstroToo use independent enums and renderer sources. Each entry includes the firmware symbol, Chinese description, and image/text hints.",
     inputSchema: {
       type: "object",
       properties: {
@@ -479,7 +522,7 @@ const tools: Tool[] = [
         },
         script: {
           type: "string",
-          enum: ["all", "digits", "digits-extended", "latin", "cjk"],
+          enum: ["all", "digits", "digits-extended", "latin", "cjk", "unicode"],
           description: "Filter by derived script. 'digits' = image fonts whose charset is exactly 0-9.",
         },
         tag: {
@@ -677,6 +720,7 @@ function ensureArray(input: unknown, fieldName: string): unknown[] {
 }
 
 function resolveTarget(input: unknown): DeviceTarget {
+  if (input && typeof input === "object" && identifiedTargets.has(input)) return input as IdentifiedTarget;
   const source = input === undefined ? {} : ensureRecord(input, "target");
   const host = optionalString(source.host, "target.host") ?? DEFAULT_HOST;
   if (!host) {
@@ -693,7 +737,10 @@ function resolveTarget(input: unknown): DeviceTarget {
   if (timeoutMs <= 0) {
     throw new Error("target.timeoutMs must be > 0.");
   }
-  return { host, port, timeoutMs };
+  const model = source.model ?? DEFAULT_MODEL;
+  if (!["auto", "timesframe", "astrotoo"].includes(String(model))) throw new Error("Invalid target.model");
+  if (!Number.isInteger(port) || port > 65535) throw new Error("Invalid target.port");
+  return { host, port, timeoutMs, model: model as Target["model"] };
 }
 
 function toDeviceFlag(value: boolean | undefined): number | undefined {
@@ -706,6 +753,8 @@ function toDeviceFlag(value: boolean | undefined): number | undefined {
 async function postJson(target: DeviceTarget, endpoint: string, payload: JsonRecord) {
   const url = `http://${target.host}:${target.port}${endpoint}`;
   const payloadText = JSON.stringify(payload);
+  if (target.model === "astrotoo" && Buffer.byteLength(payloadText, "utf8") > 65536)
+    throw new Error("AstroToo JSON exceeds 65536 UTF-8 bytes.");
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -726,6 +775,7 @@ async function postJson(target: DeviceTarget, endpoint: string, payload: JsonRec
     }
   }
 
+  assertResponse(response.status, responseJson);
   return {
     url,
     endpoint,
@@ -768,6 +818,34 @@ function buildMultipartTwoParts(
   return Buffer.concat([part1Header, metaBytes, Buffer.from(crlf), part2Header, fileBytes, ending]);
 }
 
+function containsBundleImage(value: unknown): boolean {
+  if (Array.isArray(value)) return value.some(containsBundleImage);
+  if (!value || typeof value !== "object") return false;
+  const record = value as JsonRecord;
+  if (typeof record.bundle_image === "string" && record.bundle_image.length > 0) return true;
+  return Object.values(record).some(containsBundleImage);
+}
+
+function assertAstroTooSequentialAsset(
+  target: DeviceTarget,
+  metadata: JsonRecord,
+  fileBytes: Buffer,
+  fileName: string,
+) {
+  if (target.model !== "astrotoo") return;
+  const dialAssets = typeof metadata.DialAssets === "string" ? metadata.DialAssets.toLowerCase() : "";
+  const legacyBundle = typeof metadata.UseDialAssetBundle === "number" && metadata.UseDialAssetBundle !== 0;
+  const gzip = fileBytes.length >= 2 && fileBytes[0] === 0x1f && fileBytes[1] === 0x8b;
+  const zip = fileBytes.length >= 4 && fileBytes[0] === 0x50 && fileBytes[1] === 0x4b &&
+    fileBytes[2] === 0x03 && fileBytes[3] === 0x04;
+  const archiveName = /\.(?:tar|tgz|tar\.gz|zip)$/i.test(fileName);
+  if (dialAssets === "bundle" || legacyBundle || containsBundleImage(metadata) || gzip || zip || archiveName) {
+    throw new Error(
+      "AstroToo does not accept TAR/ZIP asset bundles. Upload each element with watchface_upload_file, bind its returned local:// FileId, then send one JPEG/WebP backdrop with DialAssets=image.",
+    );
+  }
+}
+
 async function postMultipart(
   target: DeviceTarget,
   endpoint: string,
@@ -775,6 +853,12 @@ async function postMultipart(
   boundary: string,
 ) {
   const url = `http://${target.host}:${target.port}${endpoint}`;
+  if (target.model === "astrotoo") {
+    const header = body.subarray(0, 512).toString("utf8");
+    const firstSize = /Content-Length: (\d+)/i.exec(header);
+    if (!firstSize || Number(firstSize[1]) > 65536) throw new Error("AstroToo multipart JSON exceeds 65536 bytes.");
+    if (body.length > 6291456 + 65536 + 8192) throw new Error("AstroToo single-file upload exceeds 6 MiB.");
+  }
   const payload = new Uint8Array(body);
   const response = await fetch(url, {
     method: "POST",
@@ -796,6 +880,7 @@ async function postMultipart(
     }
   }
 
+  assertResponse(response.status, responseJson);
   return {
     url,
     endpoint,
@@ -826,7 +911,7 @@ function extractSnapShotPath(responseJson: unknown): string | undefined {
   return typeof path === "string" && path.length > 0 ? path : undefined;
 }
 
-async function fetchDeviceSnapshotWebp(
+async function fetchDeviceSnapshotImage(
   target: DeviceTarget,
   httpPath: string,
 ): Promise<{ url: string; httpStatus: number; bytes: Buffer; contentType: string | null }> {
@@ -849,8 +934,8 @@ async function fetchDeviceSnapshotWebp(
   };
 }
 
-function isLikelyWebp(bytes: Buffer): boolean {
-  return (
+function detectSnapshotFormat(bytes: Buffer): "webp" | "jpeg" | "png" | "bmp" | null {
+  if (
     bytes.length >= 12 &&
     bytes[0] === 0x52 &&
     bytes[1] === 0x49 &&
@@ -860,7 +945,11 @@ function isLikelyWebp(bytes: Buffer): boolean {
     bytes[9] === 0x45 &&
     bytes[10] === 0x42 &&
     bytes[11] === 0x50
-  );
+  ) return "webp";
+  if (bytes.length >= 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff) return "jpeg";
+  if (bytes.length >= 8 && bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) return "png";
+  if (bytes.length >= 2 && bytes[0] === 0x42 && bytes[1] === 0x4d) return "bmp";
+  return null;
 }
 
 function textResult(data: unknown) {
@@ -904,14 +993,15 @@ type FontCatalog = {
   fonts: FontCatalogEntry[];
 };
 
-let cachedFontCatalog: FontCatalog | null = null;
+const cachedFontCatalog = new Map<Model, FontCatalog>();
 
-async function loadFontCatalog(): Promise<FontCatalog> {
-  if (cachedFontCatalog) return cachedFontCatalog;
-  const absolutePath = path.join(resourceRoot, "font-catalog.json");
+async function loadFontCatalog(model: Model = "timesframe"): Promise<FontCatalog> {
+  const cached = cachedFontCatalog.get(model);
+  if (cached) return cached;
+  const absolutePath = path.join(resourceRoot, PRODUCTS[model].resourceDir, "font-catalog.json");
   const raw = await readFile(absolutePath, "utf8");
   const parsed = JSON.parse(raw) as FontCatalog;
-  cachedFontCatalog = parsed;
+  cachedFontCatalog.set(model, parsed);
   return parsed;
 }
 
@@ -948,14 +1038,15 @@ type DispCatalog = {
   displays: DispCatalogEntry[];
 };
 
-let cachedDispCatalog: DispCatalog | null = null;
+const cachedDispCatalog = new Map<Model, DispCatalog>();
 
-async function loadDispCatalog(): Promise<DispCatalog> {
-  if (cachedDispCatalog) return cachedDispCatalog;
-  const absolutePath = path.join(resourceRoot, "disp-catalog.json");
+async function loadDispCatalog(model: Model = "timesframe"): Promise<DispCatalog> {
+  const cached = cachedDispCatalog.get(model);
+  if (cached) return cached;
+  const absolutePath = path.join(resourceRoot, PRODUCTS[model].resourceDir, "disp-catalog.json");
   const raw = await readFile(absolutePath, "utf8");
   const parsed = JSON.parse(raw) as DispCatalog;
-  cachedDispCatalog = parsed;
+  cachedDispCatalog.set(model, parsed);
   return parsed;
 }
 
@@ -983,15 +1074,63 @@ type CuratedTemplatesFile = {
   templates: CuratedTemplateRow[];
 };
 
-let cachedCuratedTemplates: CuratedTemplatesFile | null = null;
+const cachedCuratedTemplates = new Map<Model, CuratedTemplatesFile>();
 
-async function loadCuratedTemplates(): Promise<CuratedTemplatesFile> {
-  if (cachedCuratedTemplates) return cachedCuratedTemplates;
-  const absolutePath = path.join(resourceRoot, "templates-curated.json");
+async function loadCuratedTemplates(model: Model = "timesframe"): Promise<CuratedTemplatesFile> {
+  const cached = cachedCuratedTemplates.get(model);
+  if (cached) return cached;
+  const absolutePath = path.join(resourceRoot, PRODUCTS[model].resourceDir, "templates-curated.json");
   const raw = await readFile(absolutePath, "utf8");
   const parsed = JSON.parse(raw) as CuratedTemplatesFile;
-  cachedCuratedTemplates = parsed;
+  cachedCuratedTemplates.set(model, parsed);
   return parsed;
+}
+
+type ClockCatalogRow = {
+  clockId: number;
+  nameCn: string;
+  nameEn: string;
+  isDefault: boolean;
+  sources: string[];
+  itemIds: string[];
+  disps: number[];
+  fonts: number[];
+  tags: string[];
+  [key: string]: unknown;
+};
+
+type ClockCatalogFile = {
+  schema: number;
+  model: Model;
+  generatedAt: string;
+  source: Record<string, unknown>;
+  counts: Record<string, number>;
+  notes: string[];
+  defaultClockIds: number[];
+  clocks: ClockCatalogRow[];
+};
+
+const cachedClockCatalog = new Map<Model, ClockCatalogFile>();
+const cachedClockConfigs = new Map<Model, Record<string, JsonRecord>>();
+
+async function loadClockCatalog(model: Model): Promise<ClockCatalogFile> {
+  const cached = cachedClockCatalog.get(model);
+  if (cached) return cached;
+  const parsed = JSON.parse(await readFile(
+    path.join(resourceRoot, PRODUCTS[model].resourceDir, "clock-catalog.json"), "utf8",
+  )) as ClockCatalogFile;
+  cachedClockCatalog.set(model, parsed);
+  return parsed;
+}
+
+async function loadClockConfigs(model: Model): Promise<Record<string, JsonRecord>> {
+  const cached = cachedClockConfigs.get(model);
+  if (cached) return cached;
+  const parsed = JSON.parse(await readFile(
+    path.join(resourceRoot, PRODUCTS[model].resourceDir, "clock-configs.json"), "utf8",
+  )) as { configurations: Record<string, JsonRecord> };
+  cachedClockConfigs.set(model, parsed.configurations);
+  return parsed.configurations;
 }
 
 async function readResource(uri: string) {
@@ -1069,6 +1208,11 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       precheckBody.UseCurrentDisplayClock = 1;
     }
 
+    if (target.model === "astrotoo" && args.deviceImageUrl !== undefined) {
+      throw new Error(
+        "AstroToo does not bind a background through DeviceImageUrl. Send the 480x480 JPEG/WebP as dialAssetsPath so firmware can validate it before the transaction.",
+      );
+    }
     if (args.deviceImageUrl !== undefined) {
       body.DeviceImageUrl = requiredString(args.deviceImageUrl, "deviceImageUrl");
     }
@@ -1122,7 +1266,8 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       precheckJson && Array.isArray(precheckJson.ItemList)
         ? precheckJson.ItemList
         : null;
-    if (precheckCode === 0 && precheckItems && precheckItems.length === 0) {
+    if (precheckCode !== 0 || !precheckItems) throw new Error("Cannot patch: valid GetLocalClockInfo response with ItemList is required.");
+    if (precheckItems.length === 0) {
       throw new Error(
         "GetLocalClockInfo returned empty ItemList. Stop patching and switch to an editable clock first (watchface_set_clock_select). Do not auto-create a new clock unless explicitly requested.",
       );
@@ -1142,6 +1287,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       const fileName =
         optionalString(args.fileName, "fileName") ??
         path.basename(path.resolve(dialAssetsPath));
+      assertAstroTooSequentialAsset(target, metadata, fileBytes, fileName);
       const boundary = "----DivoomMcpPatchClockBoundary7YA4YWxkTrZu0gW";
       const multipartBody = buildMultipartTwoParts(
         metadata,
@@ -1178,7 +1324,25 @@ async function handleToolCall(name: string, rawArgs: unknown) {
   if (name === "watchface_set_clock_select") {
     const target = resolveTarget(args.target);
     const clockId = requiredInteger(args.clockId, "clockId");
-    return callDivoomApi(target, "Channel/SetClockSelectId", { ClockId: clockId });
+    const payload: JsonRecord = { ClockId: clockId };
+    const sysUpdateTime = optionalInteger(args.sysUpdateTime, "sysUpdateTime");
+    if (sysUpdateTime !== undefined) payload.SysUpdateTime = sysUpdateTime;
+    if (target.model !== "timesframe")
+      return callDivoomApi(target, "Channel/SetClockSelectId", payload);
+
+    const [, second] = await Promise.all([
+      callDivoomApi(target, "Channel/SetClockSelectId", payload),
+      callDivoomApi(target, "Channel/SetClockSelectId", payload),
+    ]);
+    return {
+      ...second,
+      compatibility: {
+        model: "timesframe",
+        clockSelectRequests: 2,
+        delivery: "paired",
+        activeScheduleSuppressedForCurrentPeriod: true,
+      },
+    };
   }
 
   if (name === "watchface_get_brightness") {
@@ -1189,6 +1353,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
   if (name === "watchface_set_brightness") {
     const target = resolveTarget(args.target);
     const brightness = requiredInteger(args.brightness, "brightness");
+    if (target.model === "astrotoo" && (brightness < 0 || brightness > 100)) throw new Error("Brightness must be 0–100.");
     return callDivoomApi(target, "Channel/SetBrightness", { Brightness: brightness });
   }
 
@@ -1244,16 +1409,22 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const target = resolveTarget(args.target);
     const filePath = requiredString(args.filePath, "filePath");
     const metadataInput = ensureRecord(args.metadata, "metadata");
-    const metadata: JsonRecord = { ...metadataInput, ReturnCode: 0 };
+    if (target.model !== "astrotoo") {
+      throw new Error(
+        "TimesFrame generic /upload is disabled in MCP local-only mode because it dispatches the upload command to the device network task. Send assets through watchface_create_local_clock or watchface_patch_local instead.",
+      );
+    }
+    const metadata: JsonRecord = { Command: "Device/UploadLocalAsset", ReturnCode: 0 };
 
     const fileBytes = await readFile(path.resolve(filePath));
     const filePartName =
       optionalString(args.filePartName, "filePartName") ?? `${Date.now()}`;
     const fileName =
       optionalString(args.fileName, "fileName") ?? path.basename(path.resolve(filePath));
+    assertAstroTooSequentialAsset(target, metadataInput, fileBytes, fileName);
     const boundary = "----DivoomMcpUploadBoundary7YA4YWxkTrZu0gW";
     const body = buildMultipartTwoParts(metadata, fileBytes, filePartName, fileName, boundary);
-    const result = await postMultipart(target, "/upload", body, boundary);
+    const result = await postMultipart(target, "/upload_local_asset", body, boundary);
     return {
       ...result,
       requestMeta: metadata,
@@ -1279,6 +1450,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       optionalString(args.filePartName, "filePartName") ?? `${Date.now()}`;
     const fileName =
       optionalString(args.fileName, "fileName") ?? path.basename(path.resolve(imagePath));
+    assertAstroTooSequentialAsset(target, metadata, imageBytes, fileName);
     const boundary = "----DivoomMcpCreateClockBoundary7YA4YWxkTrZu0gW";
     const body = buildMultipartTwoParts(metadata, imageBytes, filePartName, fileName, boundary);
     const result = await postMultipart(target, "/create_local_clock", body, boundary);
@@ -1319,35 +1491,42 @@ async function handleToolCall(name: string, rawArgs: unknown) {
 
     const apiResult = await callDivoomApi(target, "Device/GetScreenSnapshot");
     const snapShotPath = extractSnapShotPath(apiResult.responseJson);
+    if (target.model === "astrotoo" && !snapShotPath)
+      throw new Error("AstroToo did not return a path for this capture; no old snapshot was fetched.");
     await sleep(waitMs);
 
-    const candidatePaths: string[] = [snapshotHttpPath];
+    const candidatePaths: string[] = target.model === "astrotoo" && snapShotPath ? [snapShotPath] : [snapshotHttpPath];
     if (snapShotPath && !candidatePaths.includes(snapShotPath)) {
       candidatePaths.push(snapShotPath);
     }
     if (
+      target.model !== "astrotoo" &&
       !candidatePaths.includes("/userdata/app_pic/snapshot.webp") &&
       snapshotHttpPath !== "/userdata/app_pic/snapshot.webp"
     ) {
       candidatePaths.push("/userdata/app_pic/snapshot.webp");
     }
 
-    let fetchResult: Awaited<ReturnType<typeof fetchDeviceSnapshotWebp>> | null = null;
+    let fetchResult: Awaited<ReturnType<typeof fetchDeviceSnapshotImage>> | null = null;
+    let snapshotFormat: ReturnType<typeof detectSnapshotFormat> = null;
     const attempts: Array<{ httpPath: string; httpStatus: number; byteLength: number }> = [];
     for (const httpPath of candidatePaths) {
-      const attempt = await fetchDeviceSnapshotWebp(target, httpPath);
+      const attempt = await fetchDeviceSnapshotImage(target, httpPath);
       attempts.push({
         httpPath,
         httpStatus: attempt.httpStatus,
         byteLength: attempt.bytes.length,
       });
-      if (attempt.httpStatus === 200 && attempt.bytes.length > 0 && isLikelyWebp(attempt.bytes)) {
+      const format = detectSnapshotFormat(attempt.bytes);
+      if (attempt.httpStatus === 200 && format) {
         fetchResult = attempt;
+        snapshotFormat = format;
         break;
       }
     }
 
     if (!fetchResult) {
+      if (target.model === "astrotoo") throw new Error("Failed to download the new AstroToo snapshot.");
       return {
         ok: false,
         command: "Device/GetScreenSnapshot",
@@ -1358,7 +1537,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
         apiResult,
         attempts,
         guidance:
-          "After create/patch/switch, call this tool to capture the dial. Wait 2s (default) before GET. Compare the WebP against your design. Retry once if the file is still empty.",
+          "After create/patch/switch, call this tool to capture the dial. Retry once if the returned image is still empty.",
       };
     }
 
@@ -1377,13 +1556,14 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       snapshotHttpUrl: fetchResult.url,
       byteLength: fetchResult.bytes.length,
       contentType: fetchResult.contentType,
+      format: snapshotFormat,
       savedTo,
       apiResult,
       attempts,
       usageNotes: [
         "Use after Device/CreateLocalClock, Device/PatchLocalClockInfo, or Channel/SetClockSelectId when you need a visual ground truth.",
-        "Default flow: POST Device/GetScreenSnapshot → wait 2s → GET http://<host>:9000/userdata/snapshot.webp",
-        "Compare the downloaded WebP with mockups or a prior snapshot to validate layout, colors, and asset binding.",
+        "AstroToo downloads the exact snapShotPath from this capture; TimesFrame may use the configured WebP fallback path.",
+        "Compare the downloaded image with mockups or a prior snapshot to validate layout, colors, and asset binding.",
       ],
     };
   }
@@ -1393,11 +1573,61 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const command = requiredString(args.command, "command");
     const payload =
       args.payload === undefined ? {} : ensureRecord(args.payload, "payload");
+    if (target.model === "astrotoo" && command === "Device/PatchLocalClockInfo") {
+      const selection: JsonRecord = {};
+      for (const key of ["ClockId", "UseCurrentDisplayClock", "ParentClockId", "ParentItemId"])
+        if (payload[key] !== undefined) selection[key] = payload[key];
+      if (selection.ClockId === undefined) selection.UseCurrentDisplayClock = 1;
+      const precheck = await callDivoomApi(target, "Device/GetLocalClockInfo", selection);
+      const before = precheck.responseJson as JsonRecord;
+      if (!Array.isArray(before.ItemList) || before.ItemList.length === 0)
+        throw new Error("Cannot patch: non-empty GetLocalClockInfo ItemList is required.");
+    }
     return callDivoomApi(target, command, payload);
   }
 
+  if (name === "watchface_clock_catalog") {
+    const model = authoringModel(args);
+    const catalog = await loadClockCatalog(model);
+    const clockIds = args.clockIds === undefined ? null
+      : ensureArray(args.clockIds, "clockIds").map((value) => requiredInteger(value, "clockIds[]"));
+    const fonts = args.fonts === undefined ? []
+      : ensureArray(args.fonts, "fonts").map((value) => requiredInteger(value, "fonts[]"));
+    const disps = args.disps === undefined ? []
+      : ensureArray(args.disps, "disps").map((value) => requiredInteger(value, "disps[]"));
+    const tagsAny = args.tagsAny === undefined ? [] : ensureArrayOfStrings(args.tagsAny, "tagsAny");
+    const nameContains = optionalString(args.nameContains, "nameContains")?.toLowerCase();
+    const itemIdContains = optionalString(args.itemIdContains, "itemIdContains")?.toLowerCase();
+    const defaultOnly = optionalBoolean(args.defaultOnly, "defaultOnly") ?? false;
+    const includeConfig = optionalBoolean(args.includeConfig, "includeConfig") ?? false;
+    const limit = Math.max(1, Math.min(200, optionalInteger(args.limit, "limit") ?? 50));
+    let filtered = catalog.clocks;
+    if (clockIds?.length) {
+      const wanted = new Set(clockIds);
+      filtered = filtered.filter((clock) => wanted.has(clock.clockId));
+    }
+    if (nameContains) filtered = filtered.filter((clock) =>
+      clock.nameCn.toLowerCase().includes(nameContains) || clock.nameEn.toLowerCase().includes(nameContains));
+    if (defaultOnly) filtered = filtered.filter((clock) => clock.isDefault);
+    if (fonts.length) filtered = filtered.filter((clock) => fonts.some((id) => clock.fonts.includes(id)));
+    if (disps.length) filtered = filtered.filter((clock) => disps.some((id) => clock.disps.includes(id)));
+    if (itemIdContains) filtered = filtered.filter((clock) =>
+      clock.itemIds.some((id) => id.toLowerCase().includes(itemIdContains)));
+    if (tagsAny.length) filtered = filtered.filter((clock) => tagsAny.some((tag) => clock.tags.includes(tag)));
+    const truncated = filtered.length > limit;
+    const selected = filtered.slice(0, limit);
+    let clocks: Array<ClockCatalogRow & { config?: JsonRecord }> = selected;
+    if (includeConfig) {
+      const configs = await loadClockConfigs(model);
+      clocks = selected.map((clock) => ({ ...clock, config: configs[String(clock.clockId)] }));
+    }
+    return { schema: catalog.schema, model, generatedAt: catalog.generatedAt, source: catalog.source,
+      counts: { ...catalog.counts, afterFilter: filtered.length, returned: clocks.length, truncated },
+      notes: catalog.notes, clocks };
+  }
+
   if (name === "watchface_disp_catalog") {
-    const catalog = await loadDispCatalog();
+    const catalog = await loadDispCatalog(authoringModel(args));
     const idList =
       args.ids === undefined
         ? null
@@ -1452,7 +1682,8 @@ async function handleToolCall(name: string, rawArgs: unknown) {
   }
 
   if (name === "watchface_font_catalog") {
-    const catalog = await loadFontCatalog();
+    const model = authoringModel(args);
+    const catalog = await loadFontCatalog(model);
     const typeFilter = (optionalString(args.type, "type") ?? "all").toLowerCase();
     const scriptFilter = (optionalString(args.script, "script") ?? "all").toLowerCase();
     const tagFilter = optionalString(args.tag, "tag");
@@ -1466,7 +1697,24 @@ async function handleToolCall(name: string, rawArgs: unknown) {
         ? null
         : ensureArray(args.ids, "ids").map((v) => requiredInteger(v, "ids[]"));
 
-    let filtered = catalog.fonts;
+    let filtered: Array<FontCatalogEntry & { AvailableLocally?: boolean }> = catalog.fonts;
+    let liveFontCount: number | undefined;
+    if (model === "astrotoo" && args.target) {
+      const result = await callDivoomApi(resolveTarget(args.target), "Device/GetLocalFontList");
+      const response = ensureRecord(result.responseJson, "font response");
+      const liveRows = ensureArray(response.FontList, "FontList").map((value) => ensureRecord(value, "FontList[]"));
+      const availability = new Map(liveRows.map((row) => [
+        requiredInteger(row.id ?? row.ID, "FontList[].id"), row.AvailableLocally !== false,
+      ]));
+      liveFontCount = availability.size;
+      filtered = catalog.fonts.map((font) => ({ ...font, AvailableLocally: availability.get(font.id) === true }));
+      const known = new Set(filtered.map((font) => font.id));
+      for (const [id, available] of availability) if (!known.has(id)) filtered.push({
+        id, type: -1, type_name: "image", name: `Font ${id}`, charset: "", script: "unknown",
+        style_tags: [], recommendedFor: [], notes: "Reported by this device but absent from the bundled AstroToo font_list.cfg.",
+        AvailableLocally: available,
+      });
+    }
     if (idList && idList.length > 0) {
       const idSet = new Set(idList);
       filtered = filtered.filter((font) => idSet.has(font.id));
@@ -1495,7 +1743,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const trimmed = filtered.slice(0, limit);
 
     const fonts = idsOnly
-      ? trimmed.map(({ id, name, type_name, script }) => ({ id, name, type_name, script }))
+      ? trimmed.map(({ id, name, type_name, script, AvailableLocally }) => ({ id, name, type_name, script, AvailableLocally }))
       : trimmed;
 
     return {
@@ -1504,18 +1752,21 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       source: catalog.source,
       counts: {
         totalInCatalog: catalog.fonts.length,
+        liveFontCount,
         afterFilter: filtered.length,
         returned: fonts.length,
         truncated,
       },
-      notes: catalog.notes,
+      notes: model === "astrotoo" && args.target
+        ? [...catalog.notes, "AvailableLocally is merged from Device/GetLocalFontList for this target."]
+        : catalog.notes,
       scenarios: includeScenarios ? catalog.scenarios : undefined,
       fonts,
     };
   }
 
   if (name === "watchface_template_search") {
-    const curated = await loadCuratedTemplates();
+    const curated = await loadCuratedTemplates(authoringModel(args));
     const tagsAll =
       args.tagsAll === undefined ? [] : ensureArrayOfStrings(args.tagsAll, "tagsAll");
     const tagsAny =
@@ -1612,13 +1863,13 @@ async function handleToolCall(name: string, rawArgs: unknown) {
 
   if (name === "watchface_layout_suggest") {
     const dispId = requiredInteger(args.disp, "disp");
-    const catalog = await loadDispCatalog();
+    const catalog = await loadDispCatalog(authoringModel(args));
     const entry = catalog.displays.find((d) => d.disp === dispId);
     if (!entry) {
       throw new Error(`disp ${dispId} not found in disp-catalog.`);
     }
-    const canvasW = optionalInteger(args.canvasWidth, "canvasWidth") ?? 800;
-    const canvasH = optionalInteger(args.canvasHeight, "canvasHeight") ?? 1280;
+    const canvasW = optionalInteger(args.canvasWidth, "canvasWidth") ?? PROFILES[authoringModel(args)].width;
+    const canvasH = optionalInteger(args.canvasHeight, "canvasHeight") ?? PROFILES[authoringModel(args)].height;
     const tw = entry.typography;
     let suggestedItemFields: JsonRecord | null = null;
     if (tw) {
@@ -1650,6 +1901,9 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     };
   }
 
+  if (name === "watchface_protocol_quick_reference" && authoringModel(args) === "astrotoo") {
+    return { model: "astrotoo", guide: await readFile(path.join(resourceRoot, PRODUCTS.astrotoo.resourceDir, "guide.md"), "utf8") };
+  }
   if (name === "watchface_protocol_quick_reference") {
     const lines = [
       "1) Always POST JSON to /divoom_api (never GET). Root ReturnCode in the request must be 0.",
@@ -1661,7 +1915,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       "6) DialAssets selection: 'image' = no local element leaves (or all http(s) URLs); 'bundle' = at least one ItemList[i].image_addr or ItemPatchList[i].patch.bundle_image is a local leaf — pack as clock_bg.tar.gz (USTAR + gzip).",
       "7) Image format rules: dial backdrop is JPEG (FF D8) or WebP (RIFF…WEBP) only, ≤ 500 KiB, recommended 800x1280 portrait. Element slots inside the tarball accept JPEG/WebP/PNG (89 50 4E 47 …). GIF/BMP/TIFF must be transcoded client-side before packing.",
       "8) Replace cached backdrop without changing cfg DeviceImageUrl: POST /replace_clock_dial_bg multipart (no tar.gz, JPEG/WebP only).",
-      "9) Replace cfg DeviceImageUrl: POST /upload to obtain a FileId, then Device/PatchLocalClockInfo with the new URL; verify with GetLocalClockInfo.",
+      "9) Generic /upload is disabled for TimesFrame in MCP local-only mode. Send received files only through /create_local_clock or /patch_local_clock; they are device-side staging inputs for that operation and are never uploaded outward. Verify the committed result with GetLocalClockInfo.",
       "10) ItemList JSON requirements: numbers disp/font/x/y/w/h/size/alig; non-empty strings color_1/color_2/item_id (#RRGGBB hex). ItemIdList parallel non-empty strings. alig: 3=center, 4=left, 5=right (firmware-native).",
       "11) Channel/SetClockSelectId switches the active dial on screen — confirm user intent before running.",
       "12) Device/ResetLocalClockFromServer is destructive (deletes local sys-side files first).",
@@ -1684,6 +1938,71 @@ async function handleToolCall(name: string, rawArgs: unknown) {
   throw new Error(`Unsupported tool: ${name}`);
 }
 
+
+const deviceTools = new Set([
+  "watchface_get_device_info", "watchface_get_local", "watchface_patch_local",
+  "watchface_get_fonts_local", "watchface_get_store_market_list", "watchface_set_clock_select",
+  "watchface_get_brightness", "watchface_set_brightness", "watchface_onoff_screen",
+  "watchface_replace_dial_bg_file", "watchface_upload_file", "watchface_create_local_clock",
+  "watchface_reset_local_then_cloud", "watchface_get_screen_snapshot", "watchface_raw_command",
+]);
+const offlineTools = new Set([
+  "watchface_clock_catalog", "watchface_disp_catalog", "watchface_font_catalog", "watchface_template_search",
+  "watchface_layout_suggest", "watchface_protocol_quick_reference",
+]);
+const identifiedTargets = new WeakSet<object>();
+tools.unshift({
+  name: "watchface_get_device_info",
+  description: "Query this device's Hardware version first, then return its product profile and LAN capabilities. Each target is identified independently.",
+  inputSchema: { type: "object", properties: { target: targetSchema }, additionalProperties: false },
+});
+for (const tool of tools) {
+  if (offlineTools.has(tool.name)) {
+    tool.inputSchema.properties = {
+      ...tool.inputSchema.properties,
+      target: targetSchema,
+      model: { type: "string", enum: ["timesframe", "astrotoo"], description: "For offline authoring only. A connected target's hardware determines its model." },
+    };
+  }
+  tool.description = (tool.description ?? "") +
+    " For AstroToo, first query hardware/capabilities; use the 480x480 AstroToo resources. Legacy 800x1280 examples and typography apply only to TimesFrame.";
+}
+function authoringModel(args: JsonRecord): Model {
+  const value = args.model ?? "timesframe";
+  if (value !== "timesframe" && value !== "astrotoo") throw new Error("Invalid authoring model.");
+  return value;
+}
+async function dispatchTool(name: string, rawArgs: unknown) {
+  const args = rawArgs === undefined ? {} : ensureRecord(rawArgs, "arguments");
+  const needsDevice = deviceTools.has(name) || (offlineTools.has(name) && (args.target !== undefined || DEFAULT_HOST !== ""));
+  if (!needsDevice) return handleToolCall(name, args);
+  const unresolved = resolveTarget(args.target);
+  return serial(unresolved, async () => {
+    const target = await identify(unresolved);
+    identifiedTargets.add(target);
+    if (args.model !== undefined && args.model !== target.model)
+      throw new Error("Authoring model conflicts with the connected device.");
+    if (target.model === "astrotoo") {
+      if (name === "watchface_reset_local_then_cloud") throw new Error("Cloud reset is disabled for AstroToo.");
+      if (name === "watchface_upload_file" &&
+          target.capabilities.LocalAssetUploadPath !== "/upload_local_asset")
+        throw new Error("AstroToo firmware does not provide the dedicated local asset upload route; upgrade before uploading watchface assets.");
+      if (["watchface_patch_local", "watchface_create_local_clock", "watchface_replace_dial_bg_file",
+        "watchface_upload_file", "watchface_set_clock_select", "watchface_set_brightness", "watchface_onoff_screen",
+        "watchface_raw_command"].includes(name)) requireLocal(target);
+    }
+    if (name === "watchface_get_device_info") return {
+      host: target.host, port: target.port, model: target.model, hardware: target.hardware,
+      identification: target.identification, canvas: PROFILES[target.model],
+      resourceDirectory: PRODUCTS[target.model].resourceDir, capabilities: target.capabilities,
+      mcpFilePolicy: target.model === "astrotoo"
+        ? { localAssetUploadPath: target.capabilities.LocalAssetUploadPath, genericUpload: "temporary-until-bound", createPatchUpload: "temporary-until-processed", outboundFileUpload: false }
+        : { genericUpload: "disabled", createPatchUpload: "temporary-until-processed", outboundFileUpload: false },
+    };
+    return handleToolCall(name, { ...args, target, model: target.model });
+  });
+}
+
 async function main() {
   const server = new Server(
     {
@@ -1702,7 +2021,7 @@ async function main() {
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
     try {
-      const result = await handleToolCall(
+      const result = await dispatchTool(
         request.params.name,
         request.params.arguments,
       );

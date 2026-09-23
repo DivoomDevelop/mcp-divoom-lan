@@ -1,0 +1,6 @@
+{
+  "Command": "Device/GetScreenSnapshot",
+  "DeviceType": "AstroToo",
+  "ReturnCode": 0,
+  "snapShotPath": "/userdata/app_pic/snapshot.bmp"
+}

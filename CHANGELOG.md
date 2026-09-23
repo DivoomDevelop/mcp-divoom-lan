@@ -4,6 +4,24 @@ All notable changes to this project are documented in this file.
 
 This project follows [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Added
+
+- Automatic per-target product detection through `Device/GetHardwareVersion`, including independent queues for multiple devices.
+- AstroToo 480×480 profiles, resources, templates, live font availability, local-only uploads, and `watchface_get_device_info`.
+- Product-specific `watchface_clock_catalog` plus AstroToo catalogs generated from both simulator `clocksys` directories, `Device/GetClockDefaultList`, `Device/GetClockInfoV3`, `font_list.cfg`, and `Device/GetFontForAI`.
+- Product registry and isolated `resources/timesframe`, `resources/astrotoo`, and `resources/common` directories, with an onboarding guide for future products.
+
+### Changed
+
+- AstroToo writes require `Device/GetLanCapabilities` with the local-only LAN API. Cloud reset and raw-command bypasses are rejected.
+- AstroToo assets are uploaded serially as temporary device-local `local://` staging files, consumed after successful binding and cleared on reboot when unbound; TAR/TGZ/ZIP bundles are rejected by MCP and firmware.
+- TimesFrame generic `/upload` is blocked by MCP because it enters the device network task. TimesFrame create/patch multipart inputs now use unique staging paths and are deleted after processing; neither product's LAN receive path uploads files outward.
+- Snapshot downloads now validate WebP, JPEG, PNG, or BMP and follow AstroToo's per-capture BMP path.
+- HTTP, JSON, business responses, multipart sizes, read-before-write, snapshots, and write timeouts now use strict failure handling.
+- TimesFrame hardware identification is limited to 510/511/512; AstroToo remains 530. Clock IDs, names, fonts, `disp`, item IDs, templates, and layout data are isolated by product.
+
 ## [0.1.7] - 2026-06-09
 
 ### Added

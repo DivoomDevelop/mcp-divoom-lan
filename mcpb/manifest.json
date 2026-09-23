@@ -3,8 +3,8 @@
   "name": "mcp-divoom-lan",
   "display_name": "Divoom LAN Watchface",
   "version": "0.1.4",
-  "description": "MCP server for Divoom watchface customization over LAN (read/patch dials, brightness, uploads).",
-  "long_description": "Wraps the Divoom device LAN API as MCP tools with read-before-write safeguards. Configure your device IP and optional port, then use tools such as watchface_get_local and watchface_patch_local. See the GitHub repository for full documentation.",
+  "description": "MCP server for TimesFrame and AstroToo watchface customization over LAN.",
+  "long_description": "Controls one or more Divoom devices and identifies each target from its Hardware response before selecting the TimesFrame or AstroToo profile. Includes read-before-write safeguards and AstroToo local-only asset persistence.",
   "author": {
     "name": "Divoom Developers"
   },
@@ -33,17 +33,25 @@
       "env": {
         "DIVOOM_DEVICE_HOST": "${user_config.divoom_device_host}",
         "DIVOOM_DEVICE_PORT": "${user_config.divoom_device_port}",
+        "DIVOOM_DEVICE_MODEL": "${user_config.divoom_device_model}",
         "DIVOOM_TIMEOUT_MS": "${user_config.divoom_timeout_ms}"
       }
     }
   },
   "tools_generated": true,
   "user_config": {
+    "divoom_device_model": {
+      "type": "string",
+      "title": "Product detection",
+      "description": "Use auto to identify each target by Hardware. timesframe is only a legacy firmware fallback.",
+      "default": "auto",
+      "required": false
+    },
     "divoom_device_host": {
       "type": "string",
-      "title": "Divoom device IP",
+      "title": "Default device IP (optional)",
       "description": "LAN IP address of the Divoom device (e.g. 192.168.1.120).",
-      "required": true
+      "required": false
     },
     "divoom_device_port": {
       "type": "number",

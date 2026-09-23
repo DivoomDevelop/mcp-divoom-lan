@@ -4,6 +4,10 @@
 
 完整协议细节建议继续在源码大仓中维护；此处聚焦“如何安全可用”。
 
+本文件保留 TimesFrame 历史协议语义。当前 MCP 本地模式禁止 TimesFrame 通用
+`/upload`；表盘文件只随创建/修改请求临时接收，处理完成即清理且不会向外上传。
+AstroToo 请使用 `docs/astrotoo-and-multiple-devices.md`。
+
 ## 核心接口
 
 - `POST /divoom_api`

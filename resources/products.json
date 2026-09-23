@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "products": {
+    "timesframe": {
+      "hardware": [510, 511, 512],
+      "canvas": { "width": 800, "height": 1280 },
+      "directory": "timesframe"
+    },
+    "astrotoo": {
+      "hardware": [530],
+      "canvas": { "width": 480, "height": 480 },
+      "directory": "astrotoo"
+    }
+  }
+}

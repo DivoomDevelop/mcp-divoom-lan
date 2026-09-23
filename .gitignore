@@ -4,3 +4,5 @@ dist/
 *.tgz
 mcpb/staging/
 mcp-divoom-lan.mcpb
+__pycache__/
+*.pyc

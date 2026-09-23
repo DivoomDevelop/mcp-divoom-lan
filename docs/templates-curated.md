@@ -1,6 +1,6 @@
 # Curated templates（上架表盘骨架）
 
-`resources/templates-curated.json`（资源 URI：`divoom://templates/curated`）包含约 **20**
+`resources/timesframe/templates-curated.json`（资源 URI：`divoom://templates/curated`）包含约 **20**
 套从编辑器自带的 **`public/template/config/*.cfg`** 挖掘出来的表盘骨架，供 AGENT **克隆
 `ItemList` 几何与层级**，而不是从 `(0,0)` 凭空猜坐标。
 

@@ -1,0 +1,6 @@
+{
+  "Command": "Channel/SetClockSelectId",
+  "DeviceType": "AstroToo",
+  "ReturnCode": 0,
+  "ClockId": 60000
+}

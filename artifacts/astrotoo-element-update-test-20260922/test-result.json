@@ -1,0 +1,258 @@
+{
+  "startedAt": "2026-09-22T10:41:54.820Z",
+  "initialUploads": [
+    {
+      "file": "hour-initial.png",
+      "bytes": 5120,
+      "fileId": "local://1790073715-7.bin"
+    },
+    {
+      "file": "minute-initial.png",
+      "bytes": 5206,
+      "fileId": "local://1790073715-8.bin"
+    },
+    {
+      "file": "second-initial.png",
+      "bytes": 2686,
+      "fileId": "local://1790073715-9.bin"
+    }
+  ],
+  "updateUploads": [
+    {
+      "file": "minute-updated.png",
+      "bytes": 4112,
+      "fileId": "local://1790073725-11.bin"
+    },
+    {
+      "file": "second-updated.png",
+      "bytes": 3249,
+      "fileId": "local://1790073726-12.bin"
+    }
+  ],
+  "device": {
+    "model": "astrotoo",
+    "hardware": 530,
+    "firmware": 530039,
+    "canvas": {
+      "width": 480,
+      "height": 480
+    },
+    "transfer": "sequential"
+  },
+  "create": {
+    "response": {
+      "Command": "Device/CreateLocalClock",
+      "ReturnCode": 0,
+      "ReturnMessage": "OK",
+      "DeviceType": "AstroToo",
+      "ClockId": 60007
+    },
+    "background": {
+      "file": "background.jpg",
+      "bytes": 60453
+    },
+    "totalFiles": 4
+  },
+  "clockId": 60007,
+  "before": {
+    "format": "bmp",
+    "bytes": 691254,
+    "sha256": "00074b5f21588566c450e39b20d5d641e0f7db107a0c1ab2f5516f79b71bff88"
+  },
+  "patch": {
+    "response": {
+      "DialTimeoutFlag": 0,
+      "PixelDialType": 0,
+      "AiScheduleType": 0,
+      "IsComponent": 0,
+      "NameCn": "多文件元素更新测试",
+      "NameEn": "多文件元素更新测试",
+      "SysUpdateTime": 1790073728,
+      "ClockId": 60007,
+      "EdgeClockId": 0,
+      "AppNum": 0,
+      "StyleClockId": 0,
+      "ComponentClockId": 0,
+      "ItemList": [
+        {
+          "size": 0,
+          "x": 40,
+          "y": 20,
+          "w": 400,
+          "h": 400,
+          "disp": 131,
+          "alig": 3,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "UserDefine",
+          "angle": 0,
+          "hier": 1,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "hour",
+          "color_1": "#ffffff",
+          "color_2": "#000000"
+        },
+        {
+          "size": 0,
+          "x": 40,
+          "y": 20,
+          "w": 400,
+          "h": 400,
+          "disp": 132,
+          "alig": 3,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "UserDefine",
+          "angle": 0,
+          "hier": 1,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "minute",
+          "color_1": "#ffffff",
+          "color_2": "#000000"
+        },
+        {
+          "size": 0,
+          "x": 40,
+          "y": 20,
+          "w": 400,
+          "h": 400,
+          "disp": 233,
+          "alig": 3,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "UserDefine",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "second",
+          "color_1": "#ffffff",
+          "color_2": "#000000"
+        },
+        {
+          "size": 28,
+          "x": 18,
+          "y": 414,
+          "w": 122,
+          "h": 42,
+          "disp": 156,
+          "alig": 4,
+          "sep": 0,
+          "font": 36,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "date",
+          "color_1": "#ffd54f",
+          "color_2": "#000000"
+        },
+        {
+          "size": 26,
+          "x": 142,
+          "y": 414,
+          "w": 88,
+          "h": 42,
+          "disp": 37,
+          "alig": 3,
+          "sep": 0,
+          "font": 36,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weekday",
+          "color_1": "#80deea",
+          "color_2": "#000000"
+        },
+        {
+          "size": 16,
+          "x": 215,
+          "y": 422,
+          "w": 145,
+          "h": 42,
+          "disp": 157,
+          "alig": 3,
+          "sep": 0,
+          "font": 36,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weather_range",
+          "color_1": "#ffffff",
+          "color_2": "#000000"
+        },
+        {
+          "size": 22,
+          "x": 368,
+          "y": 422,
+          "w": 94,
+          "h": 42,
+          "disp": 339,
+          "alig": 4,
+          "sep": 0,
+          "font": 36,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature",
+          "color_1": "#ffffff",
+          "color_2": "#000000"
+        }
+      ],
+      "ItemIdList": [
+        "hour",
+        "minute",
+        "second",
+        "date",
+        "weekday",
+        "weather_range",
+        "temperature"
+      ],
+      "Config": "",
+      "Command": "Device/PatchLocalClockInfo",
+      "ReturnCode": 0,
+      "ReturnMessage": "OK",
+      "DeviceType": "AstroToo"
+    },
+    "updatedImageFiles": 2,
+    "changedIndexes": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "after": {
+    "format": "bmp",
+    "bytes": 691254,
+    "sha256": "f8ae9134e29d3647b68bb9e120813d1cee4eb0a29cd8ca454405c02ba27e3a1d"
+  },
+  "readback": {
+    "ReturnCode": 0,
+    "ClockId": 60007,
+    "name": "多文件元素更新测试",
+    "itemCount": 7,
+    "minuteImage": "UserDefine",
+    "secondImage": "UserDefine",
+    "dateColor": "#ffd54f",
+    "weekdayColor": "#80deea"
+  },
+  "changedPixels": true,
+  "completedAt": "2026-09-22T10:42:17.613Z"
+}
