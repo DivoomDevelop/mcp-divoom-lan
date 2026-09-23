@@ -1,45 +1,45 @@
-# mcp-divoom-lan 文档索引
+# mcp-divoom-lan Documentation
 
-如果你是第一次接触 Divoom MCP，按下面顺序阅读：
+If you are new to the Divoom MCP server, read the documentation in this order:
 
-1. `quick-start.md`：5 分钟跑通安装和首个调用
-2. `mcp-tools.md`：21 个 MCP 工具 API、机型范围和文件策略
-3. `astrotoo-and-multiple-devices.md`：硬件识别、多设备并行及 AstroToo 本地保存
-4. `adding-products.md`：新增产品注册、独立资料目录和接入检查
-5. `tool-examples.md`：核心功能示例（含 AstroToo 逐文件上传、新建及指针表盘）
-6. `html-visual-editor.md`：如何配合 HTML 可视化编辑器（含公开仓库地址）
-7. `safety-and-troubleshooting.md`：风险边界与常见问题
-8. `reference/`：协议关键规则提炼（中英）
-9. `examples/`：请求/响应示例与目录清单
+1. `quick-start.md`: install, configure, and complete the first call in about five minutes.
+2. `mcp-tools.md`: all 21 MCP tools, product scope, and file policy.
+3. `astrotoo-and-multiple-devices.md`: Hardware detection, concurrent devices, and AstroToo local persistence.
+4. `adding-products.md`: product registration, isolated resource directories, and onboarding checks.
+5. `tool-examples.md`: core operations, including sequential AstroToo asset uploads, creation, and analog pointers.
+6. `html-visual-editor.md`: use the HTML visual editor with this MCP server.
+7. `safety-and-troubleshooting.md`: operating boundaries and common failures.
+8. `reference/`: condensed protocol rules.
+9. `examples/`: request and response examples with a catalog.
 
-补充：**`disp-usage.md`** 中含「图像元素唯一性」及网络图库 `disp`（`13` / `125–130` / `173–175`）与固件常量对照表，建模 **`ItemList` 前应阅读**。
+Read `disp-usage.md` before building an `ItemList`. It documents image-element uniqueness and maps the network-gallery `disp` values 13, 125–130, and 173–175 to firmware constants.
 
-## 目标能力
+## Capabilities
 
-当前共提供 21 个 MCP 工具：15 个设备工具和 6 个离线/机型感知设计工具。完整清单见 `mcp-tools.md`。
+The server provides 21 MCP tools: 15 device tools and 6 offline or model-aware authoring tools. See `mcp-tools.md` for the complete catalog.
 
-- 查询设备型号和 LAN 能力（`watchface_get_device_info`）
-- 修改本地表盘内容（`watchface_patch_local`）
-- 切换当前表盘（`watchface_set_clock_select`）
-- 调整亮度（`watchface_set_brightness`）
-- 创建新本地表盘（`watchface_create_local_clock`）
-- 按每台设备返回的 `Hardware` 自动区分 TimesFrame 与 AstroToo
-- 在一个 MCP 服务中通过 `target.host` 控制多台设备
+- Query the product model and LAN capabilities with `watchface_get_device_info`.
+- Patch local watchface content with `watchface_patch_local`.
+- Select the current watchface with `watchface_set_clock_select`.
+- Read and set brightness.
+- Create a new local watchface with `watchface_create_local_clock`.
+- Select TimesFrame or AstroToo automatically from the Hardware value returned by each device.
+- Control multiple devices from one MCP server by passing `target.host`.
 
-## 前置条件（必须）
+## Requirements
 
-- 设备和 MCP 客户端机器网络可达（通常在同一局域网）
-- 知道设备 LAN IP（例如 `192.168.1.120`）
-- Node.js 版本 >= 20
+- The device must be reachable from the MCP client machine, normally on the same LAN.
+- You must know the device LAN IP address, such as `192.168.1.120`.
+- Node.js 20 or later is required.
 
-## 新增目录说明
+## Documentation directories
 
-- `reference/`：从原始 Guide 提炼的关键协议约束，便于模型快速对齐行为
-- `examples/`：从原始 EXAMPLE 抽取的常用样例，适合联调与回归
+- `reference/`: condensed constraints extracted from the original guides for fast and consistent model behavior.
+- `examples/`: common requests and responses for integration tests and regression checks.
 
-## 可视化编辑器公开地址（v2）
+## Public visual editor v2
 
-- GitHub 仓库：`https://github.com/DivoomDevelop/divoom-watchface-visual-editor_v2`
-- 在线页面（GitHub Pages）：`https://divoomdevelop.github.io/divoom-watchface-visual-editor_v2/`
+- GitHub repository: `https://github.com/DivoomDevelop/divoom-watchface-visual-editor_v2`
+- GitHub Pages: `https://divoomdevelop.github.io/divoom-watchface-visual-editor_v2/`
 
-本地工作目录（例如 `D:\divoom-watchface-visual-editor`）与上述 **v2** 仓库对应：开发、提交、`git push` 均以该 GitHub 地址为远程权威来源；npm 包名定位为 `divoom-watchface-visual-editor-v2`（与 v1 区分）。
+A local working directory such as `D:\divoom-watchface-visual-editor` is only a clone of the v2 repository. Treat the GitHub repository above as the authoritative remote for development and pushes. The npm package name is `divoom-watchface-visual-editor-v2`, which distinguishes it from v1.

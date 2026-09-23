@@ -1,8 +1,8 @@
-# MCP 工具 API
+# MCP Tool API
 
-当前服务提供 21 个工具：15 个设备工具和 6 个离线/机型感知设计工具。设备工具每次都先读取目标设备的 `Device/GetHardwareVersion`；Hardware 510/511/512 使用 TimesFrame 配置，530 使用 AstroToo 配置。
+The server exposes 21 tools: 15 device tools and 6 offline or model-aware authoring tools. Every device tool first reads `Device/GetHardwareVersion` from the target. Hardware 510/511/512 selects TimesFrame; Hardware 530 selects AstroToo.
 
-## 通用目标参数
+## Common target parameter
 
 ```json
 {
@@ -15,60 +15,60 @@
 }
 ```
 
-建议保持 `model:"auto"`。同一 `host:port` 上的完整操作串行执行，不同设备可以并行。没有传 `target` 时使用 `DIVOOM_DEVICE_HOST`、`DIVOOM_DEVICE_PORT`、`DIVOOM_DEVICE_MODEL` 和 `DIVOOM_TIMEOUT_MS`。
+Keep `model:"auto"` unless compatibility with legacy TimesFrame firmware requires an explicit model. Complete operations are serialized for the same `host:port`; different devices can run concurrently. When `target` is omitted, the server uses `DIVOOM_DEVICE_HOST`, `DIVOOM_DEVICE_PORT`, `DIVOOM_DEVICE_MODEL`, and `DIVOOM_TIMEOUT_MS`.
 
-## 设备工具（15）
+## Device tools (15)
 
-| 工具 | 机型 | 用途 |
+| Tool | Product | Purpose |
 |---|---|---|
-| `watchface_get_device_info` | 两者 | 查询硬件版本、型号、画布、LAN 能力和文件策略。 |
-| `watchface_get_local` | 两者 | 读取当前或指定 `ClockId` 的表盘配置。 |
-| `watchface_patch_local` | 两者 | 预检后修改表盘；纯字段修改走 JSON，带底图时走 multipart。 |
-| `watchface_get_fonts_local` | 两者 | 读取设备实际可用字体。 |
-| `watchface_get_store_market_list` | 两者 | 读取设备已有市场缓存；AstroToo 不触发下载。 |
-| `watchface_set_clock_select` | 两者 | 切换表盘；请求只含 `ClockId`，显式传入时才含 `sysUpdateTime`。TimesFrame 在同一 MCP 串行操作中成对排队两次相同请求，使手动选择在当前时段覆盖传统定时表盘；AstroToo 只发送一次。 |
-| `watchface_get_brightness` | 两者 | 读取亮度。 |
-| `watchface_set_brightness` | 两者 | 设置亮度；AstroToo 范围为 0～100。 |
-| `watchface_onoff_screen` | 两者 | `onOff:1` 开屏，`onOff:0` 关屏。 |
-| `watchface_replace_dial_bg_file` | 两者 | 替换缓存底图，不修改 `DeviceImageUrl`。 |
-| `watchface_upload_file` | AstroToo | 每次上传一个元素文件，返回临时 `local://` 引用。 |
-| `watchface_create_local_clock` | 两者 | 创建本地表盘；TimesFrame 可用 tar.gz，AstroToo 只接收一张 480×480 底图。 |
-| `watchface_reset_local_then_cloud` | TimesFrame | 删除本地 sys 侧文件后从云端恢复；AstroToo 禁止。 |
-| `watchface_get_screen_snapshot` | 两者 | 截图并校验本次返回路径；AstroToo 当前为 BMP。 |
-| `watchface_raw_command` | 两者 | 原样发送 `/divoom_api` 产品命令；AstroToo 的表盘修改命令仍执行读取预检。 |
+| `watchface_get_device_info` | Both | Report Hardware, product model, canvas, LAN capabilities, and file policy. |
+| `watchface_get_local` | Both | Read the current watchface or a specified `ClockId`. |
+| `watchface_patch_local` | Both | Pre-read and patch a watchface. Field-only changes use JSON; a request with a backdrop uses multipart. |
+| `watchface_get_fonts_local` | Both | Read fonts actually available on the device. |
+| `watchface_get_store_market_list` | Both | Read the market cache already present on the device. AstroToo does not download missing entries. |
+| `watchface_set_clock_select` | Both | Select a watchface. The payload contains only `ClockId` unless `sysUpdateTime` is explicitly supplied. TimesFrame queues a verified pair of identical requests within one serialized MCP operation so a manual selection overrides the current traditional schedule period; AstroToo sends one request. |
+| `watchface_get_brightness` | Both | Read brightness. |
+| `watchface_set_brightness` | Both | Set brightness. AstroToo accepts 0–100. |
+| `watchface_onoff_screen` | Both | Use `onOff:1` to turn the display on and `onOff:0` to turn it off. |
+| `watchface_replace_dial_bg_file` | Both | Replace the cached backdrop without changing `DeviceImageUrl`. |
+| `watchface_upload_file` | AstroToo | Upload one element file and return a temporary `local://` reference. |
+| `watchface_create_local_clock` | Both | Create a local watchface. TimesFrame accepts an image or tar.gz; AstroToo accepts one 480×480 backdrop after element files have been uploaded individually. |
+| `watchface_reset_local_then_cloud` | TimesFrame | Remove local system-side files and restore from the cloud. This tool is blocked for AstroToo. |
+| `watchface_get_screen_snapshot` | Both | Capture the screen and validate the path returned by this request. AstroToo currently returns BMP. |
+| `watchface_raw_command` | Both | Send a product command unchanged to `/divoom_api`. AstroToo watchface-write commands still perform the required read precheck. |
 
-## 设计辅助工具（6）
+## Authoring tools (6)
 
-| 工具 | 用途 |
+| Tool | Purpose |
 |---|---|
-| `watchface_protocol_quick_reference` | 返回所选机型的操作规则。 |
-| `watchface_clock_catalog` | 查询所选产品的表盘 ID、中英文名称、字体、`disp`、`item_id`；可用 `includeConfig:true` 返回原始配置。 |
-| `watchface_disp_catalog` | 查询所选机型的 `disp` 枚举及过滤结果。 |
-| `watchface_font_catalog` | 查询字体目录；传在线 AstroToo `target` 时合并设备的 `AvailableLocally` 状态。 |
-| `watchface_template_search` | 搜索所选机型的表盘模板。 |
-| `watchface_layout_suggest` | 返回所选机型的布局建议；AstroToo 不使用 TimesFrame 坐标统计。 |
+| `watchface_protocol_quick_reference` | Return operating rules for the selected model. |
+| `watchface_clock_catalog` | Query product-specific watchface IDs, Chinese and English names, fonts, `disp`, and `item_id`; `includeConfig:true` includes native configurations. |
+| `watchface_disp_catalog` | Query and filter the selected model's `disp` catalog. |
+| `watchface_font_catalog` | Query the selected model's font catalog. With a live AstroToo target, local availability is merged into the AstroToo names. |
+| `watchface_template_search` | Search curated templates for the selected model. |
+| `watchface_layout_suggest` | Return model-specific layout guidance. AstroToo never receives TimesFrame coordinate statistics. |
 
-离线调用通过顶层 `model:"timesframe"` 或 `model:"astrotoo"` 选资料；连接设备时以硬件识别结果为准。
+Offline calls select data with a top-level `model:"timesframe"` or `model:"astrotoo"`. Calls with a live device always use the product detected from Hardware.
 
-AstroToo 表盘资料来自模拟器的 `resource/userdata/system/clocksys` 与 `resource/usr/share/divoom_app/clocksys`。默认 ID 由 `Device/GetClockDefaultList` 和 `IsDefault=1` 获取；本地缺失配置时由 `Device/GetClockInfoV3` 加 `DeviceId` 获取。字体 ID 与文件来自 `resource/usr/share/divoom_app/system/font_list.cfg`，名称来自 `Device/GetFontForAI`。服务器请求 URL 为 `https://appchina.divoom-gz.com/` 加命令字符串，BODY 使用 JSON 打包。
+AstroToo watchface data comes from the simulator's `resource/userdata/system/clocksys` and `resource/usr/share/divoom_app/clocksys`. Default IDs come from `Device/GetClockDefaultList` with `IsDefault=1`; missing local configurations come from `Device/GetClockInfoV3` with `DeviceId`. Font IDs and files come from `resource/usr/share/divoom_app/system/font_list.cfg`, and names come from `Device/GetFontForAI`. Server requests use `https://appchina.divoom-gz.com/` plus the command string with a JSON body.
 
-AstroToo 专用资源为 `divoom://astrotoo/clocks/catalog`、`divoom://astrotoo/clocks/configs`、`divoom://astrotoo/font/catalog` 和 `divoom://astrotoo/disp/catalog`。原有无 `astrotoo` 前缀的资源保持 TimesFrame 语义。
+AstroToo resources are `divoom://astrotoo/clocks/catalog`, `divoom://astrotoo/clocks/configs`, `divoom://astrotoo/font/catalog`, and `divoom://astrotoo/disp/catalog`. Existing resource URIs without the `astrotoo` prefix retain TimesFrame semantics.
 
-文件按产品存放在 `resources/timesframe` 和 `resources/astrotoo`，共享协议资料放在 `resources/common`。`resources/products.json` 与 `divoom://products/catalog` 给出产品注册信息。新增产品时必须增加独立目录、Hardware 映射与完整资源，运行时不会回退使用另一产品的表盘、字体或元素资料。
+Product data lives in `resources/timesframe` and `resources/astrotoo`; shared protocol guidance lives in `resources/common`. `resources/products.json` and `divoom://products/catalog` expose the product registry. A new product must add its own directory, Hardware mapping, and complete resource set. Runtime code never falls back to another product's watchfaces, fonts, or element metadata.
 
-## 文件和本地保存策略
+## File and local-storage policy
 
-- AstroToo 底图为 480×480 JPEG/WebP，文件小于 500 KiB；JSON 按 UTF-8 不超过 64 KiB。
-- AstroToo 没有 TAR，MCP 同时拒绝 TAR/TGZ/ZIP。元素图片必须逐个串行调用 `watchface_upload_file`；该工具使用专用 `/upload_local_asset`，不会占用照片/像素业务的 `/upload`。
-- `watchface_upload_file` 返回的 `local://...` 是设备临时传输引用。创建或修改成功后，固件把已绑定文件原子移动到持久表盘目录；未绑定文件在重启时清理。
-- TimesFrame 的通用 `/upload` 已禁用。其文件只随 `watchface_create_local_clock` 或 `watchface_patch_local` 进入设备端暂存区，并在操作处理后清理。
-- 两种机型收到的 LAN 文件都不会向云端或外部服务器上传。
-- 写入超时不自动重发；先回读设备状态，再决定是否重试。
-- TimesFrame 的两个 `SetClockSelectId` 是一组已验证的手动切换协议序列，会一起排入设备命令队列并分别校验回包。它不会修改或关闭定时配置，也不是超时重试。
+- AstroToo backdrops must be 480×480 JPEG/WebP files smaller than 500 KiB. JSON is limited to 64 KiB measured as UTF-8 bytes.
+- AstroToo has no TAR support, and the MCP server rejects TAR, TGZ, and ZIP. Upload each element image sequentially with `watchface_upload_file`. This tool uses the dedicated `/upload_local_asset` route and does not use the photo or pixel-art `/upload` route.
+- A `local://...` value returned by `watchface_upload_file` is a temporary device-local transfer reference. After a successful create or patch, firmware atomically moves bound files into the persistent watchface directory. Unbound files are removed on reboot.
+- Generic TimesFrame `/upload` is disabled. TimesFrame files enter the device staging area only through `watchface_create_local_clock` or `watchface_patch_local` and are removed after the operation.
+- LAN files received by either product are never uploaded to the cloud or another external server.
+- Timed-out writes are not retried automatically. Read device state before deciding whether to retry.
+- The two TimesFrame `SetClockSelectId` calls are one verified manual-selection protocol sequence. They are queued together and each response is validated. The sequence does not edit or disable schedule configuration and is not a timeout retry.
 
-## 推荐调用流程
+## Recommended flows
 
-修改已有表盘：
+Patch an existing watchface:
 
 ```text
 watchface_get_device_info
@@ -78,16 +78,16 @@ watchface_get_device_info
 → watchface_get_screen_snapshot
 ```
 
-AstroToo 创建带元素素材的表盘：
+Create an AstroToo watchface with element assets:
 
 ```text
 watchface_get_device_info
 → watchface_get_fonts_local
-→ watchface_upload_file（每个元素一次，串行）
+→ watchface_upload_file (once per element, sequentially)
 → watchface_create_local_clock
 → watchface_set_clock_select
 → watchface_get_local
 → watchface_get_screen_snapshot
 ```
 
-具体参数示例见 `tool-examples.md`，多设备和固件能力要求见 `astrotoo-and-multiple-devices.md`。
+See `tool-examples.md` for complete parameter examples and `astrotoo-and-multiple-devices.md` for multi-device behavior and firmware capability requirements.

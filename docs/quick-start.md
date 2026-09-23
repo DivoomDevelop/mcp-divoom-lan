@@ -1,33 +1,31 @@
-# 快速开始（5 分钟）
+# Quick Start (5 Minutes)
 
-## 1) 安装与构建
+## 1. Install and build
 
 ```bash
 npm install
 npm run build
 ```
 
-## 2) MCP 客户端配置
+## 2. Configure the MCP client
 
-可直接复制仓库根目录的 `client-config.example.json`，并把路径改成你本机实际路径。
+Copy `client-config.example.json` from the repository root and replace its executable path with the absolute path on your machine.
 
-关键项：
+Key settings:
 
 - `command`: `node`
 - `args`: `.../dist/index.js`
-- `env.DIVOOM_DEVICE_HOST`: 设备局域网 IP
-- `env.DIVOOM_DEVICE_PORT`: 默认 `9000`
-- `env.DIVOOM_DEVICE_MODEL`: 建议保持 `auto`
+- `env.DIVOOM_DEVICE_HOST`: the device's LAN IP address
+- `env.DIVOOM_DEVICE_PORT`: `9000` by default
+- `env.DIVOOM_DEVICE_MODEL`: keep `auto` unless legacy TimesFrame compatibility requires an explicit value
 
-## 3) 首次连通性测试
+## 3. Test the first connection
 
-先调用：
+Call `watchface_get_device_info` first.
 
-- `watchface_get_device_info`
+The MCP server calls `Device/GetHardwareVersion` on the target. Hardware 510/511/512 selects TimesFrame, and Hardware 530 selects AstroToo. Unknown Hardware values stop the operation.
 
-MCP 会先调用设备的 `Device/GetHardwareVersion`。硬件 510/511/512 使用 TimesFrame 配置，530 使用 AstroToo 配置；未知硬件会停止操作。
-
-再调用 `watchface_get_local`。最小参数（读取当前屏幕表盘）：
+Then call `watchface_get_local`. The smallest request for the watchface currently shown on screen is:
 
 ```json
 {
@@ -35,9 +33,9 @@ MCP 会先调用设备的 `Device/GetHardwareVersion`。硬件 510/511/512 使�
 }
 ```
 
-同一 MCP 服务控制多台设备时，每次调用都传对应 `target`。识别结果不会在设备之间复用；同一设备的完整操作会串行，不同设备可并行。
+When one MCP server controls several devices, include the corresponding `target` in every call. Identification results are never reused between devices. Complete operations are serialized for the same device, while different devices can run concurrently.
 
-如果你没配置环境变量，也可以每次传设备地址：
+If you did not configure environment variables, pass the device address in each call:
 
 ```json
 {
@@ -49,96 +47,81 @@ MCP 会先调用设备的 `Device/GetHardwareVersion`。硬件 510/511/512 使�
 }
 ```
 
-## 4) 建议标准流程
+## 4. Standard write flow
 
-所有写操作都建议使用下面流程：
+Use this flow for write operations:
 
-1. `watchface_get_local`（读当前配置）
-2. 检查 `ItemList`：
-   - 为空：停止写入，先切换到可编辑表盘（`watchface_set_clock_select`）
-   - 非空：继续下一步
-3. 选择写入路径（与 HTML 编辑器保持一致）：
-   - 仅字段差异 → `watchface_patch_local`（不传 `dialAssetsPath`，走
-     `POST /divoom_api`）
-   - 用户换了元素图：
-     - TimesFrame → `watchface_patch_local` + `clock_bg.tar.gz`，用
-       `ItemPatchList[].patch.bundle_image` 绑定叶子
-     - AstroToo → 对每张图串行调用一次 `watchface_upload_file`，再把返回的
-       临时 `local://...` 写入同一轮创建/修改的 `image_addr`；提交成功后暂存文件会被删除，禁止 TAR/TGZ/ZIP
-   - 仅换底图 → `watchface_patch_local` + 单张 JPEG/WebP，或
-     `watchface_replace_dial_bg_file`（不改 `DeviceImageUrl`）
-   - 行数变化 → 整表替换 `ItemList` + `ItemIdList`（兜底）
-4. `watchface_get_local`（回读确认）
+1. Call `watchface_get_local` to read the current configuration.
+2. Inspect `ItemList`.
+   - If it is empty, stop the write and select an editable watchface with `watchface_set_clock_select`.
+   - If it is populated, continue.
+3. Choose the file path that matches the change:
+   - Field changes only: call `watchface_patch_local` without `dialAssetsPath`; the request uses `POST /divoom_api`.
+   - Changed element images on TimesFrame: call `watchface_patch_local` with `clock_bg.tar.gz` and bind each leaf with `ItemPatchList[].patch.bundle_image`.
+   - Changed element images on AstroToo: call `watchface_upload_file` once for each image, sequentially. Put each returned temporary `local://...` value into `image_addr` in the same create or patch operation. Staging files are consumed after a successful commit. TAR, TGZ, and ZIP are rejected.
+   - Backdrop only: call `watchface_patch_local` with one JPEG/WebP file, or use `watchface_replace_dial_bg_file` to leave `DeviceImageUrl` unchanged.
+   - A changed number of rows: replace the complete `ItemList` and `ItemIdList` as a fallback.
+4. Call `watchface_get_local` again and verify the committed state.
 
-> `patch.*` 不要包含 `item_id`，避免覆盖设备菜单/config 关联。
+Do not place `item_id` in `patch.*`; doing so can overwrite the device's menu and configuration relationships.
 
-TimesFrame 不开放通用 `watchface_upload_file`。其素材随创建/修改 multipart 请求传入，设备处理完成后会删除接收暂存文件。两种机型的 MCP/LAN 流程都不会把接收文件上传到云端。
+TimesFrame does not expose generic `watchface_upload_file`. Its assets are sent with the create or patch multipart request and the receiving staging file is removed after processing. The MCP/LAN flows for both products keep received files on the device and never upload them to the cloud.
 
-> 非用户明确要求时，不要调用 `watchface_create_local_clock`。
+Do not call `watchface_create_local_clock` unless the user explicitly requests a new watchface.
 
-## 5) 快速排错
+## 5. Troubleshooting
 
-- 连接失败：检查 IP、端口、同网段、防火墙
-- 返回码非 0：先看 `ReturnMessage`，再核对请求字段（参见
-  `docs/safety-and-troubleshooting.md` 错误对照表）
-- 底图上传失败：底图必须是 JPEG/WebP 且小于 500 KiB；TimesFrame 为
-  800×1280，AstroToo 为 480×480
-- TimesFrame 元素 bundle 失败：`tar.gz` 内每个元素必须是 JPEG / WebP /
-  PNG；AstroToo 不支持 bundle，必须逐文件上传
+- Connection failure: verify the IP address, port, subnet, and firewall.
+- Nonzero return code: read `ReturnMessage`, then compare the request fields with the error table in `docs/safety-and-troubleshooting.md`.
+- Backdrop upload failure: use JPEG or WebP smaller than 500 KiB. TimesFrame requires 800×1280; AstroToo requires 480×480.
+- TimesFrame element-bundle failure: every element in `tar.gz` must be JPEG, WebP, or PNG. AstroToo does not support bundles and requires sequential uploads.
 
-## 6) 字体怎么选
+## 6. Choose a font
 
-写 `ItemList[i].font` 之前，先翻字体目录：
+Before writing `ItemList[i].font`, inspect the font catalog:
 
-- TimesFrame 资源：`divoom://font/guide`、`divoom://font/catalog`
-- AstroToo 资源：`divoom://astrotoo/font/catalog`
-- 工具：`watchface_font_catalog`（用 `model` 或在线 `target` 选择机型；AstroToo 在线模式把设备可用性合并到独立名称目录）
+- TimesFrame resources: `divoom://font/guide` and `divoom://font/catalog`
+- AstroToo resource: `divoom://astrotoo/font/catalog`
+- Tool: `watchface_font_catalog`, using `model` for offline work or a live `target` for device-aware selection. A live AstroToo query merges local availability into the independent AstroToo name catalog.
 
-数字位图字体（charset 仅 `0123456789`）只能渲染数字，适合时间/日期/温度位；
-带中文的文本槽位（disp 49/56/154/155/178/179/219/220 等）必须挑 `script:"cjk"`
-的 TTF（HarmonyOS_SansSC、SourceHanSans、Alimama、ZCOOL 等）。详情见
-`docs/font-usage.md`。
+A bitmap font whose charset is only `0123456789` can render digits only and is suitable for time, date, or temperature values. Text slots that contain Chinese characters, such as disp 49/56/154/155/178/179/219/220, require a CJK-capable TTF such as HarmonyOS Sans SC, Source Han Sans, Alimama, or ZCOOL. See `docs/font-usage.md` for details.
 
-实操时务必再用 `watchface_get_fonts_local` 校验一次设备真正装了哪些字体。
+Always call `watchface_get_fonts_local` before writing to confirm which fonts are actually installed on the target device.
 
-## 7) `disp` 怎么选 / 怎么验证 JSON
+## 7. Choose `disp` and validate JSON
 
-- TimesFrame 资源：`divoom://disp/catalog`（194 个 disp，含中文描述 + 是否需要图片资源的启发式提示）
-- AstroToo 资源：`divoom://astrotoo/disp/catalog`
-- 工具：`watchface_disp_catalog`（用 `model` 或在线 `target` 选择机型，再按 `ids/nameContains/descriptionContains/expects` 过滤）
+- TimesFrame resource: `divoom://disp/catalog`, containing 194 `disp` entries and hints about image resources
+- AstroToo resource: `divoom://astrotoo/disp/catalog`
+- Tool: `watchface_disp_catalog`, selecting the model with `model` or a live `target`, then filtering by `ids`, `nameContains`, `descriptionContains`, or `expects`
 
-启发式信号：
+Useful hints:
 
-- `hints.likelyUsesRasterOrAssetLayer = true` → 槽位需要 `image_addr`/图层资源（多为 *_PIC、*_GIF、*_IMAGE 类）
-- `hints.oftenUsesVectorFontForText = true` → 槽位以文本为主，配合 `watchface_font_catalog` 选 `script` 合适的 font id
+- `hints.likelyUsesRasterOrAssetLayer = true`: the slot usually needs `image_addr` or another image-layer asset, commonly for `*_PIC`, `*_GIF`, or `*_IMAGE` entries.
+- `hints.oftenUsesVectorFontForText = true`: the slot primarily renders text; choose an appropriate font script with `watchface_font_catalog`.
 
-## 8) 生成完整表盘 JSON 时
+## 8. Generate a complete watchface configuration
 
-- TimesFrame：用 `divoom://watchface/schema` 校验，从 `divoom://watchface/example-minimal` 起步，画布为 `800×1280`
-- AstroToo：用 `divoom://astrotoo/watchface/schema` 校验，从 `divoom://astrotoo/watchface/example-minimal` 起步，画布为 `480×480`
-- 保持 `ItemIdList` 与 `ItemList[].item_id` 顺序一致
+- TimesFrame: validate with `divoom://watchface/schema`, start from `divoom://watchface/example-minimal`, and use an 800×1280 canvas.
+- AstroToo: validate with `divoom://astrotoo/watchface/schema`, start from `divoom://astrotoo/watchface/example-minimal`, and use a 480×480 canvas.
+- Keep `ItemIdList` in the same order as `ItemList[].item_id`.
 
-## 9) 配套样例位置
+## 9. Sample locations
 
-- 请求/响应样例：`docs/examples/`
-- 协议关键点提炼：`docs/reference/`
-- 编辑器侧 AI 指南：资源 `divoom://guide/ai-watchface`（`docs/ai-watchface-guide.md` 同源）
+- Request and response samples: `docs/examples/`
+- Condensed protocol rules: `docs/reference/`
+- Editor-side AI guide: `divoom://guide/ai-watchface`
 
-## 10) 模板克隆 + 排版默认值（漂亮表盘）
+## 10. Clone a template and choose layout defaults
 
-先用 `watchface_clock_catalog` 查询所选产品已有的 `ClockId`、中英文名称、字体、`disp` 和 `item_id`。AstroToo 紧凑索引位于 `divoom://astrotoo/clocks/catalog`；需要完整原始配置时传 `includeConfig:true` 或读取 `divoom://astrotoo/clocks/configs`。这些 ID 和元素语义不能跨产品使用。
+Call `watchface_clock_catalog` first to inspect existing `ClockId` values, Chinese and English names, fonts, `disp`, and `item_id` semantics for the selected product. The compact AstroToo index is available at `divoom://astrotoo/clocks/catalog`. To read full native configurations, pass `includeConfig:true` or read `divoom://astrotoo/clocks/configs`. Never reuse these IDs or semantics across products.
 
-从零手写坐标最容易丑。**优先**：
+Use an existing template instead of inventing every coordinate:
 
-- TimesFrame 资源：`divoom://templates/curated`（约 20 套从编辑器上架 cfg 挖出来的骨架）
-- AstroToo 资源：`divoom://astrotoo/templates/curated`
-- 工具：`watchface_template_search`（按 `tagsAll` / `tagsAny` / `bucket` /
-  `dispPresent` 过滤）
-- 工具：`watchface_layout_suggest`（按 `disp` 取 `typography` 的中位数
-  `size/x/y/w/h/alig` + 常见 `color_*`）
+- TimesFrame resource: `divoom://templates/curated`
+- AstroToo resource: `divoom://astrotoo/templates/curated`
+- Tool: `watchface_template_search`, filtered with `tagsAll`, `tagsAny`, `bucket`, or `dispPresent`
+- Tool: `watchface_layout_suggest`, which returns median `size/x/y/w/h/alig` values and common colors for a `disp`
 
-推荐流程：先 `watchface_template_search({ tagsAny: ["weather"] })` 挑一套接近主题的
-`ItemList`，再对每个改动过的 `disp` 调用 `watchface_layout_suggest` 微调几何，
-最后用 `watchface_font_catalog` 替换字体并用 `watchface_get_fonts_local` 确认设备可用。
+A practical sequence is to search with `watchface_template_search({ tagsAny: ["weather"] })`, adapt the closest `ItemList`, call `watchface_layout_suggest` for each changed `disp`, replace fonts with `watchface_font_catalog`, and confirm device availability with `watchface_get_fonts_local`.
 
-详见 `docs/templates-curated.md`。
+See `docs/templates-curated.md` for more detail.

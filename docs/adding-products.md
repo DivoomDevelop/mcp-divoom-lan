@@ -1,31 +1,31 @@
-# 新增产品资料
+# Adding Product Support
 
-产品资料必须独立存放在 `resources/<model>/`。当前目录为 `timesframe` 和 `astrotoo`；共享协议说明放在 `resources/common`。
+Store each product's reference data in its own `resources/<model>/` directory. The current product directories are `timesframe` and `astrotoo`; shared protocol guidance belongs in `resources/common`.
 
-## 产品注册
+## Product registry
 
-在 `src/devices.ts` 的 `PRODUCTS` 中登记 Hardware 列表、画布尺寸和资源目录，并同步更新 `resources/products.json`。一个 Hardware 只能属于一个产品。设备联网调用始终先读 `Device/GetHardwareVersion`，未知 Hardware 直接失败。
+Register the Hardware values, canvas size, and resource directory in `PRODUCTS` in `src/devices.ts`, then update `resources/products.json` to match. A Hardware value may belong to only one product. Every online device operation starts with `Device/GetHardwareVersion`; unknown Hardware values are rejected.
 
-## 目录约定
+## Directory layout
 
-每个产品目录至少提供：
+Each product directory must provide at least:
 
-- `clock-catalog.json`：表盘 ID、中英文名称、字体、`disp`、`item_id` 和来源摘要。
-- `clock-configs.json`：按 ClockId 索引的完整配置。
-- `font-catalog.json`：该产品自己的字体 ID 和名称。
-- `disp-catalog.json`：该产品固件实际支持的 `disp`。
-- `templates-curated.json`：只由该产品配置生成的模板。
-- `watchface-config.schema.json`：该产品画布和字段约束。
-- `example-minimal.json`：该产品的最小示例。
+- `clock-catalog.json`: watchface IDs, Chinese and English names, fonts, `disp`, `item_id`, and source summaries.
+- `clock-configs.json`: complete configurations indexed by ClockId.
+- `font-catalog.json`: font IDs and names for that product.
+- `disp-catalog.json`: the `disp` values actually supported by that product's firmware.
+- `templates-curated.json`: templates generated only from that product's configurations.
+- `watchface-config.schema.json`: canvas and field constraints for that product.
+- `example-minimal.json`: a minimal example for that product.
 
-可以增加产品专用 `guide.md` 和其他文件。运行时加载器只读取 `PRODUCTS[model].resourceDir`，禁止缺失时回退到另一个产品目录。
+A product-specific `guide.md` and other supporting files may also be added. Runtime loaders read only `PRODUCTS[model].resourceDir`; they must never fall back to another product's directory when data is missing.
 
-## 接入检查
+## Integration checklist
 
-1. 增加 Hardware 映射和产品目录。
-2. 为 `watchface_clock_catalog`、字体、`disp`、模板和 schema 准备独立数据。
-3. 增加公开资源 URI；旧 URI 保持原语义。
-4. 添加测试，覆盖自动识别、目录选择、同名或同 ID 数据不串用、未知 Hardware 拒绝。
-5. 运行类型检查、MCP 协议测试和资源生成器，再做对应真机验证。
+1. Add the Hardware mapping and product resource directory.
+2. Prepare independent data for `watchface_clock_catalog`, fonts, `disp`, templates, and the schema.
+3. Add public resource URIs while preserving the meaning of existing URIs.
+4. Add tests for automatic identification, directory selection, isolation of duplicate names or IDs, and rejection of unknown Hardware values.
+5. Run type checking, MCP protocol tests, and resource generators, then validate on the corresponding physical device.
 
-不要仅根据 `DeviceType`、IP、上一次设备结果或某个常见 ClockId 判断产品。
+Never identify a product from `DeviceType`, an IP address, a previous device result, or a commonly used ClockId alone.

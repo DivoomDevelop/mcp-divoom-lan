@@ -1,12 +1,10 @@
-# 核心功能示例
+# Core Tool Examples
 
-本文给出修改、切换、亮度、新建、素材更新、换底图以及 AstroToo 逐文件上传的 MCP 调用参数示例。
+This document shows MCP parameters for patching, selecting, changing brightness, creating a watchface, updating assets, replacing a backdrop, and uploading AstroToo files individually.
 
----
+## 1. Increase the time font and change it to red
 
-## 1) 修改表盘（字体变大 + 红色）
-
-工具：`watchface_patch_local`
+Tool: `watchface_patch_local`
 
 ```json
 {
@@ -23,16 +21,11 @@
 }
 ```
 
-说明：
+`size_delta` is applied to the current `size`. Call `watchface_get_local` immediately afterward to verify the committed value.
 
-- `size_delta` 是在原有 `size` 上增量修改
-- 建议修改后立即调用 `watchface_get_local` 回读
+## 2. Select a watchface by ClockId
 
----
-
-## 2) 选择表盘（切换到指定 ClockId）
-
-工具：`watchface_set_clock_select`
+Tool: `watchface_set_clock_select`
 
 ```json
 {
@@ -40,7 +33,7 @@
 }
 ```
 
-先用 `watchface_clock_catalog` 查询当前产品的候选项，避免把另一个产品的 `ClockId`、字体或元素含义带进来：
+Query `watchface_clock_catalog` for the current product before selecting an ID. This prevents ClockId, font, or element semantics from another product from entering the request:
 
 ```json
 {
@@ -52,13 +45,11 @@
 }
 ```
 
-要查看指定表盘的原始 AstroToo 配置，可传 `clockIds:[101]` 和 `includeConfig:true`。`watchface_get_store_market_list` 仍用于读取设备已经缓存的市场表盘列表。
+To inspect the original AstroToo configuration for a known watchface, pass `clockIds:[101]` with `includeConfig:true`. `watchface_get_store_market_list` remains the tool for reading market entries already cached by the device.
 
----
+## 3. Change brightness
 
-## 3) 修改亮度
-
-工具：`watchface_set_brightness`
+Tool: `watchface_set_brightness`
 
 ```json
 {
@@ -66,15 +57,11 @@
 }
 ```
 
-配套读取：
+Use `watchface_get_brightness` to read the current value.
 
-- `watchface_get_brightness`
+## 4. Create a local watchface with a backdrop only
 
----
-
-## 4) 创建新本地表盘（仅底图）
-
-工具：`watchface_create_local_clock`
+Tool: `watchface_create_local_clock`
 
 ```json
 {
@@ -103,28 +90,19 @@
 }
 ```
 
-说明：
+Rules:
 
-- 工具会自动补 `Command=Device/CreateLocalClock` 与 `ReturnCode=0`
-- 底图使用 `800x1280` 的 `JPEG/WebP`（不接 PNG），建议 < 512000 字节；
-  tar.gz 内的元素槽位（`ItemList[i].image_addr` 引用的叶子）支持
-  `JPEG/WebP/PNG`，由固件 `wf_validate_bundle_slot_image_file` 按魔数校验
-- `font` 建议先通过 `watchface_get_fonts_local` 读取可用 id
-- `item_id` **必须为非空字符串**（固件 `NEED_STR("item_id")`），`ItemIdList`
-  内每项也必须非空，通常等同于 `item_id`
-- **图像槽位**：同一表盘中 **每种图像相关 `disp` 只放一行**；若重复，**后面的条目会覆盖前面的**。
-  **网络图库**（`disp` **13**、**125–130**、**173–175** 等，`DIVOOM_CLOCK_DISP_SUPPORT_NET*_PIC`）
-  尤其典型——详见 `docs/disp-usage.md`「图像元素唯一性（网络图库系列）」。
+- The tool adds `Command=Device/CreateLocalClock` and `ReturnCode=0`.
+- A TimesFrame backdrop must be an 800×1280 JPEG/WebP file, not PNG, and should be smaller than 512000 bytes. Element files referenced by `ItemList[i].image_addr` inside tar.gz may be JPEG, WebP, or PNG; firmware validates their magic bytes with `wf_validate_bundle_slot_image_file`.
+- Query available font IDs with `watchface_get_fonts_local`.
+- Every `item_id` must be a non-empty string because firmware applies `NEED_STR("item_id")`. Every `ItemIdList` entry must also be non-empty and normally matches the corresponding `item_id`.
+- Use only one row for each image-related `disp` in a watchface. When duplicate rows exist, the later row replaces the earlier one. This is especially relevant to network-gallery values 13, 125–130, and 173–175 (`DIVOOM_CLOCK_DISP_SUPPORT_NET*_PIC`). See the image-element uniqueness section in `docs/disp-usage.md`.
 
----
+## 5. Create a TimesFrame watchface with bundled element images
 
-## 5) 创建新本地表盘（底图 + 元素图打包）
+When a TimesFrame watchface needs several element images, such as icons, pointer images, or bitmap digits, package the element files and `clock_bg.jpg` in one `clock_bg.tar.gz` using USTAR plus gzip. Each leaf name must exactly match its `ItemList[i].image_addr`.
 
-需要随表盘上传多张元素图（图标 / 指针 GIF / 数字位图）时，把所有元素图与
-`clock_bg.jpg` 一起打成一个 `clock_bg.tar.gz`（USTAR + gzip），叶子名与
-`ItemList[i].image_addr` 完全一致。
-
-工具：`watchface_create_local_clock`
+Tool: `watchface_create_local_clock`
 
 ```json
 {
@@ -168,62 +146,45 @@
 }
 ```
 
-`clock_bg.tar.gz` 内部结构：
+Archive contents:
 
-```
+```text
 clock_bg.jpg
 weather_pack.bin
 ```
 
-要点：
+Rules:
 
-- `DialAssets: "bundle"` 时第二段 `file_name` 必须是 `clock_bg.tar.gz`，且
-  服务器据此把 tar 解压到 `/userdata/app_pic/`。
-- 不要把元素图作为独立的多段 multipart 上传——固件每次请求只接受一个文件。
-- `image_addr` 跳过本地叶子名时（比如已经是 `http(s)` URL），那张图无需进 tar。
-- 不要在 tar 内建子目录、不要使用相对路径或绝对路径，叶子名 ≤ 95 字节。
-- **同一 `disp` 的图像槽位不要重复多行**（网络图库见 `docs/disp-usage.md`），否则后者覆盖前者。
+- With `DialAssets:"bundle"`, the second multipart part must use the file name `clock_bg.tar.gz`. Firmware uses that name to choose extraction into `/userdata/app_pic/`.
+- Do not send element files as separate multipart parts. Firmware accepts one file per request.
+- An `image_addr` that is already an `http://` or `https://` URL does not need a corresponding archive member.
+- Do not create archive subdirectories or use relative or absolute paths. Each leaf name must be at most 95 bytes.
+- Do not duplicate image slots with the same `disp`; the later row replaces the earlier one.
 
----
+## 5b. Analog pointer images
 
-## 5b) 模拟指针（`HOUR_POINT_IMAGE` / `MIN_POINT_IMAGE` / `SECOND_POINT_IMAGE`）
+The firmware constants are:
 
-固件侧常量（与设备代码一致）：
+- `DIVOOM_CLOCK_DISP_SUPPORT_HOUR_POINT_IMAGE` = 131
+- `DIVOOM_CLOCK_DISP_SUPPORT_MIN_POINT_IMAGE` = 132
+- `DIVOOM_CLOCK_DISP_SUPPORT_SECOND_POINT_IMAGE` = 233
 
-- **`DIVOOM_CLOCK_DISP_SUPPORT_HOUR_POINT_IMAGE`** = **131**（时针指针）
-- **`DIVOOM_CLOCK_DISP_SUPPORT_MIN_POINT_IMAGE`** = **132**（分针指针）
-- **`DIVOOM_CLOCK_DISP_SUPPORT_SECOND_POINT_IMAGE`** = **233**（秒针指针）
+These slots use `image_addr` with TimesFrame `clock_bg.tar.gz` element files, but their geometry differs from a full-screen image:
 
-对应 `disp`：**131** / **132** / **233**。这类槽位走 **`image_addr` + `clock_bg.tar.gz` 元素图**，但布局和「整屏贴图」完全不同：
+1. All three pointer entries must use exactly the same `x`, `y`, `w`, and `h`, with `w = h`. Each pointer image must be a `w`×`w` canvas. Draw the pointer from the exact center toward 12 o'clock so firmware can rotate the layer around its center. Do not use three unrelated narrow rectangles or an 800×1280 full-screen pointer image. Device export ClockId 60012 is a known example in which all pointers share the same square layer.
+2. Center the square layer on the physical pivot of the dial. Common side lengths range from 180 to 600 pixels; `watchface_disp_catalog` exposes template medians under `typography.box`.
+3. Each PNG, WebP, or JPEG pointer asset must have the exact `w`×`h` dimensions declared by its entry.
+4. `hier` has three valid levels: 0 for automatic order, 1 for the bottom layer, and 2 for the top layer. A common layout uses `hier:1` for the hour hand, `hier:2` for the second hand, and `hier:0` for the minute hand. Verify final ordering on the physical device.
+5. `transp` represents visible opacity. Set `transp:100` for a visible pointer or image. A generated default of 0 makes the element invisible.
+6. Most published templates use `alig:4` (left). For a dial centered on the canvas, `alig:3` also works with `x = cx - w/2` and `y = cy - h/2`. Verify geometry on the physical device.
 
-0. **必须先满足（否则易出现错位）**：三根条目使用**完全相同**的 **`x`、`y`、`w`、`h`**，且 **`w = h`（正方形）**；
-   三张指针素材均为 **`w`×`w` 像素**，在各自画布**正中央**枢轴、朝 **12 点**方向绘制，由固件绕**图层中心**旋转。
-   **不要用三根互不相同的细长矩形 `w×h`**，也不要用 **`800×1280`** 全屏笔画一根针。
-   正确示例可参考设备导出 **`ClockId 60012`**（如 **`d:\debug\clock60012.cfg`**）：三根指针共用同一正方形图层参数。
+To repair pointer geometry, prepare a new TimesFrame `clock_bg.tar.gz`, optionally with an updated `clock_bg.jpg`, pass it as `dialAssetsPath` to `watchface_patch_local`, and set `bundle_image` plus the matching `image_addr` in `ItemPatchList[].patch`.
 
-1. **图层几何**：把该正方形中心对准表盘物理轴心（圆心）。常见边长在 **180～600**（编辑器模板中位数见 `watchface_disp_catalog` → `typography.box`）。
+`scripts/gen_ocean_analog_dial_assets.py` is a reference generator for an ocean backdrop and square pointer assets.
 
-2. **素材像素**：每张指针 PNG（或 WebP/JPEG）分辨率 **必须等于** **`w`×`h`**（即 **`w`×`w`**）。
-3. **叠放顺序 `hier`（仅三档）**：**`0`** = 自动排序；**`1`** = **底层**（先画）；**`2`** =
-   **顶层**（后画，压住下层）。没有 `3`、`4`… 等扩展档位。模拟表盘常见写法：时针 **`hier: 1`**（底层）、
-   秒针 **`hier: 2`**（顶层盖住时针分针）、分针 **`hier: 0`**（交给自动顺序）；最终以真机为准微调。
-4. **透明度 `transp`（务必写对）**：表示「显示出来」的强度，可理解为 **不透明度**：正常能看见的元素请写 **`100`**。
-   **大量 AI / 模板会把未给出的字段落成 `0`——在设备上会变成完全看不见（指针、贴图「失踪」）**。生成 `ItemList`
-   时只要元素需要显示，就应 **显式设置 `transp: 100`**，不要省略或填 **`0`**（除非刻意隐藏）。
-5. **`alig`**：多数上架模板用 **`4`（左）**；表盘轴心在画布正中时，也可用 **`3`（居中）**
-   配合 **`x = cx − w/2`，`y = cy − h/2`**。以真机为准微调。
+## 6. Patch a TimesFrame backdrop or element image
 
-修正错误布局时：准备好新的 `clock_bg.tar.gz`（可含更新后的 `clock_bg.jpg`），用
-`watchface_patch_local` 传 **`dialAssetsPath`**，并在 **`ItemPatchList[].patch`** 里带上
-**`bundle_image`**（以及 **`image_addr`**，与叶子文件名一致）。
-
-仓库内可参考脚本：`scripts/gen_ocean_analog_dial_assets.py`（生成海洋底图 + 方形指针打包示例）。
-
----
-
-## 6) PATCH 时同时上传新底图 / 元素图
-
-工具：`watchface_patch_local` + `dialAssetsPath`
+Tool: `watchface_patch_local` with `dialAssetsPath`
 
 ```json
 {
@@ -244,21 +205,15 @@ weather_pack.bin
 }
 ```
 
-`patch_assets.tar.gz` 内含被引用的叶子。tar 内可省略 `clock_bg.*`，前提是
-至少一条 `ItemPatchList[].patch.bundle_image` 指向 tar 内已有文件。
+The archive contains each referenced leaf. It may omit `clock_bg.*` when at least one `ItemPatchList[].patch.bundle_image` points to an existing archive member.
 
-**重要**：`patch.*` 不要传 `item_id`，否则会用本侧值覆盖设备里原本有意义的
-`item_id`（例如 `time_main`），破坏菜单/config 关联。仅当显式想重命名槽位时
-才发 `item_id`。
+Do not include `item_id` in `patch.*`. Otherwise a client-side value can replace the device's meaningful identifier, such as `time_main`, and break menu or configuration relationships. Send `item_id` only when intentionally renaming a slot.
 
----
+## 6b. Patch fields without uploading files
 
-## 6b) 仅修改字段（无文件上传） — 走 `/divoom_api`
+For size, position, color, and other field-only changes, omit multipart and send JSON through `POST /divoom_api`.
 
-如果只是改字号/位置/颜色等字段，**不要**用 multipart，直接走
-`POST /divoom_api`：
-
-工具：`watchface_patch_local`（不传 `dialAssetsPath`）
+Tool: `watchface_patch_local` without `dialAssetsPath`
 
 ```json
 {
@@ -271,17 +226,11 @@ weather_pack.bin
 }
 ```
 
-要点：
-- 仅发**变更字段**的 diff（`wf_apply_item_patch` 字段白名单见 quick reference）。
-- `alig` 取值：`3`=居中、`4`=左对齐、`5`=右对齐（与固件一致）。
-- 同样不要把 `item_id` 放进 `patch.*`。
-- 工具会先做 `Device/GetLocalClockInfo` 预检查，`ItemList` 为空时拒绝写入。
+Send only changed fields. The quick reference lists the `wf_apply_item_patch` allowlist. Alignment values are 3 for center, 4 for left, and 5 for right. Keep `item_id` out of `patch.*`. The tool performs a `Device/GetLocalClockInfo` precheck and rejects the write when `ItemList` is empty.
 
----
+## 7. Replace only the backdrop
 
-## 7) 仅替换底图（不改 DeviceImageUrl）
-
-工具：`watchface_replace_dial_bg_file`
+Tool: `watchface_replace_dial_bg_file`
 
 ```json
 {
@@ -290,14 +239,11 @@ weather_pack.bin
 }
 ```
 
-该方式用于"替换解码缓存"，不会改 cfg 里的 URL 字段；`/replace_clock_dial_bg`
-只接受单张 JPEG/WebP 第二段，不接受 tar.gz。
+This replaces the decoded cache without changing the URL field in the configuration. `/replace_clock_dial_bg` accepts one JPEG/WebP file as the second multipart part and does not accept tar.gz.
 
----
+## 8. Create an AstroToo watchface after sequential asset uploads
 
-## 8) AstroToo：逐文件上传元素后创建表盘
-
-先确认设备型号和本地保存能力：
+First identify the product and verify local persistence:
 
 ```json
 {
@@ -309,10 +255,9 @@ weather_pack.bin
 }
 ```
 
-工具：`watchface_get_device_info`。返回结果应包含 `model:"astrotoo"`、
-`hardware:530` 和 `capabilities.LocalOnly:true`。
+Call `watchface_get_device_info`. The result must contain `model:"astrotoo"`, `hardware:530`, and `capabilities.LocalOnly:true`.
 
-每个指针或图标分别调用一次 `watchface_upload_file`，调用之间保持串行：
+Call `watchface_upload_file` once for each pointer or icon, keeping the calls sequential:
 
 ```json
 {
@@ -323,9 +268,7 @@ weather_pack.bin
 }
 ```
 
-依次上传 `hour.png`、`minute.png`、`second.png`，从每次响应的
-`responseJson.FileId` 取得 `local://...`。把三个值分别写入完整配置中对应条目的
-`image_addr`，再调用：
+Upload `hour.png`, `minute.png`, and `second.png` in order. Read the `local://...` reference from `responseJson.FileId` after each call. Put each returned value in the matching entry's `image_addr`, then call `watchface_create_local_clock`:
 
 ```json
 {
@@ -333,7 +276,7 @@ weather_pack.bin
   "imagePath": "C:/watchface/clock_bg.webp",
   "fileName": "clock_bg.webp",
   "metadata": {
-    "ClockName": "春日指针表盘",
+    "ClockName": "Spring Analog Watchface",
     "DialAssets": "image",
     "ItemIdList": ["hour", "minute", "second", "date"],
     "ItemList": [
@@ -350,7 +293,7 @@ weather_pack.bin
         "sep": 0,
         "hier": 1,
         "transp": 100,
-        "image_addr": "local://从时针上传响应取得",
+        "image_addr": "local://value-from-hour-upload",
         "color_1": "#FFFFFF",
         "color_2": "#000000"
       }
@@ -359,12 +302,6 @@ weather_pack.bin
 }
 ```
 
-上面的 `ItemList` 只展示一条指针结构；实际提交时必须包含与 `ItemIdList` 一一对应的
-全部条目。完整的三指针加日期示例位于
-`artifacts/astrotoo-spring-watchface/create-payload.json`，端到端调用示例位于
-`artifacts/astrotoo-spring-watchface/create-via-mcp.mjs`。
+The abbreviated `ItemList` shows one pointer structure. The submitted configuration must contain every entry referenced by `ItemIdList`. A complete three-pointer and date example is in `artifacts/astrotoo-spring-watchface/create-payload.json`; the end-to-end MCP example is `artifacts/astrotoo-spring-watchface/create-via-mcp.mjs`.
 
-AstroToo 不接受 TAR/TGZ/ZIP。`local://...` 是该设备上的临时传输引用；创建或修改
-成功后，固件把已绑定素材移动到表盘持久目录。未绑定素材在重启时清理，也不会上传到
-外部服务器。TimesFrame 的通用 `/upload` 在 MCP 中被禁止，其创建/修改接收文件同样
-只作为本次操作的设备端暂存输入。
+AstroToo rejects TAR, TGZ, and ZIP. A `local://...` value is a temporary transfer reference on that device. After a successful create or patch, firmware moves bound assets into the persistent watchface directory. Unbound assets are removed on reboot and are never sent to an external server. The MCP server blocks generic TimesFrame `/upload`; files supplied to TimesFrame create or patch operations are likewise temporary device-side inputs for that operation only.
