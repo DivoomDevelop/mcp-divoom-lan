@@ -8,7 +8,6 @@ Tool: `watchface_patch_local`
 
 ```json
 {
-  "useCurrentDisplayClock": true,
   "itemPatchByRoleList": [
     {
       "role": "clock_time_font",
@@ -21,7 +20,7 @@ Tool: `watchface_patch_local`
 }
 ```
 
-`size_delta` is applied to the current `size`. Call `watchface_get_local` immediately afterward to verify the committed value.
+The tool first reads fixed ClockId 60000. `size_delta` is applied to the current `size`. Call `watchface_get_local` with `clockId:60000` afterward to verify the committed value.
 
 ## 2. Select a watchface by ClockId
 
@@ -188,7 +187,7 @@ Tool: `watchface_patch_local` with `dialAssetsPath`
 
 ```json
 {
-  "clockId": 60006,
+  "clockId": 60000,
   "dialAssetsPath": "C:/build/patch_assets.tar.gz",
   "metadata": {
     "DialAssets": "bundle",
@@ -217,7 +216,7 @@ Tool: `watchface_patch_local` without `dialAssetsPath`
 
 ```json
 {
-  "clockId": 60006,
+  "clockId": 60000,
   "itemPatchList": [
     { "index": 0, "patch": { "size": 320 } },
     { "index": 0, "patch": { "color_1": "#ffaa00" } },
@@ -226,7 +225,7 @@ Tool: `watchface_patch_local` without `dialAssetsPath`
 }
 ```
 
-Send only changed fields. The quick reference lists the `wf_apply_item_patch` allowlist. Alignment values are 3 for center, 4 for left, and 5 for right. Keep `item_id` out of `patch.*`. The tool performs a `Device/GetLocalClockInfo` precheck and rejects the write when `ItemList` is empty.
+Send only changed fields. The quick reference lists the `wf_apply_item_patch` allowlist. Alignment values are 3 for center, 4 for left, and 5 for right. Keep `item_id` out of `patch.*`. The tool always prechecks ClockId 60000. If that slot is missing, creation requires `dialAssetsPath` plus complete `itemList` and `itemIdList`.
 
 ## 7. Replace only the backdrop
 

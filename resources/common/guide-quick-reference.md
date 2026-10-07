@@ -61,7 +61,7 @@ matrix; agents on top of this MCP should mirror it for predictable behavior:
 4. If any leaf needs uploading, switch to multipart `/patch_local_clock` and
    add `bundle_image: <leaf>` to that index's patch.
 5. Send and re-read with `GetLocalClockInfo` to verify.
-6. Do not auto-create a new clock for color/style patch requests.
+6. MCP create and patch tools reserve ClockId 60000. They pre-read it and may create it only from a complete configuration plus backdrop; color/style-only patch requests never auto-create a missing slot.
 
 ## Screen snapshot (visual verification)
 

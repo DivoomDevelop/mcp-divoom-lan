@@ -3,6 +3,7 @@
 Connect to the target and call watchface_get_device_info first. Hardware 530 selects AstroToo; 510/511/512 select TimesFrame. Never infer the product from legacy DeviceType fields or a previous device.
 
 - Canvas: 480×480. Backgrounds: JPEG/WebP, exactly 480×480, less than 512000 bytes. AstroToo rejects TAR/TGZ/ZIP bundles.
+- MCP create and patch tools manage fixed ClockId 60000. They read it first, create it only when missing and complete creation data is supplied, and otherwise update it. Other explicit IDs are rejected.
 - Read the current ItemList before editing. Empty or invalid results stop writes. Keep item_id stable and prefer per-index patches.
 - All AstroToo LAN edits and assets stay on the device. Required fonts/images must already exist locally or be supplied in the upload. No cloud reset or automatic resource download.
 - Get fonts from this device with watchface_get_fonts_local; use only AvailableLocally=true. watchface_font_catalog merges that status with AstroToo names from Device/GetFontForAI.

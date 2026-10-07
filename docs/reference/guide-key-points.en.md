@@ -53,6 +53,8 @@ extracted but never rebound.
 
 - `watchface_create_local_clock` should run only when the user explicitly asks
   to create a new clock.
+- MCP create and patch tools reserve ClockId 60000. They read the slot first,
+  create it from complete creation data when missing, and update it when present.
 - Do not auto-create clocks for style/color patch requests.
 
 ## Multipart wire format (firmware-strict)

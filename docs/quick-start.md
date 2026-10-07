@@ -51,9 +51,9 @@ If you did not configure environment variables, pass the device address in each 
 
 Use this flow for write operations:
 
-1. Call `watchface_get_local` to read the current configuration.
+1. Create and patch operations always target ClockId 60000. The MCP server reads that slot before writing.
 2. Inspect `ItemList`.
-   - If it is empty, stop the write and select an editable watchface with `watchface_set_clock_select`.
+   - If ClockId 60000 is missing, provide a backdrop with a complete `ItemList` and `ItemIdList`; the MCP server creates it.
    - If it is populated, continue.
 3. Choose the file path that matches the change:
    - Field changes only: call `watchface_patch_local` without `dialAssetsPath`; the request uses `POST /divoom_api`.
@@ -67,7 +67,7 @@ Do not place `item_id` in `patch.*`; doing so can overwrite the device's menu an
 
 TimesFrame does not expose generic `watchface_upload_file`. Its assets are sent with the create or patch multipart request and the receiving staging file is removed after processing. The MCP/LAN flows for both products keep received files on the device and never upload them to the cloud.
 
-Do not call `watchface_create_local_clock` unless the user explicitly requests a new watchface.
+`watchface_create_local_clock` is idempotent for ClockId 60000: it creates a missing slot and updates an existing slot.
 
 ## 5. Troubleshooting
 

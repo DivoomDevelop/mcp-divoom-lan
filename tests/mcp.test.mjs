@@ -10,7 +10,7 @@ import path from "node:path";
 
 let client, transport, astro, frame, temporary;
 async function mock(hardware) {
-  const state = { hardware, local: true, assetPath: "/upload_local_asset", calls: [], fail: null, invalid: false, empty: false, noSnapshot: false, timeoutWrite: false };
+  const state = { hardware, local: true, assetPath: "/upload_local_asset", managedClockExists: true, calls: [], fail: null, invalid: false, empty: false, noSnapshot: false, timeoutWrite: false };
   const server = http.createServer(async (req,res) => {
     let chunks=[]; for await (const c of req) chunks.push(c);
     const raw=Buffer.concat(chunks);
@@ -21,7 +21,8 @@ async function mock(hardware) {
     }
     if(req.url!=="/divoom_api") {
       state.calls.push({path:req.url,raw});
-      res.end(JSON.stringify({ReturnCode:0,ClockId:60001,FileId:"local://example.bin"})); return;
+      if(req.url==="/create_local_clock") state.managedClockExists=true;
+      res.end(JSON.stringify({ReturnCode:0,ClockId:60000,FileId:"local://example.bin"})); return;
     }
     const body=JSON.parse(raw);
     state.calls.push(body);
@@ -30,7 +31,9 @@ async function mock(hardware) {
     else if(body.Command==="Device/GetLanCapabilities") data={...data,Hardware:state.hardware,LocalOnly:state.local,LanApiVersion:1,BundleMaxBytes:0,SupportsAssetBundle:false,AssetTransfer:"sequential",LocalAssetUploadPath:state.assetPath,UploadPersistence:"temporary-until-bound",OutboundFileUpload:false};
     else if(body.Command==="Device/GetLocalClockInfo") {
       if(state.invalid) { res.end("truncated {"); return; }
-      data={...data,ClockId:60001,ItemList:state.empty?[]:[{item_id:"time",disp:4,font:26}]};
+      if(body.ClockId===60000 && !state.managedClockExists)
+        data={ReturnCode:1,Command:body.Command,ReturnMessage:"local clock not found"};
+      else data={...data,ClockId:body.ClockId??60000,ItemList:state.empty?[]:[{item_id:"time",disp:4,font:26}]};
     } else if(body.Command==="Device/GetLocalFontList") data={...data,FontList:[{id:88,AvailableLocally:true}]};
     else if(body.Command==="Device/GetScreenSnapshot") data={...data,snapShotPath:"/userdata/current.bmp"};
     else if(body.Command==="Sys/GetBrightness") data={...data,Brightness:50};
@@ -101,10 +104,78 @@ test("invalid, failed and empty prechecks never issue a patch",async()=>{
   }
   astro.state.invalid=false;astro.state.empty=false;astro.state.fail=null;
 });
+test("create and patch are locked to ClockId 60000",async()=>{
+  const beforePatch=astro.state.calls.length;
+  data(await call("watchface_patch_local",{
+    target:astro.target,itemPatchList:[{index:0,patch:{size:31}}],
+  }));
+  const patchCalls=astro.state.calls.slice(beforePatch).filter(c=>
+    c.Command==="Device/GetLocalClockInfo" || c.Command==="Device/PatchLocalClockInfo");
+  assert.deepEqual(patchCalls.map(c=>c.ClockId),[60000,60000]);
+
+  const beforeWrongPatch=astro.state.calls.length;
+  const wrongPatch=await call("watchface_patch_local",{
+    target:astro.target,clockId:60001,itemPatchList:[{index:0,patch:{size:32}}],
+  });
+  assert.equal(wrongPatch.isError,true);
+  assert.match(wrongPatch.content[0].text,/must be 60000/);
+  assert.ok(!astro.state.calls.slice(beforeWrongPatch).some(c=>c.Command==="Device/PatchLocalClockInfo"));
+
+  const wrongRawPatch=await call("watchface_raw_command",{
+    target:astro.target,command:"Device/PatchLocalClockInfo",payload:{ClockId:60001,ItemPatchList:[]},
+  });
+  assert.equal(wrongRawPatch.isError,true);
+  assert.match(wrongRawPatch.content[0].text,/must be 60000/);
+
+  const background=path.join(temporary,"fixed-clock-bg.webp");
+  await writeFile(background,"RIFF1234WEBPpayload");
+  const wrongCreate=await call("watchface_create_local_clock",{
+    target:astro.target,imagePath:background,
+    metadata:{ClockId:60001,DialAssets:"image",ItemList:[],ItemIdList:[]},
+  });
+  assert.equal(wrongCreate.isError,true);
+  assert.match(wrongCreate.content[0].text,/must be 60000/);
+
+  const updated=data(await call("watchface_create_local_clock",{
+    target:astro.target,imagePath:background,
+    metadata:{DialAssets:"image",ItemList:[],ItemIdList:[]},
+  }));
+  assert.equal(updated.operation,"updated");
+  const update=astro.state.calls.findLast(c=>c.path==="/patch_local_clock");
+  assert.ok(update.raw.includes(Buffer.from('"ClockId":60000')));
+  assert.ok(update.raw.includes(Buffer.from('"Command":"Device/PatchLocalClockInfo"')));
+
+  astro.state.managedClockExists=false;
+  const created=data(await call("watchface_create_local_clock",{
+    target:astro.target,imagePath:background,
+    metadata:{DialAssets:"image",ItemList:[],ItemIdList:[]},
+  }));
+  assert.equal(created.operation,"created");
+  const create=astro.state.calls.findLast(c=>c.path==="/create_local_clock");
+  assert.ok(create.raw.includes(Buffer.from('"ClockId":60000')));
+  assert.ok(create.raw.includes(Buffer.from('"Command":"Device/CreateLocalClock"')));
+  assert.equal(astro.state.managedClockExists,true);
+
+  astro.state.managedClockExists=false;
+  const incompletePatch=await call("watchface_patch_local",{
+    target:astro.target,itemPatchList:[{index:0,patch:{size:33}}],
+  });
+  assert.equal(incompletePatch.isError,true);
+  assert.match(incompletePatch.content[0].text,/Creation requires dialAssetsPath/);
+
+  const createdFromPatch=data(await call("watchface_patch_local",{
+    target:astro.target,dialAssetsPath:background,
+    itemList:[{item_id:"time",disp:4,font:26}],itemIdList:["time"],
+  }));
+  assert.equal(createdFromPatch.operation,"created");
+  const patchCreate=astro.state.calls.findLast(c=>c.path==="/create_local_clock");
+  assert.ok(patchCreate.raw.includes(Buffer.from('"ClockId":60000')));
+  assert.equal(astro.state.managedClockExists,true);
+});
 test("AstroToo background bytes use validated multipart instead of DeviceImageUrl",async()=>{
   const n=astro.state.calls.length;
   const result=await call("watchface_patch_local",{
-    target:astro.target,clockId:60001,deviceImageUrl:"local://temporary.bin",
+    target:astro.target,clockId:60000,deviceImageUrl:"local://temporary.bin",
   });
   assert.equal(result.isError,true);
   assert.match(result.content[0].text,/dialAssetsPath/);
@@ -215,7 +286,7 @@ test("TimesFrame generic upload is blocked before a file reaches the device",asy
   assert.equal(frame.state.calls.length,before+1);
   assert.equal(frame.state.calls.at(-1).Command,"Device/GetHardwareVersion");
 });
-test("AstroToo rejects archives and creates with sequential local asset references",async()=>{
+test("AstroToo rejects archives and updates with sequential local asset references",async()=>{
   const archive=path.join(temporary,"clock_bg.tar.gz");
   await writeFile(archive,Buffer.from([0x1f,0x8b,0x08,0x00]));
   const beforeArchive=astro.state.calls.length;
@@ -231,9 +302,10 @@ test("AstroToo rejects archives and creates with sequential local asset referenc
     target:astro.target,imagePath:background,
     metadata:{DialAssets:"image",ItemList:[{item_id:"hour",image_addr:"local://hour.bin"}],ItemIdList:["hour"]},
   }));
-  const create=astro.state.calls.findLast(c=>c.path==="/create_local_clock");
-  assert.ok(create.raw.includes(Buffer.from('"DialAssets":"image"')));
-  assert.ok(create.raw.includes(Buffer.from('"image_addr":"local://hour.bin"')));
+  const update=astro.state.calls.findLast(c=>c.path==="/patch_local_clock");
+  assert.ok(update.raw.includes(Buffer.from('"ClockId":60000')));
+  assert.ok(update.raw.includes(Buffer.from('"DialAssets":"image"')));
+  assert.ok(update.raw.includes(Buffer.from('"image_addr":"local://hour.bin"')));
 });
 test("snapshot downloads the path returned by this capture",async()=>{
   const result=data(await call("watchface_get_screen_snapshot",{target:astro.target,waitMs:0}));
@@ -263,7 +335,7 @@ test("clock select keeps the legacy payload and isolates the TimesFrame schedule
 test("raw patch obeys the same read precheck",async()=>{
   astro.state.empty=true;
   const n=astro.state.calls.length;
-  assert.equal((await call("watchface_raw_command",{target:astro.target,command:"Device/PatchLocalClockInfo",payload:{ClockId:22}})).isError,true);
+  assert.equal((await call("watchface_raw_command",{target:astro.target,command:"Device/PatchLocalClockInfo",payload:{ClockId:60000}})).isError,true);
   assert.ok(!astro.state.calls.slice(n).some(c=>c.Command==="Device/PatchLocalClockInfo"));
   astro.state.empty=false;
 });

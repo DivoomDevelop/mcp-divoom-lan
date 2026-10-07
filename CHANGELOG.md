@@ -15,6 +15,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- Watchface creation and patching now manage fixed ClockId 60000. Each operation reads that slot first, creates it when missing and complete creation data is available, or updates it when present.
 - AstroToo writes require `Device/GetLanCapabilities` with the local-only LAN API. Cloud reset and raw-command bypasses are rejected.
 - AstroToo assets are uploaded serially as temporary device-local `local://` staging files, consumed after successful binding and cleared on reboot when unbound; TAR/TGZ/ZIP bundles are rejected by MCP and firmware.
 - TimesFrame generic `/upload` is blocked by MCP because it enters the device network task. TimesFrame create/patch multipart inputs now use unique staging paths and are deleted after processing; neither product's LAN receive path uploads files outward.

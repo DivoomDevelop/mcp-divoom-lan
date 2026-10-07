@@ -43,7 +43,9 @@ HTML editor's behavior (see `divoom_app/tools/divoom-watchface-visual-editor`).
     the WebP with your design or a prior capture (MCP:
     `watchface_get_screen_snapshot`).
 11. Do not call `watchface_create_local_clock` unless the user explicitly asks
-    to create a new clock.
+    to create a new clock. Both create and patch tools reserve ClockId 60000,
+    pre-read it, create it only from complete creation data when missing, and
+    otherwise update it.
 
 ## Risky operations (require explicit user intent)
 

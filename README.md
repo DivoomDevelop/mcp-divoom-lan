@@ -20,7 +20,8 @@ Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-spec
 ## Default safety policy (important)
 
 - **Identify every target first:** `Hardware` 510/511/512 selects TimesFrame; 530 selects AstroToo. Unknown hardware is rejected. `DeviceType` is not used for product detection.
-- **Read before write:** call `watchface_get_local`, then `watchface_patch_local`, then read back to verify.
+- **Fixed managed slot:** create and patch operations first read `ClockId 60000`. A missing slot is created; an existing slot is updated.
+- **Read before write:** the MCP server performs the ClockId 60000 precheck, writes, and then clients should read back to verify.
 - If `GetLocalClockInfo` returns an **empty `ItemList`:** stop writes; switch to an editable watchface first.
 - Do **not** call `watchface_create_local_clock` unless the user clearly asks to create a new one (no implicit creation).
 
@@ -30,7 +31,7 @@ Device tools (15):
 
 - `watchface_get_device_info` → hardware identification and LAN capability report
 - `watchface_get_local` → `Device/GetLocalClockInfo`
-- `watchface_patch_local` → `Device/PatchLocalClockInfo` (default `/divoom_api`); optional `dialAssetsPath` switches to multipart `POST /patch_local_clock`. TimesFrame can use tar.gz; AstroToo accepts one backdrop and uses prior per-file `local://` uploads for elements.
+- `watchface_patch_local` → fixed `ClockId 60000` upsert. Existing configurations use `Device/PatchLocalClockInfo`; a missing configuration is created when a backdrop and complete item tables are supplied.
 - `watchface_get_fonts_local` → `Device/GetLocalFontList`
 - `watchface_get_store_market_list` → `Device/GetStoreClockMarketList`
 - `watchface_set_clock_select` → `Channel/SetClockSelectId` (TimesFrame queues a paired request inside one serialized MCP operation so a manual selection suppresses the active traditional schedule for the current period; AstroToo sends once)
@@ -39,7 +40,7 @@ Device tools (15):
 - `watchface_onoff_screen` → `Channel/OnOffScreen` (1=on, 0=off)
 - `watchface_replace_dial_bg_file` → `POST /replace_clock_dial_bg`
 - `watchface_upload_file` → AstroToo-only `POST /upload_local_asset`; returns a temporary `local://` staging reference consumed by a successful create/patch. AstroToo keeps product photo/pixel `POST /upload` separate. TimesFrame generic `/upload` is blocked in local-only MCP mode.
-- `watchface_create_local_clock` → `POST /create_local_clock` (TimesFrame: single image or tar.gz; AstroToo: one 480×480 backdrop after uploading element files individually)
+- `watchface_create_local_clock` → fixed `ClockId 60000` multipart upsert: `/create_local_clock` when missing and `/patch_local_clock` when already present.
 - `watchface_reset_local_then_cloud` → `Device/ResetLocalClockFromServer`
 - `watchface_get_screen_snapshot` → `Device/GetScreenSnapshot` (downloads the returned AstroToo snapshot path; TimesFrame keeps its WebP fallback)
 - `watchface_raw_command` → generic `POST /divoom_api`

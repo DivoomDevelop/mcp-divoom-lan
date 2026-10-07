@@ -22,6 +22,7 @@ const DEFAULT_MODEL = process.env.DIVOOM_DEVICE_MODEL ?? "auto";
 const DEFAULT_HOST = (process.env.DIVOOM_DEVICE_HOST ?? "").trim();
 const DEFAULT_PORT = parseIntegerOrDefault(process.env.DIVOOM_DEVICE_PORT, 9000);
 const DEFAULT_TIMEOUT_MS = parseIntegerOrDefault(process.env.DIVOOM_TIMEOUT_MS, 45_000);
+const MANAGED_CLOCK_ID = 60_000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -167,13 +168,17 @@ const tools: Tool[] = [
   {
     name: "watchface_patch_local",
     description:
-      "Patch local dial via Device/PatchLocalClockInfo with precheck. Defaults to POST /divoom_api (JSON only) for pure metadata edits. Prefer ItemPatchList (per-index field diff) — DO NOT include item_id inside patch.* unless the user explicitly asks to rename a slot, since the firmware will overwrite the device-side item_id and break menu/config bindings. When dialAssetsPath is set, switches to multipart POST /patch_local_clock. TimesFrame accepts a single JPEG/WebP backdrop or clock_bg.tar.gz bundle. AstroToo accepts one JPEG/WebP backdrop only: upload every element separately with watchface_upload_file, bind its returned local:// FileId in image_addr, and never send TAR/TGZ/ZIP or bundle_image. Supplying ItemList alone is a full-table replace and should be avoided unless the row count actually changes. Pointer fixes (131/132/233 = DIVOOM_CLOCK_DISP_SUPPORT_*_POINT_IMAGE): shared square x/y/w/h, w×w PNGs, center rotation; transp 100; hier 0/1/2 only. Avoid duplicate image-backed disp rows (NET_PIC family); docs/disp-usage.md.",
+      "Upsert fixed local ClockId 60000. The tool first calls Device/GetLocalClockInfo for 60000. If it exists, the tool uses Device/PatchLocalClockInfo; if it is missing, creation requires dialAssetsPath plus a complete ItemList and ItemIdList and uses Device/CreateLocalClock. Field-only updates use POST /divoom_api; asset updates use multipart. Prefer ItemPatchList for existing rows and do not include item_id inside patch.* unless explicitly renaming a slot. TimesFrame accepts a JPEG/WebP backdrop or clock_bg.tar.gz bundle. AstroToo accepts one JPEG/WebP backdrop only after element files are uploaded separately and bound through local:// FileId values. AstroToo rejects TAR/TGZ/ZIP and bundle_image.",
     inputSchema: {
       type: "object",
       properties: {
         target: targetSchema,
-        clockId: { type: "integer" },
-        useCurrentDisplayClock: { type: "boolean" },
+        clockId: {
+          type: "integer",
+          enum: [MANAGED_CLOCK_ID],
+          default: MANAGED_CLOCK_ID,
+          description: "Optional compatibility field. Only ClockId 60000 is accepted.",
+        },
         deviceImageUrl: { type: "string" },
         devicePreviewImageUrl: { type: "string" },
         devicePreviewImageUrl2: { type: "string" },
@@ -352,7 +357,7 @@ const tools: Tool[] = [
   {
     name: "watchface_create_local_clock",
     description:
-      "POST /create_local_clock (multipart) — Device/CreateLocalClock. TimesFrame accepts DialAssets image/auto/bundle and may use clock_bg.tar.gz. AstroToo accepts DialAssets=image only: upload every element separately with watchface_upload_file, put each returned local:// FileId in ItemList[i].image_addr, then call this tool with one 480x480 JPEG/WebP backdrop. AstroToo rejects TAR/TGZ/ZIP, UseDialAssetBundle!=0, and bundle_image. Each ItemList row needs numeric disp/font/x/y/w/h/size/alig and non-empty color_1/color_2/item_id; ItemIdList must be parallel. Pointer slots 131/132/233 use one shared square box and square upward-pointing images with center pivot; transp=100; hier is 0/1/2.",
+      "Upsert fixed local ClockId 60000 with multipart. The tool first reads ClockId 60000, calls Device/CreateLocalClock only when it is missing, and otherwise calls Device/PatchLocalClockInfo to replace/update it. TimesFrame accepts DialAssets image/auto/bundle and may use clock_bg.tar.gz. AstroToo accepts DialAssets=image only: upload every element separately with watchface_upload_file, put each returned local:// FileId in ItemList[i].image_addr, then call this tool with one 480x480 JPEG/WebP backdrop. AstroToo rejects TAR/TGZ/ZIP, UseDialAssetBundle!=0, and bundle_image.",
     inputSchema: {
       type: "object",
       properties: {
@@ -365,7 +370,7 @@ const tools: Tool[] = [
         metadata: {
           type: "object",
           description:
-            "First multipart JSON: ClockName, ItemList, ItemIdList. AstroToo requires DialAssets=image and local:// image_addr values from prior per-file uploads. TimesFrame may use auto/image/bundle and legacy UseDialAssetBundle.",
+            "First multipart JSON: ClockName, ItemList, ItemIdList. ClockId is always 60000; another explicit value is rejected. AstroToo requires DialAssets=image and local:// image_addr values from prior per-file uploads. TimesFrame may use auto/image/bundle and legacy UseDialAssetBundle.",
         },
         filePartName: {
           type: "string",
@@ -428,7 +433,7 @@ const tools: Tool[] = [
   {
     name: "watchface_raw_command",
     description:
-      "Raw POST /divoom_api command wrapper. Command is required; payload object is merged with enforced ReturnCode=0.",
+      "Raw POST /divoom_api command wrapper. Command is required; payload object is merged with enforced ReturnCode=0. Raw Device/CreateLocalClock and Device/PatchLocalClockInfo payloads are restricted to ClockId 60000; use the dedicated create/patch tools for the full precheck and multipart upsert flow.",
     inputSchema: {
       type: "object",
       properties: {
@@ -653,6 +658,14 @@ function optionalInteger(input: unknown, fieldName: string): number | undefined 
   return input;
 }
 
+function fixedManagedClockId(input: unknown, fieldName: string): number {
+  const value = optionalInteger(input, fieldName);
+  if (value !== undefined && value !== MANAGED_CLOCK_ID) {
+    throw new Error(`${fieldName} must be ${MANAGED_CLOCK_ID}.`);
+  }
+  return MANAGED_CLOCK_ID;
+}
+
 function requiredInteger(input: unknown, fieldName: string): number {
   const value = optionalInteger(input, fieldName);
   if (value === undefined) {
@@ -750,7 +763,7 @@ function toDeviceFlag(value: boolean | undefined): number | undefined {
   return value ? 1 : 0;
 }
 
-async function postJson(target: DeviceTarget, endpoint: string, payload: JsonRecord) {
+async function postJsonUnchecked(target: DeviceTarget, endpoint: string, payload: JsonRecord) {
   const url = `http://${target.host}:${target.port}${endpoint}`;
   const payloadText = JSON.stringify(payload);
   if (target.model === "astrotoo" && Buffer.byteLength(payloadText, "utf8") > 65536)
@@ -775,7 +788,6 @@ async function postJson(target: DeviceTarget, endpoint: string, payload: JsonRec
     }
   }
 
-  assertResponse(response.status, responseJson);
   return {
     url,
     endpoint,
@@ -784,6 +796,39 @@ async function postJson(target: DeviceTarget, endpoint: string, payload: JsonRec
     responseJson,
     responseText,
   };
+}
+
+async function postJson(target: DeviceTarget, endpoint: string, payload: JsonRecord) {
+  const result = await postJsonUnchecked(target, endpoint, payload);
+  assertResponse(result.httpStatus, result.responseJson);
+  return result;
+}
+
+async function getManagedClockState(target: DeviceTarget) {
+  const request: JsonRecord = {
+    ClockId: MANAGED_CLOCK_ID,
+    Command: "Device/GetLocalClockInfo",
+    ReturnCode: 0,
+  };
+  const result = await postJsonUnchecked(target, "/divoom_api", request);
+  if (result.httpStatus < 200 || result.httpStatus >= 300) {
+    throw new Error(`Device HTTP error ${result.httpStatus}`);
+  }
+  if (!result.responseJson || typeof result.responseJson !== "object" || Array.isArray(result.responseJson)) {
+    throw new Error("Device returned invalid JSON; ClockId 60000 state is unknown.");
+  }
+  const response = result.responseJson as JsonRecord;
+  if (response.ReturnCode === 0) {
+    const exists = response.ClockId === MANAGED_CLOCK_ID &&
+      Array.isArray(response.ItemList) && response.ItemList.length > 0;
+    return { exists, result };
+  }
+  const message = String(response.ReturnMessage ?? "");
+  if (/not\s*(?:found|exist)|missing|不存在|未找到/i.test(message)) {
+    return { exists: false, result };
+  }
+  assertResponse(result.httpStatus, response);
+  return { exists: false, result };
 }
 
 function buildMultipartTwoParts(
@@ -1186,27 +1231,11 @@ async function handleToolCall(name: string, rawArgs: unknown) {
 
   if (name === "watchface_patch_local") {
     const target = resolveTarget(args.target);
-    const body: JsonRecord = {};
-    const precheckBody: JsonRecord = {};
-
-    const clockId = optionalInteger(args.clockId, "clockId");
-    const useCurrentDisplayClock = optionalBoolean(
-      args.useCurrentDisplayClock,
-      "useCurrentDisplayClock",
-    );
-
-    if (clockId !== undefined) {
-      body.ClockId = clockId;
-      precheckBody.ClockId = clockId;
+    const clockId = fixedManagedClockId(args.clockId, "clockId");
+    if (args.useCurrentDisplayClock !== undefined) {
+      throw new Error(`watchface_patch_local always targets ClockId ${MANAGED_CLOCK_ID}; useCurrentDisplayClock is not accepted.`);
     }
-    if (useCurrentDisplayClock !== undefined) {
-      body.UseCurrentDisplayClock = toDeviceFlag(useCurrentDisplayClock);
-      precheckBody.UseCurrentDisplayClock = toDeviceFlag(useCurrentDisplayClock);
-    }
-    if (clockId === undefined && useCurrentDisplayClock === undefined) {
-      body.UseCurrentDisplayClock = 1;
-      precheckBody.UseCurrentDisplayClock = 1;
-    }
+    const body: JsonRecord = { ClockId: clockId };
 
     if (target.model === "astrotoo" && args.deviceImageUrl !== undefined) {
       throw new Error(
@@ -1247,39 +1276,42 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       );
     }
 
-    // Guard rail: do not patch when current/local clock payload is empty.
-    // This avoids writing against a non-editable or incomplete dial context.
-    const precheck = await callDivoomApi(
-      target,
-      "Device/GetLocalClockInfo",
-      precheckBody,
-    );
+    const dialAssetsPath = optionalString(args.dialAssetsPath, "dialAssetsPath");
+    const clockState = await getManagedClockState(target);
     const precheckJson =
-      precheck.responseJson && typeof precheck.responseJson === "object"
-        ? (precheck.responseJson as JsonRecord)
-        : null;
-    const precheckCode =
-      precheckJson && typeof precheckJson.ReturnCode === "number"
-        ? precheckJson.ReturnCode
+      clockState.result.responseJson && typeof clockState.result.responseJson === "object"
+        ? (clockState.result.responseJson as JsonRecord)
         : null;
     const precheckItems =
       precheckJson && Array.isArray(precheckJson.ItemList)
         ? precheckJson.ItemList
         : null;
-    if (precheckCode !== 0 || !precheckItems) throw new Error("Cannot patch: valid GetLocalClockInfo response with ItemList is required.");
-    if (precheckItems.length === 0) {
+    const hasFullConfiguration = Array.isArray(body.ItemList) && Array.isArray(body.ItemIdList);
+    if (!clockState.exists && (!dialAssetsPath || !hasFullConfiguration)) {
       throw new Error(
-        "GetLocalClockInfo returned empty ItemList. Stop patching and switch to an editable clock first (watchface_set_clock_select). Do not auto-create a new clock unless explicitly requested.",
+        "ClockId 60000 does not exist. Creation requires dialAssetsPath plus complete itemList and itemIdList, or use watchface_create_local_clock with a complete configuration.",
+      );
+    }
+    if (clockState.exists && (!precheckItems || precheckItems.length === 0) && !hasFullConfiguration) {
+      throw new Error(
+        "ClockId 60000 has an empty ItemList. Supply a complete itemList and itemIdList before updating it.",
       );
     }
 
+    const creating = !clockState.exists;
+    if (creating) {
+      body.ClockName = "MCP Clock 60000";
+      const requestedFileName = optionalString(args.fileName, "fileName") ?? path.basename(path.resolve(dialAssetsPath!));
+      body.DialAssets = target.model === "timesframe" && /\.(?:tar\.gz|tgz)$/i.test(requestedFileName)
+        ? "bundle"
+        : "image";
+    }
     const metadata: JsonRecord = {
       ...body,
-      Command: "Device/PatchLocalClockInfo",
+      Command: creating ? "Device/CreateLocalClock" : "Device/PatchLocalClockInfo",
       ReturnCode: 0,
     };
 
-    const dialAssetsPath = optionalString(args.dialAssetsPath, "dialAssetsPath");
     if (dialAssetsPath) {
       const fileBytes = await readFile(path.resolve(dialAssetsPath));
       const filePartName =
@@ -1288,7 +1320,9 @@ async function handleToolCall(name: string, rawArgs: unknown) {
         optionalString(args.fileName, "fileName") ??
         path.basename(path.resolve(dialAssetsPath));
       assertAstroTooSequentialAsset(target, metadata, fileBytes, fileName);
-      const boundary = "----DivoomMcpPatchClockBoundary7YA4YWxkTrZu0gW";
+      const boundary = creating
+        ? "----DivoomMcpCreateClockBoundary7YA4YWxkTrZu0gW"
+        : "----DivoomMcpPatchClockBoundary7YA4YWxkTrZu0gW";
       const multipartBody = buildMultipartTwoParts(
         metadata,
         fileBytes,
@@ -1296,15 +1330,19 @@ async function handleToolCall(name: string, rawArgs: unknown) {
         fileName,
         boundary,
       );
-      const result = await postMultipart(target, "/patch_local_clock", multipartBody, boundary);
+      const endpoint = creating ? "/create_local_clock" : "/patch_local_clock";
+      const result = await postMultipart(target, endpoint, multipartBody, boundary);
       return {
         ...result,
+        operation: creating ? "created" : "updated",
+        clockId: MANAGED_CLOCK_ID,
+        precheck: clockState.result.responseJson,
         requestMeta: metadata,
         filePartName,
         fileName,
         dialAssetsPath: path.resolve(dialAssetsPath),
         fileBytes: fileBytes.length,
-        transport: "POST /patch_local_clock multipart",
+        transport: `POST ${endpoint} multipart`,
       };
     }
 
@@ -1439,9 +1477,13 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const target = resolveTarget(args.target);
     const imagePath = requiredString(args.imagePath, "imagePath");
     const metadataInput = ensureRecord(args.metadata, "metadata");
+    const clockId = fixedManagedClockId(metadataInput.ClockId, "metadata.ClockId");
+    const clockState = await getManagedClockState(target);
+    const exists = clockState.exists;
     const metadata: JsonRecord = {
       ...metadataInput,
-      Command: "Device/CreateLocalClock",
+      ClockId: clockId,
+      Command: exists ? "Device/PatchLocalClockInfo" : "Device/CreateLocalClock",
       ReturnCode: 0,
     };
 
@@ -1451,11 +1493,17 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const fileName =
       optionalString(args.fileName, "fileName") ?? path.basename(path.resolve(imagePath));
     assertAstroTooSequentialAsset(target, metadata, imageBytes, fileName);
-    const boundary = "----DivoomMcpCreateClockBoundary7YA4YWxkTrZu0gW";
+    const boundary = exists
+      ? "----DivoomMcpPatchClockBoundary7YA4YWxkTrZu0gW"
+      : "----DivoomMcpCreateClockBoundary7YA4YWxkTrZu0gW";
     const body = buildMultipartTwoParts(metadata, imageBytes, filePartName, fileName, boundary);
-    const result = await postMultipart(target, "/create_local_clock", body, boundary);
+    const endpoint = exists ? "/patch_local_clock" : "/create_local_clock";
+    const result = await postMultipart(target, endpoint, body, boundary);
     return {
       ...result,
+      operation: exists ? "updated" : "created",
+      clockId: MANAGED_CLOCK_ID,
+      precheck: clockState.result.responseJson,
       requestMeta: metadata,
       filePartName,
       fileName,
@@ -1571,13 +1619,19 @@ async function handleToolCall(name: string, rawArgs: unknown) {
   if (name === "watchface_raw_command") {
     const target = resolveTarget(args.target);
     const command = requiredString(args.command, "command");
-    const payload =
+    const payloadInput =
       args.payload === undefined ? {} : ensureRecord(args.payload, "payload");
+    const fixesManagedClock = command === "Device/PatchLocalClockInfo" || command === "Device/CreateLocalClock";
+    const payload: JsonRecord = fixesManagedClock
+      ? { ...payloadInput, ClockId: fixedManagedClockId(payloadInput.ClockId, "payload.ClockId") }
+      : payloadInput;
+    if (fixesManagedClock && payload.UseCurrentDisplayClock !== undefined) {
+      throw new Error(`${command} always targets ClockId ${MANAGED_CLOCK_ID}; UseCurrentDisplayClock is not accepted.`);
+    }
     if (target.model === "astrotoo" && command === "Device/PatchLocalClockInfo") {
-      const selection: JsonRecord = {};
-      for (const key of ["ClockId", "UseCurrentDisplayClock", "ParentClockId", "ParentItemId"])
+      const selection: JsonRecord = { ClockId: MANAGED_CLOCK_ID };
+      for (const key of ["ParentClockId", "ParentItemId"])
         if (payload[key] !== undefined) selection[key] = payload[key];
-      if (selection.ClockId === undefined) selection.UseCurrentDisplayClock = 1;
       const precheck = await callDivoomApi(target, "Device/GetLocalClockInfo", selection);
       const before = precheck.responseJson as JsonRecord;
       if (!Array.isArray(before.ItemList) || before.ItemList.length === 0)
@@ -1907,7 +1961,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
   if (name === "watchface_protocol_quick_reference") {
     const lines = [
       "1) Always POST JSON to /divoom_api (never GET). Root ReturnCode in the request must be 0.",
-      "2) Read before write: Device/GetLocalClockInfo first; if ItemList is empty, stop and switch to an editable clock (Channel/SetClockSelectId) — do not auto-create.",
+      "2) Create and patch tools manage fixed ClockId 60000. They read it first, create it only when missing and complete creation data is available, otherwise update it. Other explicit ClockId values are rejected.",
       "3) Patch minimally with ItemPatchList (per-index field diff) and ItemPatchByRoleList (semantic role). Do NOT include item_id inside patch.* unless explicitly renaming a slot — the device-side item_id is referenced by menus/config bindings.",
       "4) Only fall back to a full ItemList replacement when row count actually changes (rows added/removed). For pure metadata edits (size/x/y/font/color), POST /divoom_api JSON-only is enough.",
       "5) When new bytes need to land on the device, switch to multipart /patch_local_clock or /create_local_clock. JSON part first (name=\"json\"; filename=\"cmd.json\"), file part second (filename=\"clock_bg.jpg|webp|tar.gz\"); both parts carry per-part Content-Length; boundary is unquoted; CRLF; single file per request.",
