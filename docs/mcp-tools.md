@@ -43,7 +43,7 @@ Keep `model:"auto"` unless compatibility with legacy TimesFrame firmware require
 |---|---|
 | `watchface_protocol_quick_reference` | Return operating rules for the selected model. |
 | `watchface_clock_catalog` | Query product-specific watchface IDs, Chinese and English names, fonts, `disp`, and `item_id`; `includeConfig:true` includes native configurations. |
-| `watchface_disp_catalog` | Query and filter the selected model's `disp` catalog. |
+| `watchface_disp_catalog` | Query and filter the selected model's `disp` catalog. AstroToo supports category, render-kind, data-source, asset, and reference-usage metadata. |
 | `watchface_font_catalog` | Query the selected model's font catalog. With a live AstroToo target, local availability is merged into the AstroToo names. |
 | `watchface_template_search` | Search curated templates for the selected model. |
 | `watchface_layout_suggest` | Return model-specific layout guidance. AstroToo never receives TimesFrame coordinate statistics. |
@@ -52,7 +52,7 @@ Offline calls select data with a top-level `model:"timesframe"` or `model:"astro
 
 AstroToo watchface data comes from the simulator's `resource/userdata/system/clocksys` and `resource/usr/share/divoom_app/clocksys`. Default IDs come from `Device/GetClockDefaultList` with `IsDefault=1`; missing local configurations come from `Device/GetClockInfoV3` with `DeviceId`. Font IDs and files come from `resource/usr/share/divoom_app/system/font_list.cfg`, and names come from `Device/GetFontForAI`. Server requests use `https://appchina.divoom-gz.com/` plus the command string with a JSON body.
 
-AstroToo resources are `divoom://astrotoo/clocks/catalog`, `divoom://astrotoo/clocks/configs`, `divoom://astrotoo/font/catalog`, and `divoom://astrotoo/disp/catalog`. Existing resource URIs without the `astrotoo` prefix retain TimesFrame semantics.
+AstroToo resources are `divoom://astrotoo/clocks/catalog`, `divoom://astrotoo/clocks/configs`, `divoom://astrotoo/font/catalog`, `divoom://astrotoo/disp/summary`, and `divoom://astrotoo/disp/catalog`. The summary groups all declared and range-backed IDs by category, distinguishes implementation evidence, and records which elements occur in the loaded reference configurations. Existing resource URIs without the `astrotoo` prefix retain TimesFrame semantics.
 
 Product data lives in `resources/timesframe` and `resources/astrotoo`; shared protocol guidance lives in `resources/common`. `resources/products.json` and `divoom://products/catalog` expose the product registry. A new product must add its own directory, Hardware mapping, and complete resource set. Runtime code never falls back to another product's watchfaces, fonts, or element metadata.
 

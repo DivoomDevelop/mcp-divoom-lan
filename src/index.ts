@@ -113,6 +113,7 @@ const RESOURCES = [
   ...[
     ["divoom://astrotoo/guide", "AstroToo LAN Guide", "guide.md", "text/markdown"],
     ["divoom://astrotoo/disp/catalog", "AstroToo Disp Catalog", "disp-catalog.json", "application/json"],
+    ["divoom://astrotoo/disp/summary", "AstroToo Disp Summary", "disp-summary.json", "application/json"],
     ["divoom://astrotoo/font/catalog", "AstroToo Font Policy", "font-catalog.json", "application/json"],
     ["divoom://astrotoo/clocks/catalog", "AstroToo Clock Catalog", "clock-catalog.json", "application/json"],
     ["divoom://astrotoo/clocks/configs", "AstroToo Clock Configurations", "clock-configs.json", "application/json"],
@@ -478,7 +479,7 @@ const tools: Tool[] = [
   {
     name: "watchface_disp_catalog",
     description:
-      "Return the selected product's `disp` catalog for `ItemList[i].disp` and `ItemPatchList[i].patch.disp`. TimesFrame and AstroToo use independent enums and renderer sources. Each entry includes the firmware symbol, Chinese description, and image/text hints.",
+      "Return the selected product's `disp` catalog for `ItemList[i].disp` and `ItemPatchList[i].patch.disp`. TimesFrame and AstroToo use independent enums and renderer sources. AstroToo entries also report category, render kind, data source, asset requirement, authoring mode, and reference-config usage.",
     inputSchema: {
       type: "object",
       properties: {
@@ -501,13 +502,29 @@ const tools: Tool[] = [
           description:
             "'image' = only slots whose hints.likelyUsesRasterOrAssetLayer is true; 'text' = only slots whose hints.oftenUsesVectorFontForText is true.",
         },
+        category: {
+          type: "string",
+          description: "AstroToo category filter, such as time, date, weather, analog, calendar, music, app_data, or component.",
+        },
+        renderKind: {
+          type: "string",
+          description: "AstroToo render-kind filter: text, image, animation, analog_hand, composite, or system.",
+        },
+        dataSource: {
+          type: "string",
+          description: "AstroToo runtime provider filter, such as device_time, weather_service, calendar_service, or local_or_cached_media.",
+        },
+        usedInReferenceConfigs: {
+          type: "boolean",
+          description: "AstroToo: true returns elements proven in loaded native/server reference configurations; false returns renderer-only entries.",
+        },
         limit: {
           type: "integer",
-          description: "Max entries to return (default 80, max 300).",
+          description: "Max entries to return (default 80, max 600).",
         },
         idsOnly: {
           type: "boolean",
-          description: "If true, return only `[{disp, name, description_zh}]` rows for a compact summary.",
+          description: "If true, return compact rows with identity, category, render kind, data source, asset requirement, authoring mode, and usage proof.",
         },
       },
       additionalProperties: false,
@@ -1066,7 +1083,16 @@ type TypographyBlock = {
 type DispCatalogEntry = {
   disp: number;
   name: string;
+  description_en?: string;
   description_zh: string;
+  category?: string;
+  renderKind?: string;
+  dataSource?: string;
+  assetRequirement?: string;
+  authoringMode?: string;
+  implementationEvidence?: string;
+  aliases?: string[];
+  usage?: { referenceConfigCount: number; exampleClockIds: number[]; usedInReferenceConfigs: boolean };
   hints: {
     likelyUsesRasterOrAssetLayer?: boolean;
     oftenUsesVectorFontForText?: boolean;
@@ -1080,6 +1106,7 @@ type DispCatalog = {
   generatedAt: string;
   source: { editorRepo: string; base: string; generated: string | null; counts: Record<string, number> };
   notes: string[];
+  summary?: Record<string, unknown>;
   displays: DispCatalogEntry[];
 };
 
@@ -1689,8 +1716,12 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const nameContains = optionalString(args.nameContains, "nameContains");
     const descriptionContains = optionalString(args.descriptionContains, "descriptionContains");
     const expects = (optionalString(args.expects, "expects") ?? "any").toLowerCase();
+    const category = optionalString(args.category, "category")?.toLowerCase();
+    const renderKind = optionalString(args.renderKind, "renderKind")?.toLowerCase();
+    const dataSource = optionalString(args.dataSource, "dataSource")?.toLowerCase();
+    const usedInReferenceConfigs = optionalBoolean(args.usedInReferenceConfigs, "usedInReferenceConfigs");
     const limitRaw = optionalInteger(args.limit, "limit");
-    const limit = Math.max(1, Math.min(300, limitRaw ?? 80));
+    const limit = Math.max(1, Math.min(600, limitRaw ?? 80));
     const idsOnly = optionalBoolean(args.idsOnly, "idsOnly") ?? false;
 
     let filtered = catalog.displays;
@@ -1706,6 +1737,11 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       const needle = descriptionContains.toLowerCase();
       filtered = filtered.filter((entry) => entry.description_zh.toLowerCase().includes(needle));
     }
+    if (category) filtered = filtered.filter((entry) => entry.category?.toLowerCase() === category);
+    if (renderKind) filtered = filtered.filter((entry) => entry.renderKind?.toLowerCase() === renderKind);
+    if (dataSource) filtered = filtered.filter((entry) => entry.dataSource?.toLowerCase() === dataSource);
+    if (usedInReferenceConfigs !== undefined) filtered = filtered.filter((entry) =>
+      entry.usage?.usedInReferenceConfigs === usedInReferenceConfigs);
     if (expects === "image") {
       filtered = filtered.filter((entry) => entry.hints?.likelyUsesRasterOrAssetLayer === true);
     } else if (expects === "text") {
@@ -1717,7 +1753,10 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const truncated = filtered.length > limit;
     const trimmed = filtered.slice(0, limit);
     const displays = idsOnly
-      ? trimmed.map(({ disp, name, description_zh }) => ({ disp, name, description_zh }))
+      ? trimmed.map(({ disp, name, description_en, description_zh, category, renderKind, dataSource,
+        assetRequirement, authoringMode, implementationEvidence, usage }) => ({ disp, name, description_en,
+        description_zh, category, renderKind, dataSource, assetRequirement, authoringMode,
+        implementationEvidence, usage }))
       : trimmed;
 
     return {
@@ -1731,6 +1770,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
         truncated,
       },
       notes: catalog.notes,
+      summary: catalog.summary,
       displays,
     };
   }

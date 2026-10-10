@@ -55,15 +55,108 @@ function requestCommand(command, extra = {}) {
 
 const header = fs.readFileSync(path.join(sourceRoot, "divoom_light/include/divoom_disp_clock.h"), "utf8");
 const implementation = cSources(path.join(sourceRoot, "divoom_light")).join("\n");
-const displays = [...header.matchAll(/^\s*(DIVOOM_CLOCK_DISP_SUPPORT_[A-Z0-9_]+)\s*=\s*(\d+)\s*,\s*(?:\/\/([^\r\n]*))?/gm)]
-  .filter(([, symbol, id]) => Number(id) > 0 && implementation.includes(symbol))
+
+function displayCategory(name, id) {
+  if (id === 1000 || /_END_ID$|END_NUM_INFO/.test(name)) return "system_control";
+  if ((id >= 261 && id <= 280) || /COMPONET|COMPONENT|DIAL_SPECIAL_ITEM|SET_COMPLEX/.test(name)) return "component";
+  if (/POINT_IMAGE|WORLD_(HOUR|MIN)_POINT/.test(name)) return "analog";
+  if (/MUSIC|SPOTIFY|LYRICS|SINGER|EQ_/.test(name)) return "music";
+  if (/STOCK|FINANCE|EXCHANGE/.test(name)) return "finance";
+  if (/CALENDAR|EVENT|SCHEDULE|TODO|DIALY|TODAY_ACTIVITIES/.test(name)) return "calendar";
+  if (/CHINA_|LUNAR|SOLAR_TERM|FESTIVAL|POETRY/.test(name)) return "lunar_culture";
+  if (/WEATHER|TEMP|HUMI|WIND|VISIBILITY|ATMOSPHERIC|AIR_|SUNRISE|SUNSET|PHASE_MOON|TIDAL/.test(name)) return "weather";
+  if (/NOISE/.test(name)) return "environment";
+  if (/AI_|DYNAMIC/.test(name)) return "ai_dynamic";
+  if (/APP_|GAME_LEVEL/.test(name)) return "app_data";
+  if (/NET\d|NET_PIC|RSS|WEB_CONTENT/.test(name)) return "network";
+  if (/COUNT_?DOWN|CONTDOWN|TIMER|PASSED|DAYS_OF_LOVE|SEC_OF_LOVE|HALLOW_DAY|CHRISTMAS_DAY/.test(name)) return "countdown";
+  if (/PHOTO|VIDEO|PICTRUE|PIXEL_|ANIMATION|GIF|WEBP|HOT_IMAGE|DIVOOM_HOT|MARBLE/.test(name)) return "photo_video";
+  if (/TEXT|MESSAGE|DAILY_SENTENCE|WORD_OF_THE_DAY|AUTHOR_NICK_NAME/.test(name)) return "text";
+  if (/DATE|WEEK|MONTH|YEAR|(^|_)DAY($|_)|(^|_)MON($|_)/.test(name)) return "date";
+  if (/HOUR|MIN|SECOND|(^|_)SEC($|_)|TIME|AM_PM|AMPM|NOW_DISP/.test(name)) return "time";
+  if (/WIFI|BATTERY|VOLUME|WORK_MODE|ALARM|UPLOAD_PROGRESS/.test(name)) return "system_status";
+  if (/IMAGE|PIC|IMG|BACKGROUND|BACKGROUD|FLAG|MARK/.test(name)) return "image";
+  return "other";
+}
+
+function renderKind(name, id) {
+  if (id === 1000 || /_END_ID$|END_NUM_INFO/.test(name)) return "system";
+  if (/POINT_IMAGE|WORLD_(HOUR|MIN)_POINT/.test(name)) return "analog_hand";
+  if (/GIF|ANIMATION|VIDEO|EQ_|MARBLE/.test(name)) return "animation";
+  if ((id >= 261 && id <= 280) || /COMPONET|COMPONENT|CALENDAR_WATCH|DIAL|FULL_SCREEN_LYRICS|SPECIAL_ITEM/.test(name)) return "composite";
+  if (/IMAGE|PIC|IMG|PICTRUE|PHOTO|WEBP|EMOJI|FLAG|BACKGROUND|BACKGROUD|HEATMAP|MARK|DIVOOM_HOT/.test(name)) return "image";
+  return "text";
+}
+
+function dataSource(category) {
+  return ({
+    time: "device_time", date: "device_time", countdown: "device_time", environment: "device_sensor",
+    weather: "weather_service", calendar: "calendar_service", lunar_culture: "firmware_calendar",
+    music: "audio_service", finance: "finance_service", ai_dynamic: "ai_service",
+    app_data: "app_payload", network: "network_content", photo_video: "local_or_cached_media",
+    image: "local_or_firmware_asset", text: "configuration_or_service",
+    analog: "device_time", component: "linked_watchface", system_status: "device_state",
+    system_control: "firmware_internal", other: "firmware_service",
+  })[category];
+}
+
+function displayMetadata(name, id) {
+  const category = displayCategory(name, id);
+  const kind = renderKind(name, id);
+  const internal = category === "system_control" || id === 280;
+  const component = id >= 261 && id < 280;
+  const localAsset = kind === "analog_hand" ||
+    (/CUSTOM|USER_DEFINE/.test(name) && ["image", "animation", "composite"].includes(kind));
+  const serviceAsset = ["image", "animation"].includes(kind) && !localAsset;
+  return {
+    category,
+    renderKind: kind,
+    dataSource: dataSource(category),
+    assetRequirement: internal ? "none" : localAsset ? "local_asset" :
+      serviceAsset ? "service_or_firmware_asset" : kind === "text" ? "font" : "firmware_managed",
+    authoringMode: internal ? "firmware_internal" : component ? "component_reference" : "direct",
+  };
+}
+
+const aliasByTarget = new Map();
+for (const [, alias, target] of header.matchAll(/^\s*(DIVOOM_CLOCK_DISP_[A-Z0-9_]+)\s*=\s*(DIVOOM_CLOCK_DISP_[A-Z0-9_]+)\s*,/gm)) {
+  const aliases = aliasByTarget.get(target) ?? [];
+  aliases.push(alias);
+  aliasByTarget.set(target, aliases);
+}
+const shortName = (symbol) => symbol.replace(/^DIVOOM_CLOCK_DISP_(?:SUPPORT_)?/, "");
+const displays = [...header.matchAll(/^\s*(DIVOOM_CLOCK_DISP_[A-Z0-9_]+)\s*=\s*(\d+)\s*,\s*(?:\/\/([^\r\n]*))?/gm)]
+  .filter(([, , id]) => Number(id) > 0)
   .map(([, symbol, id, comment]) => {
-    const raster = /IMAGE|GIF|PIC|PNG/.test(symbol);
-    return { disp: Number(id), name: symbol.replace("DIVOOM_CLOCK_DISP_SUPPORT_", ""),
+    const disp = Number(id);
+    const aliases = aliasByTarget.get(symbol) ?? [];
+    const referencedAlias = aliases.find((alias) => implementation.includes(alias));
+    const implementationEvidence = implementation.includes(symbol) ? "direct_symbol" :
+      referencedAlias ? "alias_symbol" : "declaration_only";
+    const name = shortName(referencedAlias ?? symbol);
+    const metadata = displayMetadata(name, disp);
+    if (implementationEvidence === "declaration_only") metadata.authoringMode = "declared_only";
+    const raster = ["image", "animation", "analog_hand"].includes(metadata.renderKind);
+    return { disp, name, description_en: name.toLowerCase().replaceAll("_", " "),
       description_zh: comment?.trim() ?? "",
-      hints: { likelyUsesRasterOrAssetLayer: raster, oftenUsesVectorFontForText: !raster,
-        note: "AstroToo renderer symbol; dynamic data may require a corresponding device service." } };
-  }).sort((a, b) => a.disp - b.disp);
+      ...metadata,
+      implementationEvidence,
+      aliases: [symbol, ...aliases].map(shortName).filter((value) => value !== name),
+      hints: { likelyUsesRasterOrAssetLayer: raster, oftenUsesVectorFontForText: metadata.renderKind === "text",
+        note: implementationEvidence === "declaration_only" ?
+          "Declared by the AstroToo header but not directly referenced by current renderer C sources; do not author without hardware proof." :
+          "Derived from the AstroToo renderer symbol; service-backed data and assets require the matching runtime provider." } };
+  });
+// The firmware treats 261 <= disp < 280 as 19 component positions. Only the
+// first position has an enum symbol, but native configurations use the rest.
+for (let disp = 262; disp < 280; disp++) {
+  const name = `DAIL_COMPONENT_ID${disp - 260}`;
+  displays.push({ disp, name, description_en: `dial component position ${disp - 260}`,
+    description_zh: "", ...displayMetadata(name, disp), implementationEvidence: "renderer_range", aliases: [],
+    hints: { likelyUsesRasterOrAssetLayer: false, oftenUsesVectorFontForText: false,
+      note: "Implicit AstroToo component position accepted by the renderer range 261 <= disp < 280." } });
+}
+displays.sort((a, b) => a.disp - b.disp);
 const displayById = new Map(displays.map((entry) => [entry.disp, entry]));
 
 const clockDirectories = [
@@ -135,6 +228,47 @@ function clockMetadata(clockId, config) {
 }
 const clocks = [...configurations].sort((a, b) => a[0] - b[0]).map(([id, config]) => clockMetadata(id, config));
 
+const displayUsage = new Map();
+for (const [clockId, config] of configurations) {
+  for (const disp of new Set((config.ItemList ?? []).map((item) => Number(item.disp)).filter(Number.isInteger))) {
+    const row = displayUsage.get(disp) ?? { referenceConfigCount: 0, exampleClockIds: [] };
+    row.referenceConfigCount++;
+    if (row.exampleClockIds.length < 8) row.exampleClockIds.push(clockId);
+    displayUsage.set(disp, row);
+  }
+}
+for (const display of displays) {
+  const usage = displayUsage.get(display.disp) ?? { referenceConfigCount: 0, exampleClockIds: [] };
+  display.usage = { ...usage, usedInReferenceConfigs: usage.referenceConfigCount > 0 };
+}
+
+function countBy(rows, field) {
+  return Object.fromEntries([...rows.reduce((counts, row) =>
+    counts.set(row[field], (counts.get(row[field]) ?? 0) + 1), new Map())].sort((a, b) => a[0].localeCompare(b[0])));
+}
+const usedDisplays = displays.filter((entry) => entry.usage.usedInReferenceConfigs);
+const displaySummary = {
+  total: displays.length,
+  usedInReferenceConfigs: usedDisplays.length,
+  unusedInReferenceConfigs: displays.length - usedDisplays.length,
+  categories: countBy(displays, "category"),
+  renderKinds: countBy(displays, "renderKind"),
+  assetRequirements: countBy(displays, "assetRequirement"),
+  implementationEvidence: countBy(displays, "implementationEvidence"),
+  topUsed: [...displays].sort((a, b) => b.usage.referenceConfigCount - a.usage.referenceConfigCount || a.disp - b.disp)
+    .slice(0, 30).map(({ disp, name, category, renderKind, usage }) => ({ disp, name, category, renderKind, ...usage })),
+  authoringRequirements: [
+    "Select AstroToo by detected Hardware 530 before using these ids; never reuse TimesFrame disp semantics.",
+    "Prefer elements with usedInReferenceConfigs=true and copy a native configuration with matching dataSource and renderKind.",
+    "Elements backed by weather, calendar, music, finance, AI, app, or network services require that provider at runtime.",
+    "Upload each local element asset separately, bind its local:// reference, and then commit fixed ClockId 60000.",
+    "Use analog hand ids 131, 132, and 233 together with centered square upward-pointing images.",
+    "Ids 261-279 reference linked component watchfaces; id 280 and id 1000 are firmware-internal and must not be authored.",
+    "authoringMode=declared_only means the id exists in the current header but has no direct renderer-symbol evidence; do not generate it without hardware proof.",
+    "An implemented entry with no reference configuration has renderer evidence but no validated authoring recipe; verify it on hardware.",
+  ],
+};
+
 const fontFile = path.join(simulatorRoot, "resource/usr/share/divoom_app/system/font_list.cfg");
 const fontNameFile = path.join(simulatorRoot, "resource/usr/share/divoom_app/system/font_name.cfg");
 const localFontConfig = readJson(fontFile);
@@ -170,9 +304,13 @@ const source = {
   defaultList: { command: "Device/GetClockDefaultList", isDefault: 1, deviceId },
   missingConfigFallback: { command: "Device/GetClockInfoV3", deviceId },
 };
-write("disp-catalog.json", { schema: 1, model: "astrotoo", generatedAt, source: {
+write("disp-catalog.json", { schema: 2, model: "astrotoo", generatedAt, source: {
   base: "AstroToo simulator src/divoom_light/include/divoom_disp_clock.h + divoom_light/*.c",
-  counts: { total: displays.length } }, notes: ["Hardware 530; 480x480.", "No TimesFrame typography is used."], displays });
+  counts: { total: displays.length } }, notes: ["Hardware 530; 480x480.", "No TimesFrame typography is used.",
+    "Classification fields are generated from header declarations and renderer symbols; usage fields are measured from bundled and server-fallback AstroToo configurations."],
+  summary: displaySummary, displays });
+write("disp-summary.json", { schema: 1, model: "astrotoo", generatedAt, source: {
+  catalog: "divoom://astrotoo/disp/catalog", referenceConfigurations: configurations.size }, ...displaySummary });
 write("font-catalog.json", { schema: 1, model: "astrotoo", generatedAt, source: {
   file: "resource/usr/share/divoom_app/system/font_list.cfg",
   nameCache: "resource/usr/share/divoom_app/system/font_name.cfg",
@@ -207,7 +345,9 @@ schema.$defs.item.properties.y = { type: "integer", minimum: 0, maximum: 479 };
 schema.$defs.item.properties.w = { type: "integer", minimum: 0, maximum: 480 };
 schema.$defs.item.properties.h = { type: "integer", minimum: 0, maximum: 480 };
 schema.$defs.item.properties.hier = { type: "integer", enum: [0, 1, 2] };
-schema.$defs.item.properties.disp = { type: "integer", enum: displays.map((entry) => entry.disp) };
+schema.$defs.item.properties.disp = { type: "integer", enum: displays
+  .filter((entry) => !["declared_only", "firmware_internal"].includes(entry.authoringMode))
+  .map((entry) => entry.disp) };
 write("watchface-config.schema.json", schema);
 console.log(JSON.stringify({ displays: displays.length, fonts: fonts.length, clocks: clocks.length,
   defaults: defaultClockIds.length, serverFallback: clocks.filter((clock) => clock.sources.includes("server-fallback")).length }));

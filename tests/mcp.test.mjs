@@ -220,8 +220,8 @@ test("clock ids, names, fonts and element semantics stay product-specific",async
   const astroCatalog=data(await call("watchface_clock_catalog",{
     target:astro.target,clockIds:[101],defaultOnly:true,includeConfig:true,
   }));
-  assert.equal(astroCatalog.counts.configurations,1042);
-  assert.equal(astroCatalog.counts.defaults,356);
+  assert.equal(astroCatalog.counts.configurations,1096);
+  assert.equal(astroCatalog.counts.defaults,405);
   assert.equal(astroCatalog.clocks[0].clockId,101);
   assert.equal(astroCatalog.clocks[0].nameEn,"NBA Rank");
   assert.equal(astroCatalog.clocks[0].config.ClockId,101);
@@ -232,11 +232,39 @@ test("clock ids, names, fonts and element semantics stay product-specific",async
   const frameWithConfig=data(await call("watchface_clock_catalog",{target:frame.target,limit:1,includeConfig:true}));
   assert.equal(frameWithConfig.clocks[0].config.ClockId,frameWithConfig.clocks[0].clockId);
   const resource=await client.readResource({uri:"divoom://astrotoo/clocks/catalog"});
-  assert.equal(JSON.parse(resource.contents[0].text).counts.configurations,1042);
+  assert.equal(JSON.parse(resource.contents[0].text).counts.configurations,1096);
   const products=await client.readResource({uri:"divoom://products/catalog"});
   const registry=JSON.parse(products.contents[0].text).products;
   assert.deepEqual(registry.timesframe.hardware,[...PRODUCTS.timesframe.hardware]);
   assert.equal(registry.astrotoo.directory,PRODUCTS.astrotoo.resourceDir);
+});
+test("AstroToo display knowledge includes categories, usage proof, implicit component positions, and the latest lyrics element",async()=>{
+  const result=data(await call("watchface_disp_catalog",{
+    model:"astrotoo",ids:[131,176,181,262,280,538,1000],limit:600,idsOnly:true,
+  }));
+  assert.equal(result.summary.total,522);
+  assert.equal(result.summary.usedInReferenceConfigs,227);
+  assert.equal(result.displays.find(row=>row.disp===131).renderKind,"analog_hand");
+  assert.equal(result.displays.find(row=>row.disp===176).implementationEvidence,"direct_symbol");
+  assert.equal(result.displays.find(row=>row.disp===181).authoringMode,"declared_only");
+  assert.equal(result.displays.find(row=>row.disp===262).authoringMode,"component_reference");
+  assert.equal(result.displays.find(row=>row.disp===280).authoringMode,"firmware_internal");
+  assert.equal(result.displays.find(row=>row.disp===538).dataSource,"audio_service");
+  assert.equal(result.displays.find(row=>row.disp===538).usage.usedInReferenceConfigs,true);
+  assert.equal(result.displays.find(row=>row.disp===1000).assetRequirement,"none");
+
+  const weather=data(await call("watchface_disp_catalog",{
+    model:"astrotoo",category:"weather",renderKind:"image",usedInReferenceConfigs:true,limit:600,
+  }));
+  assert.ok(weather.displays.length>0);
+  assert.ok(weather.displays.every(row=>row.category==="weather" && row.renderKind==="image"));
+  const summary=JSON.parse((await client.readResource({uri:"divoom://astrotoo/disp/summary"})).contents[0].text);
+  assert.equal(summary.total,522);
+  assert.match(summary.authoringRequirements.join(" "),/261-279/);
+  const schema=JSON.parse((await client.readResource({uri:"divoom://astrotoo/watchface/schema"})).contents[0].text);
+  assert.ok(schema.$defs.item.properties.disp.enum.includes(176));
+  assert.ok(!schema.$defs.item.properties.disp.enum.includes(181));
+  assert.ok(!schema.$defs.item.properties.disp.enum.includes(280));
 });
 test("single-device precheck and patch remain adjacent",async()=>{
   const n=astro.state.calls.length;

@@ -1,0 +1,606 @@
+{
+  "schema": 1,
+  "model": "astrotoo",
+  "generatedAt": "2026-10-10T09:35:34.834Z",
+  "source": {
+    "catalog": "divoom://astrotoo/disp/catalog",
+    "referenceConfigurations": 1096
+  },
+  "total": 522,
+  "usedInReferenceConfigs": 227,
+  "unusedInReferenceConfigs": 295,
+  "categories": {
+    "ai_dynamic": 4,
+    "analog": 5,
+    "app_data": 58,
+    "calendar": 35,
+    "component": 24,
+    "countdown": 23,
+    "date": 54,
+    "environment": 4,
+    "finance": 4,
+    "image": 15,
+    "lunar_culture": 25,
+    "music": 10,
+    "network": 11,
+    "photo_video": 71,
+    "system_control": 2,
+    "system_status": 6,
+    "text": 44,
+    "time": 45,
+    "weather": 82
+  },
+  "renderKinds": {
+    "analog_hand": 5,
+    "animation": 22,
+    "composite": 79,
+    "image": 111,
+    "system": 2,
+    "text": 303
+  },
+  "assetRequirements": {
+    "firmware_managed": 69,
+    "font": 303,
+    "local_asset": 18,
+    "none": 2,
+    "service_or_firmware_asset": 130
+  },
+  "implementationEvidence": {
+    "alias_symbol": 1,
+    "declaration_only": 22,
+    "direct_symbol": 481,
+    "renderer_range": 18
+  },
+  "topUsed": [
+    {
+      "disp": 16,
+      "name": "APP_ITEM_DATA1",
+      "category": "app_data",
+      "renderKind": "text",
+      "referenceConfigCount": 538,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 35,
+      "name": "APP_TITLE",
+      "category": "app_data",
+      "renderKind": "text",
+      "referenceConfigCount": 410,
+      "exampleClockIds": [
+        1643,
+        1655,
+        1658,
+        1660,
+        1662,
+        1664,
+        1666,
+        1672
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 4,
+      "name": "HOUR_MIN",
+      "category": "time",
+      "renderKind": "text",
+      "referenceConfigCount": 287,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 38,
+      "name": "APP_ITEM_DATA2",
+      "category": "app_data",
+      "renderKind": "text",
+      "referenceConfigCount": 282,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        109
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 40,
+      "name": "APP_ITEM_DATA3",
+      "category": "app_data",
+      "renderKind": "text",
+      "referenceConfigCount": 276,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 13,
+      "name": "NET_PIC",
+      "category": "network",
+      "renderKind": "image",
+      "referenceConfigCount": 236,
+      "exampleClockIds": [
+        1654,
+        170,
+        171,
+        1754,
+        1756,
+        1805,
+        1806,
+        1810
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 37,
+      "name": "ENG_WEEK_THREE",
+      "category": "date",
+      "renderKind": "text",
+      "referenceConfigCount": 220,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 100,
+      "name": "APP_ITEM_DATA6",
+      "category": "app_data",
+      "renderKind": "text",
+      "referenceConfigCount": 176,
+      "exampleClockIds": [
+        101,
+        102,
+        105,
+        107,
+        108,
+        109,
+        110,
+        111
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 99,
+      "name": "APP_ITEM_DATA5",
+      "category": "app_data",
+      "renderKind": "text",
+      "referenceConfigCount": 172,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        105,
+        106,
+        107,
+        108,
+        109
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 240,
+      "name": "WEBP_WEATHER",
+      "category": "weather",
+      "renderKind": "image",
+      "referenceConfigCount": 169,
+      "exampleClockIds": [
+        1654,
+        1656,
+        1658,
+        1660,
+        1662,
+        1664,
+        1666,
+        1670
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 49,
+      "name": "TEXT_MESSAGE",
+      "category": "text",
+      "renderKind": "text",
+      "referenceConfigCount": 160,
+      "exampleClockIds": [
+        1684,
+        1720,
+        1722,
+        1727,
+        1754,
+        1756,
+        1784,
+        1805
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 254,
+      "name": "TEMP_DIGIT2",
+      "category": "weather",
+      "renderKind": "text",
+      "referenceConfigCount": 134,
+      "exampleClockIds": [
+        108,
+        1720,
+        1726,
+        1736,
+        1754,
+        1756,
+        1805,
+        1806
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 17,
+      "name": "APP_ITEM_NAME1",
+      "category": "app_data",
+      "renderKind": "text",
+      "referenceConfigCount": 121,
+      "exampleClockIds": [
+        108,
+        1689,
+        1706,
+        1707,
+        171,
+        1720,
+        1736,
+        1737
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 39,
+      "name": "ENG_MONTH_DOT_DAY",
+      "category": "date",
+      "renderKind": "text",
+      "referenceConfigCount": 106,
+      "exampleClockIds": [
+        1688,
+        1754,
+        1805,
+        1827,
+        1848,
+        1852,
+        1853,
+        1854
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 261,
+      "name": "DAIL_COMPONENT_START_ID",
+      "category": "component",
+      "renderKind": "composite",
+      "referenceConfigCount": 106,
+      "exampleClockIds": [
+        1654,
+        1658,
+        1664,
+        1672,
+        1688,
+        1720,
+        1726,
+        1736
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 8,
+      "name": "DAY",
+      "category": "date",
+      "renderKind": "text",
+      "referenceConfigCount": 102,
+      "exampleClockIds": [
+        1626,
+        1628,
+        1630,
+        1632,
+        1633,
+        1756,
+        1777,
+        1805
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 372,
+      "name": "TEXT_MESSAGE2",
+      "category": "text",
+      "renderKind": "text",
+      "referenceConfigCount": 100,
+      "exampleClockIds": [
+        1684,
+        1720,
+        1722,
+        1727,
+        1756,
+        1784,
+        1822,
+        1853
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 495,
+      "name": "STOCK_TREND_PIC",
+      "category": "finance",
+      "renderKind": "image",
+      "referenceConfigCount": 96,
+      "exampleClockIds": [
+        1698,
+        1699,
+        1700,
+        1701,
+        1702,
+        1703,
+        1704,
+        1705
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 54,
+      "name": "WEATHER_WORD",
+      "category": "weather",
+      "renderKind": "text",
+      "referenceConfigCount": 91,
+      "exampleClockIds": [
+        1754,
+        1827,
+        1848,
+        1852,
+        1853,
+        1854,
+        1855,
+        1862
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 173,
+      "name": "NET2_PIC",
+      "category": "network",
+      "renderKind": "image",
+      "referenceConfigCount": 80,
+      "exampleClockIds": [
+        170,
+        1827,
+        1855,
+        1872,
+        1873,
+        1874,
+        1876,
+        1880
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 499,
+      "name": "NEXT_EVENT_TITLE",
+      "category": "calendar",
+      "renderKind": "text",
+      "referenceConfigCount": 78,
+      "exampleClockIds": [
+        1626,
+        1631,
+        1731,
+        1732,
+        1825,
+        1826,
+        1859,
+        1860
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 500,
+      "name": "NEXT_EVENT_TIME",
+      "category": "calendar",
+      "renderKind": "text",
+      "referenceConfigCount": 78,
+      "exampleClockIds": [
+        1626,
+        1631,
+        1731,
+        1732,
+        1825,
+        1826,
+        1859,
+        1860
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 41,
+      "name": "APP_ITEM_DATA4",
+      "category": "app_data",
+      "renderKind": "text",
+      "referenceConfigCount": 75,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 339,
+      "name": "TEMP_DIGIT3",
+      "category": "weather",
+      "renderKind": "text",
+      "referenceConfigCount": 68,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        109
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 59,
+      "name": "HOUR_DECADE_IMAGE",
+      "category": "time",
+      "renderKind": "image",
+      "referenceConfigCount": 67,
+      "exampleClockIds": [
+        1654,
+        1720,
+        1736,
+        1805,
+        1806,
+        1888,
+        1891,
+        1897
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 60,
+      "name": "HOUR_UNIT_IMAGE",
+      "category": "time",
+      "renderKind": "image",
+      "referenceConfigCount": 67,
+      "exampleClockIds": [
+        1654,
+        1720,
+        1736,
+        1805,
+        1806,
+        1888,
+        1891,
+        1897
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 61,
+      "name": "MIN_DECADE_IMAGE",
+      "category": "time",
+      "renderKind": "image",
+      "referenceConfigCount": 67,
+      "exampleClockIds": [
+        1654,
+        1720,
+        1736,
+        1805,
+        1806,
+        1888,
+        1891,
+        1897
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 62,
+      "name": "MIN_UNIT_IMAGE",
+      "category": "time",
+      "renderKind": "image",
+      "referenceConfigCount": 66,
+      "exampleClockIds": [
+        1654,
+        1720,
+        1736,
+        1805,
+        1806,
+        1888,
+        1891,
+        1897
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 51,
+      "name": "COUNT_DOWN_DAY",
+      "category": "countdown",
+      "renderKind": "text",
+      "referenceConfigCount": 65,
+      "exampleClockIds": [
+        1720,
+        1756,
+        1778,
+        1779,
+        1780,
+        1781,
+        1805,
+        1970
+      ],
+      "usedInReferenceConfigs": true
+    },
+    {
+      "disp": 156,
+      "name": "MON_DAY",
+      "category": "date",
+      "renderKind": "text",
+      "referenceConfigCount": 65,
+      "exampleClockIds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108
+      ],
+      "usedInReferenceConfigs": true
+    }
+  ],
+  "authoringRequirements": [
+    "Select AstroToo by detected Hardware 530 before using these ids; never reuse TimesFrame disp semantics.",
+    "Prefer elements with usedInReferenceConfigs=true and copy a native configuration with matching dataSource and renderKind.",
+    "Elements backed by weather, calendar, music, finance, AI, app, or network services require that provider at runtime.",
+    "Upload each local element asset separately, bind its local:// reference, and then commit fixed ClockId 60000.",
+    "Use analog hand ids 131, 132, and 233 together with centered square upward-pointing images.",
+    "Ids 261-279 reference linked component watchfaces; id 280 and id 1000 are firmware-internal and must not be authored.",
+    "authoringMode=declared_only means the id exists in the current header but has no direct renderer-symbol evidence; do not generate it without hardware proof.",
+    "An implemented entry with no reference configuration has renderer evidence but no validated authoring recipe; verify it on hardware."
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "model": "astrotoo",
-  "generatedAt": "2026-09-22T13:22:12.429Z",
+  "generatedAt": "2026-10-10T09:35:34.834Z",
   "source": {
     "simulator": "LvglAstroTooSimulator",
     "clockDirectories": [
@@ -19,11 +19,11 @@
     }
   },
   "counts": {
-    "configurations": 1042,
-    "defaults": 356,
-    "userdata": 943,
+    "configurations": 1096,
+    "defaults": 405,
+    "userdata": 955,
     "packaged": 99,
-    "serverFallback": 0
+    "serverFallback": 42
   },
   "notes": [
     "Clock IDs, names, fonts, disp IDs, and item IDs are AstroToo-specific.",
@@ -46,6 +46,7 @@
     140,
     150,
     160,
+    171,
     173,
     174,
     240,
@@ -385,9 +386,81 @@
     2918,
     2919,
     2920,
-    2922
+    2922,
+    2923,
+    2924,
+    2925,
+    2926,
+    2928,
+    2929,
+    2930,
+    2931,
+    2932,
+    2933,
+    2934,
+    2935,
+    2936,
+    2937,
+    2938,
+    2939,
+    2942,
+    2943,
+    2944,
+    2945,
+    2946,
+    2947,
+    2960,
+    2961,
+    2962,
+    2963,
+    2966,
+    2967,
+    2968,
+    2969,
+    2970,
+    2972,
+    2977,
+    3003,
+    3004,
+    3005,
+    3006,
+    3007,
+    3008,
+    3009,
+    3010,
+    3011,
+    3012,
+    3013,
+    3014,
+    3016,
+    3020,
+    3031
   ],
   "clocks": [
+    {
+      "clockId": 0,
+      "nameCn": "",
+      "nameEn": "",
+      "isDefault": false,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 0,
+      "itemCount": 0,
+      "itemIds": [],
+      "disps": [],
+      "fonts": [],
+      "assetCount": 0,
+      "tags": [
+        "other"
+      ],
+      "stats": {
+        "itemCount": 0,
+        "uniqueDisps": 0,
+        "rasterSlotRatio": 0,
+        "dominantFonts": []
+      }
+    },
     {
       "clockId": 101,
       "nameCn": "NBA排名",
@@ -1373,11 +1446,11 @@
       "clockId": 171,
       "nameCn": "虚拟货币",
       "nameEn": "Cyber Currency",
-      "isDefault": false,
+      "isDefault": true,
       "sources": [
         "userdata"
       ],
-      "sysUpdateTime": 1787554611,
+      "sysUpdateTime": 1790127279,
       "itemCount": 3,
       "itemIds": [
         "SubClockId_"
@@ -1394,7 +1467,8 @@
       ],
       "assetCount": 1,
       "tags": [
-        "asset_heavy"
+        "asset_heavy",
+        "default"
       ],
       "stats": {
         "itemCount": 3,
@@ -6888,7 +6962,7 @@
       "sources": [
         "packaged"
       ],
-      "sysUpdateTime": 1788860961,
+      "sysUpdateTime": 1790130065,
       "itemCount": 18,
       "itemIds": [
         "SubClockId_",
@@ -11606,7 +11680,7 @@
       "sources": [
         "userdata"
       ],
-      "sysUpdateTime": 1788831918,
+      "sysUpdateTime": 1790151359,
       "itemCount": 8,
       "itemIds": [
         "SubClockId_"
@@ -29482,7 +29556,7 @@
       "sources": [
         "packaged"
       ],
-      "sysUpdateTime": 1788860974,
+      "sysUpdateTime": 1790130054,
       "itemCount": 18,
       "itemIds": [
         "SubClockId_",
@@ -46358,6 +46432,2604 @@
           {
             "id": 190,
             "share": 0.1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2923,
+      "nameCn": "闪光青蛙 ",
+      "nameEn": "SHINY FRO",
+      "isDefault": true,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1790127682,
+      "itemCount": 10,
+      "itemIds": [],
+      "disps": [
+        13,
+        59,
+        60,
+        61,
+        62,
+        66,
+        69,
+        70,
+        71
+      ],
+      "fonts": [
+        6
+      ],
+      "assetCount": 10,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 10,
+        "uniqueDisps": 9,
+        "rasterSlotRatio": 1,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2924,
+      "nameCn": "新年焰舞",
+      "nameEn": "New Year Fire Dance",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790147214,
+      "itemCount": 4,
+      "itemIds": [],
+      "disps": [
+        4,
+        13,
+        51,
+        343
+      ],
+      "fonts": [
+        6,
+        70
+      ],
+      "assetCount": 1,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 4,
+        "uniqueDisps": 4,
+        "rasterSlotRatio": 0.25,
+        "dominantFonts": [
+          {
+            "id": 70,
+            "share": 0.75
+          },
+          {
+            "id": 6,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2925,
+      "nameCn": "情人节爱心",
+      "nameEn": "Pop hearts",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790217535,
+      "itemCount": 5,
+      "itemIds": [],
+      "disps": [
+        4,
+        13,
+        51,
+        173,
+        343
+      ],
+      "fonts": [
+        6,
+        70
+      ],
+      "assetCount": 2,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 5,
+        "uniqueDisps": 5,
+        "rasterSlotRatio": 0.4,
+        "dominantFonts": [
+          {
+            "id": 70,
+            "share": 0.6
+          },
+          {
+            "id": 6,
+            "share": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2926,
+      "nameCn": "时间安排（不在表盘市场显示）",
+      "nameEn": "Schedule",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790221704,
+      "itemCount": 4,
+      "itemIds": [],
+      "disps": [
+        190,
+        354,
+        355,
+        358
+      ],
+      "fonts": [
+        6,
+        28
+      ],
+      "assetCount": 0,
+      "tags": [
+        "time",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 4,
+        "uniqueDisps": 4,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 28,
+            "share": 0.75
+          },
+          {
+            "id": 6,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2928,
+      "nameCn": "万圣梦幻夜",
+      "nameEn": "Halloween Dream Night",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790221203,
+      "itemCount": 8,
+      "itemIds": [],
+      "disps": [
+        13,
+        51,
+        59,
+        60,
+        61,
+        62,
+        173,
+        343
+      ],
+      "fonts": [
+        6,
+        68
+      ],
+      "assetCount": 6,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 8,
+        "uniqueDisps": 8,
+        "rasterSlotRatio": 0.75,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.75
+          },
+          {
+            "id": 68,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2929,
+      "nameCn": "独立日星火",
+      "nameEn": "Independence Spark",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790239331,
+      "itemCount": 4,
+      "itemIds": [],
+      "disps": [
+        4,
+        13,
+        51,
+        343
+      ],
+      "fonts": [
+        6,
+        66
+      ],
+      "assetCount": 1,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 4,
+        "uniqueDisps": 4,
+        "rasterSlotRatio": 0.25,
+        "dominantFonts": [
+          {
+            "id": 66,
+            "share": 0.75
+          },
+          {
+            "id": 6,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2930,
+      "nameCn": "嘴替熊猫",
+      "nameEn": "MOUTH SUBSTITUTE PANDA",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790244236,
+      "itemCount": 6,
+      "itemIds": [],
+      "disps": [
+        2,
+        3,
+        8,
+        9,
+        13,
+        66
+      ],
+      "fonts": [
+        6,
+        170
+      ],
+      "assetCount": 2,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 6,
+        "uniqueDisps": 6,
+        "rasterSlotRatio": 0.333,
+        "dominantFonts": [
+          {
+            "id": 170,
+            "share": 0.667
+          },
+          {
+            "id": 6,
+            "share": 0.333
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2931,
+      "nameCn": "别想太多 ",
+      "nameEn": "DONT_OVERTHINK",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790560405,
+      "itemCount": 10,
+      "itemIds": [],
+      "disps": [
+        13,
+        59,
+        60,
+        61,
+        62,
+        69,
+        70,
+        71,
+        72,
+        171
+      ],
+      "fonts": [
+        6
+      ],
+      "assetCount": 10,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 10,
+        "uniqueDisps": 10,
+        "rasterSlotRatio": 1,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2932,
+      "nameCn": "月夜灯下 ",
+      "nameEn": "MOONLIGHT UNDER LAMP",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790758113,
+      "itemCount": 8,
+      "itemIds": [],
+      "disps": [
+        8,
+        9,
+        13,
+        59,
+        60,
+        61,
+        62,
+        66
+      ],
+      "fonts": [
+        6,
+        150
+      ],
+      "assetCount": 6,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 8,
+        "uniqueDisps": 8,
+        "rasterSlotRatio": 0.75,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.75
+          },
+          {
+            "id": 150,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2933,
+      "nameCn": "清茗小獭 ",
+      "nameEn": "Tea Otter",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790669433,
+      "itemCount": 5,
+      "itemIds": [],
+      "disps": [
+        4,
+        8,
+        9,
+        13,
+        66
+      ],
+      "fonts": [
+        6,
+        150
+      ],
+      "assetCount": 2,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 5,
+        "uniqueDisps": 5,
+        "rasterSlotRatio": 0.4,
+        "dominantFonts": [
+          {
+            "id": 150,
+            "share": 0.6
+          },
+          {
+            "id": 6,
+            "share": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2934,
+      "nameCn": "表盘视频",
+      "nameEn": "表盘视频",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790585575,
+      "itemCount": 0,
+      "itemIds": [],
+      "disps": [],
+      "fonts": [],
+      "assetCount": 0,
+      "tags": [
+        "default"
+      ],
+      "stats": {
+        "itemCount": 0,
+        "uniqueDisps": 0,
+        "rasterSlotRatio": 0,
+        "dominantFonts": []
+      }
+    },
+    {
+      "clockId": 2935,
+      "nameCn": "归我小窝 ",
+      "nameEn": "MY COZY NEST",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790669616,
+      "itemCount": 8,
+      "itemIds": [],
+      "disps": [
+        13,
+        59,
+        60,
+        61,
+        62,
+        240,
+        378,
+        379
+      ],
+      "fonts": [
+        6,
+        36
+      ],
+      "assetCount": 6,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 8,
+        "uniqueDisps": 8,
+        "rasterSlotRatio": 0.75,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.75
+          },
+          {
+            "id": 36,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2936,
+      "nameCn": "思绪远航 ",
+      "nameEn": "WANDERING THOUGHTS",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791429289,
+      "itemCount": 8,
+      "itemIds": [],
+      "disps": [
+        8,
+        9,
+        13,
+        59,
+        60,
+        61,
+        62,
+        66
+      ],
+      "fonts": [
+        6,
+        150
+      ],
+      "assetCount": 6,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 8,
+        "uniqueDisps": 8,
+        "rasterSlotRatio": 0.75,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.75
+          },
+          {
+            "id": 150,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2937,
+      "nameCn": "信号测试",
+      "nameEn": "Signal Clock",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790673132,
+      "itemCount": 10,
+      "itemIds": [],
+      "disps": [
+        4,
+        8,
+        13,
+        27,
+        37,
+        173,
+        174,
+        339,
+        492,
+        528
+      ],
+      "fonts": [
+        6,
+        12
+      ],
+      "assetCount": 5,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 10,
+        "uniqueDisps": 10,
+        "rasterSlotRatio": 0.5,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.5
+          },
+          {
+            "id": 12,
+            "share": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2938,
+      "nameCn": "专注当下 ",
+      "nameEn": "PRESENT MOMENT",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790674228,
+      "itemCount": 7,
+      "itemIds": [],
+      "disps": [
+        13,
+        59,
+        60,
+        61,
+        62,
+        378,
+        379
+      ],
+      "fonts": [
+        6
+      ],
+      "assetCount": 5,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 7,
+        "uniqueDisps": 7,
+        "rasterSlotRatio": 0.714,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2939,
+      "nameCn": "复古留言",
+      "nameEn": "Retro Message 92",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790679190,
+      "itemCount": 9,
+      "itemIds": [],
+      "disps": [
+        4,
+        7,
+        8,
+        13,
+        27,
+        37,
+        410,
+        492,
+        526
+      ],
+      "fonts": [
+        6,
+        46,
+        52
+      ],
+      "assetCount": 2,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 9,
+        "uniqueDisps": 9,
+        "rasterSlotRatio": 0.222,
+        "dominantFonts": [
+          {
+            "id": 46,
+            "share": 0.556
+          },
+          {
+            "id": 52,
+            "share": 0.222
+          },
+          {
+            "id": 6,
+            "share": 0.222
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2940,
+      "nameCn": "歌词表盘 PC 验证",
+      "nameEn": "Lyric Dial PC Test",
+      "isDefault": false,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1790669506,
+      "itemCount": 1,
+      "itemIds": [],
+      "disps": [
+        538
+      ],
+      "fonts": [
+        6
+      ],
+      "assetCount": 0,
+      "tags": [
+        "other"
+      ],
+      "stats": {
+        "itemCount": 1,
+        "uniqueDisps": 1,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2941,
+      "nameCn": "歌词测试表盘",
+      "nameEn": "歌词测试表盘",
+      "isDefault": false,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1791355958,
+      "itemCount": 6,
+      "itemIds": [],
+      "disps": [
+        4,
+        8,
+        27,
+        37,
+        240,
+        538
+      ],
+      "fonts": [
+        6,
+        28,
+        114
+      ],
+      "assetCount": 1,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy"
+      ],
+      "stats": {
+        "itemCount": 6,
+        "uniqueDisps": 6,
+        "rasterSlotRatio": 0.167,
+        "dominantFonts": [
+          {
+            "id": 28,
+            "share": 0.667
+          },
+          {
+            "id": 114,
+            "share": 0.167
+          },
+          {
+            "id": 6,
+            "share": 0.167
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2942,
+      "nameCn": "线框云境",
+      "nameEn": "Wireframe Sky",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790758297,
+      "itemCount": 9,
+      "itemIds": [],
+      "disps": [
+        4,
+        8,
+        13,
+        27,
+        37,
+        54,
+        173,
+        339,
+        528
+      ],
+      "fonts": [
+        6,
+        52
+      ],
+      "assetCount": 3,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 9,
+        "uniqueDisps": 9,
+        "rasterSlotRatio": 0.333,
+        "dominantFonts": [
+          {
+            "id": 52,
+            "share": 0.667
+          },
+          {
+            "id": 6,
+            "share": 0.333
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2943,
+      "nameCn": "霓虹意识体",
+      "nameEn": "Neon Consciousness",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790762149,
+      "itemCount": 11,
+      "itemIds": [],
+      "disps": [
+        2,
+        3,
+        7,
+        8,
+        9,
+        13,
+        54,
+        173,
+        339,
+        492,
+        528
+      ],
+      "fonts": [
+        6,
+        52,
+        192
+      ],
+      "assetCount": 4,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 11,
+        "uniqueDisps": 11,
+        "rasterSlotRatio": 0.364,
+        "dominantFonts": [
+          {
+            "id": 52,
+            "share": 0.455
+          },
+          {
+            "id": 6,
+            "share": 0.364
+          },
+          {
+            "id": 192,
+            "share": 0.182
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2944,
+      "nameCn": "秘境生长",
+      "nameEn": "Arcane Growth",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1790763016,
+      "itemCount": 9,
+      "itemIds": [],
+      "disps": [
+        4,
+        7,
+        8,
+        9,
+        13,
+        207,
+        339,
+        492,
+        528
+      ],
+      "fonts": [
+        6,
+        52
+      ],
+      "assetCount": 4,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 9,
+        "uniqueDisps": 9,
+        "rasterSlotRatio": 0.444,
+        "dominantFonts": [
+          {
+            "id": 52,
+            "share": 0.556
+          },
+          {
+            "id": 6,
+            "share": 0.444
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2945,
+      "nameCn": "赛博诊断",
+      "nameEn": "Cyber Diagnostics",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791441080,
+      "itemCount": 10,
+      "itemIds": [],
+      "disps": [
+        2,
+        3,
+        8,
+        13,
+        27,
+        37,
+        173,
+        339,
+        492,
+        528
+      ],
+      "fonts": [
+        6,
+        52,
+        194
+      ],
+      "assetCount": 4,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 10,
+        "uniqueDisps": 10,
+        "rasterSlotRatio": 0.4,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.4
+          },
+          {
+            "id": 52,
+            "share": 0.4
+          },
+          {
+            "id": 194,
+            "share": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2946,
+      "nameCn": "喜城纪年",
+      "nameEn": "City Love Chronicle",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791616118,
+      "itemCount": 17,
+      "itemIds": [
+        "PhotoAlbumId"
+      ],
+      "disps": [
+        13,
+        51,
+        59,
+        60,
+        61,
+        62,
+        103,
+        125,
+        173,
+        174,
+        175,
+        198,
+        234,
+        240,
+        254,
+        377,
+        492
+      ],
+      "fonts": [
+        6,
+        12,
+        28,
+        48,
+        196
+      ],
+      "assetCount": 12,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 17,
+        "uniqueDisps": 17,
+        "rasterSlotRatio": 0.706,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.647
+          },
+          {
+            "id": 28,
+            "share": 0.118
+          },
+          {
+            "id": 48,
+            "share": 0.118
+          },
+          {
+            "id": 196,
+            "share": 0.059
+          },
+          {
+            "id": 12,
+            "share": 0.059
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2947,
+      "nameCn": "幽灵终端 ",
+      "nameEn": "Ghost Terminal",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791514539,
+      "itemCount": 13,
+      "itemIds": [
+        "SubClockId_0"
+      ],
+      "disps": [
+        4,
+        13,
+        31,
+        74,
+        125,
+        153,
+        173,
+        174,
+        175,
+        240,
+        254,
+        261,
+        492
+      ],
+      "fonts": [
+        6,
+        38
+      ],
+      "assetCount": 8,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 13,
+        "uniqueDisps": 13,
+        "rasterSlotRatio": 0.615,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.615
+          },
+          {
+            "id": 38,
+            "share": 0.385
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2960,
+      "nameCn": "梨园岁时",
+      "nameEn": "Opera Almanac",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791517469,
+      "itemCount": 15,
+      "itemIds": [],
+      "disps": [
+        13,
+        24,
+        25,
+        49,
+        51,
+        59,
+        60,
+        61,
+        62,
+        103,
+        149,
+        240,
+        254,
+        377,
+        461
+      ],
+      "fonts": [
+        6,
+        28,
+        68
+      ],
+      "assetCount": 7,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 15,
+        "uniqueDisps": 15,
+        "rasterSlotRatio": 0.467,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.4
+          },
+          {
+            "id": 28,
+            "share": 0.333
+          },
+          {
+            "id": 68,
+            "share": 0.267
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2961,
+      "nameCn": "归我小窝",
+      "nameEn": "MY COZY NEST",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791447069,
+      "itemCount": 8,
+      "itemIds": [],
+      "disps": [
+        13,
+        37,
+        39,
+        59,
+        60,
+        61,
+        62,
+        240
+      ],
+      "fonts": [
+        6,
+        36
+      ],
+      "assetCount": 6,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 8,
+        "uniqueDisps": 8,
+        "rasterSlotRatio": 0.75,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.75
+          },
+          {
+            "id": 36,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2962,
+      "nameCn": "月夜灯下 ",
+      "nameEn": "MOONLIGHT UNDER LAMP",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791457132,
+      "itemCount": 7,
+      "itemIds": [],
+      "disps": [
+        13,
+        37,
+        39,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fonts": [
+        6,
+        150
+      ],
+      "assetCount": 5,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 7,
+        "uniqueDisps": 7,
+        "rasterSlotRatio": 0.714,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.714
+          },
+          {
+            "id": 150,
+            "share": 0.286
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2963,
+      "nameCn": "一直闪耀 ",
+      "nameEn": " Best Friends Forever",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791617985,
+      "itemCount": 12,
+      "itemIds": [
+        "PhotoAlbumId",
+        "SubClockId_"
+      ],
+      "disps": [
+        13,
+        27,
+        37,
+        49,
+        59,
+        60,
+        61,
+        62,
+        71,
+        72,
+        174,
+        234
+      ],
+      "fonts": [
+        6,
+        28,
+        198
+      ],
+      "assetCount": 9,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 12,
+        "uniqueDisps": 12,
+        "rasterSlotRatio": 0.75,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.75
+          },
+          {
+            "id": 198,
+            "share": 0.167
+          },
+          {
+            "id": 28,
+            "share": 0.083
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2964,
+      "nameCn": "歌词EQ背景预览",
+      "nameEn": "Lyric EQ preview",
+      "isDefault": false,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1791448800,
+      "itemCount": 1,
+      "itemIds": [],
+      "disps": [
+        538
+      ],
+      "fonts": [
+        114
+      ],
+      "assetCount": 0,
+      "tags": [
+        "other"
+      ],
+      "stats": {
+        "itemCount": 1,
+        "uniqueDisps": 1,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 114,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2966,
+      "nameCn": "榫卯万年",
+      "nameEn": "Timeless Joinery",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791527696,
+      "itemCount": 10,
+      "itemIds": [],
+      "disps": [
+        4,
+        7,
+        21,
+        24,
+        25,
+        103,
+        156,
+        377,
+        523,
+        524
+      ],
+      "fonts": [
+        6,
+        28
+      ],
+      "assetCount": 1,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 10,
+        "uniqueDisps": 10,
+        "rasterSlotRatio": 0.1,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.5
+          },
+          {
+            "id": 28,
+            "share": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2967,
+      "nameCn": "故里时光",
+      "nameEn": "Hometown Memories",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791616140,
+      "itemCount": 6,
+      "itemIds": [
+        "PhotoAlbumId"
+      ],
+      "disps": [
+        4,
+        13,
+        103,
+        198,
+        234,
+        378
+      ],
+      "fonts": [
+        6,
+        68
+      ],
+      "assetCount": 2,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 6,
+        "uniqueDisps": 6,
+        "rasterSlotRatio": 0.333,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.667
+          },
+          {
+            "id": 68,
+            "share": 0.333
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2968,
+      "nameCn": "复古立体声",
+      "nameEn": "Retro Stereo",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791538827,
+      "itemCount": 11,
+      "itemIds": [],
+      "disps": [
+        4,
+        7,
+        8,
+        9,
+        50,
+        73,
+        219,
+        220,
+        254,
+        492,
+        528
+      ],
+      "fonts": [
+        6,
+        8,
+        52
+      ],
+      "assetCount": 3,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 11,
+        "uniqueDisps": 11,
+        "rasterSlotRatio": 0.273,
+        "dominantFonts": [
+          {
+            "id": 8,
+            "share": 0.636
+          },
+          {
+            "id": 6,
+            "share": 0.273
+          },
+          {
+            "id": 52,
+            "share": 0.091
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2969,
+      "nameCn": "光盘故障",
+      "nameEn": "Disc Glitch",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791527678,
+      "itemCount": 13,
+      "itemIds": [],
+      "disps": [
+        2,
+        3,
+        8,
+        13,
+        27,
+        37,
+        50,
+        173,
+        219,
+        220,
+        254,
+        492,
+        528
+      ],
+      "fonts": [
+        6,
+        52,
+        200
+      ],
+      "assetCount": 4,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 13,
+        "uniqueDisps": 13,
+        "rasterSlotRatio": 0.308,
+        "dominantFonts": [
+          {
+            "id": 52,
+            "share": 0.462
+          },
+          {
+            "id": 6,
+            "share": 0.385
+          },
+          {
+            "id": 200,
+            "share": 0.154
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2970,
+      "nameCn": "经典行情",
+      "nameEn": "Classic Market",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791533516,
+      "itemCount": 7,
+      "itemIds": [
+        "SubClockId_0",
+        "SubClockId_1"
+      ],
+      "disps": [
+        4,
+        8,
+        13,
+        27,
+        37,
+        261,
+        262
+      ],
+      "fonts": [
+        6,
+        52
+      ],
+      "assetCount": 1,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 7,
+        "uniqueDisps": 7,
+        "rasterSlotRatio": 0.143,
+        "dominantFonts": [
+          {
+            "id": 52,
+            "share": 0.571
+          },
+          {
+            "id": 6,
+            "share": 0.429
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2972,
+      "nameCn": "小小出门",
+      "nameEn": "A Little Outing",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791538553,
+      "itemCount": 10,
+      "itemIds": [
+        "SubClockId_0"
+      ],
+      "disps": [
+        13,
+        37,
+        39,
+        59,
+        60,
+        61,
+        62,
+        240,
+        254,
+        261
+      ],
+      "fonts": [
+        6,
+        48
+      ],
+      "assetCount": 6,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 10,
+        "uniqueDisps": 10,
+        "rasterSlotRatio": 0.6,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.7
+          },
+          {
+            "id": 48,
+            "share": 0.3
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 2977,
+      "nameCn": "与你并肩 ",
+      "nameEn": " Better Together",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791622080,
+      "itemCount": 9,
+      "itemIds": [
+        "PhotoAlbumId"
+      ],
+      "disps": [
+        2,
+        3,
+        8,
+        9,
+        13,
+        66,
+        173,
+        174,
+        234
+      ],
+      "fonts": [
+        6,
+        202,
+        204
+      ],
+      "assetCount": 5,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 9,
+        "uniqueDisps": 9,
+        "rasterSlotRatio": 0.556,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.556
+          },
+          {
+            "id": 202,
+            "share": 0.222
+          },
+          {
+            "id": 204,
+            "share": 0.222
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3003,
+      "nameCn": "暮色声波",
+      "nameEn": "Twilight Waves",
+      "isDefault": true,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1791620010,
+      "itemCount": 5,
+      "itemIds": [],
+      "disps": [
+        4,
+        37,
+        50,
+        156,
+        538
+      ],
+      "fonts": [
+        6,
+        36,
+        206
+      ],
+      "assetCount": 0,
+      "tags": [
+        "date",
+        "time",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 5,
+        "uniqueDisps": 5,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 36,
+            "share": 0.6
+          },
+          {
+            "id": 6,
+            "share": 0.2
+          },
+          {
+            "id": 206,
+            "share": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3004,
+      "nameCn": "深夜频率",
+      "nameEn": "Midnight Frequency",
+      "isDefault": true,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1791620420,
+      "itemCount": 5,
+      "itemIds": [],
+      "disps": [
+        4,
+        37,
+        50,
+        156,
+        538
+      ],
+      "fonts": [
+        6,
+        8
+      ],
+      "assetCount": 0,
+      "tags": [
+        "date",
+        "time",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 5,
+        "uniqueDisps": 5,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 8,
+            "share": 0.8
+          },
+          {
+            "id": 6,
+            "share": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3005,
+      "nameCn": "纸上乐章",
+      "nameEn": "Paper Symphony",
+      "isDefault": true,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1791620830,
+      "itemCount": 3,
+      "itemIds": [],
+      "disps": [
+        4,
+        50,
+        538
+      ],
+      "fonts": [
+        6,
+        36,
+        206
+      ],
+      "assetCount": 0,
+      "tags": [
+        "time",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 3,
+        "uniqueDisps": 3,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 206,
+            "share": 0.333
+          },
+          {
+            "id": 6,
+            "share": 0.333
+          },
+          {
+            "id": 36,
+            "share": 0.333
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3006,
+      "nameCn": "一直闪耀 ",
+      "nameEn": " Best Friends Forever",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791618011,
+      "itemCount": 12,
+      "itemIds": [
+        "PhotoAlbumId",
+        "SubClockId_"
+      ],
+      "disps": [
+        13,
+        27,
+        37,
+        49,
+        59,
+        60,
+        61,
+        62,
+        71,
+        174,
+        234
+      ],
+      "fonts": [
+        6,
+        28,
+        198
+      ],
+      "assetCount": 9,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 12,
+        "uniqueDisps": 11,
+        "rasterSlotRatio": 0.75,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.75
+          },
+          {
+            "id": 198,
+            "share": 0.167
+          },
+          {
+            "id": 28,
+            "share": 0.083
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3007,
+      "nameCn": "柔彩律动",
+      "nameEn": "Pastel Rhythm",
+      "isDefault": true,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1791621240,
+      "itemCount": 5,
+      "itemIds": [],
+      "disps": [
+        4,
+        37,
+        50,
+        156,
+        538
+      ],
+      "fonts": [
+        6,
+        36,
+        206
+      ],
+      "assetCount": 0,
+      "tags": [
+        "date",
+        "time",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 5,
+        "uniqueDisps": 5,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 36,
+            "share": 0.6
+          },
+          {
+            "id": 206,
+            "share": 0.2
+          },
+          {
+            "id": 6,
+            "share": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3008,
+      "nameCn": "留白之声",
+      "nameEn": "Room for Sound",
+      "isDefault": true,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1791622100,
+      "itemCount": 5,
+      "itemIds": [],
+      "disps": [
+        4,
+        37,
+        50,
+        156,
+        538
+      ],
+      "fonts": [
+        12,
+        28,
+        36
+      ],
+      "assetCount": 0,
+      "tags": [
+        "date",
+        "time",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 5,
+        "uniqueDisps": 5,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 36,
+            "share": 0.6
+          },
+          {
+            "id": 28,
+            "share": 0.2
+          },
+          {
+            "id": 12,
+            "share": 0.2
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3009,
+      "nameCn": "与你并肩 ",
+      "nameEn": " Better Together",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791621154,
+      "itemCount": 8,
+      "itemIds": [
+        "PhotoAlbumId"
+      ],
+      "disps": [
+        2,
+        3,
+        13,
+        37,
+        39,
+        173,
+        174,
+        234
+      ],
+      "fonts": [
+        6,
+        202,
+        204
+      ],
+      "assetCount": 4,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 8,
+        "uniqueDisps": 8,
+        "rasterSlotRatio": 0.5,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.5
+          },
+          {
+            "id": 202,
+            "share": 0.25
+          },
+          {
+            "id": 204,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3010,
+      "nameCn": "山海夜行",
+      "nameEn": "Nightfall Odyssey",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791596731,
+      "itemCount": 15,
+      "itemIds": [],
+      "disps": [
+        13,
+        49,
+        59,
+        60,
+        61,
+        62,
+        103,
+        176,
+        177,
+        207,
+        240,
+        254,
+        378,
+        379,
+        492
+      ],
+      "fonts": [
+        6
+      ],
+      "assetCount": 8,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 15,
+        "uniqueDisps": 15,
+        "rasterSlotRatio": 0.533,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3011,
+      "nameCn": "留白乐章",
+      "nameEn": "Notes in White",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791615091,
+      "itemCount": 4,
+      "itemIds": [],
+      "disps": [
+        4,
+        37,
+        156,
+        538
+      ],
+      "fonts": [
+        36,
+        206
+      ],
+      "assetCount": 0,
+      "tags": [
+        "date",
+        "time",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 4,
+        "uniqueDisps": 4,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 36,
+            "share": 0.75
+          },
+          {
+            "id": 206,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3012,
+      "nameCn": "潮汐回响",
+      "nameEn": "Tidal Echoes",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791616817,
+      "itemCount": 4,
+      "itemIds": [],
+      "disps": [
+        4,
+        37,
+        156,
+        538
+      ],
+      "fonts": [
+        36,
+        206
+      ],
+      "assetCount": 0,
+      "tags": [
+        "date",
+        "time",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 4,
+        "uniqueDisps": 4,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 36,
+            "share": 0.75
+          },
+          {
+            "id": 206,
+            "share": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3013,
+      "nameCn": "前程可期  ",
+      "nameEn": "The Next Chapter",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791618847,
+      "itemCount": 7,
+      "itemIds": [
+        "PhotoAlbumId"
+      ],
+      "disps": [
+        4,
+        13,
+        37,
+        39,
+        49,
+        173,
+        234
+      ],
+      "fonts": [
+        6,
+        68,
+        204
+      ],
+      "assetCount": 3,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 7,
+        "uniqueDisps": 7,
+        "rasterSlotRatio": 0.429,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.429
+          },
+          {
+            "id": 204,
+            "share": 0.429
+          },
+          {
+            "id": 68,
+            "share": 0.143
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3014,
+      "nameCn": "前程可期  ",
+      "nameEn": "The Next Chapter",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791618837,
+      "itemCount": 8,
+      "itemIds": [
+        "PhotoAlbumId"
+      ],
+      "disps": [
+        4,
+        8,
+        9,
+        13,
+        49,
+        66,
+        173,
+        234
+      ],
+      "fonts": [
+        6,
+        28,
+        204
+      ],
+      "assetCount": 4,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 8,
+        "uniqueDisps": 8,
+        "rasterSlotRatio": 0.5,
+        "dominantFonts": [
+          {
+            "id": 204,
+            "share": 0.5
+          },
+          {
+            "id": 6,
+            "share": 0.375
+          },
+          {
+            "id": 28,
+            "share": 0.125
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3016,
+      "nameCn": "战术脉冲",
+      "nameEn": "Tactical Pulse",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791620225,
+      "itemCount": 10,
+      "itemIds": [
+        "SubClockId_0"
+      ],
+      "disps": [
+        4,
+        13,
+        50,
+        220,
+        240,
+        254,
+        261,
+        343,
+        454,
+        492
+      ],
+      "fonts": [
+        6,
+        40
+      ],
+      "assetCount": 5,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 10,
+        "uniqueDisps": 10,
+        "rasterSlotRatio": 0.5,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.6
+          },
+          {
+            "id": 40,
+            "share": 0.4
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3020,
+      "nameCn": "軌道ターミナル",
+      "nameEn": "軌道ターミナル",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791622765,
+      "itemCount": 14,
+      "itemIds": [
+        "SubClockId_0"
+      ],
+      "disps": [
+        4,
+        13,
+        50,
+        66,
+        74,
+        173,
+        174,
+        220,
+        240,
+        261,
+        339,
+        378,
+        473,
+        492
+      ],
+      "fonts": [
+        6,
+        28,
+        38
+      ],
+      "assetCount": 8,
+      "tags": [
+        "weather",
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 14,
+        "uniqueDisps": 14,
+        "rasterSlotRatio": 0.571,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.643
+          },
+          {
+            "id": 38,
+            "share": 0.286
+          },
+          {
+            "id": 28,
+            "share": 0.071
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 3031,
+      "nameCn": "生日惊喜 ",
+      "nameEn": "Birthday Surprise",
+      "isDefault": true,
+      "sources": [
+        "server-fallback"
+      ],
+      "sysUpdateTime": 1791624487,
+      "itemCount": 9,
+      "itemIds": [],
+      "disps": [
+        8,
+        9,
+        13,
+        59,
+        60,
+        61,
+        62,
+        66,
+        173
+      ],
+      "fonts": [
+        6,
+        48
+      ],
+      "assetCount": 6,
+      "tags": [
+        "date",
+        "time",
+        "asset_heavy",
+        "default"
+      ],
+      "stats": {
+        "itemCount": 9,
+        "uniqueDisps": 9,
+        "rasterSlotRatio": 0.667,
+        "dominantFonts": [
+          {
+            "id": 6,
+            "share": 0.778
+          },
+          {
+            "id": 48,
+            "share": 0.222
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 29998,
+      "nameCn": "歌词静态底图仿真",
+      "nameEn": "Lyric Static Background Simulator",
+      "isDefault": false,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1789961899,
+      "itemCount": 1,
+      "itemIds": [],
+      "disps": [
+        538
+      ],
+      "fonts": [
+        0
+      ],
+      "assetCount": 0,
+      "tags": [
+        "other"
+      ],
+      "stats": {
+        "itemCount": 1,
+        "uniqueDisps": 1,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 0,
+            "share": 1
+          }
+        ]
+      }
+    },
+    {
+      "clockId": 29999,
+      "nameCn": "歌词表盘仿真",
+      "nameEn": "Lyric Dial Simulator",
+      "isDefault": false,
+      "sources": [
+        "userdata"
+      ],
+      "sysUpdateTime": 1789961899,
+      "itemCount": 2,
+      "itemIds": [],
+      "disps": [
+        471,
+        538
+      ],
+      "fonts": [
+        0
+      ],
+      "assetCount": 0,
+      "tags": [
+        "other"
+      ],
+      "stats": {
+        "itemCount": 2,
+        "uniqueDisps": 2,
+        "rasterSlotRatio": 0,
+        "dominantFonts": [
+          {
+            "id": 0,
+            "share": 1
           }
         ]
       }

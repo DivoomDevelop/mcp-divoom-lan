@@ -1,15 +1,15 @@
 {
   "schema": 1,
   "model": "astrotoo",
-  "generatedAt": "2026-09-22T13:22:12.429Z",
+  "generatedAt": "2026-10-10T09:35:34.834Z",
   "source": {
     "file": "resource/usr/share/divoom_app/system/font_list.cfg",
     "nameCache": "resource/usr/share/divoom_app/system/font_name.cfg",
     "nameCommand": "Device/GetFontForAI",
     "deviceId": 300400436,
     "counts": {
-      "local": 84,
-      "named": 68
+      "local": 92,
+      "named": 75
     }
   },
   "notes": [
@@ -941,6 +941,94 @@
       "style_tags": [],
       "recommendedFor": [],
       "notes": "AstroToo local font; source asset group1/M00/1C/44/rBAAM2qyR4OEbawWAAAAAI6VwFc387.bin"
+    },
+    {
+      "id": 192,
+      "type": 0,
+      "type_name": "image",
+      "name": "5*5 uppercase letters",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [],
+      "recommendedFor": [],
+      "notes": "AstroToo local font; source asset group1/M00/1C/7C/rBAAM2q8ujKESdZOAAAAANyIwAM646.bin"
+    },
+    {
+      "id": 194,
+      "type": 0,
+      "type_name": "image",
+      "name": "4*7 numerals",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [],
+      "recommendedFor": [],
+      "notes": "AstroToo local font; source asset group1/M00/14/CF/Ci0s8Wq83bGEMoonAAAAAKBY748076.bin"
+    },
+    {
+      "id": 196,
+      "type": 0,
+      "type_name": "image",
+      "name": "4*6 numerals/uppercase letters/characters",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [],
+      "recommendedFor": [],
+      "notes": "AstroToo local font; source asset group1/M00/15/11/Ci0s8WrIWxmEbssxAAAAAJBGpAA954.bin"
+    },
+    {
+      "id": 198,
+      "type": 0,
+      "type_name": "image",
+      "name": "4*5 numerals/uppercase letters/characters",
+      "charset": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "script": "latin",
+      "style_tags": [],
+      "recommendedFor": [],
+      "notes": "AstroToo local font; source asset group1/M00/15/12/Ci0s8WrIgmyEZpXxAAAAAG9PqzQ130.bin"
+    },
+    {
+      "id": 200,
+      "type": 0,
+      "type_name": "image",
+      "name": "3*6 numerals/characters",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [],
+      "recommendedFor": [],
+      "notes": "AstroToo local font; source asset group1/M00/15/12/Ci0s8WrIh4mEDKv9AAAAAPZ7Be4512.bin"
+    },
+    {
+      "id": 202,
+      "type": 0,
+      "type_name": "image",
+      "name": "3*5 lowercase a/p",
+      "charset": "0123456789",
+      "script": "digits",
+      "style_tags": [],
+      "recommendedFor": [],
+      "notes": "AstroToo local font; source asset group1/M00/15/13/Ci0s8WrIq-yEPlo3AAAAAH-lrlg823.bin"
+    },
+    {
+      "id": 204,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "4*6 numerals/characters",
+      "charset": "",
+      "script": "unicode",
+      "style_tags": [],
+      "recommendedFor": [],
+      "notes": "AstroToo local font; source asset group1/M00/15/13/Ci0s8WrIu46EBHthAAAAAJnxnhs330.ttf"
+    },
+    {
+      "id": 206,
+      "type": 1,
+      "type_name": "ttf",
+      "name": "Font 206",
+      "charset": "",
+      "script": "unicode",
+      "style_tags": [],
+      "recommendedFor": [],
+      "notes": "AstroToo local font; source asset group1/M00/15/14/Ci0s8WrIvGKECclbAAAAAKE3f3k187.ttf"
     }
   ]
 }
