@@ -73,6 +73,8 @@ The original resource URIs retain TimesFrame semantics. AstroToo has separate 48
 - `divoom://astrotoo/guide`
 - `divoom://astrotoo/disp/summary`
 - `divoom://astrotoo/disp/catalog`
+- `divoom://astrotoo/disp/guide/en`
+- `divoom://astrotoo/disp/guide/zh-cn`
 - `divoom://astrotoo/font/catalog`
 - `divoom://astrotoo/clocks/catalog`
 - `divoom://astrotoo/clocks/configs`

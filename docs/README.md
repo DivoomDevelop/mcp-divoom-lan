@@ -5,6 +5,7 @@ If you are new to the Divoom MCP server, read the documentation in this order:
 1. `quick-start.md`: install, configure, and complete the first call in about five minutes.
 2. `mcp-tools.md`: all 21 MCP tools, product scope, and file policy.
 3. `astrotoo-and-multiple-devices.md`: Hardware detection, concurrent devices, and AstroToo local persistence.
+   - AstroToo display-element guides: `../resources/astrotoo/display-elements.en.md` and `../resources/astrotoo/display-elements.zh-CN.md`.
 4. `adding-products.md`: product registration, isolated resource directories, and onboarding checks.
 5. `tool-examples.md`: core operations, including sequential AstroToo asset uploads, creation, and analog pointers.
 6. `html-visual-editor.md`: use the HTML visual editor with this MCP server.

@@ -114,6 +114,8 @@ const RESOURCES = [
     ["divoom://astrotoo/guide", "AstroToo LAN Guide", "guide.md", "text/markdown"],
     ["divoom://astrotoo/disp/catalog", "AstroToo Disp Catalog", "disp-catalog.json", "application/json"],
     ["divoom://astrotoo/disp/summary", "AstroToo Disp Summary", "disp-summary.json", "application/json"],
+    ["divoom://astrotoo/disp/guide/en", "AstroToo Display Elements Guide (English)", "display-elements.en.md", "text/markdown"],
+    ["divoom://astrotoo/disp/guide/zh-cn", "AstroToo Display Elements Guide (Chinese)", "display-elements.zh-CN.md", "text/markdown"],
     ["divoom://astrotoo/font/catalog", "AstroToo Font Policy", "font-catalog.json", "application/json"],
     ["divoom://astrotoo/clocks/catalog", "AstroToo Clock Catalog", "clock-catalog.json", "application/json"],
     ["divoom://astrotoo/clocks/configs", "AstroToo Clock Configurations", "clock-configs.json", "application/json"],

@@ -9,3 +9,5 @@ Product-specific data lives under one directory per product:
 Each product directory owns its clock IDs and names, fonts, `disp` meanings, element IDs, schemas, examples and templates. Do not resolve a resource by falling back to another product directory. Add a future product to `src/devices.ts` and `products.json`, then supply that product's directory before enabling its hardware code.
 
 Public MCP resource URIs remain stable. The runtime maps those URIs to these directories internally.
+
+AstroToo display-element documentation is stored with its product data as `astrotoo/display-elements.en.md` and `astrotoo/display-elements.zh-CN.md` and is exposed through language-specific MCP resource URIs.

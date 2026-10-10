@@ -265,6 +265,12 @@ test("AstroToo display knowledge includes categories, usage proof, implicit comp
   assert.ok(schema.$defs.item.properties.disp.enum.includes(176));
   assert.ok(!schema.$defs.item.properties.disp.enum.includes(181));
   assert.ok(!schema.$defs.item.properties.disp.enum.includes(280));
+  const englishGuide=(await client.readResource({uri:"divoom://astrotoo/disp/guide/en"})).contents[0].text;
+  const chineseGuide=(await client.readResource({uri:"divoom://astrotoo/disp/guide/zh-cn"})).contents[0].text;
+  assert.match(englishGuide,/522 IDs/);
+  assert.match(englishGuide,/declaration_only/);
+  assert.match(chineseGuide,/522 个 ID/);
+  assert.match(chineseGuide,/全屏歌词/);
 });
 test("single-device precheck and patch remain adjacent",async()=>{
   const n=astro.state.calls.length;
