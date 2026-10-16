@@ -6,22 +6,30 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
 
+## [0.2.0] - 2026-10-16
+
 ### Added
 
 - Automatic per-target product detection through `Device/GetHardwareVersion`, including independent queues for multiple devices.
+- `watchface_list_devices` discovery through `Device/ReturnSameLANDevice`, returning selectable TimesFrame/AstroToo targets while filtering Pixoo64 90/92/96, Times Gate 400/402, malformed rows, and other unsupported products.
 - AstroToo 480×480 profiles, resources, templates, live font availability, local-only uploads, and `watchface_get_device_info`.
 - Product-specific `watchface_clock_catalog` plus AstroToo catalogs generated from both simulator `clocksys` directories, `Device/GetClockDefaultList`, `Device/GetClockInfoV3`, `font_list.cfg`, and `Device/GetFontForAI`.
 - Product registry and isolated `resources/timesframe`, `resources/astrotoo`, and `resources/common` directories, with an onboarding guide for future products.
+- Release metadata validation and an end-to-end AstroToo workflow covering create, update, switch, readback, and screenshot verification.
 
 ### Changed
 
-- Watchface creation and patching now manage fixed ClockId 60000. Each operation reads that slot first, creates it when missing and complete creation data is available, or updates it when present.
+- Watchface creation and patching now inject the internal managed ClockId automatically. Each operation reads that slot first, creates it when missing and complete creation data is available, or updates it when present.
 - AstroToo writes require `Device/GetLanCapabilities` with the local-only LAN API. Cloud reset and raw-command bypasses are rejected.
 - AstroToo assets are uploaded serially as temporary device-local `local://` staging files, consumed after successful binding and cleared on reboot when unbound; TAR/TGZ/ZIP bundles are rejected by MCP and firmware.
 - TimesFrame generic `/upload` is blocked by MCP because it enters the device network task. TimesFrame create/patch multipart inputs now use unique staging paths and are deleted after processing; neither product's LAN receive path uploads files outward.
 - Snapshot downloads now validate WebP, JPEG, PNG, or BMP and follow AstroToo's per-capture BMP path.
 - HTTP, JSON, business responses, multipart sizes, read-before-write, snapshots, and write timeouts now use strict failure handling.
-- TimesFrame hardware identification is limited to 510/511/512; AstroToo remains 530. Clock IDs, names, fonts, `disp`, item IDs, templates, and layout data are isolated by product.
+- TimesFrame hardware identification uses 510/511/512, AstroToo uses 530, and a hardware command with no response falls back to TimesFrame for older-device compatibility. Returned unknown Hardware values remain errors. Clock IDs, names, fonts, `disp`, item IDs, templates, and layout data are isolated by product.
+
+### Fixed
+
+- Treat AstroToo's `no local sys clock file for ClockId 60000` response as a missing managed slot so the first complete write creates the watchface instead of failing before upload.
 
 ## [0.1.7] - 2026-06-09
 

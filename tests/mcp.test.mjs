@@ -10,12 +10,26 @@ import path from "node:path";
 
 let client, transport, astro, frame, temporary;
 async function mock(hardware) {
-  const state = { hardware, local: true, assetPath: "/upload_local_asset", managedClockExists: true, calls: [], fail: null, invalid: false, empty: false, noSnapshot: false, timeoutWrite: false };
+  const state = { hardware, hardwareNoResponse: false, discoveryFail: false, local: true, assetPath: "/upload_local_asset", managedClockExists: true, calls: [], fail: null, invalid: false, empty: false, noSnapshot: false, timeoutWrite: false };
   const server = http.createServer(async (req,res) => {
     let chunks=[]; for await (const c of req) chunks.push(c);
     const raw=Buffer.concat(chunks);
     if(req.method==="GET") {
-      if(req.url.endsWith(".bmp")) { res.writeHead(200,{"Content-Type":"image/bmp"}); res.end(Buffer.from("BMmock-bitmap")); }
+      if(req.url==="/Device/ReturnSameLANDevice") {
+        if(state.discoveryFail) { res.statusCode=503; res.end(JSON.stringify({ReturnCode:1,ReturnMessage:"fixture discovery failure"})); return; }
+        res.setHeader("Content-Type","application/json");
+        res.end(JSON.stringify({ReturnCode:0,ReturnMessage:"",DeviceList:[
+          {DeviceName:"AstroToo Lab",DeviceId:300426474,DevicePrivateIP:"192.168.13.142",DeviceMac:"00a62bfb9cd9",Hardware:530},
+          {DeviceName:"TimesFrame Lab",DeviceId:300251436,DevicePrivateIP:"192.168.13.159",DeviceMac:"4c37def93d9d",Hardware:511},
+          {DeviceName:"Pixoo64",DeviceId:300000705,DevicePrivateIP:"192.168.13.103",DeviceMac:"58bf25a78008",Hardware:90},
+          {DeviceName:"Pixoo64",DeviceId:300032946,DevicePrivateIP:"10.0.0.124",Hardware:92},
+          {DeviceName:"Pixoo64 Gen 2",DeviceId:300322928,DevicePrivateIP:"192.168.1.13",Hardware:96},
+          {DeviceName:"Times Gate",DeviceId:300053220,DevicePrivateIP:"10.0.0.63",Hardware:400},
+          {DeviceName:"Times Gate Simulator",DeviceId:300438376,DevicePrivateIP:"192.168.13.2",Hardware:402},
+          {DeviceName:"Malformed",DeviceId:null,DevicePrivateIP:"",Hardware:null}
+        ]}));
+      }
+      else if(req.url.endsWith(".bmp")) { res.writeHead(200,{"Content-Type":"image/bmp"}); res.end(Buffer.from("BMmock-bitmap")); }
       else { res.writeHead(200,{"Content-Type":"image/webp"}); res.end(Buffer.from("RIFF1234WEBP1234")); }
       return;
     }
@@ -26,6 +40,7 @@ async function mock(hardware) {
     }
     const body=JSON.parse(raw);
     state.calls.push(body);
+    if(body.Command==="Device/GetHardwareVersion" && state.hardwareNoResponse) { req.socket.destroy(); return; }
     let data={ReturnCode:0,Command:body.Command};
     if(body.Command==="Device/GetHardwareVersion") data={...data,Hardware:state.hardware};
     else if(body.Command==="Device/GetLanCapabilities") data={...data,Hardware:state.hardware,LocalOnly:state.local,LanApiVersion:1,BundleMaxBytes:0,SupportsAssetBundle:false,AssetTransfer:"sequential",LocalAssetUploadPath:state.assetPath,UploadPersistence:"temporary-until-bound",OutboundFileUpload:false};
@@ -55,7 +70,7 @@ before(async()=>{
   astro=await mock(530); frame=await mock(511);
   temporary=await mkdtemp(path.join(os.tmpdir(),"divoom-mcp-test-"));
   transport=new StdioClientTransport({command:process.execPath,args:["dist/index.js"],
-    env:{...process.env,DIVOOM_DEVICE_HOST:"",DIVOOM_DEVICE_MODEL:"auto"},stderr:"pipe"});
+    env:{...process.env,DIVOOM_DEVICE_HOST:"",DIVOOM_DEVICE_MODEL:"auto",DIVOOM_DISCOVERY_URL:`http://127.0.0.1:${astro.server.address().port}/Device/ReturnSameLANDevice`},stderr:"pipe"});
   client=new Client({name:"tests",version:"1.0"});
   await client.connect(transport);
 });
@@ -74,6 +89,23 @@ test("identify each target by Hardware; no model leaks across devices",async()=>
   assert.equal(astro.state.calls[0].Command,"Device/GetHardwareVersion");
   assert.equal(frame.state.calls[0].Command,"Device/GetHardwareVersion");
 });
+test("device discovery returns selectable supported targets",async()=>{
+  const found=data(await call("watchface_list_devices",{port:9100}));
+  assert.equal(found.rawDeviceCount,8);
+  assert.equal(found.supportedDeviceCount,2);
+  assert.equal(found.returnedDeviceCount,2);
+  assert.equal(found.filteredUnsupported,5);
+  assert.equal(found.ignoredMalformed,1);
+  assert.deepEqual(found.devices.map(row=>row.model),["astrotoo","timesframe"]);
+  assert.deepEqual(found.devices[0].target,{host:"192.168.13.142",port:9100,model:"auto"});
+  assert.equal("deviceMac" in found.devices[0],false);
+
+  assert.ok(found.devices.every(row=>[510,511,512,530].includes(row.hardware)));
+
+  astro.state.discoveryFail=true;
+  assert.equal((await call("watchface_list_devices",{})).isError,true);
+  astro.state.discoveryFail=false;
+});
 test("unknown hardware and mismatched manual overrides are rejected",async()=>{
   astro.state.hardware=999;
   assert.equal((await call("watchface_get_device_info",{target:astro.target})).isError,true);
@@ -81,6 +113,16 @@ test("unknown hardware and mismatched manual overrides are rejected",async()=>{
   assert.equal((await call("watchface_get_device_info",{target:{...astro.target,model:"timesframe"}})).isError,true);
   assert.throws(()=>hardwareModel(500),/Unsupported device Hardware/);
   for(const hardware of [510,511,512]) assert.equal(hardwareModel(hardware),"timesframe");
+});
+test("no Hardware response defaults auto detection to TimesFrame",async()=>{
+  frame.state.hardwareNoResponse=true;
+  const detected=data(await call("watchface_get_device_info",{target:frame.target}));
+  assert.equal(detected.model,"timesframe");
+  assert.equal(detected.hardware,null);
+  assert.equal(detected.identification,"hardware-no-response-fallback");
+  assert.equal(data(await call("watchface_get_brightness",{target:frame.target})).responseJson.Brightness,50);
+  assert.equal((await call("watchface_get_device_info",{target:{...frame.target,model:"astrotoo"}})).isError,true);
+  frame.state.hardwareNoResponse=false;
 });
 test("re-query hardware after an address changes product",async()=>{
   astro.state.hardware=510;
@@ -104,7 +146,12 @@ test("invalid, failed and empty prechecks never issue a patch",async()=>{
   }
   astro.state.invalid=false;astro.state.empty=false;astro.state.fail=null;
 });
-test("create and patch are locked to ClockId 60000",async()=>{
+test("managed ClockId is internal to create and patch tools",async()=>{
+  const listed=await client.listTools();
+  const patchTool=listed.tools.find(tool=>tool.name==="watchface_patch_local");
+  assert.ok(patchTool);
+  assert.equal(Object.hasOwn(patchTool.inputSchema.properties,"clockId"),false);
+
   const beforePatch=astro.state.calls.length;
   data(await call("watchface_patch_local",{
     target:astro.target,itemPatchList:[{index:0,patch:{size:31}}],
@@ -112,14 +159,6 @@ test("create and patch are locked to ClockId 60000",async()=>{
   const patchCalls=astro.state.calls.slice(beforePatch).filter(c=>
     c.Command==="Device/GetLocalClockInfo" || c.Command==="Device/PatchLocalClockInfo");
   assert.deepEqual(patchCalls.map(c=>c.ClockId),[60000,60000]);
-
-  const beforeWrongPatch=astro.state.calls.length;
-  const wrongPatch=await call("watchface_patch_local",{
-    target:astro.target,clockId:60001,itemPatchList:[{index:0,patch:{size:32}}],
-  });
-  assert.equal(wrongPatch.isError,true);
-  assert.match(wrongPatch.content[0].text,/must be 60000/);
-  assert.ok(!astro.state.calls.slice(beforeWrongPatch).some(c=>c.Command==="Device/PatchLocalClockInfo"));
 
   const wrongRawPatch=await call("watchface_raw_command",{
     target:astro.target,command:"Device/PatchLocalClockInfo",payload:{ClockId:60001,ItemPatchList:[]},
@@ -129,12 +168,15 @@ test("create and patch are locked to ClockId 60000",async()=>{
 
   const background=path.join(temporary,"fixed-clock-bg.webp");
   await writeFile(background,"RIFF1234WEBPpayload");
-  const wrongCreate=await call("watchface_create_local_clock",{
+  const legacyCreate=data(await call("watchface_create_local_clock",{
     target:astro.target,imagePath:background,
-    metadata:{ClockId:60001,DialAssets:"image",ItemList:[],ItemIdList:[]},
-  });
-  assert.equal(wrongCreate.isError,true);
-  assert.match(wrongCreate.content[0].text,/must be 60000/);
+    metadata:{ClockId:60001,clockId:60002,DialAssets:"image",ItemList:[],ItemIdList:[]},
+  }));
+  assert.equal(legacyCreate.operation,"updated");
+  const legacyUpdate=astro.state.calls.findLast(c=>c.path==="/patch_local_clock");
+  assert.ok(legacyUpdate.raw.includes(Buffer.from('"ClockId":60000')));
+  assert.ok(!legacyUpdate.raw.includes(Buffer.from('"ClockId":60001')));
+  assert.ok(!legacyUpdate.raw.includes(Buffer.from('"clockId":60002')));
 
   const updated=data(await call("watchface_create_local_clock",{
     target:astro.target,imagePath:background,
@@ -175,7 +217,7 @@ test("create and patch are locked to ClockId 60000",async()=>{
 test("AstroToo background bytes use validated multipart instead of DeviceImageUrl",async()=>{
   const n=astro.state.calls.length;
   const result=await call("watchface_patch_local",{
-    target:astro.target,clockId:60000,deviceImageUrl:"local://temporary.bin",
+    target:astro.target,deviceImageUrl:"local://temporary.bin",
   });
   assert.equal(result.isError,true);
   assert.match(result.content[0].text,/dialAssetsPath/);

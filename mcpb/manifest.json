@@ -2,9 +2,9 @@
   "manifest_version": "0.3",
   "name": "mcp-divoom-lan",
   "display_name": "Divoom LAN Watchface",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "MCP server for TimesFrame and AstroToo watchface customization over LAN.",
-  "long_description": "Controls one or more Divoom devices and identifies each target from its Hardware response before selecting the TimesFrame or AstroToo profile. Includes read-before-write safeguards and AstroToo local-only asset persistence.",
+  "long_description": "Discovers selectable Divoom devices, filters unsupported products, and identifies each chosen target from its Hardware response before selecting the TimesFrame or AstroToo profile. A hardware command with no response falls back to TimesFrame for older-device compatibility. Includes read-before-write safeguards and AstroToo local-only asset persistence.",
   "author": {
     "name": "Divoom Developers"
   },
@@ -43,7 +43,7 @@
     "divoom_device_model": {
       "type": "string",
       "title": "Product detection",
-      "description": "Use auto to identify each target by Hardware. timesframe is only a legacy firmware fallback.",
+      "description": "Use auto to identify each target by Hardware. If the hardware command gets no response, auto falls back to TimesFrame.",
       "default": "auto",
       "required": false
     },

@@ -1,8 +1,8 @@
 {
   "name": "mcp-divoom-lan",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "mcpName": "io.github.DivoomDevelop/mcp-divoom-lan",
-  "description": "Multi-device MCP server for TimesFrame and AstroToo LAN watchface customization",
+  "description": "Discover and control TimesFrame and AstroToo LAN watchfaces through MCP",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DivoomDevelop/mcp-divoom-lan.git"
@@ -26,7 +26,8 @@
     "sync:editor": "node scripts/sync-editor-ai-bundle.mjs",
     "build:font-catalog": "node scripts/build-font-catalog.mjs",
     "build:templates": "node scripts/build-templates-and-typography.mjs",
-    "release:check": "npm run check && npm run build && npm pack --dry-run",
+    "check:release-metadata": "node scripts/check-release-metadata.mjs",
+    "release:check": "npm run check:release-metadata && npm run check && npm run build && npm pack --dry-run",
     "prepack": "npm run build",
     "mcpb:staging": "node scripts/build-mcpb.mjs",
     "mcpb:validate": "npx --yes @anthropic-ai/mcpb validate mcpb/staging",

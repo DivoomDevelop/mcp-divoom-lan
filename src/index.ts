@@ -22,6 +22,9 @@ const DEFAULT_MODEL = process.env.DIVOOM_DEVICE_MODEL ?? "auto";
 const DEFAULT_HOST = (process.env.DIVOOM_DEVICE_HOST ?? "").trim();
 const DEFAULT_PORT = parseIntegerOrDefault(process.env.DIVOOM_DEVICE_PORT, 9000);
 const DEFAULT_TIMEOUT_MS = parseIntegerOrDefault(process.env.DIVOOM_TIMEOUT_MS, 45_000);
+const DEVICE_DISCOVERY_URL =
+  (process.env.DIVOOM_DISCOVERY_URL ?? "").trim() ||
+  "https://app.divoom-gz.com/Device/ReturnSameLANDevice";
 const MANAGED_CLOCK_ID = 60_000;
 
 const __filename = fileURLToPath(import.meta.url);
@@ -132,7 +135,7 @@ const targetSchema = {
     "Optional per-call target override. If omitted, environment variables are used.",
   properties: {
     model: { type: "string", enum: ["auto", "timesframe", "astrotoo"], default: "auto",
-      description: "Normally auto: query Hardware first. Explicit timesframe is only a legacy firmware fallback." },
+      description: "Normally auto: query Hardware first and fall back to TimesFrame only when the command gets no response. Explicit values validate the detected or fallback product." },
     host: {
       type: "string",
       description: "Device LAN IP. Example: 192.168.1.120",
@@ -171,17 +174,11 @@ const tools: Tool[] = [
   {
     name: "watchface_patch_local",
     description:
-      "Upsert fixed local ClockId 60000. The tool first calls Device/GetLocalClockInfo for 60000. If it exists, the tool uses Device/PatchLocalClockInfo; if it is missing, creation requires dialAssetsPath plus a complete ItemList and ItemIdList and uses Device/CreateLocalClock. Field-only updates use POST /divoom_api; asset updates use multipart. Prefer ItemPatchList for existing rows and do not include item_id inside patch.* unless explicitly renaming a slot. TimesFrame accepts a JPEG/WebP backdrop or clock_bg.tar.gz bundle. AstroToo accepts one JPEG/WebP backdrop only after element files are uploaded separately and bound through local:// FileId values. AstroToo rejects TAR/TGZ/ZIP and bundle_image.",
+      "Upsert the MCP-managed local watchface. The server injects its managed ClockId, reads that slot first, updates it when present, and creates it when missing if dialAssetsPath plus complete ItemList and ItemIdList are supplied. Callers do not provide a ClockId. Field-only updates use POST /divoom_api; asset updates use multipart. Prefer ItemPatchList for existing rows and do not include item_id inside patch.* unless explicitly renaming a slot. TimesFrame accepts a JPEG/WebP backdrop or clock_bg.tar.gz bundle. AstroToo accepts one JPEG/WebP backdrop only after element files are uploaded separately and bound through local:// FileId values. AstroToo rejects TAR/TGZ/ZIP and bundle_image.",
     inputSchema: {
       type: "object",
       properties: {
         target: targetSchema,
-        clockId: {
-          type: "integer",
-          enum: [MANAGED_CLOCK_ID],
-          default: MANAGED_CLOCK_ID,
-          description: "Optional compatibility field. Only ClockId 60000 is accepted.",
-        },
         deviceImageUrl: { type: "string" },
         devicePreviewImageUrl: { type: "string" },
         devicePreviewImageUrl2: { type: "string" },
@@ -360,7 +357,7 @@ const tools: Tool[] = [
   {
     name: "watchface_create_local_clock",
     description:
-      "Upsert fixed local ClockId 60000 with multipart. The tool first reads ClockId 60000, calls Device/CreateLocalClock only when it is missing, and otherwise calls Device/PatchLocalClockInfo to replace/update it. TimesFrame accepts DialAssets image/auto/bundle and may use clock_bg.tar.gz. AstroToo accepts DialAssets=image only: upload every element separately with watchface_upload_file, put each returned local:// FileId in ItemList[i].image_addr, then call this tool with one 480x480 JPEG/WebP backdrop. AstroToo rejects TAR/TGZ/ZIP, UseDialAssetBundle!=0, and bundle_image.",
+      "Upsert the MCP-managed local watchface with multipart. The server injects its managed ClockId, reads that slot first, creates it only when missing, and otherwise updates it. Callers do not provide a ClockId. TimesFrame accepts DialAssets image/auto/bundle and may use clock_bg.tar.gz. AstroToo accepts DialAssets=image only: upload every element separately with watchface_upload_file, put each returned local:// FileId in ItemList[i].image_addr, then call this tool with one 480x480 JPEG/WebP backdrop. AstroToo rejects TAR/TGZ/ZIP, UseDialAssetBundle!=0, and bundle_image.",
     inputSchema: {
       type: "object",
       properties: {
@@ -373,7 +370,7 @@ const tools: Tool[] = [
         metadata: {
           type: "object",
           description:
-            "First multipart JSON: ClockName, ItemList, ItemIdList. ClockId is always 60000; another explicit value is rejected. AstroToo requires DialAssets=image and local:// image_addr values from prior per-file uploads. TimesFrame may use auto/image/bundle and legacy UseDialAssetBundle.",
+            "First multipart JSON: ClockName, ItemList, ItemIdList. Omit ClockId; the MCP server injects the managed slot automatically. AstroToo requires DialAssets=image and local:// image_addr values from prior per-file uploads. TimesFrame may use auto/image/bundle and legacy UseDialAssetBundle.",
         },
         filePartName: {
           type: "string",
@@ -1228,6 +1225,82 @@ async function readResource(uri: string) {
 async function handleToolCall(name: string, rawArgs: unknown) {
   const args = rawArgs === undefined ? {} : ensureRecord(rawArgs, "arguments");
 
+  if (name === "watchface_list_devices") {
+    const timeoutMs = optionalInteger(args.timeoutMs, "timeoutMs") ?? DEFAULT_TIMEOUT_MS;
+    const port = optionalInteger(args.port, "port") ?? DEFAULT_PORT;
+    if (timeoutMs <= 0) throw new Error("timeoutMs must be > 0.");
+    if (port <= 0 || port > 65535) throw new Error("port must be between 1 and 65535.");
+
+    let response: Response;
+    try {
+      response = await fetch(DEVICE_DISCOVERY_URL, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout(timeoutMs),
+      });
+    } catch (error) {
+      throw new Error(`Device discovery request failed: ${String(error)}`);
+    }
+    let body: unknown;
+    try {
+      body = await response.json();
+    } catch {
+      throw new Error("Device discovery returned invalid JSON.");
+    }
+    assertResponse(response.status, body);
+    if (!Array.isArray(body.DeviceList)) {
+      throw new Error("Device discovery response is missing DeviceList.");
+    }
+
+    let ignoredMalformed = 0;
+    let filteredUnsupported = 0;
+    const devices = body.DeviceList.flatMap((value) => {
+      if (!value || typeof value !== "object" || Array.isArray(value)) {
+        ignoredMalformed += 1;
+        return [];
+      }
+      const row = value as JsonRecord;
+      const host = typeof row.DevicePrivateIP === "string" ? row.DevicePrivateIP.trim() : "";
+      const deviceId = row.DeviceId;
+      const hardware = row.Hardware;
+      if (!host || !Number.isInteger(deviceId) || !Number.isInteger(hardware)) {
+        ignoredMalformed += 1;
+        return [];
+      }
+      const product = (Object.entries(PRODUCTS) as [Model, (typeof PRODUCTS)[Model]][])
+        .find(([, profile]) => profile.hardware.includes(hardware as number));
+      if (!product) {
+        filteredUnsupported += 1;
+        return [];
+      }
+      const model = product[0];
+      const deviceName = typeof row.DeviceName === "string" && row.DeviceName.trim()
+        ? row.DeviceName.trim()
+        : `Divoom ${String(deviceId)}`;
+      return [{
+        label: `${deviceName} (${host})`,
+        deviceName,
+        deviceId,
+        host,
+        port,
+        hardware,
+        model,
+        target: { host, port, model: "auto" },
+      }];
+    });
+    return {
+      sourceUrl: DEVICE_DISCOVERY_URL,
+      discoveredAt: new Date().toISOString(),
+      rawDeviceCount: body.DeviceList.length,
+      supportedDeviceCount: devices.length,
+      returnedDeviceCount: devices.length,
+      filteredUnsupported,
+      ignoredMalformed,
+      devices,
+      selectionHint: "Ask the user to choose one entry, then pass its target object to subsequent watchface tools.",
+    };
+  }
+
   if (name === "watchface_get_local") {
     const target = resolveTarget(args.target);
     const body: JsonRecord = {};
@@ -1260,11 +1333,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
 
   if (name === "watchface_patch_local") {
     const target = resolveTarget(args.target);
-    const clockId = fixedManagedClockId(args.clockId, "clockId");
-    if (args.useCurrentDisplayClock !== undefined) {
-      throw new Error(`watchface_patch_local always targets ClockId ${MANAGED_CLOCK_ID}; useCurrentDisplayClock is not accepted.`);
-    }
-    const body: JsonRecord = { ClockId: clockId };
+    const body: JsonRecord = { ClockId: MANAGED_CLOCK_ID };
 
     if (target.model === "astrotoo" && args.deviceImageUrl !== undefined) {
       throw new Error(
@@ -1506,12 +1575,16 @@ async function handleToolCall(name: string, rawArgs: unknown) {
     const target = resolveTarget(args.target);
     const imagePath = requiredString(args.imagePath, "imagePath");
     const metadataInput = ensureRecord(args.metadata, "metadata");
-    const clockId = fixedManagedClockId(metadataInput.ClockId, "metadata.ClockId");
+    const {
+      ClockId: _callerClockId,
+      clockId: _callerClockIdLowercase,
+      ...callerMetadata
+    } = metadataInput;
     const clockState = await getManagedClockState(target);
     const exists = clockState.exists;
     const metadata: JsonRecord = {
-      ...metadataInput,
-      ClockId: clockId,
+      ...callerMetadata,
+      ClockId: MANAGED_CLOCK_ID,
       Command: exists ? "Device/PatchLocalClockInfo" : "Device/CreateLocalClock",
       ReturnCode: 0,
     };
@@ -2002,8 +2075,9 @@ async function handleToolCall(name: string, rawArgs: unknown) {
   }
   if (name === "watchface_protocol_quick_reference") {
     const lines = [
+      "0) Call watchface_list_devices and let the user choose one supported target before controlling a device.",
       "1) Always POST JSON to /divoom_api (never GET). Root ReturnCode in the request must be 0.",
-      "2) Create and patch tools manage fixed ClockId 60000. They read it first, create it only when missing and complete creation data is available, otherwise update it. Other explicit ClockId values are rejected.",
+      "2) The user never supplies a ClockId for create or patch. The MCP server injects its managed slot, reads it first, creates it only when missing and complete creation data is available, and otherwise updates it.",
       "3) Patch minimally with ItemPatchList (per-index field diff) and ItemPatchByRoleList (semantic role). Do NOT include item_id inside patch.* unless explicitly renaming a slot — the device-side item_id is referenced by menus/config bindings.",
       "4) Only fall back to a full ItemList replacement when row count actually changes (rows added/removed). For pure metadata edits (size/x/y/font/color), POST /divoom_api JSON-only is enough.",
       "5) When new bytes need to land on the device, switch to multipart /patch_local_clock or /create_local_clock. JSON part first (name=\"json\"; filename=\"cmd.json\"), file part second (filename=\"clock_bg.jpg|webp|tar.gz\"); both parts carry per-part Content-Length; boundary is unquoted; CRLF; single file per request.",
@@ -2046,11 +2120,24 @@ const offlineTools = new Set([
   "watchface_clock_catalog", "watchface_disp_catalog", "watchface_font_catalog", "watchface_template_search",
   "watchface_layout_suggest", "watchface_protocol_quick_reference",
 ]);
+const discoveryTools = new Set(["watchface_list_devices"]);
 const identifiedTargets = new WeakSet<object>();
 tools.unshift({
   name: "watchface_get_device_info",
-  description: "Query this device's Hardware version first, then return its product profile and LAN capabilities. Each target is identified independently.",
+  description: "Query this device's Hardware version first, then return its product profile and LAN capabilities. A command with no response falls back to TimesFrame; an explicit unknown Hardware value is rejected. Each target is identified independently.",
   inputSchema: { type: "object", properties: { target: targetSchema }, additionalProperties: false },
+});
+tools.unshift({
+  name: "watchface_list_devices",
+  description: "List devices returned by https://app.divoom-gz.com/Device/ReturnSameLANDevice so the user can choose a target. Only supported TimesFrame Hardware 510/511/512 and AstroToo Hardware 530 are returned. Pixoo64 Hardware 90/92/96, Times Gate Hardware 400/402, and every other unsupported product are filtered out. Each entry includes a ready-to-use target object.",
+  inputSchema: {
+    type: "object",
+    properties: {
+      port: { type: "integer", default: 9000, description: "Port placed in each selectable target object." },
+      timeoutMs: { type: "integer", default: 45000 },
+    },
+    additionalProperties: false,
+  },
 });
 for (const tool of tools) {
   if (offlineTools.has(tool.name)) {
@@ -2060,8 +2147,10 @@ for (const tool of tools) {
       model: { type: "string", enum: ["timesframe", "astrotoo"], description: "For offline authoring only. A connected target's hardware determines its model." },
     };
   }
-  tool.description = (tool.description ?? "") +
-    " For AstroToo, first query hardware/capabilities; use the 480x480 AstroToo resources. Legacy 800x1280 examples and typography apply only to TimesFrame.";
+  if (!discoveryTools.has(tool.name)) {
+    tool.description = (tool.description ?? "") +
+      " For AstroToo, first query hardware/capabilities; use the 480x480 AstroToo resources. Legacy 800x1280 examples and typography apply only to TimesFrame.";
+  }
 }
 function authoringModel(args: JsonRecord): Model {
   const value = args.model ?? "timesframe";
@@ -2070,6 +2159,7 @@ function authoringModel(args: JsonRecord): Model {
 }
 async function dispatchTool(name: string, rawArgs: unknown) {
   const args = rawArgs === undefined ? {} : ensureRecord(rawArgs, "arguments");
+  if (discoveryTools.has(name)) return handleToolCall(name, args);
   const needsDevice = deviceTools.has(name) || (offlineTools.has(name) && (args.target !== undefined || DEFAULT_HOST !== ""));
   if (!needsDevice) return handleToolCall(name, args);
   const unresolved = resolveTarget(args.target);

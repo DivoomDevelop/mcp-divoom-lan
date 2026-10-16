@@ -1,6 +1,6 @@
 export type Model = "timesframe" | "astrotoo";
 export type Target = { host: string; port: number; timeoutMs: number; model?: Model | "auto" };
-export type IdentifiedTarget = Target & { model: Model; hardware: number | null; capabilities: Record<string, unknown>; identification: "hardware" | "legacy-override" };
+export type IdentifiedTarget = Target & { model: Model; hardware: number | null; capabilities: Record<string, unknown>; identification: "hardware" | "legacy-override" | "hardware-no-response-fallback" };
 type ProductProfile = { hardware: readonly number[]; canvas: { width: number; height: number }; resourceDir: string };
 export const PRODUCTS: Record<Model, ProductProfile> = {
   timesframe: { hardware: [510, 511, 512], canvas: { width: 800, height: 1280 }, resourceDir: "timesframe" },
@@ -23,17 +23,29 @@ export function assertResponse(status: number, response: unknown): asserts respo
   if (data.ReturnCode !== 0)
     throw new Error(`Device error ReturnCode=${String(data.ReturnCode)}: ${String(data.ReturnMessage ?? "missing success code")}`);
 }
+export class DeviceNoResponseError extends Error {
+  constructor(command: string, cause: unknown) {
+    super(`Device did not respond to ${command}: ${String(cause)}`);
+    this.name = "DeviceNoResponseError";
+    this.cause = cause;
+  }
+}
 export async function request(target: Target, command: string) {
   const payloadText = JSON.stringify({ Command: command, ReturnCode: 0 });
-  const response = await fetch(`http://${target.host}:${target.port}/divoom_api`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-      "Content-Length": Buffer.byteLength(payloadText, "utf8").toString(),
-    },
-    body: payloadText,
-    signal: AbortSignal.timeout(target.timeoutMs),
-  });
+  let response: Response;
+  try {
+    response = await fetch(`http://${target.host}:${target.port}/divoom_api`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Length": Buffer.byteLength(payloadText, "utf8").toString(),
+      },
+      body: payloadText,
+      signal: AbortSignal.timeout(target.timeoutMs),
+    });
+  } catch (error) {
+    throw new DeviceNoResponseError(command, error);
+  }
   const body: unknown = await response.json();
   assertResponse(response.status, body);
   return body;
@@ -53,9 +65,17 @@ export async function identify(target: Target): Promise<IdentifiedTarget> {
   let info: Record<string, unknown>;
   try { info = await request(target, "Device/GetHardwareVersion"); }
   catch (error) {
-    if (target.model === "timesframe")
-      return { ...target, model: "timesframe", hardware: null, capabilities: {}, identification: "legacy-override" };
-    throw new Error(`Cannot read device hardware version; upgrade firmware or explicitly select a legacy TimesFrame. ${String(error)}`);
+    if (error instanceof DeviceNoResponseError && target.model !== "astrotoo")
+      return {
+        ...target,
+        model: "timesframe",
+        hardware: null,
+        capabilities: {},
+        identification: target.model === "timesframe" ? "legacy-override" : "hardware-no-response-fallback",
+      };
+    if (error instanceof DeviceNoResponseError)
+      throw new Error(`Configured model astrotoo requires a Hardware response. ${String(error)}`);
+    throw new Error(`Cannot validate device hardware version because the device returned an invalid or failed response. ${String(error)}`);
   }
   const model = hardwareModel(info.Hardware);
   if (target.model && target.model !== "auto" && target.model !== model)

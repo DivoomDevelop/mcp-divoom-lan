@@ -47,22 +47,20 @@ docker run --rm -e DIVOOM_DEVICE_HOST=127.0.0.1 mcp-divoom-lan:glama
 
 ### Elevator pitch
 
-MCP server for Divoom LAN watchface operations with practical safety boundaries: read-before-write flow, explicit destructive command warning, and multipart endpoint support.
+Multi-device MCP server for TimesFrame and AstroToo watchface creation, updates, switching, brightness, and screenshot verification over LAN.
 
 ### Full description
 
-`mcp-divoom-lan` enables MCP-compatible AI clients to operate Divoom watchface customization workflows over LAN HTTP APIs.
+`mcp-divoom-lan` enables MCP-compatible AI clients to operate TimesFrame and AstroToo watchface workflows over LAN HTTP APIs. Every online call requests the target Hardware and selects isolated product data. A hardware command with no response falls back to TimesFrame; a returned unknown value is rejected.
 
 It provides:
 
-- Local clock config read and patch tools
-- Font and market list discovery
-- Dial switch and brightness controls
-- Multipart wrappers for:
-  - `/replace_clock_dial_bg`
-  - `/upload`
-  - `/create_local_clock`
-- Quick-reference MCP resources for protocol and skill behavior
+- Supported-device discovery through `Device/ReturnSameLANDevice`, with Pixoo64 90/92/96, Times Gate 400/402, and other unsupported hardware filtered out
+- managed-slot create and patch tools that inject the internal ClockId automatically
+- Product-specific clock, font, display-element, template, and layout discovery
+- Watchface switching, brightness, screen power, and screenshot capture
+- AstroToo sequential local asset transfer and 480×480 backdrop validation
+- Per-device operation queues for multi-device control
 
 ### Transport and runtime
 
@@ -74,19 +72,21 @@ It provides:
 
 - `DIVOOM_DEVICE_HOST` (recommended global default)
 - `DIVOOM_DEVICE_PORT` (default 9000)
+- `DIVOOM_DEVICE_MODEL` (default `auto`)
 - `DIVOOM_TIMEOUT_MS` (default 45000)
 
 ### Example use cases
 
-- "Read current watchface JSON and list editable text items."
-- "Increase time font size and set color to red."
-- "Replace current dial background with this 800x1280 image."
+- "Identify this device and list its editable watchface elements."
+- "Increase the time size, read back the update, and capture a screenshot."
+- "Create a 480x480 AstroToo weather watchface with local assets."
 
 ### Safety considerations
 
 - Requires local network/device access.
-- `watchface_reset_local_then_cloud` may delete local sys-side files first.
-- Verify changes with `watchface_get_local` after write actions.
+- `watchface_reset_local_then_cloud` is TimesFrame-only and is blocked for AstroToo.
+- AstroToo does not accept TAR/TGZ/ZIP; upload image elements sequentially.
+- Verify writes with readback and a fresh device screenshot.
 
 ### Links
 

@@ -2,6 +2,16 @@
 
 This document shows MCP parameters for patching, selecting, changing brightness, creating a watchface, updating assets, replacing a backdrop, and uploading AstroToo files individually.
 
+## 0. Discover a device and let the user choose
+
+Tool: `watchface_list_devices`
+
+```json
+{}
+```
+
+Present `devices[].label` to the user. After the user chooses one entry, pass that entry's `target` object to every later device tool. The list contains only TimesFrame Hardware 510/511/512 and AstroToo Hardware 530. Pixoo64 90/92/96, Times Gate 400/402, malformed rows, and other unsupported products are filtered out.
+
 ## 1. Increase the time font and change it to red
 
 Tool: `watchface_patch_local`
@@ -20,7 +30,7 @@ Tool: `watchface_patch_local`
 }
 ```
 
-The tool first reads fixed ClockId 60000. `size_delta` is applied to the current `size`. Call `watchface_get_local` with `clockId:60000` afterward to verify the committed value.
+The tool injects and reads its internal managed slot first. `size_delta` is applied to the current `size`; read the managed watchface afterward to verify the committed value.
 
 ## 2. Select a watchface by ClockId
 
@@ -187,20 +197,16 @@ Tool: `watchface_patch_local` with `dialAssetsPath`
 
 ```json
 {
-  "clockId": 60000,
   "dialAssetsPath": "C:/build/patch_assets.tar.gz",
-  "metadata": {
-    "DialAssets": "bundle",
-    "ItemPatchList": [
-      {
-        "index": 5,
-        "patch": {
-          "image_addr": "weather_pack_v2.bin",
-          "bundle_image": "weather_pack_v2.bin"
-        }
+  "itemPatchList": [
+    {
+      "index": 5,
+      "patch": {
+        "image_addr": "weather_pack_v2.bin",
+        "bundle_image": "weather_pack_v2.bin"
       }
-    ]
-  }
+    }
+  ]
 }
 ```
 
@@ -216,7 +222,6 @@ Tool: `watchface_patch_local` without `dialAssetsPath`
 
 ```json
 {
-  "clockId": 60000,
   "itemPatchList": [
     { "index": 0, "patch": { "size": 320 } },
     { "index": 0, "patch": { "color_1": "#ffaa00" } },
@@ -225,9 +230,23 @@ Tool: `watchface_patch_local` without `dialAssetsPath`
 }
 ```
 
-Send only changed fields. The quick reference lists the `wf_apply_item_patch` allowlist. Alignment values are 3 for center, 4 for left, and 5 for right. Keep `item_id` out of `patch.*`. The tool always prechecks ClockId 60000. If that slot is missing, creation requires `dialAssetsPath` plus complete `itemList` and `itemIdList`.
+Send only changed fields. The quick reference lists the `wf_apply_item_patch` allowlist. Alignment values are 3 for center, 4 for left, and 5 for right. Keep `item_id` out of `patch.*`. Do not supply `clockId`; the tool injects and prechecks its managed slot. If that slot is missing, creation requires `dialAssetsPath` plus complete `itemList` and `itemIdList`.
 
 ## 7. Replace only the backdrop
+
+To update the managed backdrop, use `watchface_patch_local` with one image and omit `clockId`. This performs the standard pre-read and transactional update:
+
+```json
+{
+  "target": { "host": "192.168.1.120", "port": 9000 },
+  "dialAssetsPath": "C:/images/replace_bg.webp",
+  "fileName": "clock_bg.webp"
+}
+```
+
+AstroToo requires a 480×480 JPEG or WebP smaller than 500 KiB. The existing `ItemList` remains unchanged.
+
+The dedicated cached-backdrop operation is also available:
 
 Tool: `watchface_replace_dial_bg_file`
 
@@ -238,7 +257,7 @@ Tool: `watchface_replace_dial_bg_file`
 }
 ```
 
-This replaces the decoded cache without changing the URL field in the configuration. `/replace_clock_dial_bg` accepts one JPEG/WebP file as the second multipart part and does not accept tar.gz.
+This replaces the decoded cache without changing the URL field in the configuration. `/replace_clock_dial_bg` accepts one JPEG/WebP file as the second multipart part and does not accept tar.gz. Use the managed patch form above when the backdrop update belongs to the persistent ClockId 60000 workflow.
 
 ## 8. Create an AstroToo watchface after sequential asset uploads
 
@@ -301,6 +320,6 @@ Upload `hour.png`, `minute.png`, and `second.png` in order. Read the `local://..
 }
 ```
 
-The abbreviated `ItemList` shows one pointer structure. The submitted configuration must contain every entry referenced by `ItemIdList`. A complete three-pointer and date example is in `artifacts/astrotoo-spring-watchface/create-payload.json`; the end-to-end MCP example is `artifacts/astrotoo-spring-watchface/create-via-mcp.mjs`.
+The abbreviated `ItemList` shows one pointer structure. The submitted configuration must contain every entry referenced by `ItemIdList`. See `astrotoo-watchface-workflow.md` for the packaged end-to-end workflow, including product detection, updates, selection, readback, and screenshot verification.
 
 AstroToo rejects TAR, TGZ, and ZIP. A `local://...` value is a temporary transfer reference on that device. After a successful create or patch, firmware moves bound assets into the persistent watchface directory. Unbound assets are removed on reboot and are never sent to an external server. The MCP server blocks generic TimesFrame `/upload`; files supplied to TimesFrame create or patch operations are likewise temporary device-side inputs for that operation only.

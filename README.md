@@ -1,6 +1,6 @@
 # mcp-divoom-lan
 
-`mcp-divoom-lan` is an open-source MCP server that wraps Divoom TimesFrame and AstroToo watchface LAN APIs as standard tools for AI clients. One server can control several devices: every operation first reads `Device/GetHardwareVersion` from that target and selects the product profile from the returned `Hardware` value.
+`mcp-divoom-lan` is an open-source MCP server that wraps Divoom TimesFrame and AstroToo watchface LAN APIs as standard tools for AI clients. One server can control several devices: every operation first reads `Device/GetHardwareVersion` from that target and selects the product profile from the returned `Hardware` value. If that command gets no response, the server falls back to TimesFrame for compatibility with older devices; an explicit unknown Hardware value is still rejected.
 
 It works together with the **v2** HTML visual editor for modifying watchfaces, switching faces, adjusting brightness, and creating new local watchfaces.
 
@@ -19,19 +19,23 @@ Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-spec
 
 ## Default safety policy (important)
 
-- **Identify every target first:** `Hardware` 510/511/512 selects TimesFrame; 530 selects AstroToo. Unknown hardware is rejected. `DeviceType` is not used for product detection.
-- **Fixed managed slot:** create and patch operations first read `ClockId 60000`. A missing slot is created; an existing slot is updated.
-- **Read before write:** the MCP server performs the ClockId 60000 precheck, writes, and then clients should read back to verify.
+- **Identify every target first:** `Hardware` 510/511/512 selects TimesFrame; 530 selects AstroToo. A command with no response falls back to TimesFrame, while an explicit unknown Hardware value is rejected. `DeviceType` is not used for product detection.
+- **Internal managed slot:** users and MCP clients omit `ClockId` from create and patch calls. The server injects its managed slot, reads it first, creates it when missing, and updates it when present.
+- **Read before write:** the MCP server prechecks its managed slot, writes, and then clients should read back to verify.
 - If `GetLocalClockInfo` returns an **empty `ItemList`:** stop writes; switch to an editable watchface first.
-- Do **not** call `watchface_create_local_clock` unless the user clearly asks to create a new one (no implicit creation).
+- Prefer `watchface_patch_local` for edits. Use `watchface_create_local_clock` when the user asks to create a watchface or when intentionally replacing the complete managed configuration and backdrop.
 
-## Implemented tools (21)
+## Implemented tools (22)
+
+Discovery tool (1):
+
+- `watchface_list_devices` → calls `https://app.divoom-gz.com/Device/ReturnSameLANDevice`, filters out unsupported products, and returns selectable TimesFrame/AstroToo `target` objects
 
 Device tools (15):
 
 - `watchface_get_device_info` → hardware identification and LAN capability report
 - `watchface_get_local` → `Device/GetLocalClockInfo`
-- `watchface_patch_local` → fixed `ClockId 60000` upsert. Existing configurations use `Device/PatchLocalClockInfo`; a missing configuration is created when a backdrop and complete item tables are supplied.
+- `watchface_patch_local` → managed-slot upsert with no caller-supplied `ClockId`. Existing configurations use `Device/PatchLocalClockInfo`; a missing configuration is created when a backdrop and complete item tables are supplied.
 - `watchface_get_fonts_local` → `Device/GetLocalFontList`
 - `watchface_get_store_market_list` → `Device/GetStoreClockMarketList`
 - `watchface_set_clock_select` → `Channel/SetClockSelectId` (TimesFrame queues a paired request inside one serialized MCP operation so a manual selection suppresses the active traditional schedule for the current period; AstroToo sends once)
@@ -40,7 +44,7 @@ Device tools (15):
 - `watchface_onoff_screen` → `Channel/OnOffScreen` (1=on, 0=off)
 - `watchface_replace_dial_bg_file` → `POST /replace_clock_dial_bg`
 - `watchface_upload_file` → AstroToo-only `POST /upload_local_asset`; returns a temporary `local://` staging reference consumed by a successful create/patch. AstroToo keeps product photo/pixel `POST /upload` separate. TimesFrame generic `/upload` is blocked in local-only MCP mode.
-- `watchface_create_local_clock` → fixed `ClockId 60000` multipart upsert: `/create_local_clock` when missing and `/patch_local_clock` when already present.
+- `watchface_create_local_clock` → managed-slot multipart upsert with no caller-supplied `ClockId`: `/create_local_clock` when missing and `/patch_local_clock` when already present.
 - `watchface_reset_local_then_cloud` → `Device/ResetLocalClockFromServer`
 - `watchface_get_screen_snapshot` → `Device/GetScreenSnapshot` (downloads the returned AstroToo snapshot path; TimesFrame keeps its WebP fallback)
 - `watchface_raw_command` → generic `POST /divoom_api`
@@ -90,9 +94,32 @@ For [MCPB](https://github.com/anthropics/mcpb)-compatible hosts (e.g. Claude des
 2. From this package root: `npm run mcpb:pack`
 3. Output: `mcp-divoom-lan.mcpb` (gitignored). The staging directory `mcpb/staging/` is also gitignored.
 
-The bundle includes `dist/`, `resources/`, production `node_modules`, and a `manifest.json` with user fields for **device IP**, **port**, and **timeout**.
+The bundle includes `dist/`, `resources/`, production `node_modules`, and a `manifest.json` with user fields for **device IP**, **port**, **product detection**, and **timeout**.
 
 ## Quick start
+
+Published npm package:
+
+```json
+{
+  "mcpServers": {
+    "divoom-lan": {
+      "command": "npx",
+      "args": ["-y", "mcp-divoom-lan@latest"],
+      "env": {
+        "DIVOOM_DEVICE_HOST": "192.168.1.120",
+        "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_DEVICE_MODEL": "auto",
+        "DIVOOM_TIMEOUT_MS": "45000"
+      }
+    }
+  }
+}
+```
+
+`DIVOOM_DEVICE_HOST` is optional. Leave it unset and include `target.host` in each tool call when one MCP server controls multiple devices.
+
+Build from source:
 
 ```bash
 cd tools/mcp-divoom-lan  # or your clone root for this package
@@ -129,6 +156,7 @@ npm run release:check
 - `docs/quick-start.md` — minimal setup
 - `docs/mcp-tools.md` — complete 21-tool API catalog and model-specific file policy
 - `docs/astrotoo-and-multiple-devices.md` — hardware detection, multiple targets, and AstroToo local storage
+- `docs/astrotoo-watchface-workflow.md` — release-ready AstroToo create, update, switch, and screenshot workflow
 - `docs/adding-products.md` — product registry, isolated resource directories, and onboarding checks
 - `docs/tool-examples.md` — tool usage examples (includes §5b analog pointer layout)
 - `docs/disp-usage.md` — choosing `disp` ids (pointer layout `131/132/233`; net-gallery uniqueness `13/125–130/173–175`)
@@ -141,7 +169,7 @@ npm run release:check
 
 - `DIVOOM_DEVICE_HOST` — device LAN IP (e.g. `192.168.1.120`)
 - `DIVOOM_DEVICE_PORT` — HTTP port, default `9000`
-- `DIVOOM_DEVICE_MODEL` — `auto` (default), `timesframe`, or `astrotoo`; explicit values are compatibility checks, except `timesframe` can support legacy firmware without the hardware query
+- `DIVOOM_DEVICE_MODEL` — `auto` (default), `timesframe`, or `astrotoo`; auto falls back to TimesFrame only when the hardware command gets no response, and explicit values validate the detected or fallback product
 - `DIVOOM_TIMEOUT_MS` — request timeout ms, default `45000`
 
 If `DIVOOM_DEVICE_HOST` is unset, each tool call must pass `target.host`. To control several devices, pass a different `target` on each call. The server serializes a complete operation per `host:port` while allowing independent devices to run concurrently.
@@ -176,7 +204,7 @@ You can also copy `client-config.example.json` in this directory as a starting p
 1. Use a dedicated repo (e.g. `mcp-divoom-lan`) with this package at the repo root.
 2. Verify metadata: `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `RELEASE.md` as applicable.
 3. Run `npm run release:check`.
-4. Tag a GitHub release (e.g. `v0.1.2`) with screenshots and sample requests if helpful.
+4. Tag a GitHub release (e.g. `v0.2.0`) with screenshots and sample requests if helpful.
 5. Submit listings where appropriate (MCP Registry, Smithery, Glama, [MCP.so](https://mcp.so/submit), and community indexes). For Glama, follow `GLAMA_SUBMISSION_READY.md` (including `Dockerfile` and `glama.json`). For MCP.so, follow `MCP_SO_SUBMISSION_READY.md`. For the Volcengine MCP catalog, see `VOLCENGINE_SUBMISSION_READY.md` (PR: https://github.com/volcengine/mcp-server/pull/398). For an Alibaba Cloud Bailian custom MCP deployed with npx, see `BAILIAN_MCP_SUBMISSION_READY.md`. For publishing a Coze HTTP plugin, see `COZE_SUBMISSION_READY.md`.
 6. Minimal demo flow: `watchface_get_local` → `watchface_patch_local` (font size/color) → `watchface_replace_dial_bg_file` (background).
 

@@ -6,6 +6,7 @@
 
 - [ ] `npm install`
 - [ ] `npm run release:check`
+- [ ] Confirm `package.json`, `package-lock.json`, `server.json`, and `mcpb/manifest.json` report the same version
 - [ ] Confirm `dist/index.js` is up to date
 - [ ] Confirm `client-config.example.json` works on a clean client
 
@@ -37,13 +38,17 @@
 - [ ] Submit/update Smithery
 - [ ] Submit/update Glama (`GLAMA_SUBMISSION_READY.md`)
 - [ ] Submit/update MCP.so (`MCP_SO_SUBMISSION_READY.md`, [submit form](https://mcp.so/submit))
-- [ ] 阿里云百炼自定义 MCP（`BAILIAN_MCP_SUBMISSION_READY.md`；[帮助中心-自定义 MCP](https://help.aliyun.com/zh/model-studio/custom-mcp)）
-- [ ] 扣子 Coze 插件（`COZE_SUBMISSION_READY.md`；[扣子官方教程](https://www.coze.cn/api/open/docs/tutorial/build_a_agent_query_plugin)）
+- [ ] Alibaba Cloud Bailian custom MCP (`BAILIAN_MCP_SUBMISSION_READY.md`)
+- [ ] Coze HTTP plugin (`COZE_SUBMISSION_READY.md`)
 - [ ] Verify listing install instructions
 
 ## F. Post-release smoke test
 
 - [ ] Fresh install from published source
-- [ ] `watchface_get_local` returns expected data
-- [ ] `watchface_patch_local` works on a non-destructive patch
-- [ ] `watchface_replace_dial_bg_file` works with valid image
+- [ ] `watchface_list_devices` returns only Hardware 510/511/512/530 and omits MAC addresses
+- [ ] `watchface_get_device_info` identifies TimesFrame and AstroToo from Hardware
+- [ ] `watchface_get_local` returns expected product-specific data
+- [ ] `watchface_patch_local` injects the managed slot ID, updates it, and readback matches
+- [ ] AstroToo accepts a 480×480 JPEG/WebP backdrop and returns a fresh screenshot
+- [ ] AstroToo element files upload sequentially and no TAR/TGZ/ZIP is used
+- [ ] TimesFrame create, patch, switch, and screenshot regression tests pass

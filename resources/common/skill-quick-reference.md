@@ -14,6 +14,9 @@ HTML editor's behavior (see `divoom_app/tools/divoom-watchface-visual-editor`).
 
 ## Mandatory behavior
 
+0. Call `watchface_list_devices` and ask the user to choose one returned target
+   before controlling a device. Unsupported Pixoo64 and Times Gate products are
+   filtered by the tool.
 1. Always call `POST /divoom_api` with JSON body. Set root `ReturnCode` to `0`.
 2. **Read before write:** `Device/GetLocalClockInfo` first; if `ItemList` is
    empty, stop and ask the user to switch to an editable clock first.
@@ -42,10 +45,10 @@ HTML editor's behavior (see `divoom_app/tools/divoom-watchface-visual-editor`).
     2 seconds**, then `GET http://<host>:9000/userdata/snapshot.webp`. Compare
     the WebP with your design or a prior capture (MCP:
     `watchface_get_screen_snapshot`).
-11. Do not call `watchface_create_local_clock` unless the user explicitly asks
-    to create a new clock. Both create and patch tools reserve ClockId 60000,
-    pre-read it, create it only from complete creation data when missing, and
-    otherwise update it.
+11. Never ask the user for a managed watchface ID and never add one to the user
+    prompt. Create and patch calls omit `ClockId`; the MCP server injects its
+    managed slot, pre-reads it, creates it only from complete creation data when
+    missing, and otherwise updates it.
 
 ## Risky operations (require explicit user intent)
 

@@ -11,6 +11,8 @@ and rejects TAR/TGZ/ZIP bundles.
 
 ## Core transport rules
 
+- Start with `watchface_list_devices`, let the user choose a supported target,
+  and reuse that row's `target` object for the operation.
 - API entry: `POST http://<DEVICE_IP>:<PORT>/divoom_api`
 - Typical port is `9000` (confirm on firmware)
 - Use `Content-Type: application/json; charset=UTF-8`
@@ -61,7 +63,7 @@ matrix; agents on top of this MCP should mirror it for predictable behavior:
 4. If any leaf needs uploading, switch to multipart `/patch_local_clock` and
    add `bundle_image: <leaf>` to that index's patch.
 5. Send and re-read with `GetLocalClockInfo` to verify.
-6. MCP create and patch tools reserve ClockId 60000. They pre-read it and may create it only from a complete configuration plus backdrop; color/style-only patch requests never auto-create a missing slot.
+6. Omit `ClockId` from MCP create and patch calls. The server injects and pre-reads its managed slot and may create it only from a complete configuration plus backdrop; color/style-only patch requests never auto-create a missing slot.
 
 ## Screen snapshot (visual verification)
 

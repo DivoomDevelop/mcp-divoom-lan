@@ -69,7 +69,7 @@ Use these MCP resources:
 3. Load one of the reported `usage.exampleClockIds` through `watchface_clock_catalog` with `includeConfig:true`, or read it from the full configuration resource.
 4. Copy complete related families instead of isolated rows. Forecast columns, calendar composites, image sequences, time-digit images, and app-data columns often depend on sibling elements.
 5. Confirm the element's `dataSource`. Layout JSON cannot create weather, calendar, music, finance, AI, app, or network data when the corresponding runtime provider is absent.
-6. Upload each required local element image separately with `watchface_upload_file`, bind the returned `local://` reference, and commit it through the fixed ClockId 60000 create/patch flow.
+6. Upload each required local element image separately with `watchface_upload_file`, bind the returned `local://` reference, and commit it through the managed create/patch flow without supplying a `ClockId`.
 7. Read back the configuration and capture a new snapshot after writing.
 
 ## Important element families

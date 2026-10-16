@@ -6,14 +6,15 @@ This file is the release runbook for `mcp-divoom-lan`.
 
 ```bash
 npm install
-npm run check
-npm run build
-npm pack --dry-run
+npm test
+npm run release:check
 ```
+
+`release:check` verifies that npm, MCP Registry, and MCPB metadata use the same version before type checking, building, and running the package dry run.
 
 ## 2) Versioning
 
-1. Update `package.json` version.
+1. Update `package.json`, `package-lock.json`, `server.json`, and `mcpb/manifest.json` to the same version.
 2. Update `CHANGELOG.md` with release date and highlights.
 3. Ensure `README.md` examples match current behavior.
 
@@ -51,7 +52,11 @@ Keep these fields consistent across directories:
 
 - Install server from published artifact in a clean environment.
 - Call:
+  - `watchface_get_device_info`
   - `watchface_get_local`
   - `watchface_patch_local`
-  - `watchface_replace_dial_bg_file`
+  - `watchface_set_clock_select`
+  - `watchface_get_screen_snapshot`
+- On AstroToo, verify a 480×480 backdrop update and sequential upload of any image elements.
+- On TimesFrame, run create, patch, switch, and snapshot regression checks.
 - Confirm docs and demo still match real behavior.

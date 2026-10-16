@@ -4,7 +4,7 @@ Store each product's reference data in its own `resources/<model>/` directory. T
 
 ## Product registry
 
-Register the Hardware values, canvas size, and resource directory in `PRODUCTS` in `src/devices.ts`, then update `resources/products.json` to match. A Hardware value may belong to only one product. Every online device operation starts with `Device/GetHardwareVersion`; unknown Hardware values are rejected.
+Register the Hardware values, canvas size, and resource directory in `PRODUCTS` in `src/devices.ts`, then update `resources/products.json` to match. A Hardware value may belong to only one product. Every online device operation starts with `Device/GetHardwareVersion`; returned unknown Hardware values are rejected. A command with no response uses the documented TimesFrame compatibility fallback.
 
 ## Directory layout
 
@@ -25,7 +25,7 @@ A product-specific `guide.md` and other supporting files may also be added. Runt
 1. Add the Hardware mapping and product resource directory.
 2. Prepare independent data for `watchface_clock_catalog`, fonts, `disp`, templates, and the schema.
 3. Add public resource URIs while preserving the meaning of existing URIs.
-4. Add tests for automatic identification, directory selection, isolation of duplicate names or IDs, and rejection of unknown Hardware values.
+4. Add tests for automatic identification, the no-response TimesFrame fallback, directory selection, isolation of duplicate names or IDs, and rejection of returned unknown Hardware values.
 5. Run type checking, MCP protocol tests, and resource generators, then validate on the corresponding physical device.
 
 Never identify a product from `DeviceType`, an IP address, a previous device result, or a commonly used ClockId alone.

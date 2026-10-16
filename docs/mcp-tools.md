@@ -1,6 +1,14 @@
 # MCP Tool API
 
-The server exposes 21 tools: 15 device tools and 6 offline or model-aware authoring tools. Every device tool first reads `Device/GetHardwareVersion` from the target. Hardware 510/511/512 selects TimesFrame; Hardware 530 selects AstroToo.
+The server exposes 22 tools: 1 discovery tool, 15 device tools, and 6 offline or model-aware authoring tools. Every device tool first reads `Device/GetHardwareVersion` from the target. Hardware 510/511/512 selects TimesFrame; Hardware 530 selects AstroToo. No response from that command falls back to TimesFrame; a returned unknown Hardware value is rejected.
+
+## Discovery tool (1)
+
+| Tool | Purpose |
+|---|---|
+| `watchface_list_devices` | Call `https://app.divoom-gz.com/Device/ReturnSameLANDevice` and return selectable targets. Only Hardware 510/511/512/530 is returned. Pixoo64 90/92/96, Times Gate 400/402, malformed entries, and every other unsupported product are filtered out. |
+
+The discovery result omits device MAC addresses. Present `devices[].label` to the user and pass the selected `devices[].target` object to subsequent tools.
 
 ## Common target parameter
 
@@ -15,7 +23,7 @@ The server exposes 21 tools: 15 device tools and 6 offline or model-aware author
 }
 ```
 
-Keep `model:"auto"` unless compatibility with legacy TimesFrame firmware requires an explicit model. Complete operations are serialized for the same `host:port`; different devices can run concurrently. When `target` is omitted, the server uses `DIVOOM_DEVICE_HOST`, `DIVOOM_DEVICE_PORT`, `DIVOOM_DEVICE_MODEL`, and `DIVOOM_TIMEOUT_MS`.
+Keep `model:"auto"` for normal use. Auto falls back to TimesFrame only when the hardware command gets no response. Explicit values validate the detected or fallback product. Complete operations are serialized for the same `host:port`; different devices can run concurrently. When `target` is omitted, the server uses `DIVOOM_DEVICE_HOST`, `DIVOOM_DEVICE_PORT`, `DIVOOM_DEVICE_MODEL`, and `DIVOOM_TIMEOUT_MS`.
 
 ## Device tools (15)
 
@@ -23,7 +31,7 @@ Keep `model:"auto"` unless compatibility with legacy TimesFrame firmware require
 |---|---|---|
 | `watchface_get_device_info` | Both | Report Hardware, product model, canvas, LAN capabilities, and file policy. |
 | `watchface_get_local` | Both | Read the current watchface or a specified `ClockId`. |
-| `watchface_patch_local` | Both | Pre-read fixed ClockId 60000 and patch it. If missing, a request with a backdrop plus complete `ItemList` and `ItemIdList` creates it. |
+| `watchface_patch_local` | Both | Upsert the internal managed slot. The caller omits `ClockId`; if the slot is missing, a request with a backdrop plus complete `ItemList` and `ItemIdList` creates it. |
 | `watchface_get_fonts_local` | Both | Read fonts actually available on the device. |
 | `watchface_get_store_market_list` | Both | Read the market cache already present on the device. AstroToo does not download missing entries. |
 | `watchface_set_clock_select` | Both | Select a watchface. The payload contains only `ClockId` unless `sysUpdateTime` is explicitly supplied. TimesFrame queues a verified pair of identical requests within one serialized MCP operation so a manual selection overrides the current traditional schedule period; AstroToo sends one request. |
@@ -32,7 +40,7 @@ Keep `model:"auto"` unless compatibility with legacy TimesFrame firmware require
 | `watchface_onoff_screen` | Both | Use `onOff:1` to turn the display on and `onOff:0` to turn it off. |
 | `watchface_replace_dial_bg_file` | Both | Replace the cached backdrop without changing `DeviceImageUrl`. |
 | `watchface_upload_file` | AstroToo | Upload one element file and return a temporary `local://` reference. |
-| `watchface_create_local_clock` | Both | Upsert fixed ClockId 60000. It creates the slot when missing and updates it when present. TimesFrame accepts an image or tar.gz; AstroToo accepts one 480×480 backdrop after element files have been uploaded individually. |
+| `watchface_create_local_clock` | Both | Upsert the internal managed slot without a caller-supplied `ClockId`. It creates the slot when missing and updates it when present. TimesFrame accepts an image or tar.gz; AstroToo accepts one 480×480 backdrop after element files have been uploaded individually. |
 | `watchface_reset_local_then_cloud` | TimesFrame | Remove local system-side files and restore from the cloud. This tool is blocked for AstroToo. |
 | `watchface_get_screen_snapshot` | Both | Capture the screen and validate the path returned by this request. AstroToo currently returns BMP. |
 | `watchface_raw_command` | Both | Send a product command to `/divoom_api`. Raw create/patch payloads are restricted to ClockId 60000; use the dedicated tools for multipart upsert behavior. |
@@ -58,7 +66,7 @@ Product data lives in `resources/timesframe` and `resources/astrotoo`; shared pr
 
 ## File and local-storage policy
 
-- Both create and patch tools first query ClockId 60000. Other explicit ClockId values are rejected. A valid existing configuration is updated; a missing configuration is created only from a complete configuration and backdrop.
+- Users and MCP clients omit `ClockId` from create and patch calls. The server injects its internal managed slot, queries it first, updates a valid existing configuration, and creates a missing configuration only from a complete configuration and backdrop.
 - AstroToo backdrops must be 480×480 JPEG/WebP files smaller than 500 KiB. JSON is limited to 64 KiB measured as UTF-8 bytes.
 - AstroToo has no TAR support, and the MCP server rejects TAR, TGZ, and ZIP. Upload each element image sequentially with `watchface_upload_file`. This tool uses the dedicated `/upload_local_asset` route and does not use the photo or pixel-art `/upload` route.
 - A `local://...` value returned by `watchface_upload_file` is a temporary device-local transfer reference. After a successful create or patch, firmware atomically moves bound files into the persistent watchface directory. Unbound files are removed on reboot.
@@ -72,7 +80,9 @@ Product data lives in `resources/timesframe` and `resources/astrotoo`; shared pr
 Patch an existing watchface:
 
 ```text
-watchface_get_device_info
+watchface_list_devices
+→ user selects devices[].target
+→ watchface_get_device_info
 → watchface_get_local
 → watchface_patch_local
 → watchface_get_local
@@ -82,7 +92,9 @@ watchface_get_device_info
 Create an AstroToo watchface with element assets:
 
 ```text
-watchface_get_device_info
+watchface_list_devices
+→ user selects devices[].target
+→ watchface_get_device_info
 → watchface_get_fonts_local
 → watchface_upload_file (once per element, sequentially)
 → watchface_create_local_clock

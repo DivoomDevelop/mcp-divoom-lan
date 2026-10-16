@@ -1,5 +1,11 @@
 # AstroToo and Multiple Devices
 
+## Device discovery
+
+Call `watchface_list_devices` to read `https://app.divoom-gz.com/Device/ReturnSameLANDevice`. The tool returns only Hardware 510/511/512/530 with a ready-to-use `target` object. Pixoo64 Hardware 90/92/96, Times Gate Hardware 400/402, malformed rows, and all other unsupported products are removed before the list is shown to the user. Device MAC addresses are omitted.
+
+After the user chooses a row, use its `target` in every subsequent device call. A known IP can still be supplied directly without discovery.
+
 ## Device identification
 
 Before every online tool call, the MCP server sends this request to the current `target.host:target.port`:
@@ -15,7 +21,7 @@ The current Hardware mapping is:
 | 510 / 511 / 512 | TimesFrame | 800×1280 |
 | 530 | AstroToo | 480×480 |
 
-The server never infers a product from a previous response or from `DeviceType:"Frame"`. Unknown Hardware values are rejected. An explicit `target.model` that conflicts with the detected Hardware is also rejected. Legacy TimesFrame firmware without the hardware query can be used with an explicit `model:"timesframe"`; AstroToo cannot bypass capability detection.
+The server never infers a product from a previous response or from `DeviceType:"Frame"`. If `Device/GetHardwareVersion` gets no response, `model:"auto"` falls back to TimesFrame for older-device compatibility. A returned unknown Hardware value is rejected. An explicit `target.model` that conflicts with the detected or fallback product is also rejected. AstroToo therefore requires a valid Hardware response and cannot use the fallback.
 
 ## Multiple-device operation
 
@@ -35,7 +41,7 @@ Queues are isolated by `host:port`. The identify → pre-read → write sequence
 
 Before an AstroToo write, the server also reads `Device/GetLanCapabilities` and requires `LocalOnly:true` with `LanApiVersion:1`. Watchface creation, updates, asset transfer, and selection use only local device files. These operations do not enter cloud restore, automatic asset download, or external file-upload paths. The market-list tool reads only the cache already present on the device.
 
-The MCP create and patch tools reserve ClockId 60000. Each operation reads that configuration first. If a non-empty configuration exists, the MCP server updates it; if it is missing, the server creates it only when the request includes a complete `ItemList`, matching `ItemIdList`, and backdrop. Explicit IDs other than 60000 are rejected. This policy is implemented entirely in the MCP server and does not require firmware changes.
+Users and MCP callers omit `ClockId` from create and patch operations. The server injects its internal managed slot and reads that configuration first. If a non-empty configuration exists, the MCP server updates it; if it is missing, the server creates it only when the request includes a complete `ItemList`, matching `ItemIdList`, and backdrop. This policy is implemented entirely in the MCP server and does not require firmware changes.
 
 The backdrop must be a 480×480 JPEG or WebP file smaller than 500 KiB. The JSON request is limited to 64 KiB measured as UTF-8 bytes. AstroToo does not accept TAR, TGZ, or ZIP asset bundles. Upload each element image sequentially with `watchface_upload_file` through the dedicated `/upload_local_asset` route, place the returned `local://...` value in the matching `image_addr`, and then submit one backdrop with the watchface configuration.
 

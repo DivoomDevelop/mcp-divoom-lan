@@ -69,7 +69,7 @@
 3. 使用 `usage.exampleClockIds` 中的 ClockId，通过 `watchface_clock_catalog` 配合 `includeConfig:true` 获取用例，或读取完整配置资源。
 4. 对相关元素按完整组合复制。预报列、日历复合元素、图片序列、时间数字图片和 App 数据列通常依赖同组的其他元素。
 5. 检查 `dataSource`。只有布局 JSON 不能产生天气、日历、音乐、金融、AI、App 或网络数据，设备上必须存在对应运行服务或缓存数据。
-6. 需要本地图片时，使用 `watchface_upload_file` 逐个上传，绑定返回的 `local://` 引用，再通过固定 ClockId 60000 的创建/修改流程提交。
+6. 需要本地图片时，使用 `watchface_upload_file` 逐个上传并绑定返回的 `local://` 引用；创建或修改时不传 `ClockId`，由 MCP 自动使用内部受管槽。
 7. 写入后重新读取配置并获取一张新的设备截图进行验证。
 
 ## 重要元素组合

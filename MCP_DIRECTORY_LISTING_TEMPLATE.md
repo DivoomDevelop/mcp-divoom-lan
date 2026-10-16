@@ -10,24 +10,26 @@ Use this template when submitting `mcp-divoom-lan` to MCP registries/directories
 - License: MIT
 - Runtime: Node.js 20+
 - Transport: stdio
-- Entry Command: `node dist/index.js`
+- Entry Command: `npx -y mcp-divoom-lan@0.2.0`
 
 ## One-line Description
 
-MCP server for Divoom LAN watchface customization (read/patch local clock config, background replacement, upload, brightness, and store dial selection).
+Multi-device MCP server for TimesFrame and AstroToo LAN watchface creation, updates, switching, brightness, and screenshots.
 
 ## Long Description
 
-`mcp-divoom-lan` exposes Divoom local HTTP APIs as MCP tools so AI assistants can safely operate watchface customization workflows through natural language. It includes:
+`mcp-divoom-lan` exposes Divoom local HTTP APIs as 22 MCP tools. It discovers selectable devices through `Device/ReturnSameLANDevice`, filters unsupported products, requests Hardware for every target, and keeps TimesFrame and AstroToo authoring data isolated. A hardware command with no response falls back to TimesFrame; a returned unknown value is rejected. It includes:
 
-- local watchface read/patch
-- local font and store market list discovery
-- dial selection and brightness control
-- multipart operations (`/replace_clock_dial_bg`, `/upload`, `/create_local_clock`)
-- protocol quick-reference resources for agents
+- managed-slot create and patch workflows with an MCP-injected ClockId
+- product-specific clock, font, display-element, template, and layout discovery
+- watchface selection, brightness, screen power, and screenshot capture
+- local AstroToo sequential element uploads and validated multipart backdrop updates
+- independent queues for multiple devices
 
 ## Tool List
 
+- `watchface_list_devices`
+- `watchface_get_device_info`
 - `watchface_get_local`
 - `watchface_patch_local`
 - `watchface_get_fonts_local`
@@ -35,17 +37,25 @@ MCP server for Divoom LAN watchface customization (read/patch local clock config
 - `watchface_set_clock_select`
 - `watchface_get_brightness`
 - `watchface_set_brightness`
+- `watchface_onoff_screen`
 - `watchface_replace_dial_bg_file`
 - `watchface_upload_file`
 - `watchface_create_local_clock`
 - `watchface_reset_local_then_cloud`
+- `watchface_get_screen_snapshot`
 - `watchface_raw_command`
 - `watchface_protocol_quick_reference`
+- `watchface_clock_catalog`
+- `watchface_disp_catalog`
+- `watchface_font_catalog`
+- `watchface_template_search`
+- `watchface_layout_suggest`
 
 ## Environment Variables
 
-- `DIVOOM_DEVICE_HOST` (required unless passed per call via `target.host`)
+- `DIVOOM_DEVICE_HOST` (optional default; omit it when passing `target.host` per call)
 - `DIVOOM_DEVICE_PORT` (default `9000`)
+- `DIVOOM_DEVICE_MODEL` (default `auto`)
 - `DIVOOM_TIMEOUT_MS` (default `45000`)
 
 ## Install Snippet (JSON)
@@ -54,11 +64,12 @@ MCP server for Divoom LAN watchface customization (read/patch local clock config
 {
   "mcpServers": {
     "divoom-lan": {
-      "command": "node",
-      "args": ["/ABSOLUTE/PATH/to/mcp-divoom-lan/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "mcp-divoom-lan@0.2.0"],
       "env": {
         "DIVOOM_DEVICE_HOST": "192.168.1.120",
         "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_DEVICE_MODEL": "auto",
         "DIVOOM_TIMEOUT_MS": "45000"
       }
     }
@@ -68,12 +79,12 @@ MCP server for Divoom LAN watchface customization (read/patch local clock config
 
 ## Suggested Demo Prompts
 
-- "Read current local watchface config."
-- "Increase time font size by 2 and set text color to #FF0000."
-- "Replace current dial background with this 800x1280 image."
+- "Identify this device and list its editable watchface elements."
+- "Increase the time size, write only the changed fields, read back, and capture a screenshot."
+- "Create a 480x480 AstroToo weather watchface and verify it on the device."
 
 ## Risk & Safety Statement
 
 - The server wraps local LAN commands and does not bypass firmware limits.
-- `watchface_reset_local_then_cloud` may delete local sys-side files before cloud refresh.
-- Users should confirm destructive operations explicitly.
+- `watchface_reset_local_then_cloud` is TimesFrame-only and may delete local sys-side files before cloud refresh.
+- AstroToo archive uploads are rejected; element files are uploaded one at a time and remain local to the device workflow.

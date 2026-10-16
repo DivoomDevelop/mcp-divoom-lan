@@ -1,6 +1,29 @@
 # Quick Start (5 Minutes)
 
-## 1. Install and build
+## 1. Install
+
+For a published release, configure the MCP client to run the npm package:
+
+```json
+{
+  "mcpServers": {
+    "divoom-lan": {
+      "command": "npx",
+      "args": ["-y", "mcp-divoom-lan@latest"],
+      "env": {
+        "DIVOOM_DEVICE_HOST": "192.168.1.120",
+        "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_DEVICE_MODEL": "auto",
+        "DIVOOM_TIMEOUT_MS": "45000"
+      }
+    }
+  }
+}
+```
+
+To control multiple devices, omit `DIVOOM_DEVICE_HOST` and pass `target.host` in each tool call.
+
+For a source checkout:
 
 ```bash
 npm install
@@ -9,7 +32,7 @@ npm run build
 
 ## 2. Configure the MCP client
 
-Copy `client-config.example.json` from the repository root and replace its executable path with the absolute path on your machine.
+For a source checkout, copy `client-config.example.json` from the repository root and replace its executable path with the absolute path on your machine.
 
 Key settings:
 
@@ -17,13 +40,18 @@ Key settings:
 - `args`: `.../dist/index.js`
 - `env.DIVOOM_DEVICE_HOST`: the device's LAN IP address
 - `env.DIVOOM_DEVICE_PORT`: `9000` by default
-- `env.DIVOOM_DEVICE_MODEL`: keep `auto` unless legacy TimesFrame compatibility requires an explicit value
+- `env.DIVOOM_DEVICE_MODEL`: keep `auto`; explicit values validate the detected or fallback product
 
 ## 3. Test the first connection
 
-Call `watchface_get_device_info` first.
+Call `watchface_list_devices` without a target. It reads `https://app.divoom-gz.com/Device/ReturnSameLANDevice` and returns only currently supported devices:
 
-The MCP server calls `Device/GetHardwareVersion` on the target. Hardware 510/511/512 selects TimesFrame, and Hardware 530 selects AstroToo. Unknown Hardware values stop the operation.
+- TimesFrame Hardware 510/511/512
+- AstroToo Hardware 530
+
+Pixoo64 Hardware 90/92/96, Times Gate Hardware 400/402, malformed rows, and other unsupported products are filtered out. Ask the user to choose `devices[].label`, then pass that row's `target` object to `watchface_get_device_info` and every later device call.
+
+The MCP server calls `Device/GetHardwareVersion` on the target. Hardware 510/511/512 selects TimesFrame, and Hardware 530 selects AstroToo. If that command gets no response, auto detection falls back to TimesFrame. A response containing an unknown Hardware value stops the operation.
 
 Then call `watchface_get_local`. The smallest request for the watchface currently shown on screen is:
 
@@ -33,7 +61,7 @@ Then call `watchface_get_local`. The smallest request for the watchface currentl
 }
 ```
 
-When one MCP server controls several devices, include the corresponding `target` in every call. Identification results are never reused between devices. Complete operations are serialized for the same device, while different devices can run concurrently.
+When one MCP server controls several devices, include the selected `target` in every call. Identification results are never reused between devices. Complete operations are serialized for the same device, while different devices can run concurrently.
 
 If you did not configure environment variables, pass the device address in each call:
 
@@ -51,9 +79,9 @@ If you did not configure environment variables, pass the device address in each 
 
 Use this flow for write operations:
 
-1. Create and patch operations always target ClockId 60000. The MCP server reads that slot before writing.
+1. Omit `ClockId` from create and patch calls. The MCP server injects its internal managed slot and reads it before writing.
 2. Inspect `ItemList`.
-   - If ClockId 60000 is missing, provide a backdrop with a complete `ItemList` and `ItemIdList`; the MCP server creates it.
+   - If the managed slot is missing, provide a backdrop with a complete `ItemList` and `ItemIdList`; the MCP server creates it.
    - If it is populated, continue.
 3. Choose the file path that matches the change:
    - Field changes only: call `watchface_patch_local` without `dialAssetsPath`; the request uses `POST /divoom_api`.
@@ -67,7 +95,7 @@ Do not place `item_id` in `patch.*`; doing so can overwrite the device's menu an
 
 TimesFrame does not expose generic `watchface_upload_file`. Its assets are sent with the create or patch multipart request and the receiving staging file is removed after processing. The MCP/LAN flows for both products keep received files on the device and never upload them to the cloud.
 
-`watchface_create_local_clock` is idempotent for ClockId 60000: it creates a missing slot and updates an existing slot.
+`watchface_create_local_clock` is an idempotent managed-slot upsert: it creates a missing slot and updates an existing slot without requiring the caller to know its numeric ID.
 
 ## 5. Troubleshooting
 
@@ -125,3 +153,5 @@ Use an existing template instead of inventing every coordinate:
 A practical sequence is to search with `watchface_template_search({ tagsAny: ["weather"] })`, adapt the closest `ItemList`, call `watchface_layout_suggest` for each changed `disp`, replace fonts with `watchface_font_catalog`, and confirm device availability with `watchface_get_fonts_local`.
 
 See `docs/templates-curated.md` for more detail.
+
+For a complete AstroToo create, update, switch, readback, and screenshot sequence, see `docs/astrotoo-watchface-workflow.md`.

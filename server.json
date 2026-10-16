@@ -1,20 +1,20 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.DivoomDevelop/mcp-divoom-lan",
-  "description": "MCP server for Divoom LAN watchface APIs; read-before-write safe. V2 editor linked in README.",
+  "description": "Discover and control TimesFrame and AstroToo devices for LAN watchface creation, updates, switching, and screenshots.",
   "title": "Divoom LAN Watchface",
   "repository": {
     "url": "https://github.com/DivoomDevelop/mcp-divoom-lan",
     "source": "github"
   },
   "websiteUrl": "https://github.com/DivoomDevelop/mcp-divoom-lan",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "mcp-divoom-lan",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
@@ -22,14 +22,19 @@
       "environmentVariables": [
         {
           "name": "DIVOOM_DEVICE_HOST",
-          "description": "Divoom device LAN IP address",
-          "isRequired": true,
+          "description": "Optional default Divoom device LAN IP address. Omit it and pass target.host per tool call to control multiple devices.",
+          "isRequired": false,
           "isSecret": false
         },
         {
           "name": "DIVOOM_DEVICE_PORT",
           "description": "Divoom device HTTP port",
           "default": "9000"
+        },
+        {
+          "name": "DIVOOM_DEVICE_MODEL",
+          "description": "Product detection mode: auto, timesframe, or astrotoo. Use auto for current firmware.",
+          "default": "auto"
         },
         {
           "name": "DIVOOM_TIMEOUT_MS",

@@ -25,10 +25,11 @@ Use **one** of the following JSON blocks (mcp.so may expect the full `mcpServers
   "mcpServers": {
     "divoom-lan": {
       "command": "npx",
-      "args": ["-y", "mcp-divoom-lan"],
+      "args": ["-y", "mcp-divoom-lan@0.2.0"],
       "env": {
         "DIVOOM_DEVICE_HOST": "192.168.1.120",
         "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_DEVICE_MODEL": "auto",
         "DIVOOM_TIMEOUT_MS": "45000"
       }
     }
@@ -51,6 +52,7 @@ After `npm install mcp-divoom-lan` in a project directory:
       "env": {
         "DIVOOM_DEVICE_HOST": "192.168.1.120",
         "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_DEVICE_MODEL": "auto",
         "DIVOOM_TIMEOUT_MS": "45000"
       }
     }
@@ -69,6 +71,7 @@ After `npm install mcp-divoom-lan` in a project directory:
       "env": {
         "DIVOOM_DEVICE_HOST": "192.168.1.120",
         "DIVOOM_DEVICE_PORT": "9000",
+        "DIVOOM_DEVICE_MODEL": "auto",
         "DIVOOM_TIMEOUT_MS": "45000"
       }
     }
@@ -78,11 +81,11 @@ After `npm install mcp-divoom-lan` in a project directory:
 
 ## Short description (if the site has a free-text field)
 
-MCP server for Divoom LAN watchface customization: read/patch local clock config, multipart background upload, brightness and dial selection — with read-before-write safety notes.
+Multi-device MCP server for TimesFrame and AstroToo watchface creation, updates, switching, brightness, and screenshot verification over LAN.
 
 ## Long description (optional)
 
-`mcp-divoom-lan` wraps Divoom device HTTP/LAN APIs as MCP tools (`watchface_get_local`, `watchface_patch_local`, multipart dial/upload helpers, etc.) and ships markdown resources for protocol constraints. Requires LAN access to the watch; set `DIVOOM_DEVICE_HOST` (or pass `target.host` per call). See repository `README.md` and `SECURITY.md` (`developer@divoom.com`).
+`mcp-divoom-lan` wraps Divoom device HTTP/LAN APIs as 22 MCP tools. It discovers selectable devices through `Device/ReturnSameLANDevice`, filters unsupported hardware, identifies TimesFrame or AstroToo from Hardware, defaults to TimesFrame when that command gets no response, isolates product-specific clocks/fonts/display elements, injects the internal managed watchface ID automatically, and verifies writes with readback and screenshots. Requires LAN access; set `DIVOOM_DEVICE_HOST` or pass `target.host` per call. See `README.md`, `docs/astrotoo-watchface-workflow.md`, and `SECURITY.md`.
 
 ## Related
 

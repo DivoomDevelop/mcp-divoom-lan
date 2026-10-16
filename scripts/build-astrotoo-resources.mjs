@@ -261,7 +261,7 @@ const displaySummary = {
     "Select AstroToo by detected Hardware 530 before using these ids; never reuse TimesFrame disp semantics.",
     "Prefer elements with usedInReferenceConfigs=true and copy a native configuration with matching dataSource and renderKind.",
     "Elements backed by weather, calendar, music, finance, AI, app, or network services require that provider at runtime.",
-    "Upload each local element asset separately, bind its local:// reference, and then commit fixed ClockId 60000.",
+    "Upload each local element asset separately, bind its local:// reference, and then commit through the managed create/patch flow without supplying a ClockId.",
     "Use analog hand ids 131, 132, and 233 together with centered square upward-pointing images.",
     "Ids 261-279 reference linked component watchfaces; id 280 and id 1000 are firmware-internal and must not be authored.",
     "authoringMode=declared_only means the id exists in the current header but has no direct renderer-symbol evidence; do not generate it without hardware proof.",
