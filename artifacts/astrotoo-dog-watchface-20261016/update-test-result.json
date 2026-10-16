@@ -1,0 +1,753 @@
+{
+  "startedAt": "2026-10-16T08:14:16.323Z",
+  "target": {
+    "host": "192.168.13.142",
+    "port": 9000,
+    "timeoutMs": 45000
+  },
+  "itemPatchList": [
+    {
+      "index": 0,
+      "patch": {
+        "x": 18,
+        "y": 18,
+        "w": 292,
+        "h": 94,
+        "size": 78,
+        "color_1": "#D7FBFF",
+        "color_2": "#163B46"
+      }
+    },
+    {
+      "index": 1,
+      "patch": {
+        "x": 24,
+        "y": 112,
+        "w": 230,
+        "h": 38,
+        "size": 27,
+        "color_1": "#FFE39A",
+        "color_2": "#3C4426"
+      }
+    },
+    {
+      "index": 2,
+      "patch": {
+        "x": 24,
+        "y": 148,
+        "w": 180,
+        "h": 32,
+        "size": 24,
+        "color_1": "#B9F4E5",
+        "color_2": "#21473D"
+      }
+    },
+    {
+      "index": 3,
+      "patch": {
+        "x": 24,
+        "y": 316,
+        "w": 200,
+        "h": 36,
+        "size": 24,
+        "color_1": "#FFFFFF",
+        "color_2": "#264B3B"
+      }
+    },
+    {
+      "index": 4,
+      "patch": {
+        "x": 22,
+        "y": 354,
+        "w": 118,
+        "h": 60,
+        "size": 46,
+        "color_1": "#FFE79B",
+        "color_2": "#4F4020"
+      }
+    },
+    {
+      "index": 5,
+      "patch": {
+        "x": 142,
+        "y": 374,
+        "w": 170,
+        "h": 36,
+        "size": 22,
+        "color_1": "#E7FFF8",
+        "color_2": "#264B3B"
+      }
+    }
+  ],
+  "device": {
+    "host": "192.168.13.142",
+    "port": 9000,
+    "model": "astrotoo",
+    "hardware": 530,
+    "identification": "hardware",
+    "canvas": {
+      "width": 480,
+      "height": 480
+    },
+    "resourceDirectory": "astrotoo",
+    "capabilities": {
+      "Command": "Device/GetLanCapabilities",
+      "DeviceType": "AstroToo",
+      "ReturnCode": 0,
+      "Model": "astrotoo",
+      "FirmwareVersion": 530055,
+      "Hardware": 530,
+      "Software": 530055,
+      "LanApiVersion": 1,
+      "CanvasWidth": 480,
+      "CanvasHeight": 480,
+      "LocalOnly": true,
+      "JsonMaxBytes": 65536,
+      "BackgroundMaxBytesExclusive": 512000,
+      "BundleMaxBytes": 0,
+      "SupportsAssetBundle": false,
+      "AssetTransfer": "sequential",
+      "LocalAssetUploadPath": "/upload_local_asset",
+      "UploadPersistence": "temporary-until-bound",
+      "OutboundFileUpload": true,
+      "SupportsClockShare": true,
+      "SupportsClockUploadVisibility": true,
+      "SupportsClockUpdateMessageInfo": true,
+      "SupportsClockUploadClassify": true,
+      "AppPreviewUploadFormat": "webp",
+      "AppPreviewMaxWidth": 480,
+      "AppPreviewMaxHeight": 480,
+      "ClockShareCommand": "Device/ShareLocalClock",
+      "SnapshotPath": "/userdata/app_pic/snapshot.bmp"
+    },
+    "mcpFilePolicy": {
+      "localAssetUploadPath": "/upload_local_asset",
+      "genericUpload": "temporary-until-bound",
+      "createPatchUpload": "temporary-until-processed",
+      "outboundFileUpload": false
+    }
+  },
+  "before": {
+    "url": "http://192.168.13.142:9000/divoom_api",
+    "endpoint": "/divoom_api",
+    "httpStatus": 200,
+    "request": {
+      "ClockId": 60000,
+      "Command": "Device/GetLocalClockInfo",
+      "ReturnCode": 0
+    },
+    "responseJson": {
+      "DialTimeoutFlag": 0,
+      "PixelDialType": 0,
+      "AiScheduleType": 0,
+      "IsComponent": 0,
+      "NameCn": "春日柴犬天气",
+      "NameEn": "春日柴犬天气",
+      "SysUpdateTime": 1792137989,
+      "ClockId": 60000,
+      "EdgeClockId": 0,
+      "AppNum": 0,
+      "StyleClockId": 0,
+      "ComponentClockId": 0,
+      "ItemList": [
+        {
+          "size": 72,
+          "x": 22,
+          "y": 24,
+          "w": 270,
+          "h": 86,
+          "disp": 4,
+          "alig": 4,
+          "sep": 0,
+          "font": 28,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "time",
+          "color_1": "#fff8e8",
+          "color_2": "#18334a"
+        },
+        {
+          "size": 28,
+          "x": 26,
+          "y": 118,
+          "w": 230,
+          "h": 38,
+          "disp": 39,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "date",
+          "color_1": "#fff8e8",
+          "color_2": "#18334a"
+        },
+        {
+          "size": 23,
+          "x": 26,
+          "y": 154,
+          "w": 180,
+          "h": 32,
+          "disp": 37,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weekday",
+          "color_1": "#ddf4ff",
+          "color_2": "#18334a"
+        },
+        {
+          "size": 23,
+          "x": 24,
+          "y": 334,
+          "w": 190,
+          "h": 34,
+          "disp": 54,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weather",
+          "color_1": "#ffffff",
+          "color_2": "#234a37"
+        },
+        {
+          "size": 38,
+          "x": 24,
+          "y": 374,
+          "w": 105,
+          "h": 52,
+          "disp": 254,
+          "alig": 4,
+          "sep": 0,
+          "font": 28,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature",
+          "color_1": "#fff3c4",
+          "color_2": "#234a37"
+        },
+        {
+          "size": 20,
+          "x": 126,
+          "y": 388,
+          "w": 165,
+          "h": 34,
+          "disp": 157,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature_range",
+          "color_1": "#ffffff",
+          "color_2": "#234a37"
+        }
+      ],
+      "ItemIdList": [
+        "time",
+        "date",
+        "weekday",
+        "weather",
+        "temperature",
+        "temperature_range"
+      ],
+      "Config": "",
+      "Command": "Device/GetLocalClockInfo",
+      "ReturnCode": 0,
+      "ReturnMessage": "OK",
+      "DeviceType": "AstroToo"
+    },
+    "responseText": "{\n\t\"DialTimeoutFlag\":\t0,\n\t\"PixelDialType\":\t0,\n\t\"AiScheduleType\":\t0,\n\t\"IsComponent\":\t0,\n\t\"NameCn\":\t\"春日柴犬天气\",\n\t\"NameEn\":\t\"春日柴犬天气\",\n\t\"SysUpdateTime\":\t1792137989,\n\t\"ClockId\":\t60000,\n\t\"EdgeClockId\":\t0,\n\t\"AppNum\":\t0,\n\t\"StyleClockId\":\t0,\n\t\"ComponentClockId\":\t0,\n\t\"ItemList\":\t[{\n\t\t\t\"size\":\t72,\n\t\t\t\"x\":\t22,\n\t\t\t\"y\":\t24,\n\t\t\t\"w\":\t270,\n\t\t\t\"h\":\t86,\n\t\t\t\"disp\":\t4,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t28,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"time\",\n\t\t\t\"color_1\":\t\"#fff8e8\",\n\t\t\t\"color_2\":\t\"#18334a\"\n\t\t}, {\n\t\t\t\"size\":\t28,\n\t\t\t\"x\":\t26,\n\t\t\t\"y\":\t118,\n\t\t\t\"w\":\t230,\n\t\t\t\"h\":\t38,\n\t\t\t\"disp\":\t39,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"date\",\n\t\t\t\"color_1\":\t\"#fff8e8\",\n\t\t\t\"color_2\":\t\"#18334a\"\n\t\t}, {\n\t\t\t\"size\":\t23,\n\t\t\t\"x\":\t26,\n\t\t\t\"y\":\t154,\n\t\t\t\"w\":\t180,\n\t\t\t\"h\":\t32,\n\t\t\t\"disp\":\t37,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"weekday\",\n\t\t\t\"color_1\":\t\"#ddf4ff\",\n\t\t\t\"color_2\":\t\"#18334a\"\n\t\t}, {\n\t\t\t\"size\":\t23,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t334,\n\t\t\t\"w\":\t190,\n\t\t\t\"h\":\t34,\n\t\t\t\"disp\":\t54,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"weather\",\n\t\t\t\"color_1\":\t\"#ffffff\",\n\t\t\t\"color_2\":\t\"#234a37\"\n\t\t}, {\n\t\t\t\"size\":\t38,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t374,\n\t\t\t\"w\":\t105,\n\t\t\t\"h\":\t52,\n\t\t\t\"disp\":\t254,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t28,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"temperature\",\n\t\t\t\"color_1\":\t\"#fff3c4\",\n\t\t\t\"color_2\":\t\"#234a37\"\n\t\t}, {\n\t\t\t\"size\":\t20,\n\t\t\t\"x\":\t126,\n\t\t\t\"y\":\t388,\n\t\t\t\"w\":\t165,\n\t\t\t\"h\":\t34,\n\t\t\t\"disp\":\t157,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"temperature_range\",\n\t\t\t\"color_1\":\t\"#ffffff\",\n\t\t\t\"color_2\":\t\"#234a37\"\n\t\t}],\n\t\"ItemIdList\":\t[\"time\", \"date\", \"weekday\", \"weather\", \"temperature\", \"temperature_range\"],\n\t\"Config\":\t\"\",\n\t\"Command\":\t\"Device/GetLocalClockInfo\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"OK\",\n\t\"DeviceType\":\t\"AstroToo\"\n}"
+  },
+  "patch": {
+    "url": "http://192.168.13.142:9000/divoom_api",
+    "endpoint": "/divoom_api",
+    "httpStatus": 200,
+    "request": {
+      "ClockId": 60000,
+      "ItemPatchList": [
+        {
+          "index": 0,
+          "patch": {
+            "x": 18,
+            "y": 18,
+            "w": 292,
+            "h": 94,
+            "size": 78,
+            "color_1": "#D7FBFF",
+            "color_2": "#163B46"
+          }
+        },
+        {
+          "index": 1,
+          "patch": {
+            "x": 24,
+            "y": 112,
+            "w": 230,
+            "h": 38,
+            "size": 27,
+            "color_1": "#FFE39A",
+            "color_2": "#3C4426"
+          }
+        },
+        {
+          "index": 2,
+          "patch": {
+            "x": 24,
+            "y": 148,
+            "w": 180,
+            "h": 32,
+            "size": 24,
+            "color_1": "#B9F4E5",
+            "color_2": "#21473D"
+          }
+        },
+        {
+          "index": 3,
+          "patch": {
+            "x": 24,
+            "y": 316,
+            "w": 200,
+            "h": 36,
+            "size": 24,
+            "color_1": "#FFFFFF",
+            "color_2": "#264B3B"
+          }
+        },
+        {
+          "index": 4,
+          "patch": {
+            "x": 22,
+            "y": 354,
+            "w": 118,
+            "h": 60,
+            "size": 46,
+            "color_1": "#FFE79B",
+            "color_2": "#4F4020"
+          }
+        },
+        {
+          "index": 5,
+          "patch": {
+            "x": 142,
+            "y": 374,
+            "w": 170,
+            "h": 36,
+            "size": 22,
+            "color_1": "#E7FFF8",
+            "color_2": "#264B3B"
+          }
+        }
+      ],
+      "Command": "Device/PatchLocalClockInfo",
+      "ReturnCode": 0
+    },
+    "responseJson": {
+      "DialTimeoutFlag": 0,
+      "PixelDialType": 0,
+      "AiScheduleType": 0,
+      "IsComponent": 0,
+      "NameCn": "春日柴犬天气",
+      "NameEn": "春日柴犬天气",
+      "SysUpdateTime": 1792138460,
+      "ClockId": 60000,
+      "EdgeClockId": 0,
+      "AppNum": 0,
+      "StyleClockId": 0,
+      "ComponentClockId": 0,
+      "ItemList": [
+        {
+          "size": 78,
+          "x": 18,
+          "y": 18,
+          "w": 292,
+          "h": 94,
+          "disp": 4,
+          "alig": 4,
+          "sep": 0,
+          "font": 28,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "time",
+          "color_1": "#d7fbff",
+          "color_2": "#163b46"
+        },
+        {
+          "size": 27,
+          "x": 24,
+          "y": 112,
+          "w": 230,
+          "h": 38,
+          "disp": 39,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "date",
+          "color_1": "#ffe39a",
+          "color_2": "#3c4426"
+        },
+        {
+          "size": 24,
+          "x": 24,
+          "y": 148,
+          "w": 180,
+          "h": 32,
+          "disp": 37,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weekday",
+          "color_1": "#b9f4e5",
+          "color_2": "#21473d"
+        },
+        {
+          "size": 24,
+          "x": 24,
+          "y": 316,
+          "w": 200,
+          "h": 36,
+          "disp": 54,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weather",
+          "color_1": "#ffffff",
+          "color_2": "#264b3b"
+        },
+        {
+          "size": 46,
+          "x": 22,
+          "y": 354,
+          "w": 118,
+          "h": 60,
+          "disp": 254,
+          "alig": 4,
+          "sep": 0,
+          "font": 28,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature",
+          "color_1": "#ffe79b",
+          "color_2": "#4f4020"
+        },
+        {
+          "size": 22,
+          "x": 142,
+          "y": 374,
+          "w": 170,
+          "h": 36,
+          "disp": 157,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature_range",
+          "color_1": "#e7fff8",
+          "color_2": "#264b3b"
+        }
+      ],
+      "ItemIdList": [
+        "time",
+        "date",
+        "weekday",
+        "weather",
+        "temperature",
+        "temperature_range"
+      ],
+      "Config": "",
+      "Command": "Device/PatchLocalClockInfo",
+      "ReturnCode": 0,
+      "ReturnMessage": "OK",
+      "DeviceType": "AstroToo"
+    },
+    "responseText": "{\n\t\"DialTimeoutFlag\":\t0,\n\t\"PixelDialType\":\t0,\n\t\"AiScheduleType\":\t0,\n\t\"IsComponent\":\t0,\n\t\"NameCn\":\t\"春日柴犬天气\",\n\t\"NameEn\":\t\"春日柴犬天气\",\n\t\"SysUpdateTime\":\t1792138460,\n\t\"ClockId\":\t60000,\n\t\"EdgeClockId\":\t0,\n\t\"AppNum\":\t0,\n\t\"StyleClockId\":\t0,\n\t\"ComponentClockId\":\t0,\n\t\"ItemList\":\t[{\n\t\t\t\"size\":\t78,\n\t\t\t\"x\":\t18,\n\t\t\t\"y\":\t18,\n\t\t\t\"w\":\t292,\n\t\t\t\"h\":\t94,\n\t\t\t\"disp\":\t4,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t28,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"time\",\n\t\t\t\"color_1\":\t\"#d7fbff\",\n\t\t\t\"color_2\":\t\"#163b46\"\n\t\t}, {\n\t\t\t\"size\":\t27,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t112,\n\t\t\t\"w\":\t230,\n\t\t\t\"h\":\t38,\n\t\t\t\"disp\":\t39,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"date\",\n\t\t\t\"color_1\":\t\"#ffe39a\",\n\t\t\t\"color_2\":\t\"#3c4426\"\n\t\t}, {\n\t\t\t\"size\":\t24,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t148,\n\t\t\t\"w\":\t180,\n\t\t\t\"h\":\t32,\n\t\t\t\"disp\":\t37,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"weekday\",\n\t\t\t\"color_1\":\t\"#b9f4e5\",\n\t\t\t\"color_2\":\t\"#21473d\"\n\t\t}, {\n\t\t\t\"size\":\t24,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t316,\n\t\t\t\"w\":\t200,\n\t\t\t\"h\":\t36,\n\t\t\t\"disp\":\t54,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"weather\",\n\t\t\t\"color_1\":\t\"#ffffff\",\n\t\t\t\"color_2\":\t\"#264b3b\"\n\t\t}, {\n\t\t\t\"size\":\t46,\n\t\t\t\"x\":\t22,\n\t\t\t\"y\":\t354,\n\t\t\t\"w\":\t118,\n\t\t\t\"h\":\t60,\n\t\t\t\"disp\":\t254,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t28,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"temperature\",\n\t\t\t\"color_1\":\t\"#ffe79b\",\n\t\t\t\"color_2\":\t\"#4f4020\"\n\t\t}, {\n\t\t\t\"size\":\t22,\n\t\t\t\"x\":\t142,\n\t\t\t\"y\":\t374,\n\t\t\t\"w\":\t170,\n\t\t\t\"h\":\t36,\n\t\t\t\"disp\":\t157,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"temperature_range\",\n\t\t\t\"color_1\":\t\"#e7fff8\",\n\t\t\t\"color_2\":\t\"#264b3b\"\n\t\t}],\n\t\"ItemIdList\":\t[\"time\", \"date\", \"weekday\", \"weather\", \"temperature\", \"temperature_range\"],\n\t\"Config\":\t\"\",\n\t\"Command\":\t\"Device/PatchLocalClockInfo\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"OK\",\n\t\"DeviceType\":\t\"AstroToo\"\n}"
+  },
+  "select": {
+    "url": "http://192.168.13.142:9000/divoom_api",
+    "endpoint": "/divoom_api",
+    "httpStatus": 200,
+    "request": {
+      "ClockId": 60000,
+      "SysUpdateTime": 0,
+      "Command": "Channel/SetClockSelectId",
+      "ReturnCode": 0
+    },
+    "responseJson": {
+      "Command": "Channel/SetClockSelectId",
+      "DeviceId": 300426474,
+      "PacketFlag": 1792136452,
+      "DeviceType": "AstroToo",
+      "ReturnCode": 0,
+      "ReturnMessage": ""
+    },
+    "responseText": "{\n\t\"Command\":\t\"Channel/SetClockSelectId\",\n\t\"DeviceId\":\t300426474,\n\t\"PacketFlag\":\t1792136452,\n\t\"DeviceType\":\t\"AstroToo\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"\"\n}"
+  },
+  "after": {
+    "url": "http://192.168.13.142:9000/divoom_api",
+    "endpoint": "/divoom_api",
+    "httpStatus": 200,
+    "request": {
+      "ClockId": 60000,
+      "Command": "Device/GetLocalClockInfo",
+      "ReturnCode": 0
+    },
+    "responseJson": {
+      "DialTimeoutFlag": 0,
+      "PixelDialType": 0,
+      "AiScheduleType": 0,
+      "IsComponent": 0,
+      "NameCn": "春日柴犬天气",
+      "NameEn": "春日柴犬天气",
+      "SysUpdateTime": 1792138460,
+      "ClockId": 60000,
+      "EdgeClockId": 0,
+      "AppNum": 0,
+      "StyleClockId": 0,
+      "ComponentClockId": 0,
+      "ItemList": [
+        {
+          "size": 78,
+          "x": 18,
+          "y": 18,
+          "w": 292,
+          "h": 94,
+          "disp": 4,
+          "alig": 4,
+          "sep": 0,
+          "font": 28,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "time",
+          "color_1": "#d7fbff",
+          "color_2": "#163b46"
+        },
+        {
+          "size": 27,
+          "x": 24,
+          "y": 112,
+          "w": 230,
+          "h": 38,
+          "disp": 39,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "date",
+          "color_1": "#ffe39a",
+          "color_2": "#3c4426"
+        },
+        {
+          "size": 24,
+          "x": 24,
+          "y": 148,
+          "w": 180,
+          "h": 32,
+          "disp": 37,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weekday",
+          "color_1": "#b9f4e5",
+          "color_2": "#21473d"
+        },
+        {
+          "size": 24,
+          "x": 24,
+          "y": 316,
+          "w": 200,
+          "h": 36,
+          "disp": 54,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weather",
+          "color_1": "#ffffff",
+          "color_2": "#264b3b"
+        },
+        {
+          "size": 46,
+          "x": 22,
+          "y": 354,
+          "w": 118,
+          "h": 60,
+          "disp": 254,
+          "alig": 4,
+          "sep": 0,
+          "font": 28,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature",
+          "color_1": "#ffe79b",
+          "color_2": "#4f4020"
+        },
+        {
+          "size": 22,
+          "x": 142,
+          "y": 374,
+          "w": 170,
+          "h": 36,
+          "disp": 157,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature_range",
+          "color_1": "#e7fff8",
+          "color_2": "#264b3b"
+        }
+      ],
+      "ItemIdList": [
+        "time",
+        "date",
+        "weekday",
+        "weather",
+        "temperature",
+        "temperature_range"
+      ],
+      "Config": "",
+      "Command": "Device/GetLocalClockInfo",
+      "ReturnCode": 0,
+      "ReturnMessage": "OK",
+      "DeviceType": "AstroToo"
+    },
+    "responseText": "{\n\t\"DialTimeoutFlag\":\t0,\n\t\"PixelDialType\":\t0,\n\t\"AiScheduleType\":\t0,\n\t\"IsComponent\":\t0,\n\t\"NameCn\":\t\"春日柴犬天气\",\n\t\"NameEn\":\t\"春日柴犬天气\",\n\t\"SysUpdateTime\":\t1792138460,\n\t\"ClockId\":\t60000,\n\t\"EdgeClockId\":\t0,\n\t\"AppNum\":\t0,\n\t\"StyleClockId\":\t0,\n\t\"ComponentClockId\":\t0,\n\t\"ItemList\":\t[{\n\t\t\t\"size\":\t78,\n\t\t\t\"x\":\t18,\n\t\t\t\"y\":\t18,\n\t\t\t\"w\":\t292,\n\t\t\t\"h\":\t94,\n\t\t\t\"disp\":\t4,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t28,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"time\",\n\t\t\t\"color_1\":\t\"#d7fbff\",\n\t\t\t\"color_2\":\t\"#163b46\"\n\t\t}, {\n\t\t\t\"size\":\t27,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t112,\n\t\t\t\"w\":\t230,\n\t\t\t\"h\":\t38,\n\t\t\t\"disp\":\t39,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"date\",\n\t\t\t\"color_1\":\t\"#ffe39a\",\n\t\t\t\"color_2\":\t\"#3c4426\"\n\t\t}, {\n\t\t\t\"size\":\t24,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t148,\n\t\t\t\"w\":\t180,\n\t\t\t\"h\":\t32,\n\t\t\t\"disp\":\t37,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"weekday\",\n\t\t\t\"color_1\":\t\"#b9f4e5\",\n\t\t\t\"color_2\":\t\"#21473d\"\n\t\t}, {\n\t\t\t\"size\":\t24,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t316,\n\t\t\t\"w\":\t200,\n\t\t\t\"h\":\t36,\n\t\t\t\"disp\":\t54,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"weather\",\n\t\t\t\"color_1\":\t\"#ffffff\",\n\t\t\t\"color_2\":\t\"#264b3b\"\n\t\t}, {\n\t\t\t\"size\":\t46,\n\t\t\t\"x\":\t22,\n\t\t\t\"y\":\t354,\n\t\t\t\"w\":\t118,\n\t\t\t\"h\":\t60,\n\t\t\t\"disp\":\t254,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t28,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"temperature\",\n\t\t\t\"color_1\":\t\"#ffe79b\",\n\t\t\t\"color_2\":\t\"#4f4020\"\n\t\t}, {\n\t\t\t\"size\":\t22,\n\t\t\t\"x\":\t142,\n\t\t\t\"y\":\t374,\n\t\t\t\"w\":\t170,\n\t\t\t\"h\":\t36,\n\t\t\t\"disp\":\t157,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"temperature_range\",\n\t\t\t\"color_1\":\t\"#e7fff8\",\n\t\t\t\"color_2\":\t\"#264b3b\"\n\t\t}],\n\t\"ItemIdList\":\t[\"time\", \"date\", \"weekday\", \"weather\", \"temperature\", \"temperature_range\"],\n\t\"Config\":\t\"\",\n\t\"Command\":\t\"Device/GetLocalClockInfo\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"OK\",\n\t\"DeviceType\":\t\"AstroToo\"\n}"
+  },
+  "snapshot": {
+    "ok": true,
+    "command": "Device/GetScreenSnapshot",
+    "firmwareCommand": "DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT",
+    "waitMs": 1000,
+    "snapShotPath": "/userdata/app_pic/snapshot.bmp",
+    "snapshotHttpUrl": "http://192.168.13.142:9000/userdata/app_pic/snapshot.bmp",
+    "byteLength": 691254,
+    "contentType": "application/octet-stream",
+    "format": "bmp",
+    "savedTo": "\\\\192.168.13.102\\esp\\allwinner\\tina_t113_v5.0\\platform\\thirdparty\\gui\\lvgl-8\\divoom_app\\tools\\mcp-divoom-lan\\artifacts\\astrotoo-dog-watchface-20261016\\device-snapshot-updated.bmp",
+    "apiResult": {
+      "url": "http://192.168.13.142:9000/divoom_api",
+      "endpoint": "/divoom_api",
+      "httpStatus": 200,
+      "request": {
+        "Command": "Device/GetScreenSnapshot",
+        "ReturnCode": 0
+      },
+      "responseJson": {
+        "Command": "Device/GetScreenSnapshot",
+        "DeviceId": 300426474,
+        "PacketFlag": 1792136453,
+        "DeviceType": "AstroToo",
+        "ReturnCode": 0,
+        "ReturnMessage": "",
+        "snapShotPath": "/userdata/app_pic/snapshot.bmp"
+      },
+      "responseText": "{\n\t\"Command\":\t\"Device/GetScreenSnapshot\",\n\t\"DeviceId\":\t300426474,\n\t\"PacketFlag\":\t1792136453,\n\t\"DeviceType\":\t\"AstroToo\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"\",\n\t\"snapShotPath\":\t\"/userdata/app_pic/snapshot.bmp\"\n}"
+    },
+    "attempts": [
+      {
+        "httpPath": "/userdata/app_pic/snapshot.bmp",
+        "httpStatus": 200,
+        "byteLength": 691254
+      }
+    ],
+    "usageNotes": [
+      "Use after Device/CreateLocalClock, Device/PatchLocalClockInfo, or Channel/SetClockSelectId when you need a visual ground truth.",
+      "AstroToo downloads the exact snapShotPath from this capture; TimesFrame may use the configured WebP fallback path.",
+      "Compare the downloaded image with mockups or a prior snapshot to validate layout, colors, and asset binding."
+    ]
+  },
+  "snapshotFile": {
+    "path": "\\\\192.168.13.102\\esp\\allwinner\\tina_t113_v5.0\\platform\\thirdparty\\gui\\lvgl-8\\divoom_app\\tools\\mcp-divoom-lan\\artifacts\\astrotoo-dog-watchface-20261016\\device-snapshot-updated.bmp",
+    "bytes": 691254,
+    "sha256": "4fccd403ab3ebae17b18e6954e4f089b3a8e7394ed5e7baf67d8e591e1b560e6"
+  },
+  "completedAt": "2026-10-16T08:14:26.522Z"
+}
