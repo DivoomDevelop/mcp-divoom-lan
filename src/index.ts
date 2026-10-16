@@ -843,7 +843,7 @@ async function getManagedClockState(target: DeviceTarget) {
     return { exists, result };
   }
   const message = String(response.ReturnMessage ?? "");
-  if (/not\s*(?:found|exist)|missing|不存在|未找到/i.test(message)) {
+  if (/not\s*(?:found|exist)|missing|no\s+local\s+(?:sys\s+)?clock\s+file|不存在|未找到/i.test(message)) {
     return { exists: false, result };
   }
   assertResponse(result.httpStatus, response);

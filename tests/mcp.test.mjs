@@ -32,7 +32,7 @@ async function mock(hardware) {
     else if(body.Command==="Device/GetLocalClockInfo") {
       if(state.invalid) { res.end("truncated {"); return; }
       if(body.ClockId===60000 && !state.managedClockExists)
-        data={ReturnCode:1,Command:body.Command,ReturnMessage:"local clock not found"};
+        data={ReturnCode:1,Command:body.Command,ReturnMessage:"no local sys clock file for ClockId 60000"};
       else data={...data,ClockId:body.ClockId??60000,ItemList:state.empty?[]:[{item_id:"time",disp:4,font:26}]};
     } else if(body.Command==="Device/GetLocalFontList") data={...data,FontList:[{id:88,AvailableLocally:true}]};
     else if(body.Command==="Device/GetScreenSnapshot") data={...data,snapShotPath:"/userdata/current.bmp"};

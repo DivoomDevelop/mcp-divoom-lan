@@ -1,0 +1,1482 @@
+{
+  "startedAt": "2026-10-16T08:06:24.728Z",
+  "target": {
+    "host": "192.168.13.142",
+    "port": 9000,
+    "timeoutMs": 45000
+  },
+  "device": {
+    "host": "192.168.13.142",
+    "port": 9000,
+    "model": "astrotoo",
+    "hardware": 530,
+    "identification": "hardware",
+    "canvas": {
+      "width": 480,
+      "height": 480
+    },
+    "resourceDirectory": "astrotoo",
+    "capabilities": {
+      "Command": "Device/GetLanCapabilities",
+      "DeviceType": "AstroToo",
+      "ReturnCode": 0,
+      "Model": "astrotoo",
+      "FirmwareVersion": 530055,
+      "Hardware": 530,
+      "Software": 530055,
+      "LanApiVersion": 1,
+      "CanvasWidth": 480,
+      "CanvasHeight": 480,
+      "LocalOnly": true,
+      "JsonMaxBytes": 65536,
+      "BackgroundMaxBytesExclusive": 512000,
+      "BundleMaxBytes": 0,
+      "SupportsAssetBundle": false,
+      "AssetTransfer": "sequential",
+      "LocalAssetUploadPath": "/upload_local_asset",
+      "UploadPersistence": "temporary-until-bound",
+      "OutboundFileUpload": true,
+      "SupportsClockShare": true,
+      "SupportsClockUploadVisibility": true,
+      "SupportsClockUpdateMessageInfo": true,
+      "SupportsClockUploadClassify": true,
+      "AppPreviewUploadFormat": "webp",
+      "AppPreviewMaxWidth": 480,
+      "AppPreviewMaxHeight": 480,
+      "ClockShareCommand": "Device/ShareLocalClock",
+      "SnapshotPath": "/userdata/app_pic/snapshot.bmp"
+    },
+    "mcpFilePolicy": {
+      "localAssetUploadPath": "/upload_local_asset",
+      "genericUpload": "temporary-until-bound",
+      "createPatchUpload": "temporary-until-processed",
+      "outboundFileUpload": false
+    }
+  },
+  "fonts": {
+    "availableIds": [
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      28,
+      34,
+      36,
+      38,
+      42,
+      40,
+      44,
+      46,
+      48,
+      50,
+      52,
+      54,
+      56,
+      58,
+      60,
+      62,
+      64,
+      66,
+      68,
+      70,
+      72,
+      74,
+      76,
+      78,
+      80,
+      82,
+      84,
+      86,
+      88,
+      90,
+      92,
+      98,
+      96,
+      104,
+      102,
+      100,
+      108,
+      106,
+      112,
+      114,
+      116,
+      120,
+      122,
+      124,
+      126,
+      128,
+      130,
+      132,
+      134,
+      136,
+      138,
+      140,
+      142,
+      148,
+      150,
+      152,
+      154,
+      156,
+      158,
+      160,
+      162,
+      164,
+      166,
+      168,
+      170,
+      172,
+      174,
+      176,
+      178,
+      180,
+      182,
+      184,
+      188,
+      190,
+      192,
+      194,
+      196,
+      198,
+      200,
+      202,
+      204,
+      206,
+      208,
+      212,
+      214
+    ],
+    "timeFont": 28,
+    "textFont": 6,
+    "query": {
+      "url": "http://192.168.13.142:9000/divoom_api",
+      "endpoint": "/divoom_api",
+      "httpStatus": 200,
+      "request": {
+        "Command": "Device/GetLocalFontList",
+        "ReturnCode": 0
+      },
+      "responseJson": {
+        "Command": "Device/GetLocalFontList",
+        "ReturnCode": 0,
+        "ReturnMessage": "OK",
+        "DeviceType": "AstroToo",
+        "UpdateTime": 1787990630,
+        "check_flag": 2,
+        "FontList": [
+          {
+            "id": 6,
+            "type": 1,
+            "url": "group1/M00/0B/81/Ci0s8WlCSQiEVK42AAAAAOGpc3k989.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 8,
+            "type": 1,
+            "url": "group1/M00/13/3E/rBAAM2lCSw-EJaE2AAAAAN1tBMI046.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 10,
+            "type": 0,
+            "url": "group1/M00/11/9A/Ci0s8Wovs-KEMPGbAAAAABuAOWA699.bin",
+            "charset": "0123456789",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 12,
+            "type": 1,
+            "url": "group1/M00/12/CD/Ci0s8WpnK1OEFxj1AAAAAJ-V9bY279.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 14,
+            "type": 0,
+            "url": "group1/M00/19/48/rBAAM2ovs22EeSHvAAAAAFCj4ZQ295.bin",
+            "charset": "0123456789",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 16,
+            "type": 0,
+            "url": "group1/M00/11/9A/Ci0s8WovsIKEHHlWAAAAACfHTe8133.bin",
+            "charset": "0123456789km.$",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 18,
+            "type": 0,
+            "url": "group1/M00/19/48/rBAAM2ovsseEXNjxAAAAAEQX9IM309.bin",
+            "charset": "0123456789.",
+            "name": "3*5; minimum pixel characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 20,
+            "type": 0,
+            "url": "group1/M00/11/9A/Ci0s8WovsfyEDofnAAAAAL4XduQ788.bin",
+            "charset": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "name": "6*14 social dial numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 22,
+            "type": 0,
+            "url": "group1/M00/19/48/rBAAM2ovsI-ESbNeAAAAACVNnrk291.bin",
+            "charset": "0123456789.",
+            "name": "7*11  social dial time numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 24,
+            "type": 0,
+            "url": "group1/M00/19/48/rBAAM2ovsHqEUtQ6AAAAACfHTe8067.bin",
+            "charset": "0123456789KM.$",
+            "name": "8*14 Arabic numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 28,
+            "type": 1,
+            "url": "group1/M00/13/D3/Ci0s8WqRTlGEeokIAAAAAJng46I748.ttf",
+            "charset": "",
+            "name": "6*14 Digital Segment Display",
+            "AvailableLocally": true
+          },
+          {
+            "id": 34,
+            "type": 1,
+            "url": "group1/M00/11/9A/Ci0s8WovlU6EASNNAAAAAAUdkdk995.ttf",
+            "charset": "",
+            "name": "3*5 financial pixel characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 36,
+            "type": 1,
+            "url": "group1/M00/19/C0/rBAAM2pGPUqEctmiAAAAAOpzn2I895.ttf",
+            "charset": "",
+            "name": "4*9 Digital Segment Display2",
+            "AvailableLocally": true
+          },
+          {
+            "id": 38,
+            "type": 1,
+            "url": "group1/M00/12/48/Ci0s8WpQkMaEfpI8AAAAAC02H9I601.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 42,
+            "type": 1,
+            "url": "group1/M00/12/49/Ci0s8WpQm7eELmyCAAAAAMjEuaE982.ttf",
+            "charset": "",
+            "name": "7*9 uppercase letters/numbers",
+            "AvailableLocally": true
+          },
+          {
+            "id": 40,
+            "type": 1,
+            "url": "group1/M00/19/F5/rBAAM2pQm6KERlX-AAAAAJsc-ig754.ttf",
+            "charset": "",
+            "name": "3*5 AM/PM",
+            "AvailableLocally": true
+          },
+          {
+            "id": 44,
+            "type": 1,
+            "url": "group1/M00/12/70/Ci0s8WpXReiEWwc_AAAAABIjyoQ268.ttf",
+            "charset": "",
+            "name": "6*14 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 46,
+            "type": 1,
+            "url": "group1/M00/1A/1C/rBAAM2pXViWEAJF2AAAAABsQbQg596.ttf",
+            "charset": "",
+            "name": "5*13 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 48,
+            "type": 1,
+            "url": "group1/M00/1B/80/rBAAM2qRSUGEV0wYAAAAAK0c6x4466.ttf",
+            "charset": "",
+            "name": "7*9 English letters, Arabic figures",
+            "AvailableLocally": true
+          },
+          {
+            "id": 50,
+            "type": 1,
+            "url": "group1/M00/12/70/Ci0s8WpXW0qEQJq8AAAAAPZdSxU448.ttf",
+            "charset": "",
+            "name": "4*7 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 52,
+            "type": 1,
+            "url": "group1/M00/12/7D/Ci0s8WpZowmEOefzAAAAAEmCsyE250.ttf",
+            "charset": "",
+            "name": "12pt standard font",
+            "AvailableLocally": true
+          },
+          {
+            "id": 54,
+            "type": 1,
+            "url": "group1/M00/12/80/Ci0s8WpZ6U6EbYYcAAAAAORwu_Q043.ttf",
+            "charset": "",
+            "name": "4*10 numerals/uppercase letters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 56,
+            "type": 0,
+            "url": "group1/M00/1A/2D/rBAAM2paAgqEC0gfAAAAAGU02go192.bin",
+            "charset": "0123456789",
+            "name": "5*10 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 58,
+            "type": 0,
+            "url": "group1/M00/1A/2D/rBAAM2paAj6EXcbcAAAAAC2Xeu4057.bin",
+            "charset": "0123456789",
+            "name": "12pt standard font2",
+            "AvailableLocally": true
+          },
+          {
+            "id": 60,
+            "type": 0,
+            "url": "group1/M00/12/87/Ci0s8WpbKnmEIdlbAAAAAHaJ25U963.bin",
+            "charset": "0123456789,.",
+            "name": "5*11Digital Segment Display",
+            "AvailableLocally": true
+          },
+          {
+            "id": 62,
+            "type": 0,
+            "url": "group1/M00/1A/33/rBAAM2pbKrGEGdyeAAAAADnWI-U372.bin",
+            "charset": "0123456789,.",
+            "name": "16pt standard font",
+            "AvailableLocally": true
+          },
+          {
+            "id": 64,
+            "type": 1,
+            "url": "group1/M00/12/A6/Ci0s8WpgkW-EP4hCAAAAALUsmkM242.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 66,
+            "type": 1,
+            "url": "group1/M00/1A/52/rBAAM2pgkXyEdL4NAAAAALTiAU0089.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 68,
+            "type": 1,
+            "url": "group1/M00/12/AC/Ci0s8WphfgGEaA08AAAAAIkLBeQ432.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 70,
+            "type": 1,
+            "url": "group1/M00/12/CD/Ci0s8WpnLOCEaMCIAAAAAJxGgcA083.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 72,
+            "type": 1,
+            "url": "group1/M00/1A/62/rBAAM2pjFkKEFU6XAAAAAKxPBBU417.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 74,
+            "type": 1,
+            "url": "group1/M00/12/CB/Ci0s8Wpmt1-EVaSiAAAAACrG9oY164.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 76,
+            "type": 1,
+            "url": "group1/M00/12/CD/Ci0s8WpnIjqETPyjAAAAAIvLsYA695.ttf",
+            "charset": "",
+            "name": "6*14 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 78,
+            "type": 1,
+            "url": "group1/M00/1A/86/rBAAM2ppcveEXA4KAAAAAEuyYNI166.ttf",
+            "charset": "",
+            "name": "4*8 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 80,
+            "type": 0,
+            "url": "group1/M00/1A/89/rBAAM2pp7NGEUNSaAAAAAFym348940.bin",
+            "charset": "0123456789",
+            "name": "5*7  uppercase and lowercase English letters/numerals/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 82,
+            "type": 0,
+            "url": "group1/M00/13/58/Ci0s8Wp-3sqEWW6qAAAAABkj2ok471.bin",
+            "charset": "0123456789",
+            "name": "5*5 Digital Segment Display",
+            "AvailableLocally": true
+          },
+          {
+            "id": 84,
+            "type": 1,
+            "url": "group1/M00/12/E1/Ci0s8Wpqqk2EWJWKAAAAANCWwXM209.ttf",
+            "charset": "",
+            "name": "6*10 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 86,
+            "type": 1,
+            "url": "group1/M00/1A/8D/rBAAM2pqqrmEH2yMAAAAAGEQRXA416.ttf",
+            "charset": "",
+            "name": "4*7numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 88,
+            "type": 1,
+            "url": "group1/M00/1A/AF/rBAAM2pwbE2EbkSMAAAAAIKuC1o784.ttf",
+            "charset": "",
+            "name": "9*15 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 90,
+            "type": 1,
+            "url": "group1/M00/13/20/Ci0s8Wp1m8GEO4M8AAAAAA0yr9E926.ttf",
+            "charset": "",
+            "name": "8*11 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 92,
+            "type": 1,
+            "url": "group1/M00/13/57/Ci0s8Wp-xByEA06OAAAAAGUYy80230.ttf",
+            "charset": "",
+            "name": "3*7 AM/PM",
+            "AvailableLocally": true
+          },
+          {
+            "id": 98,
+            "type": 1,
+            "url": "group1/M00/13/61/Ci0s8WqAIrKEZqPkAAAAAHwIIzg469.ttf",
+            "charset": "",
+            "name": "9*15 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 96,
+            "type": 1,
+            "url": "group1/M00/1B/0E/rBAAM2qAIcyENF27AAAAACpDMHI471.ttf",
+            "charset": "",
+            "name": "7*13 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 104,
+            "type": 0,
+            "url": "group1/M00/13/7D/Ci0s8WqEG1iEFuDAAAAAAK1BMBo462.bin",
+            "charset": "0123456789",
+            "name": "7*13 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 102,
+            "type": 0,
+            "url": "group1/M00/1B/2A/rBAAM2qEGzSETrKqAAAAAHn6X98709.bin",
+            "charset": "0123456789",
+            "name": "5*7  numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 100,
+            "type": 1,
+            "url": "group1/M00/13/7C/Ci0s8WqEB66ED0FkAAAAACx5JTE998.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 108,
+            "type": 0,
+            "url": "group1/M00/13/83/Ci0s8WqFHVCEG6uDAAAAAGGVgrk295.bin",
+            "charset": "0123456789",
+            "name": "6*7 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 106,
+            "type": 0,
+            "url": "group1/M00/1B/30/rBAAM2qFHSuEBctkAAAAAAJK1SM632.bin",
+            "charset": "0123456789",
+            "name": "11*23 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 112,
+            "type": 1,
+            "url": "group1/M00/1B/88/rBAAM2qSkLeEWuAFAAAAADUbUoc457.ttf",
+            "charset": "",
+            "name": "7*7 uppercase English letters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 114,
+            "type": 1,
+            "url": "group1/M00/13/C0/Ci0s8WqOpM2EWxQiAAAAAN8Tnek497.ttf",
+            "charset": "",
+            "name": "5*5 uppercase English letters/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 116,
+            "type": 1,
+            "url": "group1/M00/1B/76/rBAAM2qPnEGETv5nAAAAAG0tBQk151.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 120,
+            "type": 0,
+            "url": "group1/M00/13/CB/Ci0s8WqP9vWEZOEfAAAAACjVmoU598.bin",
+            "charset": "0123456789",
+            "name": "7*11 numerals",
+            "AvailableLocally": false
+          },
+          {
+            "id": 122,
+            "type": 1,
+            "url": "group1/M00/13/DB/Ci0s8WqSmaqECXB8AAAAAJrNVNg362.ttf",
+            "charset": "",
+            "name": "4*6 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 124,
+            "type": 0,
+            "url": "group1/M00/13/EB/Ci0s8WqVEsaEdEr2AAAAAMsG1nc687.bin",
+            "charset": "0123456789",
+            "name": "3*6 numerals",
+            "AvailableLocally": false
+          },
+          {
+            "id": 126,
+            "type": 1,
+            "url": "group1/M00/13/F3/Ci0s8WqWf4yEdtf6AAAAAAkcof8186.ttf",
+            "charset": "",
+            "name": "6*8 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 128,
+            "type": 0,
+            "url": "group1/M00/13/F3/Ci0s8WqWjGmEaKOaAAAAAA4sXHA622.bin",
+            "charset": "0123456789",
+            "name": "11*22 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 130,
+            "type": 1,
+            "url": "group1/M00/1B/B5/rBAAM2qaW7SEHc3SAAAAACLJ8cY215.ttf",
+            "charset": "",
+            "name": "9*17  numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 132,
+            "type": 0,
+            "url": "group1/M00/1B/B5/rBAAM2qaPHOEMVuDAAAAAJ3xu7w360.bin",
+            "charset": "0123456789",
+            "name": "5*9 numerals",
+            "AvailableLocally": false
+          },
+          {
+            "id": 134,
+            "type": 1,
+            "url": "group1/M00/14/0F/Ci0s8Wqbr0GEHFqhAAAAAOQDqKs346.ttf",
+            "charset": "",
+            "name": "6*8 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 136,
+            "type": 0,
+            "url": "group1/M00/1B/D0/rBAAM2qejiuEfi0vAAAAACZ1nPk009.bin",
+            "charset": "0123456789",
+            "name": "5*8 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 138,
+            "type": 1,
+            "url": "group1/M00/1B/E0/rBAAM2qhFBKEYfZcAAAAALnCImo782.ttf",
+            "charset": "",
+            "name": "5*11 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 140,
+            "type": 1,
+            "url": "group1/M00/14/38/Ci0s8WqiFEeEAMhIAAAAAG5p1oY802.ttf",
+            "charset": "",
+            "name": "4*7 English letters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 142,
+            "type": 1,
+            "url": "group1/M00/14/74/Ci0s8WqroImEYioIAAAAAHuS174139.ttf",
+            "charset": "",
+            "name": "5*7 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 148,
+            "type": 0,
+            "url": "group1/M00/1C/11/rBAAM2qoupaEcwmmAAAAAGiGD7Y372.bin",
+            "charset": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "name": "3*5 temperature numerals/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 150,
+            "type": 1,
+            "url": "group1/M00/14/44/Ci0s8Wqj56yEcHYUAAAAAJnxnhs774.ttf",
+            "charset": "",
+            "name": "7*13 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 152,
+            "type": 0,
+            "url": "group1/M00/14/5B/Ci0s8WqnWnmEWiD9AAAAAM9q3JE786.bin",
+            "charset": "0123456789",
+            "name": "5*5 numerals/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 154,
+            "type": 0,
+            "url": "group1/M00/14/5C/Ci0s8WqnaoyEaiYwAAAAACBEAjo718.bin",
+            "charset": "0123456789",
+            "name": "5*5 Arabic figures",
+            "AvailableLocally": true
+          },
+          {
+            "id": 156,
+            "type": 0,
+            "url": "group1/M00/14/65/Ci0s8Wqo9ZiECTdQAAAAAGMBtxU150.bin",
+            "charset": "0123456789",
+            "name": "5*5 numerals/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 158,
+            "type": 0,
+            "url": "group1/M00/1C/13/rBAAM2qpDgeEFqx_AAAAAIqK6Kw200.bin",
+            "charset": "0123456789",
+            "name": "13pt standard font",
+            "AvailableLocally": true
+          },
+          {
+            "id": 160,
+            "type": 0,
+            "url": "group1/M00/1C/13/rBAAM2qpDjuERsusAAAAALCnKo4593.bin",
+            "charset": "0123456789",
+            "name": "8*16 数字/字符",
+            "AvailableLocally": true
+          },
+          {
+            "id": 162,
+            "type": 0,
+            "url": "group1/M00/14/66/Ci0s8WqpDyKEYJFrAAAAAN8p10A614.bin",
+            "charset": "0123456789",
+            "name": "6*9 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 164,
+            "type": 0,
+            "url": "group1/M00/1C/19/rBAAM2qqKl-EUDOtAAAAAKYSSYA427.bin",
+            "charset": "0123456789",
+            "name": "5*8 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 166,
+            "type": 0,
+            "url": "group1/M00/1C/1B/rBAAM2qqaLuEOxufAAAAAACFYP4698.bin",
+            "charset": "0123456789",
+            "name": "7*16 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 168,
+            "type": 0,
+            "url": "group1/M00/1C/21/rBAAM2qriM6EOaInAAAAAEziMlc041.bin",
+            "charset": "0123456789",
+            "name": "5*5 uppercase English letters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 170,
+            "type": 1,
+            "url": "group1/M00/14/74/Ci0s8WqrpDeELG1aAAAAAPBrqic253.ttf",
+            "charset": "",
+            "name": "9*10 numerals/uppercase and lowercase English letters/full characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 172,
+            "type": 0,
+            "url": "group1/M00/14/79/Ci0s8WqsmRyEBohqAAAAAE1skkw740.bin",
+            "charset": "0123456789",
+            "name": "5*9 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 174,
+            "type": 0,
+            "url": "group1/M00/1C/27/rBAAM2qszciEZMG_AAAAACnXsf0668.bin",
+            "charset": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "name": "5*7 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 176,
+            "type": 1,
+            "url": "group1/M00/14/7B/Ci0s8Wqs_OWEJRpcAAAAAOi6CTc769.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 178,
+            "type": 1,
+            "url": "group1/M00/14/7B/Ci0s8WqtE1-EMJ56AAAAAHLXvk4534.ttf",
+            "charset": "",
+            "name": "10*16 numerals/indentation characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 180,
+            "type": 0,
+            "url": "group1/M00/14/8E/Ci0s8WqwoIWEHB42AAAAAE-cRww381.bin",
+            "charset": "0123456789",
+            "name": "9*13 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 182,
+            "type": 0,
+            "url": "group1/M00/1C/3C/rBAAM2qwoPuEJkHeAAAAADdud60797.bin",
+            "charset": "0123456789",
+            "name": "3*6 numerals/temperature symbols",
+            "AvailableLocally": true
+          },
+          {
+            "id": 184,
+            "type": 0,
+            "url": "group1/M00/14/8F/Ci0s8Wqw2Z2EMYj2AAAAACOhR8Q869.bin",
+            "charset": "0123456789",
+            "name": "12*14 numerals/indentation characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 188,
+            "type": 0,
+            "url": "group1/M00/14/95/Ci0s8WqyE9SEIkJVAAAAAAcuf6s387.bin",
+            "charset": "0123456789",
+            "name": " 5*7 numerals/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 190,
+            "type": 0,
+            "url": "group1/M00/1C/44/rBAAM2qyR4OEbawWAAAAAI6VwFc387.bin",
+            "charset": "0123456789",
+            "name": "11pt standard font",
+            "AvailableLocally": true
+          },
+          {
+            "id": 192,
+            "type": 0,
+            "url": "group1/M00/1C/7C/rBAAM2q8ujKESdZOAAAAANyIwAM646.bin",
+            "charset": "0123456789",
+            "name": "5*5 uppercase letters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 194,
+            "type": 0,
+            "url": "group1/M00/14/CF/Ci0s8Wq83bGEMoonAAAAAKBY748076.bin",
+            "charset": "0123456789",
+            "name": "4*7 numerals",
+            "AvailableLocally": true
+          },
+          {
+            "id": 196,
+            "type": 0,
+            "url": "group1/M00/15/11/Ci0s8WrIWxmEbssxAAAAAJBGpAA954.bin",
+            "charset": "0123456789",
+            "name": "4*6 numerals/uppercase letters/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 198,
+            "type": 0,
+            "url": "group1/M00/15/12/Ci0s8WrIgmyEZpXxAAAAAG9PqzQ130.bin",
+            "charset": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            "name": "4*5 numerals/uppercase letters/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 200,
+            "type": 0,
+            "url": "group1/M00/15/12/Ci0s8WrIh4mEDKv9AAAAAPZ7Be4512.bin",
+            "charset": "0123456789",
+            "name": "3*6 numerals/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 202,
+            "type": 0,
+            "url": "group1/M00/15/13/Ci0s8WrIq-yEPlo3AAAAAH-lrlg823.bin",
+            "charset": "0123456789",
+            "name": "3*5 lowercase a/p",
+            "AvailableLocally": true
+          },
+          {
+            "id": 204,
+            "type": 1,
+            "url": "group1/M00/15/13/Ci0s8WrIu46EBHthAAAAAJnxnhs330.ttf",
+            "charset": "",
+            "name": "4*6 numerals/characters",
+            "AvailableLocally": true
+          },
+          {
+            "id": 206,
+            "type": 1,
+            "url": "group1/M00/15/14/Ci0s8WrIvGKECclbAAAAAKE3f3k187.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 208,
+            "type": 1,
+            "url": "group1/M00/1C/DF/rBAAM2rN0WKEHb6HAAAAAOfYG70569.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 212,
+            "type": 1,
+            "url": "group1/M00/15/38/Ci0s8WrPG4yEX51oAAAAAO1AGYM088.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": true
+          },
+          {
+            "id": 214,
+            "type": 1,
+            "url": "group1/M00/1C/E7/rBAAM2rPVsqEHpeFAAAAAJHT7Yk241.ttf",
+            "charset": "",
+            "name": "",
+            "AvailableLocally": false
+          }
+        ]
+      },
+      "responseText": "{\n\t\"Command\":\t\"Device/GetLocalFontList\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"OK\",\n\t\"DeviceType\":\t\"AstroToo\",\n\t\"UpdateTime\":\t1787990630,\n\t\"check_flag\":\t2,\n\t\"FontList\":\t[{\n\t\t\t\"id\":\t6,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/0B/81/Ci0s8WlCSQiEVK42AAAAAOGpc3k989.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t8,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/3E/rBAAM2lCSw-EJaE2AAAAAN1tBMI046.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t10,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/11/9A/Ci0s8Wovs-KEMPGbAAAAABuAOWA699.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t12,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/CD/Ci0s8WpnK1OEFxj1AAAAAJ-V9bY279.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t14,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/19/48/rBAAM2ovs22EeSHvAAAAAFCj4ZQ295.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t16,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/11/9A/Ci0s8WovsIKEHHlWAAAAACfHTe8133.bin\",\n\t\t\t\"charset\":\t\"0123456789km.$\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t18,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/19/48/rBAAM2ovsseEXNjxAAAAAEQX9IM309.bin\",\n\t\t\t\"charset\":\t\"0123456789.\",\n\t\t\t\"name\":\t\"3*5; minimum pixel characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t20,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/11/9A/Ci0s8WovsfyEDofnAAAAAL4XduQ788.bin\",\n\t\t\t\"charset\":\t\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n\t\t\t\"name\":\t\"6*14 social dial numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t22,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/19/48/rBAAM2ovsI-ESbNeAAAAACVNnrk291.bin\",\n\t\t\t\"charset\":\t\"0123456789.\",\n\t\t\t\"name\":\t\"7*11  social dial time numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t24,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/19/48/rBAAM2ovsHqEUtQ6AAAAACfHTe8067.bin\",\n\t\t\t\"charset\":\t\"0123456789KM.$\",\n\t\t\t\"name\":\t\"8*14 Arabic numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t28,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/D3/Ci0s8WqRTlGEeokIAAAAAJng46I748.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"6*14 Digital Segment Display\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t34,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/11/9A/Ci0s8WovlU6EASNNAAAAAAUdkdk995.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"3*5 financial pixel characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t36,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/19/C0/rBAAM2pGPUqEctmiAAAAAOpzn2I895.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"4*9 Digital Segment Display2\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t38,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/48/Ci0s8WpQkMaEfpI8AAAAAC02H9I601.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t42,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/49/Ci0s8WpQm7eELmyCAAAAAMjEuaE982.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"7*9 uppercase letters/numbers\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t40,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/19/F5/rBAAM2pQm6KERlX-AAAAAJsc-ig754.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"3*5 AM/PM\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t44,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/70/Ci0s8WpXReiEWwc_AAAAABIjyoQ268.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"6*14 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t46,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1A/1C/rBAAM2pXViWEAJF2AAAAABsQbQg596.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"5*13 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t48,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1B/80/rBAAM2qRSUGEV0wYAAAAAK0c6x4466.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"7*9 English letters, Arabic figures\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t50,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/70/Ci0s8WpXW0qEQJq8AAAAAPZdSxU448.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"4*7 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t52,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/7D/Ci0s8WpZowmEOefzAAAAAEmCsyE250.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"12pt standard font\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t54,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/80/Ci0s8WpZ6U6EbYYcAAAAAORwu_Q043.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"4*10 numerals/uppercase letters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t56,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1A/2D/rBAAM2paAgqEC0gfAAAAAGU02go192.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*10 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t58,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1A/2D/rBAAM2paAj6EXcbcAAAAAC2Xeu4057.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"12pt standard font2\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t60,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/12/87/Ci0s8WpbKnmEIdlbAAAAAHaJ25U963.bin\",\n\t\t\t\"charset\":\t\"0123456789,.\",\n\t\t\t\"name\":\t\"5*11Digital Segment Display\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t62,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1A/33/rBAAM2pbKrGEGdyeAAAAADnWI-U372.bin\",\n\t\t\t\"charset\":\t\"0123456789,.\",\n\t\t\t\"name\":\t\"16pt standard font\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t64,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/A6/Ci0s8WpgkW-EP4hCAAAAALUsmkM242.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t66,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1A/52/rBAAM2pgkXyEdL4NAAAAALTiAU0089.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t68,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/AC/Ci0s8WphfgGEaA08AAAAAIkLBeQ432.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t70,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/CD/Ci0s8WpnLOCEaMCIAAAAAJxGgcA083.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t72,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1A/62/rBAAM2pjFkKEFU6XAAAAAKxPBBU417.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t74,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/CB/Ci0s8Wpmt1-EVaSiAAAAACrG9oY164.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t76,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/CD/Ci0s8WpnIjqETPyjAAAAAIvLsYA695.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"6*14 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t78,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1A/86/rBAAM2ppcveEXA4KAAAAAEuyYNI166.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"4*8 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t80,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1A/89/rBAAM2pp7NGEUNSaAAAAAFym348940.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*7  uppercase and lowercase English letters/numerals/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t82,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/13/58/Ci0s8Wp-3sqEWW6qAAAAABkj2ok471.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*5 Digital Segment Display\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t84,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/12/E1/Ci0s8Wpqqk2EWJWKAAAAANCWwXM209.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"6*10 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t86,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1A/8D/rBAAM2pqqrmEH2yMAAAAAGEQRXA416.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"4*7numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t88,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1A/AF/rBAAM2pwbE2EbkSMAAAAAIKuC1o784.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"9*15 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t90,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/20/Ci0s8Wp1m8GEO4M8AAAAAA0yr9E926.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"8*11 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t92,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/57/Ci0s8Wp-xByEA06OAAAAAGUYy80230.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"3*7 AM/PM\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t98,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/61/Ci0s8WqAIrKEZqPkAAAAAHwIIzg469.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"9*15 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t96,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1B/0E/rBAAM2qAIcyENF27AAAAACpDMHI471.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"7*13 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t104,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/13/7D/Ci0s8WqEG1iEFuDAAAAAAK1BMBo462.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"7*13 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t102,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1B/2A/rBAAM2qEGzSETrKqAAAAAHn6X98709.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*7  numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t100,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/7C/Ci0s8WqEB66ED0FkAAAAACx5JTE998.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t108,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/13/83/Ci0s8WqFHVCEG6uDAAAAAGGVgrk295.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"6*7 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t106,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1B/30/rBAAM2qFHSuEBctkAAAAAAJK1SM632.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"11*23 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t112,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1B/88/rBAAM2qSkLeEWuAFAAAAADUbUoc457.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"7*7 uppercase English letters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t114,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/C0/Ci0s8WqOpM2EWxQiAAAAAN8Tnek497.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"5*5 uppercase English letters/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t116,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1B/76/rBAAM2qPnEGETv5nAAAAAG0tBQk151.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t120,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/13/CB/Ci0s8WqP9vWEZOEfAAAAACjVmoU598.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"7*11 numerals\",\n\t\t\t\"AvailableLocally\":\tfalse\n\t\t}, {\n\t\t\t\"id\":\t122,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/DB/Ci0s8WqSmaqECXB8AAAAAJrNVNg362.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"4*6 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t124,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/13/EB/Ci0s8WqVEsaEdEr2AAAAAMsG1nc687.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"3*6 numerals\",\n\t\t\t\"AvailableLocally\":\tfalse\n\t\t}, {\n\t\t\t\"id\":\t126,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/13/F3/Ci0s8WqWf4yEdtf6AAAAAAkcof8186.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"6*8 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t128,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/13/F3/Ci0s8WqWjGmEaKOaAAAAAA4sXHA622.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"11*22 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t130,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1B/B5/rBAAM2qaW7SEHc3SAAAAACLJ8cY215.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"9*17  numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t132,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1B/B5/rBAAM2qaPHOEMVuDAAAAAJ3xu7w360.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*9 numerals\",\n\t\t\t\"AvailableLocally\":\tfalse\n\t\t}, {\n\t\t\t\"id\":\t134,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/14/0F/Ci0s8Wqbr0GEHFqhAAAAAOQDqKs346.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"6*8 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t136,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1B/D0/rBAAM2qejiuEfi0vAAAAACZ1nPk009.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*8 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t138,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1B/E0/rBAAM2qhFBKEYfZcAAAAALnCImo782.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"5*11 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t140,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/14/38/Ci0s8WqiFEeEAMhIAAAAAG5p1oY802.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"4*7 English letters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t142,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/14/74/Ci0s8WqroImEYioIAAAAAHuS174139.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"5*7 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t148,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/11/rBAAM2qoupaEcwmmAAAAAGiGD7Y372.bin\",\n\t\t\t\"charset\":\t\"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n\t\t\t\"name\":\t\"3*5 temperature numerals/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t150,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/14/44/Ci0s8Wqj56yEcHYUAAAAAJnxnhs774.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"7*13 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t152,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/5B/Ci0s8WqnWnmEWiD9AAAAAM9q3JE786.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*5 numerals/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t154,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/5C/Ci0s8WqnaoyEaiYwAAAAACBEAjo718.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*5 Arabic figures\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t156,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/65/Ci0s8Wqo9ZiECTdQAAAAAGMBtxU150.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*5 numerals/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t158,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/13/rBAAM2qpDgeEFqx_AAAAAIqK6Kw200.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"13pt standard font\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t160,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/13/rBAAM2qpDjuERsusAAAAALCnKo4593.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"8*16 数字/字符\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t162,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/66/Ci0s8WqpDyKEYJFrAAAAAN8p10A614.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"6*9 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t164,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/19/rBAAM2qqKl-EUDOtAAAAAKYSSYA427.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*8 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t166,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/1B/rBAAM2qqaLuEOxufAAAAAACFYP4698.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"7*16 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t168,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/21/rBAAM2qriM6EOaInAAAAAEziMlc041.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*5 uppercase English letters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t170,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/14/74/Ci0s8WqrpDeELG1aAAAAAPBrqic253.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"9*10 numerals/uppercase and lowercase English letters/full characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t172,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/79/Ci0s8WqsmRyEBohqAAAAAE1skkw740.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*9 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t174,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/27/rBAAM2qszciEZMG_AAAAACnXsf0668.bin\",\n\t\t\t\"charset\":\t\"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n\t\t\t\"name\":\t\"5*7 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t176,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/14/7B/Ci0s8Wqs_OWEJRpcAAAAAOi6CTc769.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t178,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/14/7B/Ci0s8WqtE1-EMJ56AAAAAHLXvk4534.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"10*16 numerals/indentation characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t180,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/8E/Ci0s8WqwoIWEHB42AAAAAE-cRww381.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"9*13 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t182,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/3C/rBAAM2qwoPuEJkHeAAAAADdud60797.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"3*6 numerals/temperature symbols\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t184,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/8F/Ci0s8Wqw2Z2EMYj2AAAAACOhR8Q869.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"12*14 numerals/indentation characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t188,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/95/Ci0s8WqyE9SEIkJVAAAAAAcuf6s387.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\" 5*7 numerals/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t190,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/44/rBAAM2qyR4OEbawWAAAAAI6VwFc387.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"11pt standard font\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t192,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/1C/7C/rBAAM2q8ujKESdZOAAAAANyIwAM646.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"5*5 uppercase letters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t194,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/14/CF/Ci0s8Wq83bGEMoonAAAAAKBY748076.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"4*7 numerals\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t196,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/15/11/Ci0s8WrIWxmEbssxAAAAAJBGpAA954.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"4*6 numerals/uppercase letters/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t198,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/15/12/Ci0s8WrIgmyEZpXxAAAAAG9PqzQ130.bin\",\n\t\t\t\"charset\":\t\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\",\n\t\t\t\"name\":\t\"4*5 numerals/uppercase letters/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t200,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/15/12/Ci0s8WrIh4mEDKv9AAAAAPZ7Be4512.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"3*6 numerals/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t202,\n\t\t\t\"type\":\t0,\n\t\t\t\"url\":\t\"group1/M00/15/13/Ci0s8WrIq-yEPlo3AAAAAH-lrlg823.bin\",\n\t\t\t\"charset\":\t\"0123456789\",\n\t\t\t\"name\":\t\"3*5 lowercase a/p\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t204,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/15/13/Ci0s8WrIu46EBHthAAAAAJnxnhs330.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"4*6 numerals/characters\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t206,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/15/14/Ci0s8WrIvGKECclbAAAAAKE3f3k187.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t208,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1C/DF/rBAAM2rN0WKEHb6HAAAAAOfYG70569.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t212,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/15/38/Ci0s8WrPG4yEX51oAAAAAO1AGYM088.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\ttrue\n\t\t}, {\n\t\t\t\"id\":\t214,\n\t\t\t\"type\":\t1,\n\t\t\t\"url\":\t\"group1/M00/1C/E7/rBAAM2rPVsqEHpeFAAAAAJHT7Yk241.ttf\",\n\t\t\t\"charset\":\t\"\",\n\t\t\t\"name\":\t\"\",\n\t\t\t\"AvailableLocally\":\tfalse\n\t\t}]\n}"
+    }
+  },
+  "request": {
+    "metadata": {
+      "ClockName": "春日柴犬天气",
+      "NameCn": "春日柴犬天气",
+      "NameEn": "Spring Shiba Weather",
+      "DialAssets": "image",
+      "ItemIdList": [
+        "time",
+        "date",
+        "weekday",
+        "weather",
+        "temperature",
+        "temperature_range"
+      ],
+      "ItemList": [
+        {
+          "item_id": "time",
+          "disp": 4,
+          "font": 28,
+          "x": 22,
+          "y": 24,
+          "w": 270,
+          "h": 86,
+          "size": 72,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFF8E8",
+          "color_2": "#18334A"
+        },
+        {
+          "item_id": "date",
+          "disp": 39,
+          "font": 6,
+          "x": 26,
+          "y": 118,
+          "w": 230,
+          "h": 38,
+          "size": 28,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFF8E8",
+          "color_2": "#18334A"
+        },
+        {
+          "item_id": "weekday",
+          "disp": 37,
+          "font": 6,
+          "x": 26,
+          "y": 154,
+          "w": 180,
+          "h": 32,
+          "size": 23,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#DDF4FF",
+          "color_2": "#18334A"
+        },
+        {
+          "item_id": "weather",
+          "disp": 54,
+          "font": 6,
+          "x": 24,
+          "y": 334,
+          "w": 190,
+          "h": 34,
+          "size": 23,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFFFFF",
+          "color_2": "#234A37"
+        },
+        {
+          "item_id": "temperature",
+          "disp": 254,
+          "font": 28,
+          "x": 24,
+          "y": 374,
+          "w": 105,
+          "h": 52,
+          "size": 38,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFF3C4",
+          "color_2": "#234A37"
+        },
+        {
+          "item_id": "temperature_range",
+          "disp": 157,
+          "font": 6,
+          "x": 126,
+          "y": 388,
+          "w": 165,
+          "h": 34,
+          "size": 20,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFFFFF",
+          "color_2": "#234A37"
+        }
+      ],
+      "SetColorList": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "backgroundPath": "\\\\192.168.13.102\\esp\\allwinner\\tina_t113_v5.0\\platform\\thirdparty\\gui\\lvgl-8\\divoom_app\\tools\\mcp-divoom-lan\\artifacts\\astrotoo-dog-watchface-20261016\\clock_bg.webp",
+    "backgroundBytes": 50362
+  },
+  "write": {
+    "url": "http://192.168.13.142:9000/create_local_clock",
+    "endpoint": "/create_local_clock",
+    "httpStatus": 200,
+    "responseJson": {
+      "Command": "Device/CreateLocalClock",
+      "ReturnCode": 0,
+      "ReturnMessage": "OK",
+      "DeviceType": "AstroToo",
+      "ClockId": 60000
+    },
+    "responseText": "{\n\t\"Command\":\t\"Device/CreateLocalClock\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"OK\",\n\t\"DeviceType\":\t\"AstroToo\",\n\t\"ClockId\":\t60000\n}",
+    "operation": "created",
+    "clockId": 60000,
+    "precheck": {
+      "Command": "Device/GetLocalClockInfo",
+      "ReturnCode": 1,
+      "ReturnMessage": "no local sys clock file for ClockId 60000",
+      "DeviceType": "AstroToo"
+    },
+    "requestMeta": {
+      "ClockName": "春日柴犬天气",
+      "NameCn": "春日柴犬天气",
+      "NameEn": "Spring Shiba Weather",
+      "DialAssets": "image",
+      "ItemIdList": [
+        "time",
+        "date",
+        "weekday",
+        "weather",
+        "temperature",
+        "temperature_range"
+      ],
+      "ItemList": [
+        {
+          "item_id": "time",
+          "disp": 4,
+          "font": 28,
+          "x": 22,
+          "y": 24,
+          "w": 270,
+          "h": 86,
+          "size": 72,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFF8E8",
+          "color_2": "#18334A"
+        },
+        {
+          "item_id": "date",
+          "disp": 39,
+          "font": 6,
+          "x": 26,
+          "y": 118,
+          "w": 230,
+          "h": 38,
+          "size": 28,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFF8E8",
+          "color_2": "#18334A"
+        },
+        {
+          "item_id": "weekday",
+          "disp": 37,
+          "font": 6,
+          "x": 26,
+          "y": 154,
+          "w": 180,
+          "h": 32,
+          "size": 23,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#DDF4FF",
+          "color_2": "#18334A"
+        },
+        {
+          "item_id": "weather",
+          "disp": 54,
+          "font": 6,
+          "x": 24,
+          "y": 334,
+          "w": 190,
+          "h": 34,
+          "size": 23,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFFFFF",
+          "color_2": "#234A37"
+        },
+        {
+          "item_id": "temperature",
+          "disp": 254,
+          "font": 28,
+          "x": 24,
+          "y": 374,
+          "w": 105,
+          "h": 52,
+          "size": 38,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFF3C4",
+          "color_2": "#234A37"
+        },
+        {
+          "item_id": "temperature_range",
+          "disp": 157,
+          "font": 6,
+          "x": 126,
+          "y": 388,
+          "w": 165,
+          "h": 34,
+          "size": 20,
+          "alig": 4,
+          "sep": 0,
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "image_id": 0,
+          "image_addr": "",
+          "color_1": "#FFFFFF",
+          "color_2": "#234A37"
+        }
+      ],
+      "SetColorList": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "ClockId": 60000,
+      "Command": "Device/CreateLocalClock",
+      "ReturnCode": 0
+    },
+    "filePartName": "1792137986400",
+    "fileName": "clock_bg.webp",
+    "imagePath": "\\\\192.168.13.102\\esp\\allwinner\\tina_t113_v5.0\\platform\\thirdparty\\gui\\lvgl-8\\divoom_app\\tools\\mcp-divoom-lan\\artifacts\\astrotoo-dog-watchface-20261016\\clock_bg.webp",
+    "imageBytes": 50362
+  },
+  "select": {
+    "url": "http://192.168.13.142:9000/divoom_api",
+    "endpoint": "/divoom_api",
+    "httpStatus": 200,
+    "request": {
+      "ClockId": 60000,
+      "SysUpdateTime": 0,
+      "Command": "Channel/SetClockSelectId",
+      "ReturnCode": 0
+    },
+    "responseJson": {
+      "Command": "Channel/SetClockSelectId",
+      "DeviceId": 300426474,
+      "PacketFlag": 1792136436,
+      "DeviceType": "AstroToo",
+      "ReturnCode": 0,
+      "ReturnMessage": ""
+    },
+    "responseText": "{\n\t\"Command\":\t\"Channel/SetClockSelectId\",\n\t\"DeviceId\":\t300426474,\n\t\"PacketFlag\":\t1792136436,\n\t\"DeviceType\":\t\"AstroToo\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"\"\n}"
+  },
+  "readback": {
+    "url": "http://192.168.13.142:9000/divoom_api",
+    "endpoint": "/divoom_api",
+    "httpStatus": 200,
+    "request": {
+      "ClockId": 60000,
+      "Command": "Device/GetLocalClockInfo",
+      "ReturnCode": 0
+    },
+    "responseJson": {
+      "DialTimeoutFlag": 0,
+      "PixelDialType": 0,
+      "AiScheduleType": 0,
+      "IsComponent": 0,
+      "NameCn": "春日柴犬天气",
+      "NameEn": "春日柴犬天气",
+      "SysUpdateTime": 1792137989,
+      "ClockId": 60000,
+      "EdgeClockId": 0,
+      "AppNum": 0,
+      "StyleClockId": 0,
+      "ComponentClockId": 0,
+      "ItemList": [
+        {
+          "size": 72,
+          "x": 22,
+          "y": 24,
+          "w": 270,
+          "h": 86,
+          "disp": 4,
+          "alig": 4,
+          "sep": 0,
+          "font": 28,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "time",
+          "color_1": "#fff8e8",
+          "color_2": "#18334a"
+        },
+        {
+          "size": 28,
+          "x": 26,
+          "y": 118,
+          "w": 230,
+          "h": 38,
+          "disp": 39,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "date",
+          "color_1": "#fff8e8",
+          "color_2": "#18334a"
+        },
+        {
+          "size": 23,
+          "x": 26,
+          "y": 154,
+          "w": 180,
+          "h": 32,
+          "disp": 37,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weekday",
+          "color_1": "#ddf4ff",
+          "color_2": "#18334a"
+        },
+        {
+          "size": 23,
+          "x": 24,
+          "y": 334,
+          "w": 190,
+          "h": 34,
+          "disp": 54,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "weather",
+          "color_1": "#ffffff",
+          "color_2": "#234a37"
+        },
+        {
+          "size": 38,
+          "x": 24,
+          "y": 374,
+          "w": 105,
+          "h": 52,
+          "disp": 254,
+          "alig": 4,
+          "sep": 0,
+          "font": 28,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature",
+          "color_1": "#fff3c4",
+          "color_2": "#234a37"
+        },
+        {
+          "size": 20,
+          "x": 126,
+          "y": 388,
+          "w": 165,
+          "h": 34,
+          "disp": 157,
+          "alig": 4,
+          "sep": 0,
+          "font": 6,
+          "image_id": 0,
+          "image_addr": "",
+          "angle": 0,
+          "hier": 2,
+          "transp": 100,
+          "animation": 0,
+          "item_id": "temperature_range",
+          "color_1": "#ffffff",
+          "color_2": "#234a37"
+        }
+      ],
+      "ItemIdList": [
+        "time",
+        "date",
+        "weekday",
+        "weather",
+        "temperature",
+        "temperature_range"
+      ],
+      "Config": "",
+      "Command": "Device/GetLocalClockInfo",
+      "ReturnCode": 0,
+      "ReturnMessage": "OK",
+      "DeviceType": "AstroToo"
+    },
+    "responseText": "{\n\t\"DialTimeoutFlag\":\t0,\n\t\"PixelDialType\":\t0,\n\t\"AiScheduleType\":\t0,\n\t\"IsComponent\":\t0,\n\t\"NameCn\":\t\"春日柴犬天气\",\n\t\"NameEn\":\t\"春日柴犬天气\",\n\t\"SysUpdateTime\":\t1792137989,\n\t\"ClockId\":\t60000,\n\t\"EdgeClockId\":\t0,\n\t\"AppNum\":\t0,\n\t\"StyleClockId\":\t0,\n\t\"ComponentClockId\":\t0,\n\t\"ItemList\":\t[{\n\t\t\t\"size\":\t72,\n\t\t\t\"x\":\t22,\n\t\t\t\"y\":\t24,\n\t\t\t\"w\":\t270,\n\t\t\t\"h\":\t86,\n\t\t\t\"disp\":\t4,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t28,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"time\",\n\t\t\t\"color_1\":\t\"#fff8e8\",\n\t\t\t\"color_2\":\t\"#18334a\"\n\t\t}, {\n\t\t\t\"size\":\t28,\n\t\t\t\"x\":\t26,\n\t\t\t\"y\":\t118,\n\t\t\t\"w\":\t230,\n\t\t\t\"h\":\t38,\n\t\t\t\"disp\":\t39,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"date\",\n\t\t\t\"color_1\":\t\"#fff8e8\",\n\t\t\t\"color_2\":\t\"#18334a\"\n\t\t}, {\n\t\t\t\"size\":\t23,\n\t\t\t\"x\":\t26,\n\t\t\t\"y\":\t154,\n\t\t\t\"w\":\t180,\n\t\t\t\"h\":\t32,\n\t\t\t\"disp\":\t37,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"weekday\",\n\t\t\t\"color_1\":\t\"#ddf4ff\",\n\t\t\t\"color_2\":\t\"#18334a\"\n\t\t}, {\n\t\t\t\"size\":\t23,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t334,\n\t\t\t\"w\":\t190,\n\t\t\t\"h\":\t34,\n\t\t\t\"disp\":\t54,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"weather\",\n\t\t\t\"color_1\":\t\"#ffffff\",\n\t\t\t\"color_2\":\t\"#234a37\"\n\t\t}, {\n\t\t\t\"size\":\t38,\n\t\t\t\"x\":\t24,\n\t\t\t\"y\":\t374,\n\t\t\t\"w\":\t105,\n\t\t\t\"h\":\t52,\n\t\t\t\"disp\":\t254,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t28,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"temperature\",\n\t\t\t\"color_1\":\t\"#fff3c4\",\n\t\t\t\"color_2\":\t\"#234a37\"\n\t\t}, {\n\t\t\t\"size\":\t20,\n\t\t\t\"x\":\t126,\n\t\t\t\"y\":\t388,\n\t\t\t\"w\":\t165,\n\t\t\t\"h\":\t34,\n\t\t\t\"disp\":\t157,\n\t\t\t\"alig\":\t4,\n\t\t\t\"sep\":\t0,\n\t\t\t\"font\":\t6,\n\t\t\t\"image_id\":\t0,\n\t\t\t\"image_addr\":\t\"\",\n\t\t\t\"angle\":\t0,\n\t\t\t\"hier\":\t2,\n\t\t\t\"transp\":\t100,\n\t\t\t\"animation\":\t0,\n\t\t\t\"item_id\":\t\"temperature_range\",\n\t\t\t\"color_1\":\t\"#ffffff\",\n\t\t\t\"color_2\":\t\"#234a37\"\n\t\t}],\n\t\"ItemIdList\":\t[\"time\", \"date\", \"weekday\", \"weather\", \"temperature\", \"temperature_range\"],\n\t\"Config\":\t\"\",\n\t\"Command\":\t\"Device/GetLocalClockInfo\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"OK\",\n\t\"DeviceType\":\t\"AstroToo\"\n}"
+  },
+  "snapshot": {
+    "ok": true,
+    "command": "Device/GetScreenSnapshot",
+    "firmwareCommand": "DIVOOM_NET_COMM_GET_SCREEN_SNAPSHOT",
+    "waitMs": 1000,
+    "snapShotPath": "/userdata/app_pic/snapshot.bmp",
+    "snapshotHttpUrl": "http://192.168.13.142:9000/userdata/app_pic/snapshot.bmp",
+    "byteLength": 691254,
+    "contentType": "application/octet-stream",
+    "format": "bmp",
+    "savedTo": "\\\\192.168.13.102\\esp\\allwinner\\tina_t113_v5.0\\platform\\thirdparty\\gui\\lvgl-8\\divoom_app\\tools\\mcp-divoom-lan\\artifacts\\astrotoo-dog-watchface-20261016\\device-snapshot.bmp",
+    "apiResult": {
+      "url": "http://192.168.13.142:9000/divoom_api",
+      "endpoint": "/divoom_api",
+      "httpStatus": 200,
+      "request": {
+        "Command": "Device/GetScreenSnapshot",
+        "ReturnCode": 0
+      },
+      "responseJson": {
+        "Command": "Device/GetScreenSnapshot",
+        "DeviceId": 300426474,
+        "PacketFlag": 1792136437,
+        "DeviceType": "AstroToo",
+        "ReturnCode": 0,
+        "ReturnMessage": "",
+        "snapShotPath": "/userdata/app_pic/snapshot.bmp"
+      },
+      "responseText": "{\n\t\"Command\":\t\"Device/GetScreenSnapshot\",\n\t\"DeviceId\":\t300426474,\n\t\"PacketFlag\":\t1792136437,\n\t\"DeviceType\":\t\"AstroToo\",\n\t\"ReturnCode\":\t0,\n\t\"ReturnMessage\":\t\"\",\n\t\"snapShotPath\":\t\"/userdata/app_pic/snapshot.bmp\"\n}"
+    },
+    "attempts": [
+      {
+        "httpPath": "/userdata/app_pic/snapshot.bmp",
+        "httpStatus": 200,
+        "byteLength": 691254
+      }
+    ],
+    "usageNotes": [
+      "Use after Device/CreateLocalClock, Device/PatchLocalClockInfo, or Channel/SetClockSelectId when you need a visual ground truth.",
+      "AstroToo downloads the exact snapShotPath from this capture; TimesFrame may use the configured WebP fallback path.",
+      "Compare the downloaded image with mockups or a prior snapshot to validate layout, colors, and asset binding."
+    ]
+  },
+  "snapshotFile": {
+    "path": "\\\\192.168.13.102\\esp\\allwinner\\tina_t113_v5.0\\platform\\thirdparty\\gui\\lvgl-8\\divoom_app\\tools\\mcp-divoom-lan\\artifacts\\astrotoo-dog-watchface-20261016\\device-snapshot.bmp",
+    "bytes": 691254,
+    "sha256": "6a3677714ea49445f5e5beed86bb5c9a74608ef67978d1fde193845eae8e03f4"
+  },
+  "completedAt": "2026-10-16T08:06:35.105Z"
+}
