@@ -13,12 +13,15 @@ import {
   type Tool,
 } from "@modelcontextprotocol/sdk/types.js";
 
-import { identify, serial, assertResponse, requireLocal, PRODUCTS, PROFILES, type Model, type Target, type IdentifiedTarget } from "./devices.js";
+import { identify, identifyPixoo64, identifyTimeGate, pixoo64Route, timegateRoute, serial, assertResponse, requireLocal, PRODUCTS, PROFILES, type Model, type Target, type IdentifiedTarget } from "./devices.js";
+import { pixoo64Tools, handlePixoo64 } from "./pixoo64.js";
+import { timegateTools, handleTimeGate } from "./timegate.js";
 type JsonRecord = Record<string, unknown>;
 
 type DeviceTarget = Target;
 
 const DEFAULT_MODEL = process.env.DIVOOM_DEVICE_MODEL ?? "auto";
+const DEFAULT_HARDWARE = (process.env.DIVOOM_DEVICE_HARDWARE ?? "").trim() || undefined;
 const DEFAULT_HOST = (process.env.DIVOOM_DEVICE_HOST ?? "").trim();
 const DEFAULT_PORT = parseIntegerOrDefault(process.env.DIVOOM_DEVICE_PORT, 9000);
 const DEFAULT_TIMEOUT_MS = parseIntegerOrDefault(process.env.DIVOOM_TIMEOUT_MS, 45_000);
@@ -127,6 +130,22 @@ const RESOURCES = [
     ["divoom://astrotoo/watchface/schema", "AstroToo Watchface Schema", "watchface-config.schema.json", "application/schema+json"],
   ].map(([uri, name, file, mimeType]) => ({ uri, name, fileName: PRODUCTS.astrotoo.resourceDir + "/" + file, mimeType,
     description: "AstroToo Hardware 530 only; 480x480, local assets and on-device fonts." })),
+  {
+    uri: "divoom://pixoo64/guide", name: "PIXOO64 LAN Control Guide", mimeType: "text/markdown",
+    fileName: "pixoo64/guide.md", description: "PIXOO64 Hardware 90/92/96 routes, supported commands, display types 1–23, fonts and examples. No watchface uploads.",
+  },
+  {
+    uri: "divoom://pixoo64/example", name: "PIXOO64 Display List Example", mimeType: "application/json",
+    fileName: "pixoo64/example-items.json", description: "64×64 time and text overlays with a solid background, for pixoo64_send_items only.",
+  },
+  {
+    uri: "divoom://timegate/guide", name: "TimeGate LAN Control Guide", mimeType: "text/markdown",
+    fileName: "timegate/guide.md", description: "TimeGate 400/402 transports, LocalToken, five 128×128 screens, display lists and command batches.",
+  },
+  {
+    uri: "divoom://timegate/example", name: "TimeGate Display List Example", mimeType: "application/json",
+    fileName: "timegate/example-items.json", description: "One-screen time/text example for timegate_send_items. Supply LocalToken from device settings.",
+  },
 ] as const;
 
 const targetSchema = {
@@ -134,16 +153,16 @@ const targetSchema = {
   description:
     "Optional per-call target override. If omitted, environment variables are used.",
   properties: {
-    model: { type: "string", enum: ["auto", "timesframe", "astrotoo"], default: "auto",
-      description: "Normally auto: query Hardware first and fall back to TimesFrame only when the command gets no response. Explicit values validate the detected or fallback product." },
+    model: { type: "string", enum: ["auto", "timesframe", "astrotoo", "pixoo64", "timegate"], default: "auto",
+      description: "PIXOO64/TimeGate use discovery Hardware or target.hardware; TimesFrame/AstroToo query Hardware on the device." },
+    hardware: { type: "integer", enum: [90, 92, 96, 400, 402], description: "Explicit PIXOO64 90/92/96 or TimeGate 400/402 profile for direct LAN control. Must match the actual device; this is not a firmware version." },
     host: {
       type: "string",
       description: "Device LAN IP. Example: 192.168.1.120",
     },
     port: {
       type: "integer",
-      description: "Device HTTP port, commonly 9000.",
-      default: 9000,
+      description: "Optional HTTP port override. Defaults to 80 for PIXOO64 90/92 and TimeGate 400, otherwise 9000.",
     },
     timeoutMs: {
       type: "integer",
@@ -767,9 +786,13 @@ function resolveTarget(input: unknown): DeviceTarget {
     throw new Error("target.timeoutMs must be > 0.");
   }
   const model = source.model ?? DEFAULT_MODEL;
-  if (!["auto", "timesframe", "astrotoo"].includes(String(model))) throw new Error("Invalid target.model");
+  if (!["auto", "timesframe", "astrotoo", "pixoo64", "timegate"].includes(String(model))) throw new Error("Invalid target.model");
+  const useDefaultHardware = host === DEFAULT_HOST && ["auto", "pixoo64", "timegate"].includes(String(model));
+  const hardware = optionalInteger(source.hardware ?? (!useDefaultHardware || DEFAULT_HARDWARE === undefined ? undefined : Number(DEFAULT_HARDWARE)), "target.hardware");
+  if (hardware !== undefined && ![90, 92, 96, 400, 402].includes(hardware)) throw new Error("target.hardware must be PIXOO64 Hardware 90, 92 or 96, or TimeGate 400 or 402.");
   if (!Number.isInteger(port) || port > 65535) throw new Error("Invalid target.port");
-  return { host, port, timeoutMs, model: model as Target["model"] };
+  return { host, port, timeoutMs, model: model as Target["model"], hardware,
+    portExplicit: source.port !== undefined || !!process.env.DIVOOM_DEVICE_PORT };
 }
 
 function toDeviceFlag(value: boolean | undefined): number | undefined {
@@ -1227,9 +1250,9 @@ async function handleToolCall(name: string, rawArgs: unknown) {
 
   if (name === "watchface_list_devices") {
     const timeoutMs = optionalInteger(args.timeoutMs, "timeoutMs") ?? DEFAULT_TIMEOUT_MS;
-    const port = optionalInteger(args.port, "port") ?? DEFAULT_PORT;
+    const port = optionalInteger(args.port, "port");
     if (timeoutMs <= 0) throw new Error("timeoutMs must be > 0.");
-    if (port <= 0 || port > 65535) throw new Error("port must be between 1 and 65535.");
+    if (port !== undefined && (port <= 0 || port > 65535)) throw new Error("port must be between 1 and 65535.");
 
     let response: Response;
     try {
@@ -1274,6 +1297,8 @@ async function handleToolCall(name: string, rawArgs: unknown) {
         return [];
       }
       const model = product[0];
+      const devicePort = port ?? (model === "pixoo64" ? pixoo64Route(hardware as number).port
+        : model === "timegate" ? timegateRoute(hardware as number).port : DEFAULT_PORT);
       const deviceName = typeof row.DeviceName === "string" && row.DeviceName.trim()
         ? row.DeviceName.trim()
         : `Divoom ${String(deviceId)}`;
@@ -1282,10 +1307,12 @@ async function handleToolCall(name: string, rawArgs: unknown) {
         deviceName,
         deviceId,
         host,
-        port,
+        port: devicePort,
         hardware,
         model,
-        target: { host, port, model: "auto" },
+        target: model === "pixoo64" || model === "timegate"
+          ? { host, port: devicePort, model, hardware }
+          : { host, port: devicePort, model: "auto" },
       }];
     });
     return {
@@ -1297,7 +1324,7 @@ async function handleToolCall(name: string, rawArgs: unknown) {
       filteredUnsupported,
       ignoredMalformed,
       devices,
-      selectionHint: "Ask the user to choose one entry, then pass its target object to subsequent watchface tools.",
+      selectionHint: "Ask the user to choose an entry and pass its target to product tools: PIXOO64 uses pixoo64_*, TimeGate uses timegate_* with LocalToken from settings.",
     };
   }
 
@@ -2124,16 +2151,16 @@ const discoveryTools = new Set(["watchface_list_devices"]);
 const identifiedTargets = new WeakSet<object>();
 tools.unshift({
   name: "watchface_get_device_info",
-  description: "Query this device's Hardware version first, then return its product profile and LAN capabilities. A command with no response falls back to TimesFrame; an explicit unknown Hardware value is rejected. Each target is identified independently.",
+  description: "Return the product profile and LAN capabilities. TimesFrame/AstroToo query Hardware; PIXOO64/TimeGate use discovery or an explicit target.hardware profile. Unknown Hardware is rejected.",
   inputSchema: { type: "object", properties: { target: targetSchema }, additionalProperties: false },
 });
 tools.unshift({
   name: "watchface_list_devices",
-  description: "List devices returned by https://app.divoom-gz.com/Device/ReturnSameLANDevice so the user can choose a target. Only supported TimesFrame Hardware 510/511/512 and AstroToo Hardware 530 are returned. Pixoo64 Hardware 90/92/96, Times Gate Hardware 400/402, and every other unsupported product are filtered out. Each entry includes a ready-to-use target object.",
+  description: "List selectable TimesFrame 510/511/512, AstroToo 530, PIXOO64 90/92/96 and TimeGate 400/402 devices from https://app.divoom-gz.com/Device/ReturnSameLANDevice. Other hardware is filtered out. PIXOO64/TimeGate targets include Hardware and version-specific ports.",
   inputSchema: {
     type: "object",
     properties: {
-      port: { type: "integer", default: 9000, description: "Port placed in each selectable target object." },
+      port: { type: "integer", description: "Optional override for all targets; otherwise 80 for PIXOO64 90/92 or TimeGate 400, 9000 for PIXOO64 96 or TimeGate 402, and the configured port for TimesFrame/AstroToo." },
       timeoutMs: { type: "integer", default: 45000 },
     },
     additionalProperties: false,
@@ -2152,6 +2179,12 @@ for (const tool of tools) {
       " For AstroToo, first query hardware/capabilities; use the 480x480 AstroToo resources. Legacy 800x1280 examples and typography apply only to TimesFrame.";
   }
 }
+const pixooTools = pixoo64Tools(targetSchema);
+const pixooToolNames = new Set(pixooTools.map(tool => tool.name));
+tools.push(...pixooTools);
+const gateTools = timegateTools(targetSchema);
+const gateToolNames = new Set(gateTools.map(tool => tool.name));
+tools.push(...gateTools);
 function authoringModel(args: JsonRecord): Model {
   const value = args.model ?? "timesframe";
   if (value !== "timesframe" && value !== "astrotoo") throw new Error("Invalid authoring model.");
@@ -2160,14 +2193,25 @@ function authoringModel(args: JsonRecord): Model {
 async function dispatchTool(name: string, rawArgs: unknown) {
   const args = rawArgs === undefined ? {} : ensureRecord(rawArgs, "arguments");
   if (discoveryTools.has(name)) return handleToolCall(name, args);
-  const needsDevice = deviceTools.has(name) || (offlineTools.has(name) && (args.target !== undefined || DEFAULT_HOST !== ""));
+  const needsDevice = deviceTools.has(name) || pixooToolNames.has(name) || gateToolNames.has(name) || (offlineTools.has(name) && (args.target !== undefined || DEFAULT_HOST !== ""));
   if (!needsDevice) return handleToolCall(name, args);
   const unresolved = resolveTarget(args.target);
   return serial(unresolved, async () => {
-    const target = await identify(unresolved);
+    const target = gateToolNames.has(name) ? await identifyTimeGate(unresolved)
+      : pixooToolNames.has(name) ? await identifyPixoo64(unresolved) : await identify(unresolved);
     identifiedTargets.add(target);
     if (args.model !== undefined && args.model !== target.model)
       throw new Error("Authoring model conflicts with the connected device.");
+    if (pixooToolNames.has(name)) return handlePixoo64(name, args, target);
+    if (gateToolNames.has(name)) return handleTimeGate(name, args, target);
+    if (target.model === "timegate") {
+      if (name === "watchface_get_device_info") return handleTimeGate("timegate_get_device_info", args, target);
+      throw new Error("TimeGate uses timegate_* tools and divoom://timegate/guide; watchface authoring, raw commands and uploads are unsupported for this product.");
+    }
+    if (target.model === "pixoo64") {
+      if (name === "watchface_get_device_info") return handlePixoo64("pixoo64_get_device_info", args, target);
+      throw new Error("PIXOO64 uses pixoo64_* tools and divoom://pixoo64/guide; watchface authoring, raw commands and uploads are unsupported for this product.");
+    }
     if (target.model === "astrotoo") {
       if (name === "watchface_reset_local_then_cloud") throw new Error("Cloud reset is disabled for AstroToo.");
       if (name === "watchface_upload_file" &&

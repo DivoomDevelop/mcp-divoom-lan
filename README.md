@@ -1,8 +1,12 @@
 # mcp-divoom-lan
 
-`mcp-divoom-lan` is an open-source MCP server that wraps Divoom TimesFrame and AstroToo watchface LAN APIs as standard tools for AI clients. One server can control several devices: every operation first reads `Device/GetHardwareVersion` from that target and selects the product profile from the returned `Hardware` value. If that command gets no response, the server falls back to TimesFrame for compatibility with older devices; an explicit unknown Hardware value is still rejected.
+`mcp-divoom-lan` is an open-source MCP server for TimesFrame/AstroToo watchfaces and PIXOO64/TimeGate LAN display control. TimesFrame/AstroToo query `Device/GetHardwareVersion`; PIXOO64/TimeGate use discovery Hardware or explicit hardware profiles. Unknown hardware is rejected. The TimesFrame no-response fallback is retained after checking available discovery data.
+
+PIXOO64 Hardware **90/92** uses `80/post`; **96** uses `9000/divoom_api`. Its 10 dedicated tools send display elements, text, RGB animations and control commands. Hardware 96 command lists execute sequentially in MCP to match the reference firmware. See the [PIXOO64 guide and examples](resources/pixoo64/guide.md). Device firmware is unchanged.
 
 It works together with the **v2** HTML visual editor for modifying watchfaces, switching faces, adjusting brightness, and creating new local watchfaces.
+
+TimeGate Hardware **400** uses `80/post`; **402** uses `9000/divoom_api`. Its 10 dedicated tools control five independent **128×128** screens and require **LocalToken** from device settings. Hardware 402 batches run sequentially in MCP. See the [TimeGate guide](resources/timegate/guide.md) for per-version field, alignment and background differences. Device firmware is unchanged.
 
 **v2 visual editor (public):**
 
@@ -19,17 +23,17 @@ Your local clone path (e.g. `D:\divoom-watchface-visual-editor`) is machine-spec
 
 ## Default safety policy (important)
 
-- **Identify every target first:** `Hardware` 510/511/512 selects TimesFrame; 530 selects AstroToo. A command with no response falls back to TimesFrame, while an explicit unknown Hardware value is rejected. `DeviceType` is not used for product detection.
+- **Select the product profile:** `Hardware` 510/511/512 selects TimesFrame; 530 AstroToo; 90/92/96 PIXOO64; 400/402 TimeGate. Explicit `target.hardware` is a caller profile override. Use `pixoo64_*` or `timegate_*` for those products; managed-watchface rules below apply to TimesFrame/AstroToo.
 - **Internal managed slot:** users and MCP clients omit `ClockId` from create and patch calls. The server injects its managed slot, reads it first, creates it when missing, and updates it when present.
 - **Read before write:** the MCP server prechecks its managed slot, writes, and then clients should read back to verify.
 - If `GetLocalClockInfo` returns an **empty `ItemList`:** stop writes; switch to an editable watchface first.
 - Prefer `watchface_patch_local` for edits. Use `watchface_create_local_clock` when the user asks to create a watchface or when intentionally replacing the complete managed configuration and backdrop.
 
-## Implemented tools (22)
+## Implemented tools (42)
 
 Discovery tool (1):
 
-- `watchface_list_devices` → calls `https://app.divoom-gz.com/Device/ReturnSameLANDevice`, filters out unsupported products, and returns selectable TimesFrame/AstroToo `target` objects
+- `watchface_list_devices` → returns selectable TimesFrame/AstroToo/PIXOO64/TimeGate targets with product-specific default ports
 
 Device tools (15):
 
@@ -58,9 +62,13 @@ Offline/model-aware authoring tools (6):
 - `watchface_template_search` → curated TimesFrame or AstroToo watchface templates
 - `watchface_layout_suggest` → model-specific layout hints; AstroToo never receives TimesFrame coordinate statistics
 
+PIXOO64 tools (10): `pixoo64_get_device_info`, `pixoo64_send_animation`, `pixoo64_send_items`, `pixoo64_send_text`, `pixoo64_clear_text`, `pixoo64_set_brightness`, `pixoo64_onoff_screen`, `pixoo64_set_channel`, `pixoo64_play_gif`, and `pixoo64_command_list`. Read `divoom://pixoo64/guide` and `divoom://pixoo64/example`. A direct LAN target can be `{ "host":"192.168.1.100", "model":"pixoo64", "hardware":90 }`; omit `port` and `DIVOOM_DEVICE_PORT` to select the version's default.
+
+TimeGate tools (10): `timegate_get_device_info`, `timegate_send_items`, `timegate_send_text`, `timegate_clear_text`, `timegate_set_brightness`, `timegate_get_brightness`, `timegate_onoff_screen`, `timegate_select_clock`, `timegate_play_gif`, and `timegate_command_list`. Read `divoom://timegate/guide` and `divoom://timegate/example`; authenticated calls supply `localToken` from the actual device settings.
+
 ## Resources (context for the model)
 
-Product data is stored by directory: `resources/timesframe`, `resources/astrotoo`, and `resources/common`. `resources/products.json` records Hardware mappings, canvas sizes, and directory names. A future product gets its own directory and registry entry; runtime loaders never fall back to another product's data.
+Product data is stored by directory: `resources/timesframe`, `resources/astrotoo`, `resources/pixoo64`, `resources/timegate`, and `resources/common`. `resources/products.json` records Hardware mappings, per-screen canvas sizes, directories and routes. Runtime loaders never fall back to another product's data.
 
 The original resource URIs retain TimesFrame semantics. AstroToo has separate 480×480 resources:
 
@@ -154,7 +162,7 @@ npm run release:check
 
 - `docs/README.md` — documentation index
 - `docs/quick-start.md` — minimal setup
-- `docs/mcp-tools.md` — complete 21-tool API catalog and model-specific file policy
+- `docs/mcp-tools.md` — complete 42-tool API catalog and model-specific file policy
 - `docs/astrotoo-and-multiple-devices.md` — hardware detection, multiple targets, and AstroToo local storage
 - `docs/astrotoo-watchface-workflow.md` — release-ready AstroToo create, update, switch, and screenshot workflow
 - `docs/adding-products.md` — product registry, isolated resource directories, and onboarding checks
@@ -168,11 +176,13 @@ npm run release:check
 ## Environment variables
 
 - `DIVOOM_DEVICE_HOST` — device LAN IP (e.g. `192.168.1.120`)
-- `DIVOOM_DEVICE_PORT` — HTTP port, default `9000`
-- `DIVOOM_DEVICE_MODEL` — `auto` (default), `timesframe`, or `astrotoo`; auto falls back to TimesFrame only when the hardware command gets no response, and explicit values validate the detected or fallback product
+- `DIVOOM_DEVICE_PORT` — optional override; omit for PIXOO64 90/92 or TimeGate 400 port `80`, otherwise `9000`
+- `DIVOOM_DEVICE_MODEL` — `auto` (default), `timesframe`, `astrotoo`, `pixoo64`, or `timegate`
+- `DIVOOM_DEVICE_HARDWARE` — optional default-device profile: PIXOO64 `90/92/96` or TimeGate `400/402`; omit to use discovery
+- `DIVOOM_TIMEGATE_LOCAL_TOKEN` — optional LocalToken from the default TimeGate settings; matched by host, otherwise supply `localToken` per call
 - `DIVOOM_TIMEOUT_MS` — request timeout ms, default `45000`
 
-If `DIVOOM_DEVICE_HOST` is unset, each tool call must pass `target.host`. To control several devices, pass a different `target` on each call. The server serializes a complete operation per `host:port` while allowing independent devices to run concurrently.
+If `DIVOOM_DEVICE_HOST` is unset, each tool call must pass `target.host`. To control several devices, pass a different `target` on each call. The server serializes a complete operation per host while allowing independent devices to run concurrently.
 
 ## Example client config (stdio)
 
@@ -204,7 +214,7 @@ You can also copy `client-config.example.json` in this directory as a starting p
 1. Use a dedicated repo (e.g. `mcp-divoom-lan`) with this package at the repo root.
 2. Verify metadata: `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `RELEASE.md` as applicable.
 3. Run `npm run release:check`.
-4. Tag a GitHub release (e.g. `v0.2.0`) with screenshots and sample requests if helpful.
+4. Tag a GitHub release (e.g. `v0.3.0`) with screenshots and sample requests if helpful.
 5. Submit listings where appropriate (MCP Registry, Smithery, Glama, [MCP.so](https://mcp.so/submit), and community indexes). For Glama, follow `GLAMA_SUBMISSION_READY.md` (including `Dockerfile` and `glama.json`). For MCP.so, follow `MCP_SO_SUBMISSION_READY.md`. For the Volcengine MCP catalog, see `VOLCENGINE_SUBMISSION_READY.md` (PR: https://github.com/volcengine/mcp-server/pull/398). For an Alibaba Cloud Bailian custom MCP deployed with npx, see `BAILIAN_MCP_SUBMISSION_READY.md`. For publishing a Coze HTTP plugin, see `COZE_SUBMISSION_READY.md`.
 6. Minimal demo flow: `watchface_get_local` → `watchface_patch_local` (font size/color) → `watchface_replace_dial_bg_file` (background).
 

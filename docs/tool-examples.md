@@ -10,7 +10,7 @@ Tool: `watchface_list_devices`
 {}
 ```
 
-Present `devices[].label` to the user. After the user chooses one entry, pass that entry's `target` object to every later device tool. The list contains only TimesFrame Hardware 510/511/512 and AstroToo Hardware 530. Pixoo64 90/92/96, Times Gate 400/402, malformed rows, and other unsupported products are filtered out.
+Present `devices[].label` and pass the selected target to later calls. The list includes TimesFrame 510/511/512, AstroToo 530, PIXOO64 90/92/96 and TimeGate 400/402. The watchface examples below apply to TimesFrame/AstroToo; use the dedicated [PIXOO64](../resources/pixoo64/guide.md) or [TimeGate](../resources/timegate/guide.md) guide for those products.
 
 ## 1. Increase the time font and change it to red
 

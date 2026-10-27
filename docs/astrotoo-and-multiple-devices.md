@@ -2,13 +2,13 @@
 
 ## Device discovery
 
-Call `watchface_list_devices` to read `https://app.divoom-gz.com/Device/ReturnSameLANDevice`. The tool returns only Hardware 510/511/512/530 with a ready-to-use `target` object. Pixoo64 Hardware 90/92/96, Times Gate Hardware 400/402, malformed rows, and all other unsupported products are removed before the list is shown to the user. Device MAC addresses are omitted.
+Call `watchface_list_devices` for Hardware 510/511/512/530/90/92/96/400/402. PIXOO64 and TimeGate use their dedicated tools, profiles and routes; TimeGate additionally requires LocalToken. Other products and malformed rows are filtered out, and MAC addresses are omitted. The watchface workflow below applies to TimesFrame/AstroToo.
 
 After the user chooses a row, use its `target` in every subsequent device call. A known IP can still be supplied directly without discovery.
 
 ## Device identification
 
-Before every online tool call, the MCP server sends this request to the current `target.host:target.port`:
+Before every TimesFrame/AstroToo online tool call, the MCP server sends this request to the current `target.host:target.port`:
 
 ```json
 {"Command":"Device/GetHardwareVersion","ReturnCode":0}
@@ -35,7 +35,7 @@ A single MCP process can access different devices sequentially or concurrently:
 {"target":{"host":"192.168.1.121","port":9000},"useCurrentDisplayClock":true}
 ```
 
-Queues are isolated by `host:port`. The identify → pre-read → write sequence for one device cannot interleave with another operation on that device, while independent devices do not block each other. The Hardware value is queried again on the next operation after an IP address is reassigned.
+Queues are isolated by host, covering calls using default or explicitly specified PIXOO64 ports. The identify → pre-read → write sequence for one device cannot interleave with another operation on that device, while independent devices do not block each other. Hardware is queried again for TimesFrame/AstroToo; PIXOO64 refreshes discovery unless an explicit Hardware profile is supplied.
 
 ## AstroToo local-storage policy
 

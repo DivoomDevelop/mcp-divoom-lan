@@ -48,8 +48,10 @@ Call `watchface_list_devices` without a target. It reads `https://app.divoom-gz.
 
 - TimesFrame Hardware 510/511/512
 - AstroToo Hardware 530
+- PIXOO64 Hardware 90/92/96
+- TimeGate Hardware 400/402
 
-Pixoo64 Hardware 90/92/96, Times Gate Hardware 400/402, malformed rows, and other unsupported products are filtered out. Ask the user to choose `devices[].label`, then pass that row's `target` object to `watchface_get_device_info` and every later device call.
+Malformed rows and unsupported products are filtered out. Pass the selected target to the product's tools. PIXOO64 uses `pixoo64_*`; TimeGate uses `timegate_*` with LocalToken from settings. See the [PIXOO64](../resources/pixoo64/guide.md) and [TimeGate](../resources/timegate/guide.md) guides. Omit port overrides for automatic version routing. The following watchface steps apply to TimesFrame/AstroToo.
 
 The MCP server calls `Device/GetHardwareVersion` on the target. Hardware 510/511/512 selects TimesFrame, and Hardware 530 selects AstroToo. If that command gets no response, auto detection falls back to TimesFrame. A response containing an unknown Hardware value stops the operation.
 

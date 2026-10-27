@@ -10,7 +10,7 @@ This workflow is intended for MCP clients that create or update an AstroToo watc
 - Backdrops must be 480×480 JPEG or WebP files smaller than 500 KiB.
 - AstroToo does not accept TAR, TGZ, or ZIP watchface bundles.
 
-Call `watchface_list_devices` first and ask the user to choose an entry. The discovery tool filters out Pixoo64 Hardware 90/92/96, Times Gate Hardware 400/402, and all other unsupported products. Use the selected row's target object on every later call:
+Call `watchface_list_devices` first and choose an AstroToo entry (Hardware 530) for this workflow. The list also includes supported TimesFrame, PIXOO64 and TimeGate devices. Use the selected target object on every later call:
 
 ```json
 {

@@ -1,8 +1,8 @@
 {
   "name": "mcp-divoom-lan",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "mcpName": "io.github.DivoomDevelop/mcp-divoom-lan",
-  "description": "Discover and control TimesFrame and AstroToo LAN watchfaces through MCP",
+  "description": "Control TimesFrame/AstroToo watchfaces, PIXOO64 and TimeGate 400/402 displays through MCP",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DivoomDevelop/mcp-divoom-lan.git"
@@ -36,6 +36,7 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "docs",
     "resources",
     "client-config.example.json",

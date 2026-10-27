@@ -1,20 +1,20 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.DivoomDevelop/mcp-divoom-lan",
-  "description": "Discover and control TimesFrame and AstroToo devices for LAN watchface creation, updates, switching, and screenshots.",
+  "description": "Control TimesFrame/AstroToo watchfaces, PIXOO64 and TimeGate 400/402 display elements and commands over LAN.",
   "title": "Divoom LAN Watchface",
   "repository": {
     "url": "https://github.com/DivoomDevelop/mcp-divoom-lan",
     "source": "github"
   },
   "websiteUrl": "https://github.com/DivoomDevelop/mcp-divoom-lan",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "packages": [
     {
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "mcp-divoom-lan",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
@@ -28,13 +28,24 @@
         },
         {
           "name": "DIVOOM_DEVICE_PORT",
-          "description": "Divoom device HTTP port",
-          "default": "9000"
+          "description": "Optional port override. Omit for automatic selection: PIXOO64 90/92 and TimeGate 400 use 80; other supported hardware uses 9000."
         },
         {
           "name": "DIVOOM_DEVICE_MODEL",
-          "description": "Product detection mode: auto, timesframe, or astrotoo. Use auto for current firmware.",
+          "description": "Product mode: auto, timesframe, astrotoo, pixoo64 or timegate. PIXOO64/TimeGate use discovery Hardware or DIVOOM_DEVICE_HARDWARE.",
           "default": "auto"
+        },
+        {
+          "name": "DIVOOM_DEVICE_HARDWARE",
+          "description": "Optional explicit hardware: PIXOO64 90/92/96 or TimeGate 400/402. Must match the actual default device.",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "DIVOOM_TIMEGATE_LOCAL_TOKEN",
+          "description": "Optional TimeGate LocalToken from device settings, used only for the matching default host. Otherwise pass localToken per call.",
+          "isRequired": false,
+          "isSecret": true
         },
         {
           "name": "DIVOOM_TIMEOUT_MS",

@@ -1,12 +1,12 @@
 # MCP Tool API
 
-The server exposes 22 tools: 1 discovery tool, 15 device tools, and 6 offline or model-aware authoring tools. Every device tool first reads `Device/GetHardwareVersion` from the target. Hardware 510/511/512 selects TimesFrame; Hardware 530 selects AstroToo. No response from that command falls back to TimesFrame; a returned unknown Hardware value is rejected.
+The server exposes 42 tools: 1 discovery, 15 watchface device, 6 watchface authoring, 10 PIXOO64 and 10 TimeGate tools. TimesFrame/AstroToo use the hardware-query workflow. PIXOO64 90/92/96 and TimeGate 400/402 use discovery Hardware or explicit profiles. Their watchface uploads/raw commands are blocked. See the [PIXOO64 guide](../resources/pixoo64/guide.md) and [TimeGate guide](../resources/timegate/guide.md) for dedicated tools, constraints and examples.
 
 ## Discovery tool (1)
 
 | Tool | Purpose |
 |---|---|
-| `watchface_list_devices` | Call `https://app.divoom-gz.com/Device/ReturnSameLANDevice` and return selectable targets. Only Hardware 510/511/512/530 is returned. Pixoo64 90/92/96, Times Gate 400/402, malformed entries, and every other unsupported product are filtered out. |
+| `watchface_list_devices` | Return selectable Hardware 510/511/512/530/90/92/96/400/402 targets. PIXOO64 90/92 and TimeGate 400 default to port 80; 96/402 default to 9000. Other products and malformed entries are filtered out. |
 
 The discovery result omits device MAC addresses. Present `devices[].label` to the user and pass the selected `devices[].target` object to subsequent tools.
 
@@ -23,7 +23,7 @@ The discovery result omits device MAC addresses. Present `devices[].label` to th
 }
 ```
 
-Keep `model:"auto"` for normal use. Auto falls back to TimesFrame only when the hardware command gets no response. Explicit values validate the detected or fallback product. Complete operations are serialized for the same `host:port`; different devices can run concurrently. When `target` is omitted, the server uses `DIVOOM_DEVICE_HOST`, `DIVOOM_DEVICE_PORT`, `DIVOOM_DEVICE_MODEL`, and `DIVOOM_TIMEOUT_MS`.
+Keep `model:"auto"` for TimesFrame/AstroToo. PIXOO64/TimeGate resolve Hardware from discovery or explicit matching profiles; their model names are `pixoo64` and `timegate`. Auto checks discovery after an unsupported hardware query before the TimesFrame no-response fallback. Complete operations are serialized per host. Defaults use `DIVOOM_DEVICE_HOST`, optional `DIVOOM_DEVICE_PORT`, `DIVOOM_DEVICE_MODEL`, optional `DIVOOM_DEVICE_HARDWARE`, and `DIVOOM_TIMEOUT_MS`. TimeGate authenticated calls additionally require per-call `localToken` or `DIVOOM_TIMEGATE_LOCAL_TOKEN` for the matching default host. Credentials are not part of the target or discovery output.
 
 ## Device tools (15)
 

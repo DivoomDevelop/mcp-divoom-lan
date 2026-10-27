@@ -3,7 +3,9 @@
 If you are new to the Divoom MCP server, read the documentation in this order:
 
 1. `quick-start.md`: install, configure, and complete the first call in about five minutes.
-2. `mcp-tools.md`: all 22 MCP tools, product scope, and file policy.
+2. `mcp-tools.md`: all 42 MCP tools, product scope, and file policy.
+   - [PIXOO64 guide](../resources/pixoo64/guide.md): Hardware 90/92/96, display elements, animation, fonts and command lists.
+   - [TimeGate guide](../resources/timegate/guide.md): Hardware 400/402, LocalToken, five-screen elements and command lists.
 3. `astrotoo-and-multiple-devices.md`: Hardware detection, concurrent devices, and AstroToo local persistence.
    - AstroToo display-element guides: `../resources/astrotoo/display-elements.en.md` and `../resources/astrotoo/display-elements.zh-CN.md`.
 4. `astrotoo-watchface-workflow.md`: end-to-end AstroToo create, update, switch, readback, and snapshot workflow.
@@ -18,9 +20,9 @@ Read `disp-usage.md` before building an `ItemList`. It documents image-element u
 
 ## Capabilities
 
-The server provides 22 MCP tools: 1 discovery tool, 15 device tools, and 6 offline or model-aware authoring tools. See `mcp-tools.md` for the complete catalog.
+The server provides 42 MCP tools: 1 discovery, 15 watchface device, 6 watchface authoring, 10 PIXOO64 and 10 TimeGate tools. See `mcp-tools.md` for the complete catalog.
 
-- Discover selectable TimesFrame and AstroToo targets with `watchface_list_devices`.
+- Discover selectable TimesFrame, AstroToo, PIXOO64 and TimeGate targets with `watchface_list_devices`.
 - Query the product model and LAN capabilities with `watchface_get_device_info`.
 - Patch local watchface content with `watchface_patch_local`.
 - Select the current watchface with `watchface_set_clock_select`.

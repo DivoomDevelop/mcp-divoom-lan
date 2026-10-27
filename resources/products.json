@@ -10,6 +10,24 @@
       "hardware": [530],
       "canvas": { "width": 480, "height": 480 },
       "directory": "astrotoo"
+    },
+    "pixoo64": {
+      "hardware": [90, 92, 96],
+      "canvas": { "width": 64, "height": 64 },
+      "directory": "pixoo64",
+      "protocol": "http-drawing",
+      "routes": { "90": { "port": 80, "endpoint": "/post" }, "92": { "port": 80, "endpoint": "/post" }, "96": { "port": 9000, "endpoint": "/divoom_api" } },
+      "watchfaceUpload": false
+    },
+    "timegate": {
+      "hardware": [400, 402],
+      "canvas": { "width": 128, "height": 128 },
+      "screens": 5,
+      "directory": "timegate",
+      "protocol": "http-multi-lcd",
+      "routes": { "400": { "port": 80, "endpoint": "/post" }, "402": { "port": 9000, "endpoint": "/divoom_api" } },
+      "localTokenRequired": true,
+      "watchfaceUpload": false
     }
   }
 }

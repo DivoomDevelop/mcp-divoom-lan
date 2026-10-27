@@ -2,9 +2,9 @@
   "manifest_version": "0.3",
   "name": "mcp-divoom-lan",
   "display_name": "Divoom LAN Watchface",
-  "version": "0.2.0",
-  "description": "MCP server for TimesFrame and AstroToo watchface customization over LAN.",
-  "long_description": "Discovers selectable Divoom devices, filters unsupported products, and identifies each chosen target from its Hardware response before selecting the TimesFrame or AstroToo profile. A hardware command with no response falls back to TimesFrame for older-device compatibility. Includes read-before-write safeguards and AstroToo local-only asset persistence.",
+  "version": "0.3.0",
+  "description": "MCP server for TimesFrame/AstroToo watchfaces, PIXOO64 and TimeGate 400/402 LAN control.",
+  "long_description": "Discovers supported Divoom devices. TimesFrame/AstroToo use device Hardware queries; PIXOO64/TimeGate use discovery or explicit hardware profiles. Includes version-specific display control, TimeGate LocalToken and five-screen support. Hardware 96 and 402 command lists execute sequentially in MCP. Keeps AstroToo local-only assets and watchface read-before-write checks.",
   "author": {
     "name": "Divoom Developers"
   },
@@ -34,6 +34,8 @@
         "DIVOOM_DEVICE_HOST": "${user_config.divoom_device_host}",
         "DIVOOM_DEVICE_PORT": "${user_config.divoom_device_port}",
         "DIVOOM_DEVICE_MODEL": "${user_config.divoom_device_model}",
+        "DIVOOM_DEVICE_HARDWARE": "${user_config.divoom_device_hardware}",
+        "DIVOOM_TIMEGATE_LOCAL_TOKEN": "${user_config.timegate_local_token}",
         "DIVOOM_TIMEOUT_MS": "${user_config.divoom_timeout_ms}"
       }
     }
@@ -43,9 +45,24 @@
     "divoom_device_model": {
       "type": "string",
       "title": "Product detection",
-      "description": "Use auto to identify each target by Hardware. If the hardware command gets no response, auto falls back to TimesFrame.",
+      "description": "auto, timesframe, astrotoo, pixoo64 or timegate. PIXOO64/TimeGate use discovery or explicit Hardware below.",
       "default": "auto",
       "required": false
+    },
+    "divoom_device_hardware": {
+      "type": "string",
+      "title": "Hardware profile (optional)",
+      "description": "PIXOO64 90/92/96 or TimeGate 400/402 for the default device. Leave blank to use discovery.",
+      "default": "",
+      "required": false
+    },
+    "timegate_local_token": {
+      "type": "string",
+      "title": "TimeGate LocalToken (optional)",
+      "description": "LocalToken from the default TimeGate device settings. Omit when supplying localToken in each tool call.",
+      "sensitive": true,
+      "required": false,
+      "default": ""
     },
     "divoom_device_host": {
       "type": "string",
@@ -54,10 +71,10 @@
       "required": false
     },
     "divoom_device_port": {
-      "type": "number",
+      "type": "string",
       "title": "HTTP port",
-      "description": "Device HTTP port (commonly 9000).",
-      "default": 9000,
+      "description": "Optional port override. Leave blank for auto: PIXOO64 90/92 or TimeGate 400 uses 80, otherwise 9000.",
+      "default": "",
       "required": false
     },
     "divoom_timeout_ms": {

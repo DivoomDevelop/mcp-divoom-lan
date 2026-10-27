@@ -1,0 +1,14 @@
+{
+  "tool": "timegate_send_items",
+  "note": "Add localToken from device settings. The sample GIF initializes a 402 screen background; use an appropriate device-accessible GIF for production. Verify font availability and version-specific align semantics.",
+  "arguments": {
+    "target": { "host": "192.168.1.100", "model": "timegate", "hardware": 402 },
+    "lcdIndex": 0,
+    "mode": "replace",
+    "backgroundGif": "http://f.divoom-gz.com/64_64.gif",
+    "items": [
+      { "TextId": 1, "type": 5, "x": 8, "y": 16, "font": 2, "TextWidth": 112, "Textheight": 24, "align": 3, "color": "#FFFFFF" },
+      { "TextId": 2, "type": 22, "x": 8, "y": 72, "font": 2, "TextWidth": 112, "Textheight": 24, "align": 3, "color": "#00FFFF", "TextString": "Hello TimeGate" }
+    ]
+  }
+}

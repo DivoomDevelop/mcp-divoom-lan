@@ -1,0 +1,11 @@
+{
+  "tool": "pixoo64_send_items",
+  "arguments": {
+    "target": { "host": "192.168.1.100", "model": "pixoo64", "hardware": 90 },
+    "backgroundColor": "#000000",
+    "items": [
+      { "TextId": 1, "type": 5, "x": 0, "y": 8, "dir": 0, "font": 2, "TextWidth": 64, "Textheight": 16, "speed": 100, "align": 2, "color": "#FFFFFF" },
+      { "TextId": 2, "type": 22, "x": 0, "y": 40, "dir": 0, "font": 2, "TextWidth": 64, "Textheight": 16, "speed": 100, "align": 1, "color": "#00FFFF", "TextString": "Hello Divoom" }
+    ]
+  }
+}

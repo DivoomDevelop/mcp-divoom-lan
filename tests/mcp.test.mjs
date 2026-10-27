@@ -26,6 +26,7 @@ async function mock(hardware) {
           {DeviceName:"Pixoo64 Gen 2",DeviceId:300322928,DevicePrivateIP:"192.168.1.13",Hardware:96},
           {DeviceName:"Times Gate",DeviceId:300053220,DevicePrivateIP:"10.0.0.63",Hardware:400},
           {DeviceName:"Times Gate Simulator",DeviceId:300438376,DevicePrivateIP:"192.168.13.2",Hardware:402},
+          {DeviceName:"Unsupported",DeviceId:300000999,DevicePrivateIP:"192.168.1.99",Hardware:999},
           {DeviceName:"Malformed",DeviceId:null,DevicePrivateIP:"",Hardware:null}
         ]}));
       }
@@ -91,16 +92,20 @@ test("identify each target by Hardware; no model leaks across devices",async()=>
 });
 test("device discovery returns selectable supported targets",async()=>{
   const found=data(await call("watchface_list_devices",{port:9100}));
-  assert.equal(found.rawDeviceCount,8);
-  assert.equal(found.supportedDeviceCount,2);
-  assert.equal(found.returnedDeviceCount,2);
-  assert.equal(found.filteredUnsupported,5);
+  assert.equal(found.rawDeviceCount,9);
+  assert.equal(found.supportedDeviceCount,7);
+  assert.equal(found.returnedDeviceCount,7);
+  assert.equal(found.filteredUnsupported,1);
   assert.equal(found.ignoredMalformed,1);
-  assert.deepEqual(found.devices.map(row=>row.model),["astrotoo","timesframe"]);
+  assert.deepEqual(found.devices.map(row=>row.model),["astrotoo","timesframe","pixoo64","pixoo64","pixoo64","timegate","timegate"]);
   assert.deepEqual(found.devices[0].target,{host:"192.168.13.142",port:9100,model:"auto"});
   assert.equal("deviceMac" in found.devices[0],false);
 
-  assert.ok(found.devices.every(row=>[510,511,512,530].includes(row.hardware)));
+  assert.ok(found.devices.every(row=>[510,511,512,530,90,92,96,400,402].includes(row.hardware)));
+  const defaults=data(await call("watchface_list_devices",{}));
+  assert.deepEqual(defaults.devices.slice(2).map(row=>row.port),[80,80,9000,80,9000]);
+  assert.deepEqual(defaults.devices[2].target,{host:"192.168.13.103",port:80,model:"pixoo64",hardware:90});
+  assert.deepEqual(defaults.devices[5].target,{host:"10.0.0.63",port:80,model:"timegate",hardware:400});
 
   astro.state.discoveryFail=true;
   assert.equal((await call("watchface_list_devices",{})).isError,true);
@@ -327,7 +332,7 @@ test("independent device queues run while another target is blocked; errors rele
   const order=[];
   const p=serial(astro.target,async()=>{order.push("a");await gate;order.push("a-end");throw Error("expected");});
   const p2=serial(astro.target,async()=>order.push("b"));
-  await serial(frame.target,async()=>order.push("f"));
+  await serial({...frame.target,host:"another-device"},async()=>order.push("f"));
   assert.deepEqual(order,["a","f"]);
   release(); await assert.rejects(p); await p2;
   assert.deepEqual(order,["a","f","a-end","b"]);

@@ -6,6 +6,36 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ## Unreleased
 
+## [0.3.0] - 2026-10-27
+
+### Added
+
+- Ten PIXOO64 tools for Hardware 90/92/96: RGB888 animations, display lists, text overlays, brightness, screen power, channel selection, GIF URLs, and command batches.
+- Ten TimeGate tools for Hardware 400/402, including independent control of five 128×128 screens, display lists, text, GIF playback, brightness, screen power, clock selection, and command batches.
+- Product-specific discovery targets and routes: PIXOO64 90/92 and TimeGate 400 use `80/post`; PIXOO64 96 and TimeGate 402 use `9000/divoom_api`.
+- TimeGate LocalToken arguments and default-host configuration, with token redaction and credential isolation between targets.
+- Dedicated PIXOO64 and TimeGate guides/examples, 54 MCP protocol tests, and protocol test execution in CI.
+
+### Changed
+
+- Discovery now includes PIXOO64 and TimeGate instead of filtering these supported products out.
+- Complete operations are serialized per host, including default/explicit port aliases, to prevent interleaved animation frames or control batches.
+- Hardware 96 and 402 command batches execute sequentially in MCP because their reference firmware lacks a native command-list execution branch.
+- Unknown commands, nested batches, invalid payloads, missing success codes, and failed responses stop without automatic write retries.
+
+### Fixed
+
+- TimeGate 402 brightness readback uses `Channel/GetClockInfo`; its reference `Sys/GetBrightness` implementation returns a hardcoded 100.
+- TimeGate text routing distinguishes the legacy `LcdIndex` field from the 402 `LcdId` field.
+- Documented and demonstrated first-use TimeGate 402 background initialization so accepted display-list commands also produce visible output.
+
+### Validation
+
+- PIXOO64 Hardware 90 and 92: live command acknowledgements and state readback; Hardware 92 visual output was confirmed.
+- TimeGate Hardware 402 / firmware 402077: brightness write/readback, sequential batches, and visual confirmation on the first and fifth screens, with the other screens preserved.
+- Device source code and binaries were not modified. Original display settings and normal application supervision were restored after diagnostics.
+- Hardware 96 and TimeGate 400 are covered by protocol fixtures; physical-device validation remains pending for those versions.
+
 ## [0.2.0] - 2026-10-16
 
 ### Added

@@ -1,14 +1,14 @@
 # Adding Product Support
 
-Store each product's reference data in its own `resources/<model>/` directory. The current product directories are `timesframe` and `astrotoo`; shared protocol guidance belongs in `resources/common`.
+Store each product's reference data in its own `resources/<model>/` directory: `timesframe`, `astrotoo`, `pixoo64` and `timegate`. Shared guidance belongs in `resources/common`.
 
 ## Product registry
 
-Register the Hardware values, canvas size, and resource directory in `PRODUCTS` in `src/devices.ts`, then update `resources/products.json` to match. A Hardware value may belong to only one product. Every online device operation starts with `Device/GetHardwareVersion`; returned unknown Hardware values are rejected. A command with no response uses the documented TimesFrame compatibility fallback.
+Register Hardware values, per-screen canvas, screen count and resource directory in `PRODUCTS`, then update `resources/products.json`. A Hardware value belongs to one product only. TimesFrame/AstroToo query `Device/GetHardwareVersion`; PIXOO64/TimeGate use fresh discovery or explicit profiles. Reject returned unknown Hardware. Keep product transports, authentication and field semantics separate; TimeGate tokens must not leak across hosts.
 
 ## Directory layout
 
-Each product directory must provide at least:
+Each watchface-authoring product directory must provide at least:
 
 - `clock-catalog.json`: watchface IDs, Chinese and English names, fonts, `disp`, `item_id`, and source summaries.
 - `clock-configs.json`: complete configurations indexed by ClockId.
@@ -18,7 +18,7 @@ Each product directory must provide at least:
 - `watchface-config.schema.json`: canvas and field constraints for that product.
 - `example-minimal.json`: a minimal example for that product.
 
-A product-specific `guide.md` and other supporting files may also be added. Runtime loaders read only `PRODUCTS[model].resourceDir`; they must never fall back to another product's directory when data is missing.
+A product-specific `guide.md` and supporting files may also be added. PIXOO64/TimeGate use guides and display-list examples, without fabricated watchface-authoring catalogs. Runtime loaders must never fall back to another product's directory when data is missing.
 
 ## Integration checklist
 
